@@ -1,6 +1,6 @@
 # Projet-Casino
 
-Eleves (Aix) :
+Students (Aix) :
 
 - SAID Houssem-eddine
 - FERRY Loïc
