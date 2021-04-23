@@ -1,0 +1,76 @@
+Projet : brouillon
+
+Sujet : Casino
+
+cahier des charges :
+- etude de l'existant
+- etude des besoins
+- etude de faisabilité : compétences, matérielles, logiciels
+- analyse préalable : prendre étude des besoins et détaillé
+- diagramme de Gantt (pas obligé)
+
+
+diagramme de Gantt : 
+- 22/04/2021 : 14h - 18h --> réunion, début Projet
+
+(diagramme minimum à faire) Diagramme de classe et des cas d'utilisations
+
+
+
+cahier des charges :
+ 
+- étude de l'existant : 
+	- AZUR :https: //www.azurcasino2.com/?affiliate_system=mya&affiliate_token=kF6Brr3RYDHfbzbdfzX1hGNd7ZgqdRLk
+	- Le Jackpot : https://www.lejackpot6.com/fr/?affid=25054
+	- Cresus : https://www.cresuscasino.com/fr?aff=100236_ZBaBfeA8EABA202104227420e62e0ffe4473b632b04df9600de5&aid=100236&mid=1891&pid=308&sid=338359
+
+- étude des besoins : 
+	- inscription compte client
+	- acces info client (jeton, historique partie et achat) (par le client)
+	- différent jeux (black jack, roulette, machine à sous, ...)
+	- rang utilisateur (client/admin)
+	- achat de jeton par le client 
+	- possibilité de rejoindre une partie ou de créer une partie
+	- échanger ses jetons contre de l'argent (virtuelle)
+	- possiblité d'empreter de l'argent (en cas de manque d'argent pour acheter jeton)
+	
+- étude de faisabilité
+	- logicieles : IDE, MySQL, gitHub
+	- compétences : programmation java, conception base de donnée
+	- matérielles : ordinateurs
+
+- analyse préalable : 
+	- inscription compte client --> inscription avec email et MDP (création d'un compte dans la base de donnée si email pas déjà pris)
+	- acces info client --> nombre de jeton, partie joué, jeton acheté ou échangé, somme argent
+	- différent jeux --> black jack, roulette, machine à sous (chance truqué !!!!!!!) avec interface graphique et possiblité de miser un certain nombre de jetons
+	- rang --> utilisateur (client), utilisateur VIP (rang payant) ou admin : acces différent celon le rang
+	- achat jeton --> acheter des paques de jetons parmis ceux proposés
+	- possibilité de rejoindre une partie en cours ou de créer une partie sur un des jeux proposés
+	- échanger ses jetons contre de l'argent virtuelles d'après le prix des jetons
+	- possibilité d'empreter de l'argent (si plus d'argent avec limite dans le négatif ou de temps avec sanction sinon)
+
+
+Classes java :
+
+une classe par jeux
+une classe Carte qui correspond à une carte
+une classe Paquet de carte qui correspond à un paquet de carte
+un teste par classe
+une classe interface principale
+une classe interface par jeux
+une classe interface pour les info d'un client
+une classe interface pour les historiques
+une classe utilisateur
+une classe pour dessiner des figures
+une classe bourse qui s'occupe de l'échange entre argent et jeton
+
+Base de donnée:
+
+table utilisateur
+table historique achat jetons
+table historique partie joué
+table historique échange jeton contre argent
+table jeux
+
+
+	
