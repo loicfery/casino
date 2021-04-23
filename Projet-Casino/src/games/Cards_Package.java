@@ -41,10 +41,12 @@ public class Cards_Package {
     }
 
     public void removeCard(int cardPosition){
-
+        card_package.remove(cardPosition);
     }
 
-    public void drawCard(){
-
+    public Cards drawCard(){
+        Cards c = card_package.get(0);
+        removeCard(0);
+        return c;
     }
 }
