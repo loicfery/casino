@@ -12,15 +12,8 @@ public class Cards_Package {
         this.numberOfCard = numberOfCard;
     }
 
-    public boolean empty_package(ArrayList<Cards> card_package){ //Vérifie si le paquet est vide
-        if(card_package.isEmpty()){
-            return true;
-        }
-        return false;
-    }
-
     public void initCardPackage(ArrayList<Cards> card_package){ //Créer un packet trié (à supprimer si inutile)
-        if(empty_package(card_package)){
+        if(card_package.isEmpty()){
             for(int i =0; i<12; i++){
                 Cards heart = new Cards(i, "HEART", "RED");
                 card_package.add(heart);
