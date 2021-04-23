@@ -4,29 +4,15 @@ import java.util.ArrayList;
 
 public class Cards {
 
-    private String sign;
+    private String rank;
     private int number; // 0 à 9 = 1 = 10, 10 = J, 11 = Q, 12 = K
-    private ArrayList<Cards> card_package; // Type provisoire, à adapter au besoin
+    private String color;
 
-    public Cards(int number, String sign) { // A modifier quand l'enum sera fait
+    public Cards(int number, String rank, String color) { // A modifier quand l'enum sera fait
         this.number = number;
-        this.sign = sign;
+        this.rank = rank;
+        this.color = color;
 
     }
 
-    public String getSign() {
-        return sign;
-    }
-
-    public void setSign(String sign) {
-        this.sign = sign;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
 }
