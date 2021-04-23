@@ -3,7 +3,7 @@
 Students (Aix) :
 
 - SAID Houssem-eddine
-- FERRY Loïc
+- FERY Loïc
 - FERAUD Bastien
 - MAIMOUNA BALDE Hadja
 - LE GAL Maxime
