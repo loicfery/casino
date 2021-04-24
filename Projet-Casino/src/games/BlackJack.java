@@ -7,6 +7,7 @@ public class BlackJack {
     private List<UserHand> ListOfUserHand;
     private Cards_Package cards_package;
     private Bet bet;
+    private ActionBlackJack action;
 
     public int countValueOfUserHand(UserHand userHand){
         int s=0;
@@ -31,7 +32,10 @@ public class BlackJack {
     }
 
     public void giveCardToUser(){
-
+        for(int i = 0; i<ListOfUserHand.size(); i++){
+            ListOfUserHand.get(i).addCard(cards_package);
+            ListOfUserHand.get(i).addCard(cards_package);
+        }
     }
 
 
