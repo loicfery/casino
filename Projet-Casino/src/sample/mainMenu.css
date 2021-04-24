@@ -1,12 +1,8 @@
 BorderPane
 {
-    -fx-background-color: blue;
-}
-
-HBox
-{
     -fx-background-color: white;
 }
+
 
 .menu
 {

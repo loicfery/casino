@@ -110,17 +110,15 @@ public class ConnexionMenuController {
 
     public void switchGameMenu(ActionEvent actionEvent) throws Exception {
         try {
-            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("gameMenuSample.fxml"));
-            Parent root = (Parent)loader.load();
-            GameMenuController gameMenuController = (GameMenuController)loader.getController();
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("mainMenuSample.fxml"));
+            Parent root = loader.load();
             Scene scene = new Scene(root, 800.0D, 800.0D);
-            scene.getStylesheets().add(getClass().getResource("gameMenu.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("mainMenu.css").toExternalForm());
             Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
             window.setScene(scene);
             window.show();
         } catch (IIOException var7) {
             var7.printStackTrace();
         }
-
     }
 }

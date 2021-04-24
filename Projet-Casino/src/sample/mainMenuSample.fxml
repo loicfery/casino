@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="sample.MainMenuController">
+    <top>
+        <HBox>
+            <BorderPane.margin>
+                <Insets left="15" right="15" top="15"/>
+            </BorderPane.margin>
+            <spacing>
+                10
+            </spacing>
+    <Button text="Déconnexion" onAction="#clickLogout" fx:id="logoutButton" minHeight="30">
+        <padding>
+            <Insets top="5" left="10" right="5" bottom="5"/>
+        </padding>
+        <font>
+            <Font size="10"/>
+        </font>
+    </Button>
+
+    <Button text="Informations" onAction="#clickInformation" fx:id="informationButton" minHeight="30">
+        <padding>
+            <Insets top="5" left="10" right="5" bottom="5"/>
+        </padding>
+        <font>
+            <Font size="10"/>
+        </font>
+    </Button>
+
+    <Button text="Boutique" onAction="#clickBoutique" fx:id="boutiqueButton" minHeight="30">
+        <padding>
+            <Insets top="5" left="10" right="5" bottom="5"/>
+        </padding>
+        <font>
+            <Font size="10"/>
+        </font>
+    </Button>
+
+    <MenuBar>
+        <Menu text="Jeux">
+            <items>
+                <MenuItem text="Black Jack" onAction="#clickBlackJack" fx:id="blackJackMenu"/>
+                <MenuItem text="Machine à sous" onAction="#clickSlotMachine" fx:id="slotMachineMenu"/>
+                <MenuItem text="Roulette" onAction="#clickRoulette" fx:id="rouletteMenu"/>
+            </items>
+        </Menu>
+    </MenuBar>
+        </HBox>
+    </top>
+</BorderPane>
