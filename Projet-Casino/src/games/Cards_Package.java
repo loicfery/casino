@@ -25,8 +25,6 @@ public class Cards_Package {
                 card_package.add(clover);
             }
         }
-
-
     }
 
     public void mixCardPackage(ArrayList<Cards> card_package){ // "mélange" le packet (croupier avantageux) A compléter
