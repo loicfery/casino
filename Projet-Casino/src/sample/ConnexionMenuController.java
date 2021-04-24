@@ -114,6 +114,7 @@ public class ConnexionMenuController {
             Parent root = (Parent)loader.load();
             GameMenuController gameMenuController = (GameMenuController)loader.getController();
             Scene scene = new Scene(root, 800.0D, 800.0D);
+            scene.getStylesheets().add(getClass().getResource("gameMenu.css").toExternalForm());
             Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
             window.setScene(scene);
             window.show();
