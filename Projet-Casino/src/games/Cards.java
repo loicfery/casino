@@ -13,4 +13,7 @@ public class Cards {
 
     }
 
+    public int getNumber() {
+        return number+1;
+    }
 }

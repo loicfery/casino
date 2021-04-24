@@ -19,4 +19,8 @@ public class UserHand  {
     public void removeCard(Cards cards){
         hand.remove(cards);
     }
+
+    public List<Cards> getHand() {
+        return hand;
+    }
 }
