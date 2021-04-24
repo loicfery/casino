@@ -1,6 +1,7 @@
 package games;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class Bet {
     private int valueOfBetTotal;
@@ -14,14 +15,25 @@ public class Bet {
     }
 
     public void addBet(int valueOfBet, User user){
-        //test
+        Scanner scanner = new Scanner(System.in);
+        valueOfBet = scanner.nextInt();
+        valueOfBetTotal = getValueOfBetTotal() + valueOfBet;
+
     }
 
     public void removeBet(int valueOfBet, User user){
-
+        setValueOfBetTotal(0);
     }
 
     public void addUser(User user){
+        listOfUser.add(user);
+    }
 
+    public int getValueOfBetTotal() {
+        return valueOfBetTotal;
+    }
+
+    public void setValueOfBetTotal(int valueOfBetTotal) {
+        this.valueOfBetTotal = valueOfBetTotal;
     }
 }
