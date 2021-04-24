@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="sample.GameMenuController">
+
+    <Button text="Déconnexion" onAction="#clickLogout" fx:id="logoutButton" minHeight="30" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <font>
+            <Font size="10"/>
+        </font>
+    </Button>
+
+    <Button text="Informations" onAction="#clickInformation" fx:id="informationButton" minHeight="30" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="10.0">
+        <font>
+            <Font size="10"/>
+        </font>
+    </Button>
+
+    <Button text="Boutique" onAction="#clickBoutique" fx:id="boutiqueButton" minHeight="30" AnchorPane.leftAnchor="170.0" AnchorPane.topAnchor="10.0">
+        <font>
+            <Font size="10"/>
+        </font>
+    </Button>
+
+    <MenuBar AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="240">
+        <Menu text="Jeux">
+            <items>
+                <MenuItem text="Black Jack" onAction="#clickBlackJack" fx:id="blackJackMenu"/>
+            </items>
+        </Menu>
+    </MenuBar>
+
+</AnchorPane>
