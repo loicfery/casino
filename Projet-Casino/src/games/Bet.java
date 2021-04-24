@@ -14,7 +14,7 @@ public class Bet {
     }
 
     public void addBet(int valueOfBet, User user){
-
+        //test
     }
 
     public void removeBet(int valueOfBet, User user){
