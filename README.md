@@ -2,8 +2,8 @@
 
 Students (Aix) :
 
-- SAID Houssem-eddine
-- FERY Loïc
-- FERAUD Bastien
-- MAIMOUNA BALDE Hadja
-- LE GAL Maxime
+- SAID Houssem-eddine Cahier des charges
+- FERY Loïc Interface grapghique
+- FERAUD Bastien class Machine à sous
+- MAIMOUNA BALDE Hadja Base de donnée
+- LE GAL Maxime class BlackJack
