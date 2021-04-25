@@ -18,42 +18,61 @@
             <spacing>
                 10
             </spacing>
-    <Button text="Déconnexion" onAction="#clickLogout" fx:id="logoutButton" minHeight="30">
-        <padding>
-            <Insets top="5" left="10" right="5" bottom="5"/>
-        </padding>
-        <font>
-            <Font size="10"/>
-        </font>
-    </Button>
 
-    <Button text="Informations" onAction="#clickInformation" fx:id="informationButton" minHeight="30">
-        <padding>
-            <Insets top="5" left="10" right="5" bottom="5"/>
-        </padding>
-        <font>
-            <Font size="10"/>
-        </font>
-    </Button>
+            <Button text="Déconnexion" onAction="#clickLogout" fx:id="logoutButton" minHeight="30">
+                <padding>
+                    <Insets top="5" left="10" right="5" bottom="5"/>
+                </padding>
+                <font>
+                    <Font size="10"/>
+                </font>
+            </Button>
 
-    <Button text="Boutique" onAction="#clickBoutique" fx:id="boutiqueButton" minHeight="30">
-        <padding>
-            <Insets top="5" left="10" right="5" bottom="5"/>
-        </padding>
-        <font>
-            <Font size="10"/>
-        </font>
-    </Button>
+            <Button text="Informations" onAction="#clickInformation" fx:id="informationButton" minHeight="30">
+                <padding>
+                    <Insets top="5" left="10" right="5" bottom="5"/>
+                </padding>
+                <font>
+                    <Font size="10"/>
+                </font>
+            </Button>
 
-    <MenuBar>
-        <Menu text="Jeux">
-            <items>
-                <MenuItem text="Black Jack" onAction="#clickBlackJack" fx:id="blackJackMenu"/>
-                <MenuItem text="Machine à sous" onAction="#clickSlotMachine" fx:id="slotMachineMenu"/>
-                <MenuItem text="Roulette" onAction="#clickRoulette" fx:id="rouletteMenu"/>
-            </items>
-        </Menu>
-    </MenuBar>
+            <Button text="Boutique" onAction="#clickBoutique" fx:id="boutiqueButton" minHeight="30">
+                <padding>
+                    <Insets top="5" left="10" right="5" bottom="5"/>
+                </padding>
+                <font>
+                    <Font size="10"/>
+                </font>
+            </Button>
+
+            <Button text="Black Jack" onAction="#clickBlackJack" fx:id="blackJackMenuButton" minHeight="30">
+                <padding>
+                    <Insets top="5" left="10" right="5" bottom="5"/>
+                </padding>
+                <font>
+                    <Font size="10"/>
+                </font>
+            </Button>
+
+            <Button text="Machine à sous" onAction="#clickSlotMachine" fx:id="slotMachineMenuButton" minHeight="30">
+                <padding>
+                    <Insets top="5" left="10" right="5" bottom="5"/>
+                </padding>
+                <font>
+                    <Font size="10"/>
+                </font>
+            </Button>
+
+            <Button text="Roulette" onAction="#clickRoulette" fx:id="rouletteMenuButton" minHeight="30">
+                <padding>
+                    <Insets top="5" left="10" right="5" bottom="5"/>
+                </padding>
+                <font>
+                    <Font size="10"/>
+                </font>
+            </Button>
+
         </HBox>
     </top>
 </BorderPane>

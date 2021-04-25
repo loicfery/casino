@@ -16,7 +16,9 @@ public class MainMenuController {
     public Button boutiqueButton;
     public MenuItem blackJackMenu;
     public MenuItem slotMachineMenu;
-    public MenuItem rouletteMenu;
+    public Button blackJackMenuButton;
+    public Button slotMachineMenuButton;
+    public Button rouletteMenuButton;
 
     public MainMenuController() {
     }
@@ -36,17 +38,6 @@ public class MainMenuController {
     }
 
     public void clickInformation(ActionEvent actionEvent) throws Exception{
-        switchInformationMenu(actionEvent);
-    }
-
-    public void clickBoutique(ActionEvent actionEvent) {
-    }
-
-    public void clickBlackJack(ActionEvent actionEvent) {
-        System.out.println("test");
-    }
-
-    public void switchInformationMenu(ActionEvent actionEvent) throws Exception {
         try {
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("informationMenuSample.fxml"));
             Parent root = loader.load();
@@ -60,8 +51,25 @@ public class MainMenuController {
         }
     }
 
-    public void clickSlotMachine(ActionEvent actionEvent) {
+    public void clickBoutique(ActionEvent actionEvent) {
+    }
 
+    public void clickBlackJack(ActionEvent actionEvent) {
+
+    }
+
+    public void clickSlotMachine(ActionEvent actionEvent) throws Exception{
+        try {
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("slotMachineMenuSample.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root, 800, 800);
+            //scene.getStylesheets().add(getClass().getResource("mainMenu.css").toExternalForm());
+            Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+            window.setScene(scene);
+            window.show();
+        } catch (IIOException var7) {
+            var7.printStackTrace();
+        }
     }
 
     public void clickRoulette(ActionEvent actionEvent) {
