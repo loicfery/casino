@@ -2,8 +2,8 @@
 
 Students (Aix) :
 
-- SAID Houssem-eddine Cahier des charges
-- FERY Loïc Interface grapghique
-- FERAUD Bastien class Machine à sous
-- MAIMOUNA BALDE Hadja Base de donnée
+- SAID Houssem-eddine Cahier des charges & Roulette
+- FERY Loïc Interface Grapghique
+- FERAUD Bastien class Machine à Sous
+- MAIMOUNA BALDE Hadja Base de Donnée
 - LE GAL Maxime class BlackJack
