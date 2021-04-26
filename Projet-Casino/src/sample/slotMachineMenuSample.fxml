@@ -99,7 +99,7 @@
       </font>
    </Label>
 
-   <Button fx:id="addOneToken" layoutX="601.0" layoutY="703.0" mnemonicParsing="false" prefHeight="83.0" prefWidth="185.0" text="Ajouter 1 jeton">
+   <Button fx:id="addOneToken" layoutX="601.0" layoutY="703.0" mnemonicParsing="false" onAction="#clickAddOneToken" prefHeight="83.0" prefWidth="185.0" text="Ajouter 1 jeton">
       <font>
          <Font size="20.0" />
       </font>
@@ -128,5 +128,11 @@
          <Font size="20.0" />
       </font>
    </Button>
+
+   <Label fx:id="error" layoutX="280.0" layoutY="488.0" prefHeight="50.0" prefWidth="201.0" textFill="RED" visible="false">
+      <font>
+         <Font size="20.0" />
+      </font>
+   </Label>
    
 </AnchorPane>

@@ -45,6 +45,8 @@ public class SlotMachineMenuController {
     private Label profit;
     @FXML
     private Label token;
+    @FXML
+    private Label error;
 
     @FXML
     private Button startingGameButton;
@@ -61,10 +63,16 @@ public class SlotMachineMenuController {
     private ImageView currentPictureSlot2;
     private ImageView currentPictureSlot3;
 
+    public SlotMachineMenuController(User user){
+        this.user = user;
+    }
+
     public void initialize(){
         currentPictureSlot1 = pictureSlot1Seven;
         currentPictureSlot2 = pictureSlot2Seven;
         currentPictureSlot3 = pictureSlot3Seven;
+
+        token.setText("Vos jetons : "+user.getNumberOfToken());
     }
 
     public void switchPictureSlot(int element, int slot){
@@ -134,5 +142,17 @@ public class SlotMachineMenuController {
         switchPictureSlot(4,2);
         switchPictureSlot(2,3);
 
+    }
+
+    public void clickAddOneToken(ActionEvent actionEvent) {
+        if(user.getNumberOfToken() <= 0){
+            error.setText("Vous n'avez pas assez de jeton");
+            error.setVisible(true);
+        }
+        else{
+            error.setVisible(false);
+            user.removeToken(1);
+
+        }
     }
 }

@@ -15,18 +15,28 @@ public class Bet {
     }
 
     public void addBet(int valueOfBet, User user){
-        Scanner scanner = new Scanner(System.in);
-        valueOfBet = scanner.nextInt();
-        valueOfBetTotal = getValueOfBetTotal() + valueOfBet;
-
+        for(int index = 0; index < listOfUser.size(); index ++){
+            if(listOfUser.get(index) == user){
+                listOfBetUser.set(index,listOfBetUser.get(index) + valueOfBet);
+            }
+        }
+        setValueOfBetTotal(getValueOfBetTotal() + valueOfBet);
     }
 
     public void removeBet(int valueOfBet, User user){
-        setValueOfBetTotal(0);
+        for(int index = 0; index < listOfUser.size(); index ++){
+            if(listOfUser.get(index) == user){
+                listOfBetUser.set(index,listOfBetUser.get(index) - valueOfBet);
+            }
+        }
+        setValueOfBetTotal(getValueOfBetTotal() - valueOfBet);
     }
+
+    public void resetBet(){setValueOfBetTotal(0);}
 
     public void addUser(User user){
         listOfUser.add(user);
+        listOfBetUser.add(0);
     }
 
     public int getValueOfBetTotal() {
