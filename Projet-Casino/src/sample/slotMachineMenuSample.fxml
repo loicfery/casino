@@ -117,13 +117,13 @@
       </font>
    </Button>
 
-   <Button layoutX="406.0" layoutY="612.0" mnemonicParsing="false" onAction="#clickRemoveTenToken" prefHeight="83.0" prefWidth="185.0" text="Enlever 10 jeton">
+   <Button fx:id="removeTenToken" layoutX="406.0" layoutY="612.0" mnemonicParsing="false" onAction="#clickRemoveTenToken" prefHeight="83.0" prefWidth="185.0" text="Enlever 10 jeton">
       <font>
          <Font size="20.0" />
       </font>
    </Button>
 
-   <Button fx:id="removeTenToken" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="123.0" text="Quitter">
+   <Button fx:id="returnMainMenu" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#clickReturnMainMenu" prefHeight="57.0" prefWidth="123.0" text="Quitter">
       <font>
          <Font size="20.0" />
       </font>

@@ -1,6 +1,8 @@
 package sample;
 
+import games.User;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -11,16 +13,29 @@ import javafx.stage.Stage;
 import javax.imageio.IIOException;
 
 public class MainMenuController {
-    public Button logoutButton;
-    public Button informationButton;
-    public Button boutiqueButton;
-    public MenuItem blackJackMenu;
-    public MenuItem slotMachineMenu;
-    public Button blackJackMenuButton;
-    public Button slotMachineMenuButton;
-    public Button rouletteMenuButton;
 
-    public MainMenuController() {
+    private User user;
+
+    @FXML
+    private Button logoutButton;
+    @FXML
+    private Button informationButton;
+    @FXML
+    private Button boutiqueButton;
+    @FXML
+    private Button blackJackMenuButton;
+    @FXML
+    private Button slotMachineMenuButton;
+    @FXML
+    private Button rouletteMenuButton;
+
+    @FXML
+    private MenuItem blackJackMenu;
+    @FXML
+    private MenuItem slotMachineMenu;
+
+    public MainMenuController(User user) {
+        this.user = user;
     }
 
     public void clickLogout(ActionEvent actionEvent) throws Exception {
@@ -61,6 +76,7 @@ public class MainMenuController {
     public void clickSlotMachine(ActionEvent actionEvent) throws Exception{
         try {
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("slotMachineMenuSample.fxml"));
+            loader.setControllerFactory(c -> new SlotMachineMenuController(user));
             Parent root = loader.load();
             Scene scene = new Scene(root, 800, 800);
             //scene.getStylesheets().add(getClass().getResource("mainMenu.css").toExternalForm());

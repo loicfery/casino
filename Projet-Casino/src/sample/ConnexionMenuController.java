@@ -1,5 +1,6 @@
 package sample;
 
+import games.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -109,8 +110,12 @@ public class ConnexionMenuController {
     }
 
     public void switchGameMenu(ActionEvent actionEvent) throws Exception {
+        User user = new User("Loic","loic-fery@orange.fr","ADMIN"); //pour tester
+        user.addToken(100); // pour tester
+
         try {
-            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("mainMenuSample.fxml"));
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("mainMenuSample.fxml"));//"connexionMenuSample.fxml"
+            loader.setControllerFactory(c -> new MainMenuController(user));
             Parent root = loader.load();
             Scene scene = new Scene(root, 800.0D, 800.0D);
             scene.getStylesheets().add(getClass().getResource("mainMenu.css").toExternalForm());
