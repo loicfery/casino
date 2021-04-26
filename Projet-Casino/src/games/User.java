@@ -4,23 +4,20 @@ public class User {
 
     private String pseudo;
     private String email;
-    private String password;
     private int numberOfToken;
     private int numberOfMoney;
     private String rank;
 
-    public User(String pseudo, String email, String password,int numberOfMoney, int numberOfToken, String rank) {
+    public User(String pseudo, String email, String rank) {
         this.pseudo = pseudo;
         this.email = email;
-        this.password = password;
-        this.numberOfToken = numberOfToken;
         this.rank = rank;
-        this.numberOfMoney = numberOfMoney;
+        this.numberOfMoney = 0;
+        this.numberOfToken = 0;
     }
 
     public String getPseudo(){return pseudo;}
     public String getEmail(){return email;}
-    public String getPassword(){return password;}
     public int getNumberOfToken(){return numberOfToken;}
     public int getNumberOfMoney(){return numberOfMoney;}
     public String getRank(){return rank;}

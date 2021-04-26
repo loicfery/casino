@@ -1,61 +1,138 @@
 package sample;
 
+import games.User;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Rectangle;
 
 public class SlotMachineMenuController {
-    public Rectangle slot1;
-    public Rectangle slot2;
-    public Rectangle slot3;
 
-    public ImageView pictureSLot1;
-    public ImageView pictureSlot2;
-    public ImageView pictureSlot3;
+    private User user;
 
-    public ImageView pictureSevenSlot1;
-    public ImageView pictureCherry1Slot1;
-    public ImageView pictureCherry2Slot1;
-    public ImageView pictureLemon1Slot1;
+    @FXML
+    private ImageView pictureSlot1Seven;
+    @FXML
+    private ImageView pictureSlot2Seven;
+    @FXML
+    private ImageView pictureSlot3Seven;
 
+    @FXML
+    private ImageView pictureSlot1Cherry;
+    @FXML
+    private ImageView pictureSlot2Cherry;
+    @FXML
+    private ImageView pictureSlot3Cherry;
 
-    public Button startingGameButton;
+    @FXML
+    private ImageView pictureSlot1Lemon;
+    @FXML
+    private ImageView pictureSlot2Lemon;
+    @FXML
+    private ImageView pictureSlot3Lemon;
 
-    public void switchPicture(int numberOfPicture, int slot){
-        switch (slot){
-            case 1 : pictureSLot1.setVisible(false); switch (numberOfPicture){
-                case 0 : pictureSevenSlot1.setVisible(true); pictureSLot1 = pictureSevenSlot1; break;
-                case 1 : pictureCherry1Slot1.setVisible(true); pictureSLot1 = pictureCherry1Slot1;
-                case 3 : pictureCherry2Slot1.setVisible(true); pictureSLot1 = pictureCherry2Slot1; break;
-                case 4 : pictureLemon1Slot1.setVisible(true); pictureSLot1 = pictureCherry1Slot1; break;
-            }
+    @FXML
+    private ImageView pictureSlot1Watermelon;
+    @FXML
+    private ImageView pictureSlot2Watermelon;
+    @FXML
+    private ImageView pictureSlot3Watermelon;
+
+    @FXML
+    private Label bet;
+    @FXML
+    private Label profit;
+    @FXML
+    private Label token;
+
+    @FXML
+    private Button startingGameButton;
+    @FXML
+    private Button addOneToken;
+    @FXML
+    private Button removeOneToken;
+    @FXML
+    private Button addTenToken;
+    @FXML
+    private Button removeTenToken;
+
+    private ImageView currentPictureSlot1;
+    private ImageView currentPictureSlot2;
+    private ImageView currentPictureSlot3;
+
+    public void initialize(){
+        currentPictureSlot1 = pictureSlot1Seven;
+        currentPictureSlot2 = pictureSlot2Seven;
+        currentPictureSlot3 = pictureSlot3Seven;
+    }
+
+    public void switchPictureSlot(int element, int slot){
+        currentPictureSlot1.setVisible(false);
+        currentPictureSlot2.setVisible(false);
+        currentPictureSlot3.setVisible(false);
+
+        switch (element) {
+            case 1:
+            case 7:
+            case 10:
+                if(slot == 1) {
+                    currentPictureSlot1 = pictureSlot1Lemon;
+                }
+                if(slot == 2) {
+                    currentPictureSlot2 = pictureSlot2Lemon;
+                }
+                if(slot == 3) {
+                    currentPictureSlot3 = pictureSlot3Lemon;
+                }
+                break;
+            case 2:
+            case 4:
+            case 6:
+            case 8:
+                if(slot == 1) {
+                    currentPictureSlot1 = pictureSlot1Watermelon;
+                }
+                if(slot == 2) {
+                    currentPictureSlot2 = pictureSlot2Watermelon;
+                }
+                if(slot == 3) {
+                    currentPictureSlot3 = pictureSlot3Watermelon;
+                }
+                break;
+            case 3:
+            case 9:
+                if(slot == 1) {
+                    currentPictureSlot1 = pictureSlot1Cherry;
+                }
+                if(slot == 2) {
+                    currentPictureSlot2 = pictureSlot2Cherry;
+                }
+                if(slot == 3) {
+                    currentPictureSlot3 = pictureSlot3Cherry;
+                }
+                break;
+            case 5:
+                if(slot == 1) {
+                    currentPictureSlot1 = pictureSlot1Seven;
+                }
+                if(slot == 2) {
+                    currentPictureSlot2 = pictureSlot2Seven;
+                }
+                if(slot == 3) {
+                    currentPictureSlot3 = pictureSlot3Seven;
+                }
+                break;
         }
+        currentPictureSlot1.setVisible(true);
+        currentPictureSlot2.setVisible(true);
+        currentPictureSlot3.setVisible(true);
     }
 
     public void clickStartingGame(ActionEvent actionEvent){
-        switchPicture(1,1);
-
-       /* int position = 0;
-        for(int index = 0; index < 10; index ++){
-            switchPictureSlot1(position);
-            position = (position + 1) % 4;
-            System.out.println("new position : "+position);
-
-            //double time = System.currentTimeMillis();
-            //while(5000 > (System.currentTimeMillis() - time)){}
-
-            try {
-                Thread.sleep(2000);
-            }
-            catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }*/
-    }
-
-    public void clickTest(MouseEvent mouseEvent) {
+        switchPictureSlot(1,1);
+        switchPictureSlot(4,2);
+        switchPictureSlot(2,3);
 
     }
 }
