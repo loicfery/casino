@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SlotMachineMenuController">
+<AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SlotMachineMenuController">
    <Rectangle fx:id="rect" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="199.0" layoutX="105.0" layoutY="275.0" stroke="RED" strokeType="INSIDE" width="601.0" />
 
     <Button fx:id="startingGameButton" alignment="CENTER" layoutX="14.0" layoutY="618.0" minHeight="50" onAction="#clickStartingGame" prefHeight="83.0" prefWidth="194.0" text="Actionner" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="587.0">
@@ -81,19 +81,19 @@
       </image>
    </ImageView>
 
-   <Label fx:id="bet" alignment="CENTER" contentDisplay="CENTER" layoutX="122.0" layoutY="128.0" prefHeight="83.0" prefWidth="201.0" text="Mise : 0">
+   <Label fx:id="labelBet" alignment="CENTER" contentDisplay="CENTER" layoutX="122.0" layoutY="128.0" prefHeight="83.0" prefWidth="201.0" text="Mise : 0">
       <font>
          <Font size="30.0" />
       </font>
    </Label>
 
-   <Label fx:id="profit" alignment="CENTER" contentDisplay="CENTER" layoutX="480.0" layoutY="128.0" prefHeight="83.0" prefWidth="201.0" text="Gain : 0">
+   <Label fx:id="labelProfit" alignment="CENTER" contentDisplay="CENTER" layoutX="480.0" layoutY="128.0" prefHeight="83.0" prefWidth="201.0" text="Gain : 0">
       <font>
          <Font size="30.0" />
       </font>
    </Label>
 
-   <Label fx:id="token" layoutX="39.0" layoutY="612.0" prefHeight="63.0" prefWidth="150.0" text="Vos jetons : 0">
+   <Label fx:id="labelToken" layoutX="39.0" layoutY="612.0" prefHeight="63.0" prefWidth="150.0" text="Vos jetons : 0">
       <font>
          <Font size="20.0" />
       </font>
@@ -105,19 +105,19 @@
       </font>
    </Button>
 
-   <Button fx:id="removeOneToken" layoutX="406.0" layoutY="703.0" mnemonicParsing="false" prefHeight="83.0" prefWidth="185.0" text="Enlever 1 jeton">
+   <Button fx:id="removeOneToken" layoutX="406.0" layoutY="703.0" mnemonicParsing="false" onAction="#clickRemoveOneToken" prefHeight="83.0" prefWidth="185.0" text="Enlever 1 jeton">
       <font>
          <Font size="20.0" />
       </font>
    </Button>
 
-   <Button fx:id="addTenToken" layoutX="601.0" layoutY="612.0" mnemonicParsing="false" prefHeight="83.0" prefWidth="185.0" text="Ajouter 10 jeton">
+   <Button fx:id="addTenToken" layoutX="601.0" layoutY="612.0" mnemonicParsing="false" onAction="#clickAddTenToken" prefHeight="83.0" prefWidth="185.0" text="Ajouter 10 jeton">
       <font>
          <Font size="20.0" />
       </font>
    </Button>
 
-   <Button layoutX="406.0" layoutY="612.0" mnemonicParsing="false" prefHeight="83.0" prefWidth="185.0" text="Enlever 10 jeton">
+   <Button layoutX="406.0" layoutY="612.0" mnemonicParsing="false" onAction="#clickRemoveTenToken" prefHeight="83.0" prefWidth="185.0" text="Enlever 10 jeton">
       <font>
          <Font size="20.0" />
       </font>
@@ -129,7 +129,7 @@
       </font>
    </Button>
 
-   <Label fx:id="error" layoutX="280.0" layoutY="488.0" prefHeight="50.0" prefWidth="201.0" textFill="RED" visible="false">
+   <Label fx:id="labelError" layoutX="280.0" layoutY="488.0" prefHeight="50.0" prefWidth="401.0" textFill="RED" visible="false">
       <font>
          <Font size="20.0" />
       </font>

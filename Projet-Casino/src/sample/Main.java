@@ -1,5 +1,6 @@
 package sample;
 
+import games.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,7 +12,14 @@ public class Main extends Application {
     }
 
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(this.getClass().getResource("slotMachineMenuSample.fxml")); //"connexionMenuSample.fxml"
+        User user = new User("Loic","loic-fery@orange.fr","ADMIN");
+        user.addToken(100);
+
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("slotMachineMenuSample.fxml"));
+        loader.setControllerFactory(c -> new SlotMachineMenuController(user));
+        Parent root = loader.load();
+        //Parent root = FXMLLoader.load(this.getClass().getResource("slotMachineMenuSample.fxml")); //"connexionMenuSample.fxml"
+
         primaryStage.setTitle("Projet Casino");
         primaryStage.setScene(new Scene(root, 800.0D, 800.0D)); //500.0D, 500.0D
         primaryStage.setResizable(false);

@@ -1,5 +1,6 @@
 package sample;
 
+import games.Bet;
 import games.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -7,9 +8,13 @@ import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SlotMachineMenuController {
 
     private User user;
+    private Bet bet = new Bet();
 
     @FXML
     private ImageView pictureSlot1Seven;
@@ -40,13 +45,13 @@ public class SlotMachineMenuController {
     private ImageView pictureSlot3Watermelon;
 
     @FXML
-    private Label bet;
+    private Label labelBet;
     @FXML
-    private Label profit;
+    private Label labelProfit;
+
+    public Label labelToken;
     @FXML
-    private Label token;
-    @FXML
-    private Label error;
+    private Label labelError;
 
     @FXML
     private Button startingGameButton;
@@ -72,9 +77,10 @@ public class SlotMachineMenuController {
         currentPictureSlot2 = pictureSlot2Seven;
         currentPictureSlot3 = pictureSlot3Seven;
 
-        token.setText("Vos jetons : "+user.getNumberOfToken());
+        labelToken.setText("Vos jetons : "+user.getNumberOfToken());
     }
 
+    /** Change l'image d'un des trois slots **/
     public void switchPictureSlot(int element, int slot){
         currentPictureSlot1.setVisible(false);
         currentPictureSlot2.setVisible(false);
@@ -137,22 +143,72 @@ public class SlotMachineMenuController {
         currentPictureSlot3.setVisible(true);
     }
 
+    /** Lance la machine à sous **/
     public void clickStartingGame(ActionEvent actionEvent){
+        //méthode à finir
         switchPictureSlot(1,1);
         switchPictureSlot(4,2);
         switchPictureSlot(2,3);
 
     }
 
+    /** Ajoute un jeton à la mise **/
     public void clickAddOneToken(ActionEvent actionEvent) {
         if(user.getNumberOfToken() <= 0){
-            error.setText("Vous n'avez pas assez de jeton");
-            error.setVisible(true);
+            labelError.setText("Vous n'avez pas assez de jeton");
+            labelError.setVisible(true);
         }
         else{
-            error.setVisible(false);
+            labelError.setVisible(false);
             user.removeToken(1);
+            bet.addBet(1,user);
+            labelBet.setText("Mise : "+bet.getValueOfBetTotal());
+            labelToken.setText("Jetons : "+user.getNumberOfToken());
+        }
+    }
 
+    /** Enlève un jeton à la mise **/
+    public void clickRemoveOneToken(ActionEvent actionEvent) {
+        if(bet.getValueOfBetTotal() <= 0){
+            labelError.setText("La mise n'a pas assez de jeton");
+            labelError.setVisible(true);
+        }
+        else{
+            labelError.setVisible(false);
+            user.addToken(1);
+            bet.removeBet(1,user);
+            labelBet.setText("Mise : "+bet.getValueOfBetTotal());
+            labelToken.setText("Jetons : "+user.getNumberOfToken());
+        }
+    }
+
+    /** Ajoute dix jeton à la mise **/
+    public void clickAddTenToken(ActionEvent actionEvent) {
+        if(user.getNumberOfToken() <= 9){
+            labelError.setText("Vous n'avez pas assez de jeton");
+            labelError.setVisible(true);
+        }
+        else{
+            labelError.setVisible(false);
+            user.removeToken(10);
+            bet.addBet(10,user);
+            labelBet.setText("Mise : "+bet.getValueOfBetTotal());
+            labelToken.setText("Jetons : "+user.getNumberOfToken());
+        }
+    }
+
+    /** Enlève dix jeton à la mise **/
+    public void clickRemoveTenToken(ActionEvent actionEvent) {
+        if(bet.getValueOfBetTotal() <= 9){
+            labelError.setText("La mise n'a pas assez de jeton");
+            labelError.setVisible(true);
+        }
+        else{
+            labelError.setVisible(false);
+            user.addToken(10);
+            bet.removeBet(10,user);
+            labelBet.setText("Mise : "+bet.getValueOfBetTotal());
+            labelToken.setText("Jetons : "+user.getNumberOfToken());
         }
     }
 }

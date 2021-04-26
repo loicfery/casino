@@ -1,5 +1,6 @@
 package games;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -8,10 +9,10 @@ public class Bet {
     private List<Integer> listOfBetUser;
     private List<User> listOfUser;
 
-    public Bet(int valueOfBetTotal, List<Integer> listOfBetUser, List<User> listOfUser) {
-        this.valueOfBetTotal = valueOfBetTotal;
-        this.listOfBetUser = listOfBetUser;
-        this.listOfUser = listOfUser;
+    public Bet() {
+        this.valueOfBetTotal = 0;
+        this.listOfBetUser = new ArrayList<>();
+        this.listOfUser = new ArrayList<>();
     }
 
     public void addBet(int valueOfBet, User user){
@@ -37,6 +38,15 @@ public class Bet {
     public void addUser(User user){
         listOfUser.add(user);
         listOfBetUser.add(0);
+    }
+
+    public void removeUser(User user){
+        for(int index = 0; index < listOfUser.size(); index ++){
+            if(listOfUser.get(index) == user){
+                listOfUser.remove(index);
+                listOfBetUser.remove(index);
+            }
+        }
     }
 
     public int getValueOfBetTotal() {
