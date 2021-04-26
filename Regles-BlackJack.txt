@@ -16,7 +16,7 @@ Il y a blackjack lorsque le joueur reçoit 2 cartes totalisant une valeur de 21 
 Si un joueur possède un blackjack, le croupier paiera le joueur immédiatement à 1,5 fois la mise initiale avant de continuer avec les autres joueurs de la table à condition que le croupier n’ait pas lui-même un as comme première carte.
 Dans ce cas une assurance sera proposée à chaque joueur.
 Le joueur ayant un blackjack remportera une fois et demi sa mise initiale si le croupier n’a pas de blackjack après distribution de sa seconde carte.
-En cas de balckjack chez le joueur et chez le croupier, la main sera déclarée nulle et aucune somme ne sera échangée.
+En cas de blackjack chez le joueur et chez le croupier, la main sera déclarée nulle et aucune somme ne sera échangée.
 
 
 
@@ -27,21 +27,21 @@ Vous pouvez tirer (demander une carte) autant de fois que vous le souhaitez, tan
 Lorsque vous avez un total que vous trouvez satisfaisant, vous faites savoir au croupier que vous restez, et le jeu continue avec le joueur suivant.
 
 
-Tirer une carte : Vous souhaitez prendre une autre carte, que le croupier vous distribue.
-		  Si le joueur tire et qu’il dépasse 21, il perd sa mise.
+- Tirer une carte : Vous souhaitez prendre une autre carte, que le croupier vous distribue.
+		    Si le joueur tire et qu’il dépasse 21, il perd sa mise.
 
-Rester : Vous restez si vous êtes satisfait de votre main, que le total est suffisant;
-	 Vous ne voulez pas de carte supplémentaire.
+- Rester : Vous restez si vous êtes satisfait de votre main, que le total est suffisant;
+	   Vous ne voulez pas de carte supplémentaire.
 
-Doubler la mise : Vous doublez votre mise et vous recevez une carte, une seulement.
-		  Il vous suffit de placer une seconde mise près de la mise initiale sur la case et le croupier vous donnera une dernière carte.
+- Doubler la mise : Vous doublez votre mise et vous recevez une carte, une seulement.
+		    Il vous suffit de placer une seconde mise près de la mise initiale sur la case et le croupier vous donnera une dernière carte.
 
-Partager / Faire un split / splitter : Si les deux premières cartes du joueur forment une paire, il a la possibilité de les séparer en deux mains distinctes, de miser le même montant sur chacune d’elles et de les jouer séparément ;
-				       C’est ce qu’on appelle « faire un split » (partager les cartes). Tout 21 obtenu après un split ne compte pas comme « blackjack », puisqu’il n’a pas été réalisé avec les deux cartes d’origine.
-				       Le gain se limite donc au montant égal de la mise engagée.
+- Partager / Faire un split / splitter : Si les deux premières cartes du joueur forment une paire, il a la possibilité de les séparer en deux mains distinctes, de miser le même 					  montant sur chacune d’elles et de les jouer séparément ;C’est ce qu’on appelle « faire un split » (partager les cartes).
+					 Tout 21 obtenu après un split ne compte pas comme « blackjack », puisqu’il n’a pas été réalisé avec les deux cartes d’origine.
+				       	 Le gain se limite donc au montant égal de la mise engagée.
 
-Assurance : Si la carte apparente du croupier est un As, le joueur peut « prendre une assurance » pour se prémunir d’un blackjack, c’est à dire effectuer une mise n’excédant pas la moitié de sa mise initiale.
-	    Si la seconde carte du croupier est un 10 ou une figure, le joueur gagne 2 contre 1. Si la seconde carte (ou carte cachée) du croupier n’a pas pour valeur 10, la mise d’assurance est perdue.
+- Assurance : Si la carte apparente du croupier est un As, le joueur peut « prendre une assurance » pour se prémunir d’un blackjack, c’est à dire effectuer une mise n’excédant 	      pas la moitié de sa mise initiale. Si la seconde carte du croupier est un 10 ou une figure, le joueur gagne 2 contre 1.
+	      Si la seconde carte (ou carte cachée) du croupier n’a pas pour valeur 10, la mise d’assurance est perdue.
 
 
 
