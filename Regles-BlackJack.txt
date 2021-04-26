@@ -16,7 +16,7 @@ Il y a blackjack lorsque le joueur reçoit 2 cartes totalisant une valeur de 21 
 Si un joueur possède un blackjack, le croupier paiera le joueur immédiatement à 1,5 fois la mise initiale avant de continuer avec les autres joueurs de la table à condition que le croupier n’ait pas lui-même un as comme première carte.
 Dans ce cas une assurance sera proposée à chaque joueur.
 Le joueur ayant un blackjack remportera une fois et demi sa mise initiale si le croupier n’a pas de blackjack après distribution de sa seconde carte.
-En cas de balckjack chez le joueur et chez le croupier, la main sera déclarée nulle et aucune somme ne sera échangée.
+En cas de blackjack chez le joueur et chez le croupier, la main sera déclarée nulle et aucune somme ne sera échangée.
 
 
 
