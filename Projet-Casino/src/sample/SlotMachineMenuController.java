@@ -8,9 +8,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import javax.imageio.IIOException;
@@ -56,6 +58,8 @@ public class SlotMachineMenuController {
     public Label labelToken;
     @FXML
     private Label labelError;
+    @FXML
+    private Label labelUserPseudo;
 
     @FXML
     private Button startingGameButton;
@@ -70,6 +74,9 @@ public class SlotMachineMenuController {
     @FXML
     private Button returnMainMenu;
 
+    @FXML
+    private TextArea textRule;
+
     private ImageView currentPictureSlot1;
     private ImageView currentPictureSlot2;
     private ImageView currentPictureSlot3;
@@ -79,11 +86,30 @@ public class SlotMachineMenuController {
     }
 
     public void initialize(){
+        textRule.setEditable(false);
+        setRule();
+
         currentPictureSlot1 = pictureSlot1Seven;
         currentPictureSlot2 = pictureSlot2Seven;
         currentPictureSlot3 = pictureSlot3Seven;
 
+        labelUserPseudo.setText("Joueur : "+user.getPseudo());
         labelToken.setText("Vos jetons : "+user.getNumberOfToken());
+    }
+
+    private void setRule(){
+        textRule.setText("Règle des machines à sous. \n\n" +
+                         "Il y a 3 bobines contenant 10 symboles au totale, chaque bobine contient : \n" +
+                         "    - 1 sept \n" +
+                         "    - 2 cerises \n" +
+                         "    - 3 citrons \n" +
+                         "    - 4 pastèques \n\n" +
+                         "Le but est d'aligner 3 symbole identiques, sachant que le gain sera différent pour chaque combinaison. \n\n" +
+                         "Les différents gains sont les suivants : \n" +
+                         "    - 3 septs --> 160 \n" +
+                         "    - 3 cerises --> 25 \n" +
+                         "    - 3 citrons --> 8 \n" +
+                         "    - 3 pastèques --> 4 \n");
     }
 
     /** Change l'image d'un des trois slots **/
@@ -231,5 +257,13 @@ public class SlotMachineMenuController {
         } catch (IIOException var7) {
             var7.printStackTrace();
         }
+    }
+
+    public void showRule(MouseEvent mouseEvent) {
+        textRule.setVisible(true);
+    }
+
+    public void hideRule(MouseEvent mouseEvent) {
+        textRule.setVisible(false);
     }
 }
