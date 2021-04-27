@@ -9,6 +9,13 @@ public class BlackJack {
     private Bet bet;
     private ActionBlackJack action;
 
+    public BlackJack(List<UserHand> listOfUserHand, Cards_Package cards_package, Bet bet, ActionBlackJack action) {
+        ListOfUserHand = listOfUserHand;
+        this.cards_package = cards_package;
+        this.bet = bet;
+        this.action = action;
+    }
+
     public int countValueOfUserHand(UserHand userHand){
         int s=0;
         for (int i=0; i<userHand.getHand().size(); i++){
@@ -36,6 +43,10 @@ public class BlackJack {
             ListOfUserHand.get(i).addCard(cards_package);
             ListOfUserHand.get(i).addCard(cards_package);
         }
+    }
+
+    public void UserBet(int valueOfBet){
+        
     }
 
 
