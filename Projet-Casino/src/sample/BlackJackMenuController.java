@@ -212,24 +212,73 @@ public class BlackJackMenuController {
                 e.printStackTrace();
             }
         }
-        test();
+        startingGame();
     }
 
-    public void chooseCard()
+    public ImageView chooseCard(int cardNumber, String cardRank){
+        switch (cardNumber){
+            case 1 :
+                return getCardByRank(cardRank, pictureAsOfHeart, pictureAsOfSpade, pictureAsOfClover, pictureAsOfSquare);
+            case 2 :
+                return getCardByRank(cardRank, pictureTwoOfHeart, pictureTwoOfSpade, pictureTwoOfClover, pictureTwoOfSquare);
+            case 3 :
+                return getCardByRank(cardRank, pictureThreeOfHeart, pictureThreeOfSpade, pictureThreeOfClover, pictureThreeOfSquare);
+            case 4 :
+                return getCardByRank(cardRank, pictureFourOfHeart, pictureFourOfSpade, pictureFourOfClover, pictureFourOfSquare);
+            case 5 :
+                return getCardByRank(cardRank, pictureFiveOfHeart, pictureFiveOfSpade, pictureFiveOfClover, pictureFiveOfSquare);
+            case 6 :
+                return getCardByRank(cardRank, pictureSixOfHeart, pictureSixOfSpade, pictureSixOfClover, pictureSixOfSquare);
+            case 7 :
+                return getCardByRank(cardRank, pictureSevenOfHeart, pictureSevenOfSpade, pictureSevenOfClover, pictureSevenOfSquare);
+            case 8 :
+                return getCardByRank(cardRank, pictureEightOfHeart, pictureEightOfSpade, pictureEightOfClover, pictureEightOfSquare);
+            case 9 :
+                return getCardByRank(cardRank, pictureNineOfHeart, pictureNineOfSpade, pictureNineOfClover, pictureNineOfSquare);
+            case 10 :
+                return getCardByRank(cardRank, pictureTenOfHeart, pictureTenOfSpade, pictureTenOfClover, pictureTenOfSquare);
+            case 11 :
+                return getCardByRank(cardRank, pictureJackOfHeart, pictureJackOfSpade, pictureJackOfClover, pictureJackOfSquare);
+            case 12 :
+                return getCardByRank(cardRank, pictureQueenOfHeart, pictureQueenOfSpade, pictureQueenOfClover, pictureQueenOfSquare);
+            case 13 :
+                return getCardByRank(cardRank, pictureKingOfHeart, pictureKingOfSpade, pictureKingOfClover, pictureKingOfSquare);
+            default: return null;
+        }
+    }
 
-    public void test(){
+    private ImageView getCardByRank(String cardRank, ImageView cardOfHeart, ImageView cardOfSpade, ImageView cardOfClover, ImageView cardOfSquare) {
+        switch (cardRank){
+            case "HEART" :
+                return cardOfHeart;
+            case "SPADE" :
+                return cardOfSpade;
+            case "CLOVER" :
+                return cardOfClover;
+            case "SQUARE" :
+                return cardOfSquare;
+            default: return null;
+        }
+    }
+
+    private void setUpCard(ImageView card, int positionX, int positionY){
+        card.setLayoutX(positionX);
+        card.setLayoutY(positionY);
+        card.setVisible(true);
+    }
+
+    public void startingGame(){
         int positionXUser = ORIGIN_X;
         int positionXCroupier = ORIGIN_X;
 
-        pictureAsOfHeart.setLayoutX(positionXUser);
-        pictureAsOfHeart.setLayoutY(ORIGIN_Y_USER);
-        pictureAsOfHeart.setVisible(true);
+        // test de fonctionnement
+        setUpCard(chooseCard(1,"HEART"),positionXUser,ORIGIN_Y_USER);
         positionXUser += 50;
 
+        setUpCard(chooseCard(8,"SPADE"),positionXCroupier,ORIGIN_Y_CROUPIER);
+        positionXCroupier += 50;
 
-
-        pictureAsOfClover.setLayoutX(positionXUser);
-        pictureAsOfClover.setLayoutY(ORIGIN_Y_USER);
-        pictureAsOfClover.setVisible(true);
+        setUpCard(chooseCard(12,"HEART"),positionXUser,ORIGIN_Y_USER);
+        positionXUser += 50;
     }
 }
