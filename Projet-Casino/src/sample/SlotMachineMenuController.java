@@ -19,6 +19,8 @@ import javax.imageio.IIOException;
 
 public class SlotMachineMenuController {
 
+    private Stage stage;
+
     private User user;
     private Bet bet = new Bet();
 
@@ -81,8 +83,9 @@ public class SlotMachineMenuController {
     private ImageView currentPictureSlot2;
     private ImageView currentPictureSlot3;
 
-    public SlotMachineMenuController(User user){
+    public SlotMachineMenuController(User user,Stage stage){
         this.user = user;
+        this.stage = stage;
     }
 
     public void initialize(){
@@ -247,7 +250,7 @@ public class SlotMachineMenuController {
     public void clickReturnMainMenu(ActionEvent actionEvent) throws Exception{
         try {
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("mainMenuSample.fxml"));
-            loader.setControllerFactory(c -> new MainMenuController(user));
+            loader.setControllerFactory(c -> new MainMenuController(user,stage));
             Parent root = loader.load();
             Scene scene = new Scene(root, 800, 800);
             //scene.getStylesheets().add(getClass().getResource("mainMenu.css").toExternalForm());

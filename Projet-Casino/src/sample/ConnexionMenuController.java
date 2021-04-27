@@ -13,6 +13,8 @@ import javafx.stage.Stage;
 import javax.imageio.IIOException;
 
 public class ConnexionMenuController {
+    private Stage stage;
+
     public Label welcomeTitleLabel;
     public Label emailLabel;
     public TextField textEmail;
@@ -30,7 +32,8 @@ public class ConnexionMenuController {
     public Button loginButtonReturn;
     public Label errorLabel;
 
-    public ConnexionMenuController() {
+    public ConnexionMenuController(Stage stage) {
+        this.stage = stage;
     }
 
     public void clickConnexion(ActionEvent actionEvent) throws Exception {
@@ -114,8 +117,8 @@ public class ConnexionMenuController {
         user.addToken(100); // pour tester
 
         try {
-            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("mainMenuSample.fxml"));//"connexionMenuSample.fxml"
-            loader.setControllerFactory(c -> new MainMenuController(user));
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("mainMenuSample.fxml"));
+            loader.setControllerFactory(c -> new MainMenuController(user,stage));
             Parent root = loader.load();
             Scene scene = new Scene(root, 800.0D, 800.0D);
             scene.getStylesheets().add(getClass().getResource("mainMenu.css").toExternalForm());

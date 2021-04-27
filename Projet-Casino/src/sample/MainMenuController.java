@@ -15,6 +15,7 @@ import javax.imageio.IIOException;
 public class MainMenuController {
 
     private User user;
+    private Stage stage;
 
     @FXML
     private Button logoutButton;
@@ -34,8 +35,9 @@ public class MainMenuController {
     @FXML
     private MenuItem slotMachineMenu;
 
-    public MainMenuController(User user) {
+    public MainMenuController(User user,Stage stage) {
         this.user = user;
+        this.stage = stage;
     }
 
     public void clickLogout(ActionEvent actionEvent) throws Exception {
@@ -69,14 +71,25 @@ public class MainMenuController {
     public void clickBoutique(ActionEvent actionEvent) {
     }
 
-    public void clickBlackJack(ActionEvent actionEvent) {
-
+    public void clickBlackJack(ActionEvent actionEvent) throws Exception{
+        try {
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("blackJackMenuSample.fxml"));
+            loader.setControllerFactory(c -> new BlackJackMenuController(user,stage));
+            Parent root = loader.load();
+            Scene scene = new Scene(root, 800, 800);
+            //scene.getStylesheets().add(getClass().getResource("mainMenu.css").toExternalForm());
+            Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+            window.setScene(scene);
+            window.show();
+        } catch (IIOException var7) {
+            var7.printStackTrace();
+        }
     }
 
     public void clickSlotMachine(ActionEvent actionEvent) throws Exception{
         try {
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("slotMachineMenuSample.fxml"));
-            loader.setControllerFactory(c -> new SlotMachineMenuController(user));
+            loader.setControllerFactory(c -> new SlotMachineMenuController(user,stage));
             Parent root = loader.load();
             Scene scene = new Scene(root, 800, 800);
             //scene.getStylesheets().add(getClass().getResource("mainMenu.css").toExternalForm());

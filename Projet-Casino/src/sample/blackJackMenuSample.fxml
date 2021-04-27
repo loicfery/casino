@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="800.0" style="-fx-background-color: green;" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BlackJackMenuController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#158000" height="174.0" layoutX="327.0" layoutY="600.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" width="147.0" />
+
+      <Label fx:id="labelToken" layoutX="14.0" layoutY="703.0" prefHeight="55.0" prefWidth="163.0" text="Jetons : 0">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+
+      <Label fx:id="labelPseudo" layoutX="14.0" layoutY="632.0" prefHeight="55.0" prefWidth="308.0" text="Joueur : ">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+
+      <Label fx:id="labelBetUser" alignment="CENTER" contentDisplay="CENTER" layoutX="341.0" layoutY="613.0" prefHeight="148.0" prefWidth="119.0" text="0" textAlignment="JUSTIFY">
+         <font>
+            <Font size="50.0" />
+         </font>
+      </Label>
+
+      <TextField fx:id="textBetUser" alignment="CENTER" layoutX="513.0" layoutY="613.0" prefHeight="79.0" prefWidth="252.0" promptText="Votre mise">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </TextField>
+
+      <Button fx:id="buttonValidBet" onAction="#clickValidBet" alignment="CENTER" layoutX="558.0" layoutY="703.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="163.0" text="Miser">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Button>
+
+      <Circle fill="#737679" layoutX="775.0" layoutY="24.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
+      <Label alignment="CENTER" layoutX="757.0" layoutY="2.0" prefHeight="45.0" prefWidth="36.0" text="?">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+
+      <Label fx:id="labelError" alignment="CENTER" layoutX="150.0" layoutY="560.0" prefHeight="36.0" prefWidth="500.0" text="Erreur :" textFill="RED" visible="false">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+
+      <!-- cartes as -->
+      <ImageView fx:id="pictureAsOfHeart" fitHeight="142.0" fitWidth="109.0" layoutX="186.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/asOfheart.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureAsOfClover" fitHeight="142.0" fitWidth="109.0" layoutX="400.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/asofClover.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureAsOfSpade" fitHeight="142.0" fitWidth="109.0" layoutX="292.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/asOfSpade.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureAsOfSquare" fitHeight="142.0" fitWidth="109.0" layoutX="509.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/asOfSquare.jpg" />
+         </image>
+      </ImageView>
+
+      <!-- cartes deux -->
+      <ImageView fx:id="pictureTwoOfHeart" fitHeight="142.0" fitWidth="109.0" layoutX="186.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/twoOfheart.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureTwoOfClover" fitHeight="142.0" fitWidth="109.0" layoutX="292.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/twoOfClover.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureTwoOfSpade" fitHeight="142.0" fitWidth="109.0" layoutX="400.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/twoOfSpade.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureTwoOfSquare" fitHeight="142.0" fitWidth="109.0" layoutX="509.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/twoOfSquare.jpg" />
+         </image>
+      </ImageView>
+
+      <!-- cartes trois -->
+      <ImageView fx:id="pictureThreeOfHeart" fitHeight="142.0" fitWidth="109.0" layoutX="186.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/threeOfHeart.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureThreeOfSpade" fitHeight="142.0" fitWidth="109.0" layoutX="292.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/threeOfSpade.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureThreeOfClover" fitHeight="142.0" fitWidth="109.0" layoutX="400.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/threeOfClover.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureThreeOfSquare" fitHeight="142.0" fitWidth="109.0" layoutX="509.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/threeOfSquare.jpg" />
+         </image>
+      </ImageView>
+
+      <!-- carte quatre -->
+      <ImageView fx:id="pictureFourOfHeart" fitHeight="142.0" fitWidth="109.0" layoutX="186.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/fourOfheart.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureFourOfSpade" fitHeight="142.0" fitWidth="109.0" layoutX="292.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/fourOfSpade.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureFourOfClover" fitHeight="142.0" fitWidth="109.0" layoutX="400.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/fourOfClover.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureFourOfSquare" fitHeight="142.0" fitWidth="109.0" layoutX="509.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/fourOfSquare.jpg" />
+         </image>
+      </ImageView>
+
+      <!-- cartes cinq -->
+      <ImageView fx:id="pictureFiveOfHeart" fitHeight="142.0" fitWidth="109.0" layoutX="186.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/fiveOfHeart.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureFiveOfSpade" fitHeight="142.0" fitWidth="109.0" layoutX="292.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/fiveOfSpade.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureFiveOfClover" fitHeight="142.0" fitWidth="109.0" layoutX="400.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/fiveOfClover.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureFiveOfSquare" fitHeight="142.0" fitWidth="109.0" layoutX="509.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/fiveOfSquare.jpg" />
+         </image>
+      </ImageView>
+
+      <!-- carte six -->
+      <ImageView fx:id="pictureSixOfHeart" fitHeight="142.0" fitWidth="109.0" layoutX="186.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/sixOfheart.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureSixOfSpade" fitHeight="142.0" fitWidth="109.0" layoutX="292.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/sixOfSpade.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureSixOfClover" fitHeight="142.0" fitWidth="109.0" layoutX="400.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/sixOfClover.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureSixOfSquare" fitHeight="142.0" fitWidth="109.0" layoutX="509.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/sixOfSquare.jpg" />
+         </image>
+      </ImageView>
+
+      <!-- cartes sept -->
+      <ImageView fx:id="pictureSevenOfHeart" fitHeight="142.0" fitWidth="109.0" layoutX="186.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/sevenOfHeart.jpg" />
+         </image>
+      </ImageView>
+      <ImageView  fx:id="pictureSevenOfSpade" fitHeight="142.0" fitWidth="109.0" layoutX="292.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/sevenOfSpade.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureSevenOfClover" fitHeight="142.0" fitWidth="109.0" layoutX="400.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/sevenofClover.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureSevenOfSquare" fitHeight="142.0" fitWidth="109.0" layoutX="509.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/sevenOfSquare.jpg" />
+         </image>
+      </ImageView>
+
+      <!-- cartes huit -->
+      <ImageView fx:id="pictureEightOfHeart" fitHeight="142.0" fitWidth="109.0" layoutX="186.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/eightOfHeart.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureEightOfSpade" fitHeight="142.0" fitWidth="109.0" layoutX="292.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/eightOfSpade.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureEightOfClover" fitHeight="142.0" fitWidth="109.0" layoutX="400.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/eightOfClover.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureEightOfSquare" fitHeight="142.0" fitWidth="109.0" layoutX="509.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/eightOfSquare.jpg" />
+         </image>
+      </ImageView>
+
+      <!-- cartes neuf -->
+      <ImageView fx:id="pictureNineOfHeart" fitHeight="142.0" fitWidth="109.0" layoutX="186.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/nineOfheart.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureNineOfSpade" fitHeight="142.0" fitWidth="109.0" layoutX="292.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/nineOfSpade.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureNineOfClover" fitHeight="142.0" fitWidth="109.0" layoutX="400.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/nineOfClover.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureNineOfSquare" fitHeight="142.0" fitWidth="109.0" layoutX="509.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/nineOfSquare.jpg" />
+         </image>
+      </ImageView>
+
+      <!-- cartes dix -->
+      <ImageView fx:id="pictureTenOfHeart" fitHeight="142.0" fitWidth="109.0" layoutX="186.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/tenOfHeart.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureTenOfSpade" fitHeight="142.0" fitWidth="109.0" layoutX="292.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/tenOfSpade.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureTenOfClover" fitHeight="142.0" fitWidth="109.0" layoutX="400.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/tenOfClover.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureTenOfSquare" fitHeight="142.0" fitWidth="109.0" layoutX="509.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/tenOfSquare.jpg" />
+         </image>
+      </ImageView>
+
+      <!-- cartes valet -->
+      <ImageView fx:id="pictureJackOfHeart" fitHeight="142.0" fitWidth="109.0" layoutX="186.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/jackOfHeart.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureJackOfSpade" fitHeight="142.0" fitWidth="109.0" layoutX="292.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/jackOfSpade.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureJackOfClover" fitHeight="142.0" fitWidth="109.0" layoutX="400.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/jackOfClover.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureJackOfSquare" fitHeight="142.0" fitWidth="109.0" layoutX="509.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/jackOfSquare.jpg" />
+         </image>
+      </ImageView>
+
+      <!-- cartes reine -->
+      <ImageView fx:id="pictureQueenOfHeart" fitHeight="142.0" fitWidth="109.0" layoutX="186.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/queenOfHeart.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureQueenOfSpade" fitHeight="142.0" fitWidth="109.0" layoutX="292.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/queenOfSpade.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureQueenOfClover" fitHeight="142.0" fitWidth="109.0" layoutX="400.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/queenOfClover.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureQueenOfSquare" fitHeight="142.0" fitWidth="109.0" layoutX="509.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/queenOfSquare.jpg" />
+         </image>
+      </ImageView>
+
+      <!-- cartes roi -->
+      <ImageView fx:id="pictureKingOfHeart" fitHeight="142.0" fitWidth="109.0" layoutX="186.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/kingOfHeart.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureKingOfSpade" fitHeight="142.0" fitWidth="109.0" layoutX="292.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/kingOfSpade.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureKingOfClover" fitHeight="142.0" fitWidth="109.0" layoutX="400.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/kingOfClover.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pictureKingOfSquare" fitHeight="142.0" fitWidth="109.0" layoutX="509.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@image/cartes/kingOfSquare.jpg" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

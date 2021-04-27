@@ -3,11 +3,11 @@ package games;
 import java.util.List;
 
 public class UserHand  {
-    private List<Cards> hand;
+    private List<Card> hand;
     private User user;
 
 
-    public UserHand(List<Cards> hand, User user) {
+    public UserHand(List<Card> hand, User user) {
         this.hand = hand;
         this.user = user;
     }
@@ -16,11 +16,11 @@ public class UserHand  {
         hand.add(cards_package.drawCard());
     }
 
-    public void removeCard(Cards cards){
-        hand.remove(cards);
+    public void removeCard(Card card){
+        hand.remove(card);
     }
 
-    public List<Cards> getHand() {
+    public List<Card> getHand() {
         return hand;
     }
 
