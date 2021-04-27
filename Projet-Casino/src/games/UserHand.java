@@ -23,4 +23,8 @@ public class UserHand  {
     public List<Cards> getHand() {
         return hand;
     }
+
+    public User getUser() {
+        return user;
+    }
 }

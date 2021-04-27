@@ -46,7 +46,10 @@ public class BlackJack {
     }
 
     public void UserBet(int valueOfBet){
-        
+        for(int i = 0; i< ListOfUserHand.size(); i++){
+            bet.addUser(ListOfUserHand.get(i).getUser());
+            bet.addBet(valueOfBet, ListOfUserHand.get(i).getUser());
+        }
     }
 
 
