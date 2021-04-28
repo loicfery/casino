@@ -41,7 +41,6 @@ public class Table {
     }
 
     static public void populateTable() {
-        Cell cell00 = new Cell(37, Color.Green);
         Cell cell0 = new Cell(0, Color.Green);
         Cell cell1 = new Cell(1, Color.Red);
         Cell cell2 = new Cell(2, Color.Black);
@@ -80,7 +79,6 @@ public class Table {
         Cell cell35 = new Cell(35, Color.Black);
         Cell cell36 = new Cell(36, Color.Red);
 
-        Table.table[0][0] = cell00;
         Table.table[0][1] = cell0;
         Table.table[1][0] = cell1;
         Table.table[1][1] = cell2;
