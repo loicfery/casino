@@ -10,35 +10,38 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.shape.Polyline?>
+<?import javafx.scene.shape.Line?>
 <AnchorPane prefHeight="800.0" prefWidth="800.0" style="-fx-background-color: green;" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BlackJackMenuController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#158000" height="174.0" layoutX="327.0" layoutY="600.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" width="147.0" />
+      <Rectangle fx:id="zoneBetUser1" arcHeight="5.0" arcWidth="5.0" fill="#158000" height="174.0" layoutX="327.0" layoutY="600.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" width="147.0" />
+      <Rectangle fx:id="zoneBetUser2" arcHeight="5.0" arcWidth="5.0" fill="#158000" height="174.0" layoutX="550.0" layoutY="600.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" width="147.0" visible="false"/>
 
-      <Label fx:id="labelToken" layoutX="14.0" layoutY="703.0" prefHeight="55.0" prefWidth="163.0" text="Jetons : 0">
+      <Label fx:id="labelProfit" layoutX="14.0" layoutY="710.0" prefHeight="55.0" prefWidth="163.0" text="Gain : 0">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
 
-      <Label fx:id="labelPseudo" layoutX="14.0" layoutY="632.0" prefHeight="55.0" prefWidth="308.0" text="Joueur : ">
+      <Label fx:id="labelToken" layoutX="14.0" layoutY="660.0" prefHeight="55.0" prefWidth="163.0" text="Jetons : 0">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
 
-      <Label fx:id="labelBetUser" alignment="CENTER" contentDisplay="CENTER" layoutX="341.0" layoutY="613.0" prefHeight="148.0" prefWidth="119.0" text="0" textAlignment="JUSTIFY">
+      <Label fx:id="labelPseudo" layoutX="14.0" layoutY="600.0" prefHeight="55.0" prefWidth="308.0" text="Joueur : ">
          <font>
-            <Font size="50.0" />
+            <Font size="30.0" />
          </font>
       </Label>
 
-      <TextField fx:id="textBetUser" alignment="CENTER" layoutX="513.0" layoutY="613.0" prefHeight="79.0" prefWidth="252.0" promptText="Votre mise">
+      <TextField fx:id="textBetUser" alignment="CENTER" layoutX="280.0" layoutY="380.0" prefHeight="79.0" prefWidth="252.0" promptText="Votre mise">
          <font>
             <Font size="30.0" />
          </font>
       </TextField>
 
-      <Button fx:id="buttonValidBet" onAction="#clickValidBet" alignment="CENTER" layoutX="558.0" layoutY="703.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="163.0" text="Miser">
+      <Button fx:id="buttonValidBet" onAction="#clickValidBet" alignment="CENTER" layoutX="320.0" layoutY="500.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="163.0" text="Miser">
          <font>
             <Font size="30.0" />
          </font>
@@ -51,9 +54,51 @@
          </font>
       </Label>
 
-      <Label fx:id="labelError" alignment="CENTER" layoutX="150.0" layoutY="560.0" prefHeight="36.0" prefWidth="500.0" text="Erreur :" textFill="RED" visible="false">
+      <Label fx:id="labelError" alignment="CENTER" layoutX="150.0" layoutY="460.0" prefHeight="36.0" prefWidth="500.0" text="Erreur :" textFill="RED" visible="false">
          <font>
             <Font size="20.0" />
+         </font>
+      </Label>
+
+      <!-- premier jeton -->
+      <Circle fx:id="token1Circle1" fill="#1d2fd7" layoutX="400.0" layoutY="685.0" radius="41.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" visible="false"/>
+      <Circle fx:id="token1Circle2" fill="#1d2fd7" layoutX="400.0" layoutY="675.0" radius="41.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" visible="false"/>
+      <Rectangle fx:id="token1Rectangle1" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="22.0" layoutX="393.0" layoutY="637.0" stroke="WHITE" strokeType="INSIDE" width="15.0" visible="false"/>
+      <Rectangle fx:id="token1Rectangle2" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="37.0" layoutX="393.0" layoutY="687.0" stroke="WHITE" strokeType="INSIDE" width="15.0" visible="false"/>
+      <Rectangle fx:id="token1Rectangle3" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="14.0" layoutX="362.0" layoutY="670.0" stroke="WHITE" strokeType="INSIDE" width="25.0" visible="false"/>
+      <Rectangle fx:id="token1Rectangle4" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="14.0" layoutX="415.0" layoutY="669.0" stroke="WHITE" strokeType="INSIDE" width="24.0" visible="false"/>
+      <Polyline fx:id="token1Polyline1" fill="WHITE" layoutX="379.0" layoutY="699.0" points="-13.75, 4.25, 0.75, -12.0, 10.5, -3.0, -4.75, 17.0" stroke="WHITE" strokeType="INSIDE" visible="false"/>
+      <Polyline fx:id="token1Polyline2" fill="WHITE" layoutX="424.0" layoutY="702.0" points="4.75, 8.5, -12.0, -8.75, -4.75, -17.75, 12.5, -2.75" stroke="WHITE" strokeType="INSIDE" visible="false"/>
+      <Polyline fx:id="token1Polyline3" fill="WHITE" layoutX="371.0" layoutY="639.0" points="7.5, 4.25, 19.25, 15.75, 9.5, 27.75, -2.0, 13.25" stroke="WHITE" strokeType="INSIDE" visible="false"/>
+      <Polyline fx:id="token1Polyline4" fill="WHITE" layoutX="425.0" layoutY="651.0" points="-13.75, 4.25, -2.0, -7.0, 6.75, 2.5, -4.75, 17.0" stroke="WHITE" strokeType="INSIDE" visible="false"/>
+      <Circle fx:id="token1Circle3" fill="DODGERBLUE" layoutX="400.0" layoutY="675.0" radius="23.0" stroke="BLACK" strokeType="INSIDE" visible="false"/>
+      <Line fx:id="token1Line1" endX="-85.25" fill="BLACK" layoutX="493.0" layoutY="714.0" startX="-100.0" strokeWidth="2.0" visible="false"/>
+      <Line fx:id="token1Line2" endX="-87.75" endY="9.5" layoutX="468.0" layoutY="700.0" startX="-99.5" startY="-1.0" strokeWidth="2.0" visible="false"/>
+      <Line fx:id="token1Line3" endX="-88.0" endY="-5.75" fill="BLACK" layoutX="522.0" layoutY="702.0" startX="-97.5" startY="5.25" strokeWidth="2.0" visible="false"/>
+      <Label fx:id="token1LabelBetUser" alignment="CENTER" contentDisplay="CENTER" layoutX="341.0" layoutY="600.0" prefHeight="148.0" prefWidth="119.0" text="0" textAlignment="JUSTIFY" visible="false">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+
+      <!-- deuxième jeton -->
+      <Circle fx:id="token2Circle1" fill="#1d2fd7" layoutX="625.0" layoutY="685.0" radius="41.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" visible="false"/>
+      <Circle fx:id="token2Circle2" fill="#1d2fd7" layoutX="625.0" layoutY="675.0" radius="41.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" visible="false"/>
+      <Rectangle fx:id="token2Rectangle1" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="22.0" layoutX="618.0" layoutY="637.0" stroke="WHITE" strokeType="INSIDE" width="15.0" visible="false"/>
+      <Rectangle fx:id="token2Rectangle2" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="37.0" layoutX="618.0" layoutY="687.0" stroke="WHITE" strokeType="INSIDE" width="15.0" visible="false"/>
+      <Rectangle fx:id="token2Rectangle3" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="14.0" layoutX="587.0" layoutY="670.0" stroke="WHITE" strokeType="INSIDE" width="25.0" visible="false"/>
+      <Rectangle fx:id="token2Rectangle4" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="14.0" layoutX="640.0" layoutY="669.0" stroke="WHITE" strokeType="INSIDE" width="24.0" visible="false"/>
+      <Polyline fx:id="token2Polyline1" fill="WHITE" layoutX="604.0" layoutY="699.0" points="-13.75, 4.25, 0.75, -12.0, 10.5, -3.0, -4.75, 17.0" stroke="WHITE" strokeType="INSIDE" visible="false"/>
+      <Polyline fx:id="token2Polyline2" fill="WHITE" layoutX="649.0" layoutY="702.0" points="4.75, 8.5, -12.0, -8.75, -4.75, -17.75, 12.5, -2.75" stroke="WHITE" strokeType="INSIDE" visible="false"/>
+      <Polyline fx:id="token2Polyline3" fill="WHITE" layoutX="596.0" layoutY="639.0" points="7.5, 4.25, 19.25, 15.75, 9.5, 27.75, -2.0, 13.25" stroke="WHITE" strokeType="INSIDE" visible="false"/>
+      <Polyline fx:id="token2Polyline4" fill="WHITE" layoutX="652.0" layoutY="651.0" points="-13.75, 4.25, -2.0, -7.0, 6.75, 2.5, -4.75, 17.0" stroke="WHITE" strokeType="INSIDE" visible="false"/>
+      <Circle fx:id="token2Circle3" fill="DODGERBLUE" layoutX="625.0" layoutY="675.0" radius="23.0" stroke="BLACK" strokeType="INSIDE" visible="false"/>
+      <Line fx:id="token2Line1" endX="-85.25" fill="BLACK" layoutX="718.0" layoutY="714.0" startX="-100.0" strokeWidth="2.0" visible="false"/>
+      <Line fx:id="token2Line2" endX="-87.75" endY="9.5" layoutX="693.0" layoutY="700.0" startX="-99.5" startY="-1.0" strokeWidth="2.0" visible="false"/>
+      <Line fx:id="token2Line3" endX="-88.0" endY="-5.75" fill="BLACK" layoutX="747.0" layoutY="702.0" startX="-97.5" startY="5.25" strokeWidth="2.0" visible="false"/>
+      <Label fx:id="token2LabelBetUser" alignment="CENTER" contentDisplay="CENTER" layoutX="566.0" layoutY="600.0" prefHeight="148.0" prefWidth="119.0" text="0" textAlignment="JUSTIFY" visible="false">
+         <font>
+            <Font size="30.0" />
          </font>
       </Label>
 
@@ -342,5 +387,11 @@
             <Image url="@image/cartes/kingOfSquare.jpg" />
          </image>
       </ImageView>
+
+      <Button fx:id="buttonActionSplit" onAction="#actionSplit" alignment="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="163.0" text="Split">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

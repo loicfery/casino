@@ -8,35 +8,115 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Polyline;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class BlackJackMenuController {
 
     private final int BET_MIN = 2;
     private final int BET_MAX = 100;
-    private final int ORIGIN_X = 300;
+    private final int ORIGIN_X_Croupier = 300;
+    private final int ORIGIN_X_FIRST_HAND = 300;
+    private final int ORIGIN_X_SECOND_HAND = 523;
     private final int ORIGIN_Y_USER = 400;
     private final int ORIGIN_Y_CROUPIER = 100;
 
     private Stage stage;
     private User user;
     private BlackJack blackJack;
+    private List<ImageView> listCardUserFirstHand = new ArrayList<>();
+    private List<ImageView> listCardUserSecondHand = new ArrayList<>();
+
+    @FXML
+    private Rectangle zoneBetUser1;
+    @FXML
+    private Rectangle zoneBetUser2;
 
     @FXML
     private Label labelToken;
     @FXML
     private Label labelPseudo;
     @FXML
-    private Label labelBetUser;
-    @FXML
     private Label labelError;
+    @FXML
+    private Label labelProfit;
 
     @FXML
     private TextField textBetUser;
 
     @FXML
     private Button buttonValidBet;
+
+    /** premier Jeton **/
+    @FXML
+    private Circle token1Circle1;
+    @FXML
+    private Circle token1Circle2;
+    @FXML
+    private Rectangle token1Rectangle1;
+    @FXML
+    private Rectangle token1Rectangle2;
+    @FXML
+    private Rectangle token1Rectangle3;
+    @FXML
+    private Rectangle token1Rectangle4;
+    @FXML
+    private Polyline token1Polyline1;
+    @FXML
+    private Polyline token1Polyline2;
+    @FXML
+    private Polyline token1Polyline3;
+    @FXML
+    private Polyline token1Polyline4;
+    @FXML
+    private Circle token1Circle3;
+    @FXML
+    private Line token1Line1;
+    @FXML
+    private Line token1Line2;
+    @FXML
+    private Line token1Line3;
+    @FXML
+    private Label token1LabelBetUser;
+
+    /** deuxième jeton **/
+    @FXML
+    private Circle token2Circle1;
+    @FXML
+    private Circle token2Circle2;
+    @FXML
+    private Rectangle token2Rectangle1;
+    @FXML
+    private Rectangle token2Rectangle2;
+    @FXML
+    private Rectangle token2Rectangle3;
+    @FXML
+    private Rectangle token2Rectangle4;
+    @FXML
+    private Polyline token2Polyline1;
+    @FXML
+    private Polyline token2Polyline2;
+    @FXML
+    private Polyline token2Polyline3;
+    @FXML
+    private Polyline token2Polyline4;
+    @FXML
+    private Circle token2Circle3;
+    @FXML
+    private Line token2Line1;
+    @FXML
+    private Line token2Line2;
+    @FXML
+    private Line token2Line3;
+    @FXML
+    private Label token2LabelBetUser;
 
     /** Toutes les cartes ***********************************************************/
 
@@ -204,15 +284,17 @@ public class BlackJackMenuController {
                         buttonValidBet.setVisible(false);
 
                         user.removeToken(valueOfBet);
-                        labelBetUser.setText("1"); // recup valeur de bet
+                        token1LabelBetUser.setText("1"); // recup valeur de bet
                         labelToken.setText("Jetons : " + user.getNumberOfToken());
+
+                        setToken1Visible(true);
+                        startingGame();
                     }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        startingGame();
     }
 
     public ImageView chooseCard(int cardNumber, String cardRank){
@@ -268,17 +350,68 @@ public class BlackJackMenuController {
     }
 
     public void startingGame(){
-        int positionXUser = ORIGIN_X;
-        int positionXCroupier = ORIGIN_X;
+        int positionXUser = ORIGIN_X_FIRST_HAND;
+        int positionXCroupier = ORIGIN_X_Croupier;
+        ImageView card;
 
         // test de fonctionnement
-        setUpCard(chooseCard(1,"HEART"),positionXUser,ORIGIN_Y_USER);
+        card = chooseCard(1,"HEART");
+        listCardUserFirstHand.add(card);
+        setUpCard(card,positionXUser,ORIGIN_Y_USER);
         positionXUser += 50;
 
         setUpCard(chooseCard(8,"SPADE"),positionXCroupier,ORIGIN_Y_CROUPIER);
         positionXCroupier += 50;
 
-        setUpCard(chooseCard(12,"HEART"),positionXUser,ORIGIN_Y_USER);
+        card = chooseCard(12,"HEART");
+        listCardUserFirstHand.add(card);
+        setUpCard(card,positionXUser,ORIGIN_Y_USER);
         positionXUser += 50;
+    }
+
+    public void setToken1Visible(boolean tokenState){
+        token1Circle1.setVisible(tokenState);
+        token1Circle2.setVisible(tokenState);
+        token1Rectangle1.setVisible(tokenState);
+        token1Rectangle2.setVisible(tokenState);
+        token1Rectangle3.setVisible(tokenState);
+        token1Rectangle4.setVisible(tokenState);
+        token1Polyline1.setVisible(tokenState);
+        token1Polyline2.setVisible(tokenState);
+        token1Polyline3.setVisible(tokenState);
+        token1Polyline4.setVisible(tokenState);
+        token1Circle3.setVisible(tokenState);
+        token1Line1.setVisible(tokenState);
+        token1Line2.setVisible(tokenState);
+        token1Line3.setVisible(tokenState);
+        token1LabelBetUser.setVisible(true);
+    }
+
+    public void setToken2Visible(boolean tokenState){
+        token2Circle1.setVisible(tokenState);
+        token2Circle2.setVisible(tokenState);
+        token2Rectangle1.setVisible(tokenState);
+        token2Rectangle2.setVisible(tokenState);
+        token2Rectangle3.setVisible(tokenState);
+        token2Rectangle4.setVisible(tokenState);
+        token2Polyline1.setVisible(tokenState);
+        token2Polyline2.setVisible(tokenState);
+        token2Polyline3.setVisible(tokenState);
+        token2Polyline4.setVisible(tokenState);
+        token2Circle3.setVisible(tokenState);
+        token2Line1.setVisible(tokenState);
+        token2Line2.setVisible(tokenState);
+        token2Line3.setVisible(tokenState);
+        token2LabelBetUser.setVisible(true);
+    }
+
+    public void actionSplit(ActionEvent actionEvent){
+        zoneBetUser2.setVisible(true);
+        setToken2Visible(true);
+        token2LabelBetUser.setText(token1LabelBetUser.getText());
+
+        listCardUserSecondHand.add(listCardUserFirstHand.get(listCardUserFirstHand.size() - 1));
+        listCardUserFirstHand.remove(listCardUserFirstHand.size() - 1);
+        setUpCard(listCardUserSecondHand.get(0),ORIGIN_X_SECOND_HAND,ORIGIN_Y_USER);
     }
 }
