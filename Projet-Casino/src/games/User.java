@@ -5,21 +5,21 @@ public class User {
     private String pseudo;
     private String email;
     private int numberOfToken;
-    private int numberOfMoney;
+    private int amountOfMoney;
     private String rank;
 
     public User(String pseudo, String email, String rank) {
         this.pseudo = pseudo;
         this.email = email;
         this.rank = rank;
-        this.numberOfMoney = 0;
+        this.amountOfMoney = 0;
         this.numberOfToken = 0;
     }
 
     public String getPseudo(){return pseudo;}
     public String getEmail(){return email;}
     public int getNumberOfToken(){return numberOfToken;}
-    public int getNumberOfMoney(){return numberOfMoney;}
+    public int getAmountOfMoney(){return amountOfMoney;}
     public String getRank(){return rank;}
 
 
@@ -41,7 +41,7 @@ public class User {
 
     /** Ajoute une somme d'argent **/
     public void addMoney(int numberOfMoney){
-        this.numberOfMoney = this.numberOfMoney + numberOfMoney;
+        this.amountOfMoney = this.amountOfMoney + numberOfMoney;
     }
 
     /** Enlève des jetons **/
@@ -51,7 +51,7 @@ public class User {
 
     /** Enlève une somme d'argent **/
     public void removeMoney(int numberOfMoney){
-        this.numberOfMoney = this.numberOfMoney - numberOfMoney;
+        this.amountOfMoney = this.amountOfMoney - numberOfMoney;
     }
 }
 

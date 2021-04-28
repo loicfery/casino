@@ -43,7 +43,7 @@ public class InformationMenuController {
         labelEmail.setText("Email : "+user.getEmail());
         labelPseudo.setText("Pseudo : "+user.getPseudo());
         labelToken.setText("Jetons : "+user.getNumberOfToken());
-        labelMoney.setText("Argent : "+user.getNumberOfMoney());
+        labelMoney.setText("Argent : "+user.getAmountOfMoney());
     }
 
     public void clickLogout(ActionEvent actionEvent) throws Exception {
