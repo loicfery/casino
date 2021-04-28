@@ -247,7 +247,7 @@ public class SlotMachineMenuController {
         }
     }
 
-    public void clickReturnMainMenu(ActionEvent actionEvent) throws Exception{
+    public void returnMainMenu(ActionEvent actionEvent) throws Exception{
         try {
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("mainMenuSample.fxml"));
             loader.setControllerFactory(c -> new MainMenuController(user,stage));

@@ -131,7 +131,7 @@
       </font>
    </Button>
 
-   <Button fx:id="returnMainMenu" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#clickReturnMainMenu" prefHeight="57.0" prefWidth="123.0" text="Quitter">
+   <Button fx:id="returnMainMenu" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnMainMenu" prefHeight="57.0" prefWidth="123.0" text="Quitter">
       <font>
          <Font size="20.0" />
       </font>

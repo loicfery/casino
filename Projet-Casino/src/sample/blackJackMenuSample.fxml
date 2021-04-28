@@ -9,11 +9,11 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
-
 <?import javafx.scene.shape.Polyline?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.control.TextArea?>
+
 <AnchorPane prefHeight="800.0" prefWidth="800.0" style="-fx-background-color: green;" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BlackJackMenuController">
-   <children>
       <Rectangle fx:id="zoneBetUser1" arcHeight="5.0" arcWidth="5.0" fill="#158000" height="174.0" layoutX="327.0" layoutY="600.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" width="147.0" />
       <Rectangle fx:id="zoneBetUser2" arcHeight="5.0" arcWidth="5.0" fill="#158000" height="174.0" layoutX="550.0" layoutY="600.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" width="147.0" visible="false"/>
 
@@ -46,13 +46,6 @@
             <Font size="30.0" />
          </font>
       </Button>
-
-      <Circle fill="#737679" layoutX="775.0" layoutY="24.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
-      <Label alignment="CENTER" layoutX="757.0" layoutY="2.0" prefHeight="45.0" prefWidth="36.0" text="?">
-         <font>
-            <Font size="30.0" />
-         </font>
-      </Label>
 
       <Label fx:id="labelError" alignment="CENTER" layoutX="150.0" layoutY="460.0" prefHeight="36.0" prefWidth="500.0" text="Erreur :" textFill="RED" visible="false">
          <font>
@@ -388,10 +381,23 @@
          </image>
       </ImageView>
 
-      <Button fx:id="buttonActionSplit" onAction="#actionSplit" alignment="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="163.0" text="Split">
+      <Button fx:id="buttonActionSplit" onAction="#actionSplit" alignment="CENTER" layoutX="300.0" layoutY="10.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="163.0" text="Split" visible="false">
          <font>
             <Font size="30.0" />
          </font>
       </Button>
-   </children>
+
+      <Button fx:id="returnMainMenu" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnMainMenu" prefHeight="57.0" prefWidth="123.0" text="Quitter">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+
+   <Circle fill="#a1a1a1" layoutX="770.0" layoutY="30.0" radius="16.0" stroke="BLACK" strokeType="INSIDE" />
+   <TextArea fx:id="textRule" layoutX="50.0" layoutY="46.0" prefHeight="600.0" prefWidth="700.0" visible="false" />
+   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="754.0" layoutY="15.0" onMouseEntered="#showRule" onMouseExited="#hideRule" prefHeight="23.0" prefWidth="32.0" text="?" textAlignment="JUSTIFY">
+      <font>
+         <Font size="20.0" />
+      </font>
+   </Label>
 </AnchorPane>

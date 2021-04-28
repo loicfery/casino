@@ -1,6 +1,8 @@
 package sample;
 
+import games.User;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -13,13 +15,36 @@ import javax.imageio.IIOException;
 
 public class InformationMenuController {
 
-    public Button returnButton;
-    public Label pseudo;
-    public Label email;
-    public Label token;
-    public Label money;
-    public Button historicalPurchaseButton;
-    public Button historicalPartyButton;
+    private User user;
+    private Stage stage;
+
+    @FXML
+    private Label labelPseudo;
+    @FXML
+    private Label labelEmail;
+    @FXML
+    private Label labelToken;
+    @FXML
+    private Label labelMoney;
+
+    @FXML
+    private Button buttonHistoricalPurchase;
+    @FXML
+    private Button buttonHistoricalParty;
+    @FXML
+    private Button returnButton;
+
+    public InformationMenuController(User user, Stage stage){
+        this.user = user;
+        this.stage = stage;
+    }
+
+    public void initialize(){
+        labelEmail.setText("Email : "+user.getEmail());
+        labelPseudo.setText("Pseudo : "+user.getPseudo());
+        labelToken.setText("Jetons : "+user.getNumberOfToken());
+        labelMoney.setText("Argent : "+user.getNumberOfMoney());
+    }
 
     public void clickLogout(ActionEvent actionEvent) throws Exception {
         try {
@@ -37,13 +62,15 @@ public class InformationMenuController {
     public void clickReturn(ActionEvent actionEvent) throws Exception{
         try {
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("mainMenuSample.fxml"));
+            loader.setControllerFactory(c -> new MainMenuController(user,stage));
             Parent root = loader.load();
-            Scene scene = new Scene(root, 500.0D, 500.0D);
+            Scene scene = new Scene(root, 800, 800);
+            //scene.getStylesheets().add(getClass().getResource("mainMenu.css").toExternalForm());
             Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
             window.setScene(scene);
             window.show();
-        } catch (IIOException var6) {
-            var6.printStackTrace();
+        } catch (IIOException var7) {
+            var7.printStackTrace();
         }
     }
 

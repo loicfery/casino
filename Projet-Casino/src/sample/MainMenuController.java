@@ -57,6 +57,7 @@ public class MainMenuController {
     public void clickInformation(ActionEvent actionEvent) throws Exception{
         try {
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("informationMenuSample.fxml"));
+            loader.setControllerFactory(c -> new InformationMenuController(user,stage));
             Parent root = loader.load();
             Scene scene = new Scene(root, 500, 500);
             //scene.getStylesheets().add(getClass().getResource("mainMenu.css").toExternalForm());

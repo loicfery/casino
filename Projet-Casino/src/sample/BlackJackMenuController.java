@@ -3,17 +3,27 @@ package sample;
 import games.BlackJack;
 import games.User;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-
+import javafx.scene.control.TextArea;
+import javax.imageio.IIOException;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +45,9 @@ public class BlackJackMenuController {
     private List<ImageView> listCardUserSecondHand = new ArrayList<>();
 
     @FXML
+    private TextArea textRule;
+
+    @FXML
     private Rectangle zoneBetUser1;
     @FXML
     private Rectangle zoneBetUser2;
@@ -53,6 +66,8 @@ public class BlackJackMenuController {
 
     @FXML
     private Button buttonValidBet;
+    @FXML
+    private Button returnMainMenu;
 
     /** premier Jeton **/
     @FXML
@@ -258,6 +273,7 @@ public class BlackJackMenuController {
     public void initialize(){
         labelToken.setText("Jetons : "+user.getNumberOfToken());
         labelPseudo.setText("Joueur : "+user.getPseudo());
+        setRule();
     }
 
     public void clickValidBet(ActionEvent actionEvent) {
@@ -413,5 +429,46 @@ public class BlackJackMenuController {
         listCardUserSecondHand.add(listCardUserFirstHand.get(listCardUserFirstHand.size() - 1));
         listCardUserFirstHand.remove(listCardUserFirstHand.size() - 1);
         setUpCard(listCardUserSecondHand.get(0),ORIGIN_X_SECOND_HAND,ORIGIN_Y_USER);
+    }
+
+    public void returnMainMenu(ActionEvent actionEvent) throws Exception{
+        try {
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("mainMenuSample.fxml"));
+            loader.setControllerFactory(c -> new MainMenuController(user,stage));
+            Parent root = loader.load();
+            Scene scene = new Scene(root, 800, 800);
+            //scene.getStylesheets().add(getClass().getResource("mainMenu.css").toExternalForm());
+            Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+            window.setScene(scene);
+            window.show();
+        } catch (IIOException var7) {
+            var7.printStackTrace();
+        }
+    }
+
+    private void setRule(){
+        try {
+            File fileRuleBlackJack = new File("Regles-BlackJack.txt");
+            BufferedReader buffer = new BufferedReader(new FileReader(fileRuleBlackJack));
+            String line;
+
+            while((line = buffer.readLine()) != null){
+                textRule.setText(textRule.getText()+ "\n" + line);
+            }
+        }
+        catch (FileNotFoundException fileNotFoundException){
+            System.out.println("fichier règle non trouvé");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void showRule(MouseEvent mouseEvent) {
+        textRule.setVisible(true);
+    }
+
+    public void hideRule(MouseEvent mouseEvent) {
+        textRule.setVisible(false);
     }
 }

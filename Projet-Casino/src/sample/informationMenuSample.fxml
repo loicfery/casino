@@ -44,25 +44,25 @@
             <BorderPane.margin>
                 <Insets left="15" right="15" top="70" bottom="50"/>
             </BorderPane.margin>
-            <Label fx:id="pseudo" text="Pseudonyme :">
+            <Label fx:id="labelPseudo" text="Pseudonyme :">
                 <font>
                     <Font size="25"/>
                 </font>
             </Label>
 
-            <Label fx:id="email" text="Email :">
+            <Label fx:id="labelEmail" text="Email :">
                 <font>
                     <Font size="25"/>
                 </font>
             </Label>
 
-            <Label fx:id="token" text="Nombre de jetons :">
+            <Label fx:id="labelToken" text="Nombre de jetons :">
                 <font>
                     <Font size="25"/>
                 </font>
             </Label>
 
-            <Label fx:id="money" text="Somme d'argent :">
+            <Label fx:id="labelMoney" text="Somme d'argent :">
                 <font>
                     <Font size="25"/>
                 </font>
@@ -80,7 +80,7 @@
                 10
             </spacing>
 
-            <Button text="Historique d'achats" onAction="#clickHistoricalPurchase" fx:id="historicalPurchaseButton">
+            <Button text="Historique d'achats" onAction="#clickHistoricalPurchase" fx:id="buttonHistoricalPurchase">
                 <padding>
                     <Insets top="5" left="10" right="5" bottom="5"/>
                 </padding>
@@ -89,7 +89,7 @@
                 </font>
             </Button>
 
-            <Button text="Historique de parties" onAction="#clickHistoricalParty" fx:id="historicalPartyButton">
+            <Button text="Historique de parties" onAction="#clickHistoricalParty" fx:id="buttonHistoricalParty">
                 <padding>
                     <Insets top="5" left="10" right="5" bottom="5"/>
                 </padding>
