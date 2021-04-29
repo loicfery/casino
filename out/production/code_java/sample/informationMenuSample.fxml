@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="sample.InformationMenuController">
+
+    <top>
+        <HBox>
+            <BorderPane.margin>
+                <Insets left="15" right="15" top="15"/>
+            </BorderPane.margin>
+            <spacing>
+                10
+            </spacing>
+
+            <Button text="Déconnexion" onAction="#clickLogout" fx:id="logoutButton" minHeight="30">
+                <padding>
+                    <Insets top="5" left="10" right="5" bottom="5"/>
+                </padding>
+                <font>
+                    <Font size="10"/>
+                </font>
+            </Button>
+
+            <Button text="Retour" onAction="#clickReturn" fx:id="returnButton" minHeight="30">
+                <padding>
+                    <Insets top="5" left="10" right="5" bottom="5"/>
+                </padding>
+                <font>
+                    <Font size="10"/>
+                </font>
+            </Button>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox>
+            <BorderPane.margin>
+                <Insets left="15" right="15" top="70" bottom="50"/>
+            </BorderPane.margin>
+            <Label fx:id="labelPseudo" text="Pseudonyme :">
+                <font>
+                    <Font size="25"/>
+                </font>
+            </Label>
+
+            <Label fx:id="labelEmail" text="Email :">
+                <font>
+                    <Font size="25"/>
+                </font>
+            </Label>
+
+            <Label fx:id="labelToken" text="Nombre de jetons :">
+                <font>
+                    <Font size="25"/>
+                </font>
+            </Label>
+
+            <Label fx:id="labelMoney" text="Somme d'argent :">
+                <font>
+                    <Font size="25"/>
+                </font>
+            </Label>
+        </VBox>
+    </left>
+
+    <bottom>
+        <HBox>
+            <BorderPane.margin>
+                <Insets left="15" right="15" top="15" bottom="15"/>
+            </BorderPane.margin>
+
+            <spacing>
+                10
+            </spacing>
+
+            <Button text="Historique d'achats" onAction="#clickHistoricalPurchase" fx:id="buttonHistoricalPurchase">
+                <padding>
+                    <Insets top="5" left="10" right="5" bottom="5"/>
+                </padding>
+                <font>
+                    <Font size="10"/>
+                </font>
+            </Button>
+
+            <Button text="Historique de parties" onAction="#clickHistoricalParty" fx:id="buttonHistoricalParty">
+                <padding>
+                    <Insets top="5" left="10" right="5" bottom="5"/>
+                </padding>
+                <font>
+                    <Font size="10"/>
+                </font>
+            </Button>
+        </HBox>
+    </bottom>
+
+</BorderPane>
