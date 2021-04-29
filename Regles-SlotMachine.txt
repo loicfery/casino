@@ -1,0 +1,20 @@
+Règle des machines à sous : 
+
+Il y a 3 bobines contenant 10 symboles au totale, chaque bobine contient :
+
+- 1 sept
+
+- 2 cerises
+
+- 3 citrons
+
+- 4 pastèques
+
+Le but est d'aligner 3 symbole identiques, sachant que le gain sera différent pour chaque combinaison.
+Les différents gains sont les suivants :
+
+- 3 sept --> 160 jetons
+- 3 cerises --> 25 jetons
+- 3 citrons --> 8 jetons
+- 3 pastèques --> 4 jetons
+- 3 symbole différents --> 0 jetons
