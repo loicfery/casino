@@ -56,4 +56,15 @@ public class Bet {
     public void setValueOfBetTotal(int valueOfBetTotal) {
         this.valueOfBetTotal = valueOfBetTotal;
     }
+
+    public int getBet(User user){
+        for(int i=0; i<listOfUser.size();i++){
+            if(user == listOfUser.get(i)){
+                return listOfBetUser.get(i);
+            }
+        }
+        return 0;
+    }
+
+
 }

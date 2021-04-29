@@ -8,6 +8,7 @@ public class BlackJack {
     private Cards_Package cards_package;
     private Bet bet;
     private ActionBlackJack action;
+    private int insurance;
 
     public BlackJack(List<UserHand> listOfUserHand, ActionBlackJack action) {
         ListOfUserHand = listOfUserHand;
@@ -45,12 +46,36 @@ public class BlackJack {
         }
     }
 
-    public void UserBet(int valueOfBet){
-        for(int i = 0; i< ListOfUserHand.size(); i++){
-            bet.addUser(ListOfUserHand.get(i).getUser());
-            bet.addBet(valueOfBet, ListOfUserHand.get(i).getUser());
+    public void UserBet(int valueOfBet, User user){
+        for(int i = 1; i< ListOfUserHand.size(); i++){
+            if(user == ListOfUserHand.get(i).getUser()) {
+                bet.addBet(valueOfBet, ListOfUserHand.get(i).getUser());
+            }
         }
     }
 
+    public void addUserBet(User user){
+        bet.addUser(user);
+    }
 
+    public void game(){
+        int j = 1;
+        User croupier = new User("croupier", "null", "null");
+        UserHand croupierhand = new UserHand(null, croupier);
+        ListOfUserHand.set(0, croupierhand);
+        action = new ActionCroupier();
+        action.action(ListOfUserHand.get(0), cards_package, bet, croupier);
+        giveCardToUser();
+        while(j!=0){
+
+        }
+
+
+
+
+    }
+
+    public void setaction(ActionBlackJack action){
+        this.action = action;
+    }
 }
