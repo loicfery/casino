@@ -16,6 +16,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import javax.imageio.IIOException;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 
 public class SlotMachineMenuController {
 
@@ -101,18 +105,21 @@ public class SlotMachineMenuController {
     }
 
     private void setRule(){
-        textRule.setText("Règle des machines à sous. \n\n" +
-                         "Il y a 3 bobines contenant 10 symboles au totale, chaque bobine contient : \n" +
-                         "    - 1 sept \n" +
-                         "    - 2 cerises \n" +
-                         "    - 3 citrons \n" +
-                         "    - 4 pastèques \n\n" +
-                         "Le but est d'aligner 3 symbole identiques, sachant que le gain sera différent pour chaque combinaison. \n\n" +
-                         "Les différents gains sont les suivants : \n" +
-                         "    - 3 septs --> 160 \n" +
-                         "    - 3 cerises --> 25 \n" +
-                         "    - 3 citrons --> 8 \n" +
-                         "    - 3 pastèques --> 4 \n");
+        try {
+            File fileRuleSlotMachine = new File("Regles-SlotMachine.txt");
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileRuleSlotMachine));
+            String line;
+
+            while((line = bufferedReader.readLine()) != null){
+                textRule.setText(textRule.getText()+"\n"+line);
+            }
+        }
+        catch (FileNotFoundException fileNotFoundException){
+            System.out.println("Fichier règle non trouvé");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     /** Change l'image d'un des trois slots **/

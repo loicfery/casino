@@ -15,7 +15,7 @@ public class Main extends Application {
         User user = new User("Loic","loic-fery@orange.fr","ADMIN"); //pour tester
         user.addToken(50); // pour tester
 
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("blackJackMenuSample.fxml"));//"connexionMenuSample.fxml"
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("blackJackMenuSample.fxml")); //"connexionMenuSample.fxml"
         loader.setControllerFactory(c -> new BlackJackMenuController(user,primaryStage));
         Parent root = loader.load();
         //Parent root = FXMLLoader.load(this.getClass().getResource("slotMachineMenuSample.fxml"));  // Autre façon de faire //

@@ -1,4 +1,4 @@
-Règle du Black Jack
+Règle du Black Jack :
 
 Le but du joueur est de se rapprocher de 21 sans le dépasser.
 Pour cela il va recevoir 2 cartes qui donneront une valeur, le joueur aura alors plusieurs choix :
