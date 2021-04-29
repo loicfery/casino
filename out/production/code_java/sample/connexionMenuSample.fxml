@@ -1,0 +1,87 @@
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<AnchorPane fx:controller="sample.ConnexionMenuController" xmlns:fx="http://javafx.com/fxml">
+
+    <!-- Menu de connexion -->
+    <Label fx:id="welcomeTitleLabel" text="Bienvenue au casino" AnchorPane.bottomAnchor=" 400" AnchorPane.leftAnchor="120" AnchorPane.rightAnchor="50" AnchorPane.topAnchor="50">
+        <font>
+            <Font size="30"/>
+        </font>
+    </Label>
+
+    <Label fx:id="emailLabel" text="Email" AnchorPane.bottomAnchor="250" AnchorPane.leftAnchor="80" AnchorPane.rightAnchor="200">
+        <font>
+            <Font size="25"/>
+        </font>
+    </Label>
+
+    <Label fx:id="passwordLabel" text="Mot de passe" AnchorPane.bottomAnchor="250" AnchorPane.rightAnchor="50">
+        <font>
+            <Font size="25"/>
+        </font>
+    </Label>
+
+    <TextField fx:id="textEmail" AnchorPane.bottomAnchor="200" AnchorPane.leftAnchor="50"/>
+    <TextField fx:id="textPassword" AnchorPane.bottomAnchor="200" AnchorPane.rightAnchor="50"/>
+
+    <Button text="Connection" onAction="#clickConnexion" fx:id="loginButton" minHeight="50" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.bottomAnchor="70.0">
+        <font>
+            <Font size="25"/>
+        </font>
+    </Button>
+
+    <Button text="Nouveau Compte" onAction="#clickNewAccount" minHeight="50" fx:id="newAccountButton" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+        <font>
+            <Font size="25"/>
+        </font>
+    </Button>
+
+    <!-- Nouveau compte -->
+    <Label fx:id="newEmailLabel" text="Email :" AnchorPane.bottomAnchor="300" AnchorPane.rightAnchor="300" visible="false">
+        <font>
+            <Font size="25"/>
+        </font>
+    </Label>
+
+    <Label fx:id="newPasswordlabel" text="Mot de passe :" AnchorPane.bottomAnchor="250" AnchorPane.rightAnchor="300" visible="false">
+        <font>
+            <Font size="25"/>
+        </font>
+    </Label>
+
+    <Label fx:id="newPseudoLabel" text="Pseudonyme :" AnchorPane.bottomAnchor="200" AnchorPane.rightAnchor="300" visible="false">
+        <font>
+            <Font size="25"/>
+        </font>
+    </Label>
+
+    <TextField fx:id="textNewEmail" AnchorPane.bottomAnchor="300" AnchorPane.leftAnchor="250" maxWidth="200" minWidth="200" visible="false"/>
+    <TextField fx:id="textNewPassword" AnchorPane.bottomAnchor="250" AnchorPane.leftAnchor="250" maxWidth="200" minWidth="200" visible="false"/>
+    <TextField fx:id="textNewPseudo" AnchorPane.bottomAnchor="200" AnchorPane.leftAnchor="250" maxWidth="200" minWidth="200" visible="false"/>
+
+    <Button text="S'inscrire" onAction="#clickInscription" minHeight="50" fx:id="inscriptionButton" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" visible="false">
+        <font>
+            <Font size="25"/>
+        </font>
+    </Button>
+
+    <Button text="Se Connecter" onAction="#clickConnexionReturn" fx:id="loginButtonReturn" minHeight="50" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.bottomAnchor="70.0" visible="false">
+        <font>
+            <Font size="25"/>
+        </font>
+    </Button>
+
+    <Label fx:id="errorLabel" text="" AnchorPane.bottomAnchor="140" AnchorPane.rightAnchor="75" textFill="red" visible="false">
+        <font>
+            <Font size="15"/>
+        </font>
+    </Label>
+
+</AnchorPane>
