@@ -9,11 +9,11 @@ public class BlackJack {
     private Bet bet;
     private ActionBlackJack action;
 
-    public BlackJack(List<UserHand> listOfUserHand, Cards_Package cards_package, Bet bet, ActionBlackJack action) {
+    public BlackJack(List<UserHand> listOfUserHand, ActionBlackJack action) {
         ListOfUserHand = listOfUserHand;
-        this.cards_package = cards_package;
-        this.bet = bet;
         this.action = action;
+        cards_package = new Cards_Package();
+        bet = new Bet();
     }
 
     public int countValueOfUserHand(UserHand userHand){

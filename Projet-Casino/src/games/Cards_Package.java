@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Cards_Package {
-    private ArrayList<Card> card_package;
-    private int numberOfCard;
+    private ArrayList<Card> listOfCard;
+    private final int numberOfCard = 52;
 
-    public Cards_Package(ArrayList<Card> card_package, int numberOfCard) {
-        this.card_package = card_package;
-        this.numberOfCard = numberOfCard;
+    public Cards_Package() {
+        this.listOfCard = new ArrayList<>();
     }
 
     public void initCardPackage(ArrayList<Card> card_package){ //Créer un packet trié (à supprimer si inutile)
@@ -32,12 +31,18 @@ public class Cards_Package {
     }
 
     public void removeCard(int cardPosition){
-        card_package.remove(cardPosition);
+        listOfCard.remove(cardPosition);
     }
 
     public Card drawCard(){
-        Card c = card_package.get(0);
+        Card c = listOfCard.get(0);
         removeCard(0);
         return c;
     }
+
+    public ArrayList<Card> getCard_package() {
+        return listOfCard;
+    }
+
+
 }
