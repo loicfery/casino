@@ -2,7 +2,9 @@ package sample;
 
 import games.User;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
@@ -33,7 +35,9 @@ public class RouletteMenuController {
     private List<Circle> listOfCircleToken = new ArrayList<>();
     private List<Label> listLabelToken = new ArrayList<>();
     private List<Case> listOfCase = new ArrayList<>();
+    private List<InformationTokenBet> listOfTokenUsed = new ArrayList<>();
     private int tokenUsed = 0;
+    private int indexTokenRemove = -1;
 
      @FXML
      private Label labelProfit;
@@ -117,6 +121,15 @@ public class RouletteMenuController {
     @FXML
     private Label labelToken15;
 
+    @FXML
+    private Label labelInformationBetToken;
+    @FXML
+    private Button buttonModifyBetToken;
+    @FXML
+    private Button buttonValidBetToken;
+    @FXML
+    private TextField textBetToken;
+
 
     public RouletteMenuController(User user, Stage stage){
         this.user = user;
@@ -185,23 +198,23 @@ public class RouletteMenuController {
         listOfCase.add(new Case(689,174,740,222,"red","19"));
         listOfCase.add(new Case(689,126,740,174,"black","20"));
         listOfCase.add(new Case(689,78,740,126,"red","21"));
-        listOfCase.add(new Case(740,78,791,126,"black","22"));
+        listOfCase.add(new Case(740,174,791,222,"black","22"));
         listOfCase.add(new Case(740,126,791,174,"red","23"));
         listOfCase.add(new Case(740,78,791,126,"black","24"));
-        listOfCase.add(new Case(791,78,842,126,"red","25"));
+        listOfCase.add(new Case(791,174,842,222,"red","25"));
         listOfCase.add(new Case(791,126,842,174,"black","26"));
         listOfCase.add(new Case(791,78,842,126,"red","27"));
-        listOfCase.add(new Case(842,78,893,126,"black","28"));
-        listOfCase.add(new Case(842,78,893,126,"black","29"));
+        listOfCase.add(new Case(842,174,893,222,"black","28"));
+        listOfCase.add(new Case(842,126,893,174,"black","29"));
         listOfCase.add(new Case(842,78,893,126,"red","30"));
-        listOfCase.add(new Case(893,78,944,126,"black","31"));
-        listOfCase.add(new Case(893,78,944,126,"red","32"));
+        listOfCase.add(new Case(893,174,944,222,"black","31"));
+        listOfCase.add(new Case(893,126,944,174,"red","32"));
         listOfCase.add(new Case(893,78,944,126,"black","33"));
-        listOfCase.add(new Case(944,78,995,126,"red","34"));
-        listOfCase.add(new Case(944,78,995,126,"black","35"));
+        listOfCase.add(new Case(944,174,995,222,"red","34"));
+        listOfCase.add(new Case(944,126,995,174,"black","35"));
         listOfCase.add(new Case(944,78,995,126,"red","36"));
-        listOfCase.add(new Case(995,78,1046,126,"green","1st"));
-        listOfCase.add(new Case(995,78,1046,126,"green","2nd"));
+        listOfCase.add(new Case(995,174,1046,222,"green","1st"));
+        listOfCase.add(new Case(995,126,1046,174,"green","2nd"));
         listOfCase.add(new Case(995,78,1046,126,"green","3rd"));
         listOfCase.add(new Case(383,222,587,270,"green","1-12"));
         listOfCase.add(new Case(383,270,483,318,"green","1-18"));
@@ -221,16 +234,34 @@ public class RouletteMenuController {
         if(mouseEvent.getButton() == MouseButton.PRIMARY){ //clique gauche
             if(isPositionMouseGood(mousePositionX,mousePositionY)){
                 setPositionToken(mousePositionX,mousePositionY,listOfCircleToken.get(tokenUsed),listLabelToken.get(tokenUsed),true);
-                betToken(mousePositionX,mousePositionY);
+                betToken(mousePositionX,mousePositionY,listOfCircleToken.get(tokenUsed),listLabelToken.get(tokenUsed));
             }
         }
         if(mouseEvent.getButton() == MouseButton.SECONDARY){ //clique droit
-            // menu modification token
-            if(tokenUsed > 0) {
-                tokenUsed--;
+            indexTokenRemove = getTokenToRemove(mousePositionX,mousePositionY);
+            System.out.println(indexTokenRemove+" indexTokenused = "+tokenUsed);
+            if(indexTokenRemove > -1) {
+                if (tokenUsed > 0) {
+                    tokenUsed--;
+                }
+
+                labelInformationBetToken.setText("Mise d'un jeton  \n\n"+ "Cases sélectionnées : \n" + listOfTokenUsed.get(indexTokenRemove).getCases() + "\n Combinaison : "); //recup combinaison avec methode
+                textBetToken.setText(listOfTokenUsed.get(indexTokenRemove).getValueOfBet());
+                textBetToken.setVisible(true);
+                labelInformationBetToken.setVisible(true);
+                buttonModifyBetToken.setVisible(true);
             }
-            setPositionToken(ORIGIN_X_TOKEN,ORIGIN_Y_TOKEN,listOfCircleToken.get(tokenUsed),listLabelToken.get(tokenUsed),false);
         }
+    }
+
+    public int getTokenToRemove(int positionX, int positionY){
+        for(int index = 0; index < tokenUsed; index ++){
+            int distance = (int) Math.sqrt(Math.pow(Math.abs((positionX - listOfTokenUsed.get(index).getCircleToken().getLayoutX())) ,2) + Math.pow(Math.abs((positionY - listOfTokenUsed.get(index).getCircleToken().getLayoutY())) ,2));
+            if(distance <= listOfTokenUsed.get(index).getCircleToken().getRadius()){
+                return index;
+            }
+        }
+        return -1;
     }
 
     public void setPositionToken(int positionX, int positionY, Circle circleToken, Label labelToken, boolean state){
@@ -256,13 +287,21 @@ public class RouletteMenuController {
         }
     }
 
-    public void betToken(int positionXToken, int positionYToken){
+    public void betToken(int positionXToken, int positionYToken, Circle circleToken, Label LabelToken){
+        List<Case> listOfCaseToken = new ArrayList<>();
         for(int index = 0; index < listOfCase.size(); index ++){
             if(tokenInTheCase(listOfCase.get(index),positionXToken,positionYToken)){
-                //recup case avec token dessus
+                listOfCaseToken.add(listOfCase.get(index));
             }
         }
-        tokenUsed++;
+        InformationTokenBet informationTokenBet = new InformationTokenBet(circleToken,labelToken1,listOfCaseToken);
+        listOfTokenUsed.add(informationTokenBet);
+        labelInformationBetToken.setText("Mise d'un jeton  \n\n"+ "Cases sélectionner : \n" + informationTokenBet.getCases() + "\n Combinaison : "); //recup combinaison avec methode
+
+        labelInformationBetToken.setVisible(true);
+        buttonValidBetToken.setVisible(true);
+        textBetToken.setText("");
+        textBetToken.setVisible(true);
     }
 
     public boolean tokenInTheCase(Case cases, int positionXToken, int positionYToken){
@@ -287,5 +326,45 @@ public class RouletteMenuController {
                 }
             }
         }
+    }
+
+    public void modifyBetToken(MouseEvent mouseEvent) {
+        try {
+            int valueOfBet = Integer.parseInt(textBetToken.getText());
+            if(valueOfBet <= 0){
+                setPositionToken(ORIGIN_X_TOKEN, ORIGIN_Y_TOKEN, listOfCircleToken.get(indexTokenRemove), listLabelToken.get(indexTokenRemove), false);
+            }
+            else{
+                listOfTokenUsed.get(listOfTokenUsed.size() - 1).setValueOfBet(textBetToken.getText());
+                tokenUsed++;
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        buttonModifyBetToken.setVisible(false);
+        textBetToken.setVisible(false);
+        labelInformationBetToken.setVisible(false);
+    }
+
+    public void validBetToken(MouseEvent mouseEvent){
+        try {
+            int valueOfBet = Integer.parseInt(textBetToken.getText());
+            if(valueOfBet <= 0){
+                setPositionToken(ORIGIN_X_TOKEN, ORIGIN_Y_TOKEN, listOfCircleToken.get(tokenUsed), listLabelToken.get(tokenUsed), false);
+            }
+            else{
+                listOfTokenUsed.get(listOfTokenUsed.size() - 1).setValueOfBet(textBetToken.getText());
+                tokenUsed++;
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        buttonValidBetToken.setVisible(false);
+        textBetToken.setVisible(false);
+        labelInformationBetToken.setVisible(false);
     }
 }
