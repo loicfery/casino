@@ -37,7 +37,7 @@ public class RouletteMenuController {
     private List<Case> listOfCase = new ArrayList<>();
     private List<InformationTokenBet> listOfTokenUsed = new ArrayList<>();
     private int tokenUsed = 0;
-    private int indexTokenRemove = -1;
+    private int indexTokenRemove = 0;
 
      @FXML
      private Label labelProfit;
@@ -239,7 +239,7 @@ public class RouletteMenuController {
         }
         if(mouseEvent.getButton() == MouseButton.SECONDARY){ //clique droit
             indexTokenRemove = getTokenToRemove(mousePositionX,mousePositionY);
-            System.out.println(indexTokenRemove+" indexTokenused = "+tokenUsed);
+            //System.out.println("indexTokenRemove = "+indexTokenRemove+" ,tokenUsed = "+tokenUsed);
             if(indexTokenRemove > -1) {
                 if (tokenUsed > 0) {
                     tokenUsed--;
@@ -257,6 +257,7 @@ public class RouletteMenuController {
     public int getTokenToRemove(int positionX, int positionY){
         for(int index = 0; index < tokenUsed; index ++){
             int distance = (int) Math.sqrt(Math.pow(Math.abs((positionX - listOfTokenUsed.get(index).getCircleToken().getLayoutX())) ,2) + Math.pow(Math.abs((positionY - listOfTokenUsed.get(index).getCircleToken().getLayoutY())) ,2));
+            //System.out.println("distance = "+distance+" --> x = "+positionX+", y = "+positionY+" | x = "+listOfTokenUsed.get(index).getCircleToken().getLayoutX()+", y = "+listOfTokenUsed.get(index).getCircleToken().getLayoutY()+", radius = "+listOfTokenUsed.get(index).getCircleToken().getRadius());
             if(distance <= listOfTokenUsed.get(index).getCircleToken().getRadius()){
                 return index;
             }
@@ -287,15 +288,25 @@ public class RouletteMenuController {
         }
     }
 
-    public void betToken(int positionXToken, int positionYToken, Circle circleToken, Label LabelToken){
+    public void betToken(int positionXToken, int positionYToken, Circle circleToken, Label labelToken){
         List<Case> listOfCaseToken = new ArrayList<>();
         for(int index = 0; index < listOfCase.size(); index ++){
             if(tokenInTheCase(listOfCase.get(index),positionXToken,positionYToken)){
                 listOfCaseToken.add(listOfCase.get(index));
             }
         }
-        InformationTokenBet informationTokenBet = new InformationTokenBet(circleToken,labelToken1,listOfCaseToken);
-        listOfTokenUsed.add(informationTokenBet);
+        InformationTokenBet informationTokenBet = new InformationTokenBet(circleToken,labelToken,listOfCaseToken);
+        if(listOfTokenUsed.size() >= (tokenUsed + 1)){
+            if(listOfTokenUsed.size() == 0){
+                listOfTokenUsed.add(informationTokenBet);
+            }
+            else {
+                listOfTokenUsed.set(tokenUsed, informationTokenBet);
+            }
+        }
+        else {
+            listOfTokenUsed.add(informationTokenBet);
+        }
         labelInformationBetToken.setText("Mise d'un jeton  \n\n"+ "Cases sélectionner : \n" + informationTokenBet.getCases() + "\n Combinaison : "); //recup combinaison avec methode
 
         labelInformationBetToken.setVisible(true);
@@ -333,15 +344,19 @@ public class RouletteMenuController {
             int valueOfBet = Integer.parseInt(textBetToken.getText());
             if(valueOfBet <= 0){
                 setPositionToken(ORIGIN_X_TOKEN, ORIGIN_Y_TOKEN, listOfCircleToken.get(indexTokenRemove), listLabelToken.get(indexTokenRemove), false);
+                if(indexTokenRemove >= 0) {
+                    listOfTokenUsed.remove(indexTokenRemove);
+                }
             }
             else{
-                listOfTokenUsed.get(listOfTokenUsed.size() - 1).setValueOfBet(textBetToken.getText());
+                listOfTokenUsed.get(indexTokenRemove).setValueOfBet(textBetToken.getText());
                 tokenUsed++;
             }
         }
         catch (Exception e){
             e.printStackTrace();
         }
+        System.out.println();
 
         buttonModifyBetToken.setVisible(false);
         textBetToken.setVisible(false);
@@ -353,9 +368,12 @@ public class RouletteMenuController {
             int valueOfBet = Integer.parseInt(textBetToken.getText());
             if(valueOfBet <= 0){
                 setPositionToken(ORIGIN_X_TOKEN, ORIGIN_Y_TOKEN, listOfCircleToken.get(tokenUsed), listLabelToken.get(tokenUsed), false);
+                if(tokenUsed >= 0 && listOfTokenUsed.size() > 0) {
+                    listOfTokenUsed.remove(tokenUsed);
+                }
             }
             else{
-                listOfTokenUsed.get(listOfTokenUsed.size() - 1).setValueOfBet(textBetToken.getText());
+                listOfTokenUsed.get(tokenUsed).setValueOfBet(textBetToken.getText());
                 tokenUsed++;
             }
         }
@@ -363,6 +381,7 @@ public class RouletteMenuController {
             e.printStackTrace();
         }
 
+        System.out.println();
         buttonValidBetToken.setVisible(false);
         textBetToken.setVisible(false);
         labelInformationBetToken.setVisible(false);
