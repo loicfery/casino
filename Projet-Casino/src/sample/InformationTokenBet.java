@@ -11,6 +11,7 @@ public class InformationTokenBet {
     private Label labelToken;
     private String valueOfBet = "0";
     private List<Case> listOfCaseToken;
+    private List<Case> listOfCaseBet;
 
     public InformationTokenBet(Circle circleToken, Label labelToken, List<Case> listOfCaseToken){
         this.circleToken = circleToken;
@@ -20,13 +21,13 @@ public class InformationTokenBet {
 
     public String getCases(){
         String cases = " ";
-        for(int index = 0; index < (listOfCaseToken.size() - 1); index ++){
-            cases = cases + listOfCaseToken.get(index).getValueCase() + " ; ";
+        for(int index = 0; index < listOfCaseToken.size(); index ++){
+            cases = cases + listOfCaseToken.get(index).getValueCase() + ";";
         }
-        if(listOfCaseToken.size() > 0) {
-            cases = cases + listOfCaseToken.get(listOfCaseToken.size() - 1).getValueCase();
+        if(cases.length() > 0) {
+            return cases.substring(0,cases.length() - 1);
         }
-        return cases;
+        return "aucune case sélectionnée";
     }
 
     public Circle getCircleToken() {
@@ -47,5 +48,9 @@ public class InformationTokenBet {
 
     public void setValueOfBet(String valueOfBet){
         this.valueOfBet = valueOfBet;
+    }
+
+    public void setListOfCaseBet(List<Case> listOfCaseBet){
+        this.listOfCaseBet = listOfCaseBet;
     }
 }

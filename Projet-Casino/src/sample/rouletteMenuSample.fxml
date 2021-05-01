@@ -277,22 +277,22 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="484.0" layoutY="270.0" onMouseClicked="#choosePositionToken" prefHeight="48.0" prefWidth="100.0" text="EVEN" textFill="WHITE">
+      <Label alignment="CENTER" layoutX="484.0" layoutY="270.0" onMouseClicked="#choosePositionToken" prefHeight="48.0" prefWidth="100.0" text="PAIRE" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="587.0" layoutY="270.0" onMouseClicked="#choosePositionToken" prefHeight="48.0" prefWidth="100.0" text="RED" textFill="WHITE">
+      <Label alignment="CENTER" layoutX="587.0" layoutY="270.0" onMouseClicked="#choosePositionToken" prefHeight="48.0" prefWidth="100.0" text="ROUGE" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="688.0" layoutY="270.0" onMouseClicked="#choosePositionToken" prefHeight="48.0" prefWidth="100.0" text="BLACK" textFill="WHITE">
+      <Label alignment="CENTER" layoutX="688.0" layoutY="270.0" onMouseClicked="#choosePositionToken" prefHeight="48.0" prefWidth="100.0" text="NOIR" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="791.0" layoutY="270.0" onMouseClicked="#choosePositionToken" prefHeight="48.0" prefWidth="100.0" text="ODD" textFill="WHITE">
+      <Label alignment="CENTER" layoutX="791.0" layoutY="270.0" onMouseClicked="#choosePositionToken" prefHeight="48.0" prefWidth="100.0" text="IMPAIRE" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
@@ -344,29 +344,45 @@
       <Circle fx:id="circleToken14" layoutX="336.0" layoutY="262.0" radius="16.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0" visible="false" />
       <Circle fx:id="circleToken15" layoutX="336.0" layoutY="262.0" radius="16.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0" visible="false" />
 
-      <Label fx:id="labelToken1" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" text="1" textFill="WHITE" visible="false" />
-      <Label fx:id="labelToken2" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" text="1" textFill="WHITE" visible="false" />
-      <Label fx:id="labelToken3" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" text="1" textFill="WHITE" visible="false" />
-      <Label fx:id="labelToken4" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" text="1" textFill="WHITE" visible="false" />
-      <Label fx:id="labelToken5" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" text="1" textFill="WHITE" visible="false" />
-      <Label fx:id="labelToken6" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" text="1" textFill="WHITE" visible="false" />
-      <Label fx:id="labelToken7" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" text="1" textFill="WHITE" visible="false" />
-      <Label fx:id="labelToken8" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" text="1" textFill="WHITE" visible="false" />
-      <Label fx:id="labelToken9" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" text="1" textFill="WHITE" visible="false" />
-      <Label fx:id="labelToken10" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" text="1" textFill="WHITE" visible="false" />
-      <Label fx:id="labelToken11" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" text="1" textFill="WHITE" visible="false" />
-      <Label fx:id="labelToken12" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" text="1" textFill="WHITE" visible="false" />
-      <Label fx:id="labelToken13" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" text="1" textFill="WHITE" visible="false" />
-      <Label fx:id="labelToken14" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" text="1" textFill="WHITE" visible="false" />
-      <Label fx:id="labelToken15" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" text="1" textFill="WHITE" visible="false" />
+      <Label fx:id="labelToken1" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" textFill="WHITE" visible="false" />
+      <Label fx:id="labelToken2" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" textFill="WHITE" visible="false" />
+      <Label fx:id="labelToken3" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" textFill="WHITE" visible="false" />
+      <Label fx:id="labelToken4" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" textFill="WHITE" visible="false" />
+      <Label fx:id="labelToken5" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" textFill="WHITE" visible="false" />
+      <Label fx:id="labelToken6" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" textFill="WHITE" visible="false" />
+      <Label fx:id="labelToken7" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" textFill="WHITE" visible="false" />
+      <Label fx:id="labelToken8" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" textFill="WHITE" visible="false" />
+      <Label fx:id="labelToken9" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" textFill="WHITE" visible="false" />
+      <Label fx:id="labelToken10" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" textFill="WHITE" visible="false" />
+      <Label fx:id="labelToken11" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" textFill="WHITE" visible="false" />
+      <Label fx:id="labelToken12" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" textFill="WHITE" visible="false" />
+      <Label fx:id="labelToken13" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" textFill="WHITE" visible="false" />
+      <Label fx:id="labelToken14" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" textFill="WHITE" visible="false" />
+      <Label fx:id="labelToken15" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="252.0" prefHeight="21.0" prefWidth="23.0" textFill="WHITE" visible="false" />
 
-      <Label fx:id="labelInformationBetToken" alignment="CENTER" layoutX="234.0" layoutY="417.0" prefHeight="153.0" prefWidth="338.0" style="-fx-background-color: white;" text="Informations" visible="false">
+      <Label fx:id="labelInformationBetToken" alignment="CENTER" contentDisplay="CENTER" layoutX="212.0" layoutY="368.0" prefHeight="202.0" prefWidth="387.0" style="-fx-background-color: white;" text="Informations" visible="false">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Button fx:id="buttonModifyBetToken" layoutX="295.0" layoutY="696.0" mnemonicParsing="false" onMouseClicked="#modifyBetToken" prefHeight="68.0" prefWidth="216.0" text="Miser" visible="false">
          <font>
             <Font size="20.0" />
-         </font></Label>
-      <Button fx:id="buttonModifyBetToken" layoutX="295.0" layoutY="696.0" mnemonicParsing="false" onMouseClicked="#modifyBetToken" prefHeight="68.0" prefWidth="216.0" text="Miser" visible="false" />
-      <Button fx:id="buttonValidBetToken" layoutX="295.0" layoutY="696.0" mnemonicParsing="false" onMouseClicked="#validBetToken" prefHeight="68.0" prefWidth="216.0" text="Miser" visible="false" />
-      <TextField fx:id="textBetToken" alignment="CENTER" layoutX="234.0" layoutY="597.0" prefHeight="80.0" prefWidth="338.0" visible="false" />
+         </font></Button>
+      <Button fx:id="buttonValidBetToken" layoutX="295.0" layoutY="696.0" mnemonicParsing="false" onMouseClicked="#validBetToken" prefHeight="68.0" prefWidth="216.0" text="Miser" visible="false">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
+      <TextField fx:id="textBetToken" alignment="CENTER" layoutX="234.0" layoutY="597.0" prefHeight="80.0" prefWidth="338.0" text="Mise" visible="false" />
+      <Button fx:id="buttonStartingGame" layoutX="291.0" layoutY="693.0" mnemonicParsing="false" onMouseClicked="#startingGame" prefHeight="74.0" prefWidth="219.0" text="Starting">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Label fx:id="labelError" alignment="CENTER" layoutX="234.0" layoutY="600.0" prefHeight="60.0" prefWidth="327.0" text="Erreur:" visible="false">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
 
    </children>
 </AnchorPane>
