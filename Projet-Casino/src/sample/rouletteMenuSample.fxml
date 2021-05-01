@@ -383,6 +383,7 @@
             <Font size="15.0" />
          </font>
       </Label>
+      <Circle fx:id="circleBallRoulette" layoutX="851.0" layoutY="563.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" />
 
    </children>
 </AnchorPane>

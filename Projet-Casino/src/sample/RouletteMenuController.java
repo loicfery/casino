@@ -1,6 +1,8 @@
 package sample;
 
 import games.User;
+import javafx.animation.PathTransition;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -8,7 +10,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
+import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +28,81 @@ public class RouletteMenuController {
     private final int END_X_2 = 992;
     private final int END_Y_2 = 318;
 
+    private final int POSITION_X_CASE_ROULETTE_21 = 984;
+    private final int POSITION_Y_CASE_ROULETTE_21 = 475;
+    private final int POSITION_X_CASE_ROULETTE_2 = 963;
+    private final int POSITION_Y_CASE_ROULETTE_2 = 493;
+    private final int POSITION_X_CASE_ROULETTE_25 = 972;
+    private final int POSITION_Y_CASE_ROULETTE_25 = 513;
+    private final int POSITION_X_CASE_ROULETTE_17 = 979;
+    private final int POSITION_Y_CASE_ROULETTE_17 = 535;
+    private final int POSITION_X_CASE_ROULETTE_34 = 982;
+    private final int POSITION_Y_CASE_ROULETTE_34 = 557;
+    private final int POSITION_X_CASE_ROULETTE_6 = 982;
+    private final int POSITION_Y_CASE_ROULETTE_6 = 579;
+    private final int POSITION_X_CASE_ROULETTE_27 = 976;
+    private final int POSITION_Y_CASE_ROULETTE_27 = 600;
+    private final int POSITION_X_CASE_ROULETTE_13 = 967;
+    private final int POSITION_Y_CASE_ROULETTE_13 = 620;
+    private final int POSITION_X_CASE_ROULETTE_36 = 957;
+    private final int POSITION_Y_CASE_ROULETTE_36 = 641;
+    private final int POSITION_X_CASE_ROULETTE_11 = 942;
+    private final int POSITION_Y_CASE_ROULETTE_11 = 658;
+    private final int POSITION_X_CASE_ROULETTE_30 = 925;
+    private final int POSITION_Y_CASE_ROULETTE_30 = 670;
+    private final int POSITION_X_CASE_ROULETTE_8 = 906;
+    private final int POSITION_Y_CASE_ROULETTE_8 = 680;
+    private final int POSITION_X_CASE_ROULETTE_23 = 885;
+    private final int POSITION_Y_CASE_ROULETTE_23 = 691;
+    private final int POSITION_X_CASE_ROULETTE_10 = 861;
+    private final int POSITION_Y_CASE_ROULETTE_10 = 694;
+    private final int POSITION_X_CASE_ROULETTE_5 = 841;
+    private final int POSITION_Y_CASE_ROULETTE_5 = 693;
+    private final int POSITION_X_CASE_ROULETTE_24 = 816;
+    private final int POSITION_Y_CASE_ROULETTE_24 = 694;
+    private final int POSITION_X_CASE_ROULETTE_16 = 794;
+    private final int POSITION_Y_CASE_ROULETTE_16 = 686;
+    private final int POSITION_X_CASE_ROULETTE_33 = 775;
+    private final int POSITION_Y_CASE_ROULETTE_33 = 674;
+    private final int POSITION_X_CASE_ROULETTE_1 = 757;
+    private final int POSITION_Y_CASE_ROULETTE_1 = 660;
+    private final int POSITION_X_CASE_ROULETTE_20 = 742;
+    private final int POSITION_Y_CASE_ROULETTE_20 = 645;
+    private final int POSITION_X_CASE_ROULETTE_14 = 729;
+    private final int POSITION_Y_CASE_ROULETTE_14 = 624;
+    private final int POSITION_X_CASE_ROULETTE_31 = 718;
+    private final int POSITION_Y_CASE_ROULETTE_31 = 603;
+    private final int POSITION_X_CASE_ROULETTE_9 = 714;
+    private final int POSITION_Y_CASE_ROULETTE_9 = 580;
+    private final int POSITION_X_CASE_ROULETTE_22 = 716;
+    private final int POSITION_Y_CASE_ROULETTE_22 = 556;
+    private final int POSITION_X_CASE_ROULETTE_18 = 715;
+    private final int POSITION_Y_CASE_ROULETTE_18 = 533;
+    private final int POSITION_X_CASE_ROULETTE_29 = 722;
+    private final int POSITION_Y_CASE_ROULETTE_29 = 512;
+    private final int POSITION_X_CASE_ROULETTE_7 = 734;
+    private final int POSITION_Y_CASE_ROULETTE_7 = 492;
+    private final int POSITION_X_CASE_ROULETTE_28 = 745;
+    private final int POSITION_Y_CASE_ROULETTE_28 = 469;
+    private final int POSITION_X_CASE_ROULETTE_12 = 765;
+    private final int POSITION_Y_CASE_ROULETTE_12 = 454;
+    private final int POSITION_X_CASE_ROULETTE_35 = 786;
+    private final int POSITION_Y_CASE_ROULETTE_35 = 443;
+    private final int POSITION_X_CASE_ROULETTE_3 = 807;
+    private final int POSITION_Y_CASE_ROULETTE_3 = 433;
+    private final int POSITION_X_CASE_ROULETTE_26 = 829;
+    private final int POSITION_Y_CASE_ROULETTE_26 = 426;
+    private final int POSITION_X_CASE_ROULETTE_0 = 850;
+    private final int POSITION_Y_CASE_ROULETTE_0 = 425;
+    private final int POSITION_X_CASE_ROULETTE_32 = 875;
+    private final int POSITION_Y_CASE_ROULETTE_32 = 428;
+    private final int POSITION_X_CASE_ROULETTE_15 = 898;
+    private final int POSITION_Y_CASE_ROULETTE_15 = 433;
+    private final int POSITION_X_CASE_ROULETTE_19 = 920;
+    private final int POSITION_Y_CASE_ROULETTE_19 = 441;
+    private final int POSITION_X_CASE_ROULETTE_4 = 938;
+    private final int POSITION_Y_CASE_ROULETTE_4 = 455;
+
     private final int RADIUS_TOKEN = 16;
 
     private final int ORIGIN_X_TOKEN = 336;
@@ -36,6 +115,8 @@ public class RouletteMenuController {
     private List<Label> listLabelToken = new ArrayList<>();
     private List<Case> listOfCase = new ArrayList<>();
     private List<InformationTokenBet> listOfTokenUsed = new ArrayList<>();
+    private List<Integer> listPositionXCaseRoulette = new ArrayList<>();
+    private List<Integer> listPositionYCaseRoulette = new ArrayList<>();
     private int tokenUsed = 0;
     private int indexTokenRemove = 0;
     private boolean startingGame = false;
@@ -46,7 +127,22 @@ public class RouletteMenuController {
      private Label labelTokenUser;
      @FXML
      private Label labelPseudo;
+    @FXML
+    private Label labelInformationBetToken;
+    @FXML
+    private Label labelError;
+    @FXML
+    private Button buttonModifyBetToken;
+    @FXML
+    private Button buttonValidBetToken;
+    @FXML
+    private Button buttonStartingGame;
+    @FXML
+    private TextField textBetToken;
+    @FXML
+    private Circle circleBallRoulette;
 
+     /** cercle et label de 15 jetons pour miser **/
     @FXML
     private Circle circleToken1;
     @FXML
@@ -122,19 +218,6 @@ public class RouletteMenuController {
     @FXML
     private Label labelToken15;
 
-    @FXML
-    private Label labelInformationBetToken;
-    @FXML
-    private Label labelError;
-    @FXML
-    private Button buttonModifyBetToken;
-    @FXML
-    private Button buttonValidBetToken;
-    @FXML
-    private Button buttonStartingGame;
-    @FXML
-    private TextField textBetToken;
-
 
     public RouletteMenuController(User user, Stage stage){
         this.user = user;
@@ -178,6 +261,7 @@ public class RouletteMenuController {
         listLabelToken.add(labelToken15);
 
         setCasePosition();
+        setCaseRoulette();
     }
 
     /** Création de la liste des cases pour parier **/
@@ -233,10 +317,90 @@ public class RouletteMenuController {
         listOfCase.add(new Case(892,270,992,318,"green","19-36"));
     }
 
+    /** Création de la liste des position des cases de la roulette **/
+    public void setCaseRoulette(){
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_21);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_21);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_2);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_2);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_25);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_25);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_17);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_17);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_34);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_34);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_6);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_6);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_27);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_27);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_13);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_13);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_36);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_36);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_11);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_11);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_30);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_30);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_8);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_8);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_23);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_23);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_10);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_10);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_5);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_5);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_24);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_24);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_16);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_16);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_33);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_33);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_1);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_1);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_20);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_20);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_14);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_14);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_31);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_31);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_9);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_9);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_22);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_22);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_18);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_18);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_29);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_29);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_7);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_7);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_28);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_28);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_12);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_12);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_35);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_35);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_3);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_3);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_26);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_26);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_0);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_0);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_32);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_32);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_15);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_15);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_19);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_19);
+        listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_4);
+        listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_4);
+
+    }
+
     /** Action pour poser un jeton ou modifier sa position ou sa valeur **/
     public void choosePositionToken(MouseEvent mouseEvent) {
         if(!startingGame) {
             buttonStartingGame.setVisible(false);
+            labelError.setVisible(false);
             int mousePositionX = (int) (mouseEvent.getX());
             int mousePositionY = (int) (mouseEvent.getY());
 
@@ -700,6 +864,19 @@ public class RouletteMenuController {
             startingGame = true;
             labelError.setVisible(false);
             buttonStartingGame.setVisible(false);
+
+            //TranslateTransition translateTransition = new TranslateTransition();
+           // translateTransition.setDuration(Duration.seconds(1));
+            //translateTransition.setNode(circleBallRoulette);
+
+            Circle circle = new Circle(140);
+            PathTransition transition = new PathTransition();
+            transition.setNode(circleBallRoulette);
+            transition.setDuration(Duration.seconds(2));
+            transition.setPath(circle);
+            transition.setCycleCount(PathTransition.INDEFINITE);
+            circleBallRoulette.setVisible(true);
+            transition.play();
         }
     }
 }
