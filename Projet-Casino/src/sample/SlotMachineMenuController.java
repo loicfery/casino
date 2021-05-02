@@ -57,8 +57,6 @@ public class SlotMachineMenuController {
     private ImageView pictureSlot3Watermelon;
 
     @FXML
-    private Label labelBet;
-    @FXML
     private Label labelProfit;
 
     public Label labelToken;
@@ -69,14 +67,6 @@ public class SlotMachineMenuController {
 
     @FXML
     private Button startingGameButton;
-    @FXML
-    private Button addOneToken;
-    @FXML
-    private Button removeOneToken;
-    @FXML
-    private Button addTenToken;
-    @FXML
-    private Button removeTenToken;
     @FXML
     private Button returnMainMenu;
 
@@ -186,72 +176,21 @@ public class SlotMachineMenuController {
     }
 
     /** Lance la machine à sous **/
-    public void clickStartingGame(ActionEvent actionEvent){
-        //méthode à finir
-        switchPictureSlot(1,1);
-        switchPictureSlot(4,2);
-        switchPictureSlot(2,3);
-
-    }
-
-    /** Ajoute un jeton à la mise **/
-    public void clickAddOneToken(ActionEvent actionEvent) {
-        if(user.getNumberOfToken() <= 0){
-            labelError.setText("Vous n'avez pas assez de jeton");
-            labelError.setVisible(true);
-        }
-        else{
+    public void startingGame(MouseEvent mouseEvent){
+        if(user.getNumberOfToken() > 0) {
             labelError.setVisible(false);
             user.removeToken(1);
-            bet.addBet(1,user);
-            labelBet.setText("Mise : "+bet.getValueOfBetTotal());
             labelToken.setText("Jetons : "+user.getNumberOfToken());
-        }
-    }
-
-    /** Enlève un jeton à la mise **/
-    public void clickRemoveOneToken(ActionEvent actionEvent) {
-        if(bet.getValueOfBetTotal() <= 0){
-            labelError.setText("La mise n'a pas assez de jeton");
-            labelError.setVisible(true);
+            //méthode à finir
+            switchPictureSlot(1, 1);
+            switchPictureSlot(4, 2);
+            switchPictureSlot(2, 3);
         }
         else{
-            labelError.setVisible(false);
-            user.addToken(1);
-            bet.removeBet(1,user);
-            labelBet.setText("Mise : "+bet.getValueOfBetTotal());
-            labelToken.setText("Jetons : "+user.getNumberOfToken());
-        }
-    }
-
-    /** Ajoute dix jeton à la mise **/
-    public void clickAddTenToken(ActionEvent actionEvent) {
-        if(user.getNumberOfToken() <= 9){
             labelError.setText("Vous n'avez pas assez de jeton");
             labelError.setVisible(true);
         }
-        else{
-            labelError.setVisible(false);
-            user.removeToken(10);
-            bet.addBet(10,user);
-            labelBet.setText("Mise : "+bet.getValueOfBetTotal());
-            labelToken.setText("Jetons : "+user.getNumberOfToken());
-        }
-    }
 
-    /** Enlève dix jeton à la mise **/
-    public void clickRemoveTenToken(ActionEvent actionEvent) {
-        if(bet.getValueOfBetTotal() <= 9){
-            labelError.setText("La mise n'a pas assez de jeton");
-            labelError.setVisible(true);
-        }
-        else{
-            labelError.setVisible(false);
-            user.addToken(10);
-            bet.removeBet(10,user);
-            labelBet.setText("Mise : "+bet.getValueOfBetTotal());
-            labelToken.setText("Jetons : "+user.getNumberOfToken());
-        }
     }
 
     public void returnMainMenu(ActionEvent actionEvent) throws Exception{
