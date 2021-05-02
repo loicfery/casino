@@ -1,6 +1,6 @@
 package games;
 
-public class Table {
+public class TableRoulette {
 
     public static Cell[][] table;
 
@@ -8,7 +8,7 @@ public class Table {
     static final int HEIGHT = 13;
 
     static public Cell getCell(int row, int col) {
-        return Table.table[row][col];
+        return TableRoulette.table[row][col];
     }
 
     static {
@@ -79,43 +79,43 @@ public class Table {
         Cell cell35 = new Cell(35, Color.Black);
         Cell cell36 = new Cell(36, Color.Red);
 
-        Table.table[0][1] = cell0;
-        Table.table[1][0] = cell1;
-        Table.table[1][1] = cell2;
-        Table.table[1][2] = cell3;
-        Table.table[2][0] = cell4;
-        Table.table[2][1] = cell5;
-        Table.table[2][2] = cell6;
-        Table.table[3][0] = cell7;
-        Table.table[3][1] = cell8;
-        Table.table[3][2] = cell9;
-        Table.table[4][0] = cell10;
-        Table.table[4][1] = cell11;
-        Table.table[4][2] = cell12;
-        Table.table[5][0] = cell13;
-        Table.table[5][1] = cell14;
-        Table.table[5][2] = cell15;
-        Table.table[6][0] = cell16;
-        Table.table[6][1] = cell17;
-        Table.table[6][2] = cell18;
-        Table.table[7][0] = cell19;
-        Table.table[7][1] = cell20;
-        Table.table[7][2] = cell21;
-        Table.table[8][0] = cell22;
-        Table.table[8][1] = cell23;
-        Table.table[8][2] = cell24;
-        Table.table[9][0] = cell25;
-        Table.table[9][1] = cell26;
-        Table.table[9][2] = cell27;
-        Table.table[10][0] = cell28;
-        Table.table[10][1] = cell29;
-        Table.table[10][2] = cell30;
-        Table.table[11][0] = cell31;
-        Table.table[11][1] = cell32;
-        Table.table[11][2] = cell33;
-        Table.table[12][0] = cell34;
-        Table.table[12][1] = cell35;
-        Table.table[12][2] = cell36;
+        TableRoulette.table[0][1] = cell0;
+        TableRoulette.table[1][0] = cell1;
+        TableRoulette.table[1][1] = cell2;
+        TableRoulette.table[1][2] = cell3;
+        TableRoulette.table[2][0] = cell4;
+        TableRoulette.table[2][1] = cell5;
+        TableRoulette.table[2][2] = cell6;
+        TableRoulette.table[3][0] = cell7;
+        TableRoulette.table[3][1] = cell8;
+        TableRoulette.table[3][2] = cell9;
+        TableRoulette.table[4][0] = cell10;
+        TableRoulette.table[4][1] = cell11;
+        TableRoulette.table[4][2] = cell12;
+        TableRoulette.table[5][0] = cell13;
+        TableRoulette.table[5][1] = cell14;
+        TableRoulette.table[5][2] = cell15;
+        TableRoulette.table[6][0] = cell16;
+        TableRoulette.table[6][1] = cell17;
+        TableRoulette.table[6][2] = cell18;
+        TableRoulette.table[7][0] = cell19;
+        TableRoulette.table[7][1] = cell20;
+        TableRoulette.table[7][2] = cell21;
+        TableRoulette.table[8][0] = cell22;
+        TableRoulette.table[8][1] = cell23;
+        TableRoulette.table[8][2] = cell24;
+        TableRoulette.table[9][0] = cell25;
+        TableRoulette.table[9][1] = cell26;
+        TableRoulette.table[9][2] = cell27;
+        TableRoulette.table[10][0] = cell28;
+        TableRoulette.table[10][1] = cell29;
+        TableRoulette.table[10][2] = cell30;
+        TableRoulette.table[11][0] = cell31;
+        TableRoulette.table[11][1] = cell32;
+        TableRoulette.table[11][2] = cell33;
+        TableRoulette.table[12][0] = cell34;
+        TableRoulette.table[12][1] = cell35;
+        TableRoulette.table[12][2] = cell36;
     }
 
 }
