@@ -41,7 +41,7 @@
          </font>
       </TextField>
 
-      <Button fx:id="buttonValidBet" onAction="#clickValidBet" alignment="CENTER" layoutX="320.0" layoutY="500.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="163.0" text="Miser">
+      <Button fx:id="buttonValidBet" onMouseClicked="#validBet" alignment="CENTER" layoutX="320.0" layoutY="500.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="163.0" text="Miser">
          <font>
             <Font size="30.0" />
          </font>
@@ -381,7 +381,7 @@
          </image>
       </ImageView>
 
-      <Button fx:id="buttonActionSplit" onAction="#actionSplit" alignment="CENTER" layoutX="300.0" layoutY="10.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="163.0" text="Split" visible="false">
+      <Button fx:id="buttonActionSplit" onMouseClicked="#actionSplit" alignment="CENTER" layoutX="300.0" layoutY="10.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="163.0" text="Split" visible="false">
          <font>
             <Font size="30.0" />
          </font>

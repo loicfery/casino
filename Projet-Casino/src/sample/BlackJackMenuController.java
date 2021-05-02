@@ -68,6 +68,8 @@ public class BlackJackMenuController {
     private Button buttonValidBet;
     @FXML
     private Button returnMainMenu;
+    @FXML
+    private Button buttonActionSplit;
 
     /** premier Jeton **/
     @FXML
@@ -276,7 +278,8 @@ public class BlackJackMenuController {
         setRule();
     }
 
-    public void clickValidBet(ActionEvent actionEvent) {
+    /** Méthode pour valider la mise **/
+    public void validBet(MouseEvent mouseEvent) {
         if(textBetUser.getText().isEmpty()){
             labelError.setText("Il faut entrer une mise");
             labelError.setVisible(true);
@@ -313,6 +316,7 @@ public class BlackJackMenuController {
         }
     }
 
+    /** Méthode pour retourner une carte précise parmis les 52 cartes **/
     public ImageView chooseCard(int cardNumber, String cardRank){
         switch (cardNumber){
             case 1 :
@@ -345,6 +349,7 @@ public class BlackJackMenuController {
         }
     }
 
+    /** Méthode pour retourner une carte parmis 4 cartes et un symbole **/
     private ImageView getCardByRank(String cardRank, ImageView cardOfHeart, ImageView cardOfSpade, ImageView cardOfClover, ImageView cardOfSquare) {
         switch (cardRank){
             case "HEART" :
@@ -359,12 +364,14 @@ public class BlackJackMenuController {
         }
     }
 
+    /** Méthode pour modifier la position d'une carte **/
     private void setUpCard(ImageView card, int positionX, int positionY){
         card.setLayoutX(positionX);
         card.setLayoutY(positionY);
         card.setVisible(true);
     }
 
+    /** Méthode pour commencer une partie de black jack **/
     public void startingGame(){
         int positionXUser = ORIGIN_X_FIRST_HAND;
         int positionXCroupier = ORIGIN_X_Croupier;
@@ -385,6 +392,7 @@ public class BlackJackMenuController {
         positionXUser += 50;
     }
 
+    /** Méthode pour modifier la visibilité du premier jeton **/
     public void setToken1Visible(boolean tokenState){
         token1Circle1.setVisible(tokenState);
         token1Circle2.setVisible(tokenState);
@@ -403,6 +411,7 @@ public class BlackJackMenuController {
         token1LabelBetUser.setVisible(true);
     }
 
+    /** Méthode pour modifier la visibilité du second jetons (en cas de split) **/
     public void setToken2Visible(boolean tokenState){
         token2Circle1.setVisible(tokenState);
         token2Circle2.setVisible(tokenState);
@@ -421,7 +430,8 @@ public class BlackJackMenuController {
         token2LabelBetUser.setVisible(true);
     }
 
-    public void actionSplit(ActionEvent actionEvent){
+    /** Méthode pour l'action split (2 carte de même numéro) **/
+    public void actionSplit(MouseEvent mouseEvent){
         zoneBetUser2.setVisible(true);
         setToken2Visible(true);
         token2LabelBetUser.setText(token1LabelBetUser.getText());
@@ -431,6 +441,7 @@ public class BlackJackMenuController {
         setUpCard(listCardUserSecondHand.get(0),ORIGIN_X_SECOND_HAND,ORIGIN_Y_USER);
     }
 
+    /** Méthode pour quitter le jeu et retourner dans le menu principale **/
     public void returnMainMenu(ActionEvent actionEvent) throws Exception{
         try {
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("mainMenuSample.fxml"));
@@ -446,6 +457,7 @@ public class BlackJackMenuController {
         }
     }
 
+    /** Méthode pour écrire les règles du jeux dans une zone de texte **/
     private void setRule(){
         try {
             File fileRuleBlackJack = new File("Regles-BlackJack.txt");
@@ -464,10 +476,12 @@ public class BlackJackMenuController {
         }
     }
 
+    /** Méthode qui montre la zone de texte contenant les règles **/
     public void showRule(MouseEvent mouseEvent) {
         textRule.setVisible(true);
     }
 
+    /** Méthode qui cacher la zone de texte contenant les règles **/
     public void hideRule(MouseEvent mouseEvent) {
         textRule.setVisible(false);
     }

@@ -15,14 +15,14 @@ public class Main extends Application {
         User user = new User("Loic","loic-fery@orange.fr","ADMIN"); //pour tester
         user.addToken(50); // pour tester
 
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("rouletteMenuSample.fxml")); //"connexionMenuSample.fxml"
-        loader.setControllerFactory(c -> new RouletteMenuController(user,primaryStage));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("connexionMenuSample.fxml")); //"connexionMenuSample.fxml"
+        loader.setControllerFactory(c -> new ConnexionMenuController(primaryStage));
         Parent root = loader.load();
 
         //Parent root = FXMLLoader.load(this.getClass().getResource("slotMachineMenuSample.fxml"));  // Autre façon de faire //
 
         primaryStage.setTitle("Projet Casino");
-        Scene scene = new Scene(root, 1100, 800.0D); //500.0D, 500.0D --> taille à utiliser à la fin
+        Scene scene = new Scene(root, 500, 500); //500.0D, 500.0D --> taille à utiliser à la fin //1100,800
 
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
