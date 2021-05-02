@@ -312,17 +312,17 @@
             <Image url="@image/roulette.jpg" />
          </image>
       </ImageView>
-      <Label fx:id="labelProfit" layoutX="14.0" layoutY="718.0" prefHeight="68.0" prefWidth="189.0" text="Gain : 0">
+      <Label fx:id="labelProfit" layoutX="14.0" layoutY="718.0" prefHeight="68.0" prefWidth="607.0" text="Gain : 0">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <Label fx:id="labelTokenUser" layoutX="14.0" layoutY="640.0" prefHeight="68.0" prefWidth="189.0" text="Jetons : 0">
+      <Label fx:id="labelTokenUser" layoutX="14.0" layoutY="640.0" prefHeight="68.0" prefWidth="613.0" text="Jetons : 0">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <Label fx:id="labelPseudo" layoutX="14.0" layoutY="563.0" prefHeight="68.0" prefWidth="189.0" text="joueur : ">
+      <Label fx:id="labelPseudo" layoutX="14.0" layoutY="563.0" prefHeight="68.0" prefWidth="613.0" text="joueur : ">
          <font>
             <Font size="30.0" />
          </font>
@@ -373,14 +373,14 @@
             <Font size="20.0" />
          </font></Button>
       <TextField fx:id="textBetToken" alignment="CENTER" layoutX="234.0" layoutY="597.0" prefHeight="80.0" prefWidth="338.0" text="Mise" visible="false" />
-      <Button fx:id="buttonStartingGame" layoutX="291.0" layoutY="693.0" mnemonicParsing="false" onMouseClicked="#startingGame" prefHeight="74.0" prefWidth="219.0" text="Starting">
+      <Button fx:id="buttonStartingGame" layoutX="25.0" layoutY="416.0" mnemonicParsing="false" onMouseClicked="#startingGame" prefHeight="102.0" prefWidth="251.0" text="Starting">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Label fx:id="labelError" alignment="CENTER" layoutX="234.0" layoutY="600.0" prefHeight="60.0" prefWidth="327.0" text="Erreur:" visible="false">
+      <Label fx:id="labelError" alignment="CENTER" layoutX="197.0" layoutY="600.0" prefHeight="60.0" prefWidth="387.0" text="Erreur:" textFill="RED" visible="false">
          <font>
-            <Font size="15.0" />
+            <Font size="20.0" />
          </font>
       </Label>
       <Circle fx:id="circleBallRoulette" layoutX="851.0" layoutY="563.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" />

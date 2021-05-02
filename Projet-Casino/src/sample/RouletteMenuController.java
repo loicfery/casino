@@ -399,18 +399,28 @@ public class RouletteMenuController {
     /** Action pour poser un jeton ou modifier sa position ou sa valeur **/
     public void choosePositionToken(MouseEvent mouseEvent) {
         if(!startingGame) {
-            buttonStartingGame.setVisible(false);
             labelError.setVisible(false);
             int mousePositionX = (int) (mouseEvent.getX());
             int mousePositionY = (int) (mouseEvent.getY());
 
             if (mouseEvent.getButton() == MouseButton.PRIMARY) { //clique gauche
                 if (isPositionMouseGood(mousePositionX, mousePositionY)) {
-                    setPositionToken(mousePositionX, mousePositionY, listOfCircleToken.get(tokenUsed), listLabelToken.get(tokenUsed), true);
-                    betToken(mousePositionX, mousePositionY, listOfCircleToken.get(tokenUsed), listLabelToken.get(tokenUsed));
+                    buttonStartingGame.setVisible(false);
+                    if(getTokenToRemove(mousePositionX,mousePositionY) == -1) {
+                        labelError.setVisible(false);
+                        setPositionToken(mousePositionX, mousePositionY, listOfCircleToken.get(tokenUsed), listLabelToken.get(tokenUsed), true);
+                        betToken(mousePositionX, mousePositionY, listOfCircleToken.get(tokenUsed), listLabelToken.get(tokenUsed));
+                    }
+                    else {
+                        labelInformationBetToken.setVisible(false);
+                        textBetToken.setVisible(false);
+                        labelError.setText("Vous ne pouvez pas placer de jeton ici");
+                        labelError.setVisible(true);
+                    }
                 }
             }
             if (mouseEvent.getButton() == MouseButton.SECONDARY) { //clique droit
+                buttonStartingGame.setVisible(false);
                 indexTokenRemove = getTokenToRemove(mousePositionX, mousePositionY);
                 if (indexTokenRemove > -1) {
                     if (tokenUsed > 0) {
@@ -557,7 +567,7 @@ public class RouletteMenuController {
         return "aucune case sélectionnée";
     }
 
-    /** Retourne l'indice d'un jeton à modifier **/
+    /** Retourne l'indice du jeton à modifier **/
     public int getTokenToRemove(int positionX, int positionY){
         for(int index = 0; index < tokenUsed; index ++){
             int distance = (int) Math.sqrt(Math.pow(Math.abs((positionX - listOfTokenUsed.get(index).getCircleToken().getLayoutX())) ,2) + Math.pow(Math.abs((positionY - listOfTokenUsed.get(index).getCircleToken().getLayoutY())) ,2));
@@ -623,7 +633,17 @@ public class RouletteMenuController {
 
     /** Vérifie si un jeton est passé sur une case **/
     public boolean tokenInTheCase(Case cases, int positionXToken, int positionYToken){
-        if(((positionXToken + RADIUS_TOKEN) >= cases.getOriginX() && (positionXToken + RADIUS_TOKEN) <= cases.getEndX()) && (positionYToken >= cases.getOriginY() && positionYToken <= cases.getEndY())){
+        for(int x = (positionXToken - RADIUS_TOKEN); x <= (positionXToken + RADIUS_TOKEN); x++){
+            for(int y = (positionYToken - RADIUS_TOKEN); y <= (positionYToken + RADIUS_TOKEN); y++){
+                if((Math.pow(Math.abs(x - positionXToken),2) + Math.pow(Math.abs(y - positionYToken),2))  == Math.pow(RADIUS_TOKEN,2)){
+                    if(x >= cases.getOriginX() && x <= cases.getEndX() && y >= cases.getOriginY() && y <= cases.getEndY()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+       /* if(((positionXToken + RADIUS_TOKEN) >= cases.getOriginX() && (positionXToken + RADIUS_TOKEN) <= cases.getEndX()) && (positionYToken >= cases.getOriginY() && positionYToken <= cases.getEndY())){
             return true;
         }
         else {
@@ -643,7 +663,7 @@ public class RouletteMenuController {
                     }
                 }
             }
-        }
+        }*/
     }
 
     /** Bouton pour valider la modification d'un jeton **/
