@@ -22,6 +22,7 @@ public class SlotMachine {
     public SlotMachine(){
         bet = new Bet();
         image = new ArrayList<>();
+
     };
 
     public void userBet(int valueOfBet, User user){
@@ -37,8 +38,6 @@ public class SlotMachine {
             nb = random.nextInt(10);
             results[i] = slot[nb];
             }
-
-
     }; //utilisation de la machine à sous
 
     public int verifySlot(){
@@ -57,13 +56,10 @@ public class SlotMachine {
             }
         }
         else{return 0;}
-
-
     }; // vérification des resultats
 
     public void giveTokenBet(User user){
         int gain = verifySlot();
         user.addToken(gain);
-
     }; //gain de l'utilisateur, 160 pour 3 SEVEN, 25 pour 3 CHERRY, 8 pour 3 LEMON, 4 pour 3 WATERMELON, 0 sinon
 }
