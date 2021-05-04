@@ -6,10 +6,9 @@ public class Card {
     private int number;
     private String color;
 
-    public Card(int number, String rank, String color) {
+    public Card(int number, String rank) {
         this.number = number;
         this.rank = rank;
-        this.color = color;
 
     }
 
@@ -17,5 +16,4 @@ public class Card {
         return number+1;
     }
     public String getRank(){return rank;}
-    public String getColor(){return color;}
 }
