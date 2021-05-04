@@ -164,6 +164,7 @@ public class RouletteMenuController {
         this.stage = stage;
     }
 
+    /** Méthode qui initialise l'interface de la roulette **/
     public void setting(){
         stage.setTitle("Roulette");
         scene = new Scene(root,1100,800);
@@ -244,6 +245,7 @@ public class RouletteMenuController {
         });
     }
 
+    /** Méthode qui crée la grille de mise **/
     private void setupGameBoard(){
         Rectangle rectangle = new Rectangle();
         setUpScene.setRectangle(rectangle,434.0,78.0,48.0,51.0,5.0,5.0, Paint.valueOf("BLACK"),Paint.valueOf("WHITE"),2.0, StrokeType.INSIDE,true,anchorPane);
@@ -639,7 +641,7 @@ public class RouletteMenuController {
         listOfLabelGameBoard.add(label);
     }
 
-    /** Création de la liste des cases pour parier **/
+    /** Méthode de création de la liste des cases pour parier **/
     public void setCasePosition(){
         listOfCase.add(new Case(320,78,384,223,"green","0"));
         listOfCase.add(new Case(383,174,434,222,"red","1"));
@@ -692,7 +694,7 @@ public class RouletteMenuController {
         listOfCase.add(new Case(892,270,992,318,"green","19-36"));
     }
 
-    /** Création de la liste des position des cases de la roulette **/
+    /** Méthode de création de la liste des position des cases de la roulette **/
     public void setCaseRoulette(){
         listPositionXCaseRoulette.add(POSITION_X_CASE_ROULETTE_21);
         listPositionYCaseRoulette.add(POSITION_Y_CASE_ROULETTE_21);
@@ -771,7 +773,7 @@ public class RouletteMenuController {
 
     }
 
-    /** Action pour poser un jeton ou modifier sa position ou sa valeur **/
+    /** Méthode d'action pour poser un jeton ou modifier sa position ou sa valeur **/
     public void choosePositionToken(MouseEvent mouseEvent) {
         if(!startingGame) {
             labelError.setVisible(false);
@@ -813,7 +815,7 @@ public class RouletteMenuController {
         }
     }
 
-    /** Returne les cases de la combinaison à partir de la position du jeton **/
+    /** Méthode qui returne les cases de la combinaison à partir de la position du jeton **/
     public String getCasesBet(List<Case> listOfCaseToken, Circle circleToken){
         if(listOfCaseToken.size() == 0){
             return "aucune case sélectionnée";
@@ -943,7 +945,7 @@ public class RouletteMenuController {
         return "aucune case sélectionnée";
     }
 
-    /** Retourne l'indice du jeton à modifier **/
+    /** Méthode qui retourne l'indice du jeton à modifier **/
     public int getTokenToRemove(int positionX, int positionY){
         for(int index = 0; index < tokenUsed; index ++){
             int distance = (int) Math.sqrt(Math.pow(Math.abs((positionX - listOfTokenUsed.get(index).getCircleToken().getLayoutX())) ,2) + Math.pow(Math.abs((positionY - listOfTokenUsed.get(index).getCircleToken().getLayoutY())) ,2));
@@ -954,7 +956,7 @@ public class RouletteMenuController {
         return -1;
     }
 
-    /** Modifie la position d'un jeton **/
+    /** Méthode qui modifie la position d'un jeton **/
     public void setPositionToken(int positionX, int positionY, Circle circleToken, Label labelToken, boolean state){
         circleToken.setLayoutX(positionX);
         circleToken.setLayoutY(positionY);
@@ -979,7 +981,7 @@ public class RouletteMenuController {
         }
     }
 
-    /** Récupère toutes les informations du jeton posé **/
+    /** Méthode qui récupère toutes les informations du jeton posé **/
     public void betToken(int positionXToken, int positionYToken, Circle circleToken, Label labelToken){
         List<Case> listOfCaseToken = new ArrayList<>();
         for(int index = 0; index < listOfCase.size(); index ++){
@@ -1007,7 +1009,7 @@ public class RouletteMenuController {
         labelInformationBetToken.setText("Mise d'un jeton  \n"+ "Cases sélectionnées : \n" + informationTokenBet.getCases() + "\n Cases misées : \n"+getCasesBet(informationTokenBet.getListOfCaseToken(),circleToken)); //recup combinaison avec methode
     }
 
-    /** Vérifie si un jeton est passé sur une case **/
+    /** Méthode qui vérifie si un jeton est passé sur une case **/
     public boolean tokenInTheCase(Case cases, int positionXToken, int positionYToken){
         for(int x = (positionXToken - RADIUS_TOKEN); x <= (positionXToken + RADIUS_TOKEN); x++){
             for(int y = (positionYToken - RADIUS_TOKEN); y <= (positionYToken + RADIUS_TOKEN); y++){
@@ -1021,7 +1023,7 @@ public class RouletteMenuController {
         return false;
     }
 
-    /** Bouton pour valider la modification d'un jeton **/
+    /** Méthode pour valider la modification d'un jeton **/
     public void modifyBetToken() {
         if(!textBetToken.getText().isEmpty()) {
             try {
@@ -1058,7 +1060,7 @@ public class RouletteMenuController {
         startingGameButton.setVisible(true);
     }
 
-    /** Boutton pour valider un nouveau jeton posé  **/
+    /** Méthode pour valider un nouveau jeton posé  **/
     public void validBetToken(){
         if(!textBetToken.getText().isEmpty()) {
             try {
@@ -1090,7 +1092,7 @@ public class RouletteMenuController {
         }
     }
 
-    /** Retourne la case qui possède une certaine valeur **/
+    /** Méthode qui retourne la case qui possède une certaine valeur **/
     public Case getCase(String valueOfCase){
         for(int index = 0; index < listOfCase.size(); index ++){
             if(listOfCase.get(index).getValueCase().equals(valueOfCase)){
@@ -1100,7 +1102,7 @@ public class RouletteMenuController {
         return null;
     }
 
-    /** Retourne les autres cases d'une combinaisons d'après une case **/
+    /** Méthode qui retourne les autres cases d'une combinaisons d'après une case **/
     public List<Case> getCombinaisonCase(Case cases){
         List<Case> listOfCase = new ArrayList<>();
 
@@ -1229,7 +1231,7 @@ public class RouletteMenuController {
         return listOfCase;
     }
 
-    /** Boutton pour lancer la roulette et mettre fin aux mises **/
+    /** Méthode pour lancer la roulette et mettre fin aux mises **/
     public void startingGame() {
         if(tokenUsed == 0){
             labelError.setText("Il faut placer un jeton au minimum");

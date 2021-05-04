@@ -45,6 +45,7 @@ public class ConnexionMenuController {
         this.stage = stage;
     }
 
+    /** Méthode qui initialise l'interface de connexion **/
     public void setting(){
         stage.setTitle("Menu de connexion");
         scene = new Scene(root,500,500);

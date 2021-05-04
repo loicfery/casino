@@ -77,6 +77,7 @@ public class BlackJackMenuController {
         this.user = user;
     }
 
+    /** Méthode qui initialise l'interface du black jack **/
     public void setting(){
         stage.setTitle("Menu Black Jack");
         scene = new Scene(root,800,800);
@@ -117,6 +118,7 @@ public class BlackJackMenuController {
         stage.show();
     }
 
+    /** Méthode qui crée le premier jeton **/
     private void initToken1(){
         Circle circle = new Circle();
         setUpScene.setCircle(circle,41.0,400.0,685.0, Paint.valueOf("#1d2fd7"),Paint.valueOf("BLACK"), StrokeType.INSIDE,2.0,false,anchorPane);
@@ -168,6 +170,7 @@ public class BlackJackMenuController {
         setUpScene.setLabel(labelToken1,"0",Pos.CENTER,341.0,600.0,148.0,119.0,new Font(30.0),Color.BLACK,false,anchorPane);
     }
 
+    /** Méthode qui crée le deuxième jeton en cas de split **/
     private void initToken2(){
         Circle circle = new Circle();
         setUpScene.setCircle(circle,41.0,625.0,685.0, Paint.valueOf("#1d2fd7"),Paint.valueOf("BLACK"), StrokeType.INSIDE,2.0,false,anchorPane);

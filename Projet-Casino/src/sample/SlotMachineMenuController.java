@@ -55,6 +55,7 @@ public class SlotMachineMenuController {
         this.stage = stage;
     }
 
+    /** Méthode qui initialise le'interface de la machine à sous **/
     public void setting(){
         stage.setTitle("Machine à sous");
         scene = new Scene(root,800,800);
@@ -139,7 +140,7 @@ public class SlotMachineMenuController {
         }
     }
 
-    /** Change l'image d'un slot avec l'image en paramètre **/
+    /** Méthode qui change l'image d'un slot avec l'image en paramètre **/
     private void switchPictureSlot(int slot, Image newPicture){
         switch (slot) {
             case 1 :
@@ -153,7 +154,7 @@ public class SlotMachineMenuController {
         }
     }
 
-    /** Lance la machine à sous **/
+    /** Méthode qui lance la machine à sous **/
     private void startingGame(){
         if(user.getNumberOfToken() > 0) {
             labelError.setVisible(false);
