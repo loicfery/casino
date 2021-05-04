@@ -14,13 +14,13 @@ public class Cards_Package {
     public void initCardPackage(ArrayList<Card> card_package){ //Créer un packet trié (à supprimer si inutile)
         if(card_package.isEmpty()){
             for(int i =0; i<12; i++){
-                Card heart = new Card(i, "HEART", "RED");
+                Card heart = new Card(i, "HEART");
                 card_package.add(heart);
-                Card tile = new Card(i, "TILE", "RED");
+                Card tile = new Card(i, "TILE");
                 card_package.add(tile);
-                Card spade = new Card(i, "SPADE", "BLACK");
+                Card spade = new Card(i, "SPADE");
                 card_package.add(spade);
-                Card clover = new Card(i, "CLOVER", "BLACK");
+                Card clover = new Card(i, "CLOVER");
                 card_package.add(clover);
             }
         }

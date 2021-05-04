@@ -1,9 +1,13 @@
 package games;
 
+import java.util.List;
+
 public class ActionInsurance implements ActionBlackJack {
     @Override
-    public void action(UserHand userHand, Cards_Package cards_package, Bet bet, User user) {
-        int insurrance = bet.getBet(user) / 2;
+    public void action(List<UserHand> ListOfUserHand, Cards_Package cards_package, Bet bet) {
+        int insurrance = bet.getBet(ListOfUserHand.get(1).getUser()) / 2;
+        bet.addUser(ListOfUserHand.get(3).getUser());
+        bet.addBet(insurrance, ListOfUserHand.get(3).getUser());
 
 
     }
