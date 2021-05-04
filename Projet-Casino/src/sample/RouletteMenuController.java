@@ -167,6 +167,7 @@ public class RouletteMenuController {
     public void setting(){
         stage.setTitle("Roulette");
         scene = new Scene(root,1100,800);
+        scene.getStylesheets().add(getClass().getResource("rouletteMenu.css").toExternalForm());
         stage.setScene(scene);
 
         setupGameBoard();

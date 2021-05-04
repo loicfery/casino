@@ -9,6 +9,8 @@ public class BlackJack {
     private Bet bet; //Mise
     private ActionBlackJack action; //Action du joueur
 
+    /** C'est pas logique d'avoir ces deux paramètre alors que tu dois les créer dans la classe
+     * il te faut plutot mettre User user pour récupérer l'utilisateur **/
     public BlackJack(List<UserHand> listOfUserHand, ActionBlackJack action) {
         ListOfUserHand = listOfUserHand;
         this.action = action;

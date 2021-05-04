@@ -1,5 +1,6 @@
 package sample;
 
+import games.BlackJack;
 import games.User;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -42,6 +43,8 @@ public class BlackJackMenuController {
     private SetupScene setUpScene = new SetupScene();
     private User user;
 
+    private BlackJack blackJack;
+
     private List<Shape> token1 = new ArrayList<>();
     private List<Shape> token2 = new ArrayList<>();
     private List<ImageView> croupierHand = new ArrayList<>();
@@ -77,6 +80,7 @@ public class BlackJackMenuController {
     public void setting(){
         stage.setTitle("Menu Black Jack");
         scene = new Scene(root,800,800);
+        scene.getStylesheets().add(getClass().getResource("blackJackMenu.css").toExternalForm());
         stage.setScene(scene);
 
         setUpScene.setRectangle(zoneBetUser1,327.0,600.0,174.0,147.0,5.0,5.0,Paint.valueOf("#158000"),Paint.valueOf("BLACK"),5.0,StrokeType.INSIDE,true,anchorPane);
