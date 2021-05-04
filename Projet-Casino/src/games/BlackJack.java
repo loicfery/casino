@@ -84,18 +84,23 @@ public class BlackJack {
     }
 
     public void gameEnd() {
-        int token = 0;
         while (countValueOfUserHand(ListOfUserHand.get(0)) <= 17) { //Pioche du croupier jusqu'à avoir 17 ou +
             ListOfUserHand.get(0).addCard(cards_package);
         }
+    }
+
+    public int betDistribute(){
+        int token = 0;
         if (ListOfUserHand.get(2).getHand().get(0) != null) {  //Remise ou perte des gains si split
             if (countValueOfUserHand(ListOfUserHand.get(0)) < countValueOfUserHand(ListOfUserHand.get(1))) {
+                token = token + bet.getBet(ListOfUserHand.get(1).getUser());
                 ListOfUserHand.get(1).getUser().addToken(bet.getBet(ListOfUserHand.get(1).getUser()));
             }
             if (countValueOfUserHand(ListOfUserHand.get(0)) > countValueOfUserHand(ListOfUserHand.get(1))) {
                 ListOfUserHand.get(1).getUser().removeToken(bet.getBet(ListOfUserHand.get(1).getUser()));
             }
             if (countValueOfUserHand(ListOfUserHand.get(0)) < countValueOfUserHand(ListOfUserHand.get(2))) {
+                token = token + bet.getBet(ListOfUserHand.get(1).getUser());
                 ListOfUserHand.get(1).getUser().addToken(bet.getBet(ListOfUserHand.get(2).getUser()));
             }
             if (countValueOfUserHand(ListOfUserHand.get(0)) > countValueOfUserHand(ListOfUserHand.get(2))) {
@@ -105,9 +110,10 @@ public class BlackJack {
         else {
             if (countValueOfUserHand(ListOfUserHand.get(0)) < countValueOfUserHand(ListOfUserHand.get(1))) {
                 if (verifyBlackJack(ListOfUserHand.get(1))) {
-                    int somme = (int) (bet.getBet(ListOfUserHand.get(1).getUser()) * 1.5);
-                    ListOfUserHand.get(1).getUser().addToken(somme);
+                    token = (int) (bet.getBet(ListOfUserHand.get(1).getUser()) * 1.5);
+                    ListOfUserHand.get(1).getUser().addToken(token);
                 } else {
+                    token = bet.getBet(ListOfUserHand.get(1).getUser());
                     ListOfUserHand.get(1).getUser().addToken(bet.getBet(ListOfUserHand.get(1).getUser()));
                 }
             }
@@ -119,10 +125,7 @@ public class BlackJack {
             }
         }
         reset();
-    }
-
-    public void setaction(ActionBlackJack action){ //méthode permettant de récupéré l'action pour l'interface
-        this.action = action;
+        return token;
     }
 
     public void reset(){
