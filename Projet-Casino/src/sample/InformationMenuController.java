@@ -37,6 +37,8 @@ public class InformationMenuController {
     public InformationMenuController(User user, Stage stage){
         this.user = user;
         this.stage = stage;
+
+        //scene.getStylesheets().add(getClass().getResource("informationMenu.css").toExternalForm());
     }
 
     public void initialize(){

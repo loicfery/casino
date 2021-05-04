@@ -59,6 +59,7 @@ public class SlotMachineMenuController {
     public void setting(){
         stage.setTitle("Machine à sous");
         scene = new Scene(root,800,800);
+        scene.getStylesheets().add(getClass().getResource("slotMachineMenu.css").toExternalForm());
         stage.setScene(scene);
 
         setUpScene.setRectangle(cadreSlotMachine,105.0,275.0,199.0,601.0,5.0,5.0, Paint.valueOf("RED"),Paint.valueOf("RED"),1.0, StrokeType.INSIDE,true,anchorPane);

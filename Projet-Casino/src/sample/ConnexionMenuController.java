@@ -49,6 +49,7 @@ public class ConnexionMenuController {
     public void setting(){
         stage.setTitle("Menu de connexion");
         scene = new Scene(root,500,500);
+        scene.getStylesheets().add(getClass().getResource("connexionMenu.css").toExternalForm());
         stage.setScene(scene);
 
         setUpScene.setLabel(labelWelcomeTitle,"Bienvenue au casino", Pos.CENTER,100,50,20,300,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
