@@ -1,148 +1,185 @@
 package sample;
 
 import games.User;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javax.imageio.IIOException;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
+
 
 public class ConnexionMenuController {
+
+    private BorderPane root = new BorderPane();
+    private Scene scene;
     private Stage stage;
+    private AnchorPane anchorPane = new AnchorPane();
+    private SetupScene setUpScene = new SetupScene();
     private User user;
 
-    @FXML
-    private Label welcomeTitleLabel;
-    @FXML
-    private Label emailLabel;
-    @FXML
-    private TextField textEmail;
-    @FXML
-    private Label passwordLabel;
-    @FXML
-    private TextField textPassword;
-    @FXML
-    private Button loginButton;
-    @FXML
-    private Button newAccountButton;
-    @FXML
-    private Label newEmailLabel;
-    @FXML
-    private Label newPasswordLabel;
-    @FXML
-    private Label newPseudoLabel;
-    @FXML
-    private TextField textNewEmail;
-    @FXML
-    private TextField textNewPassword;
-    @FXML
-    private TextField textNewPseudo;
-    @FXML
-    private Button inscriptionButton;
-    @FXML
-    private Button loginButtonReturn;
-    @FXML
-    private Label errorLabel;
+    private Label labelWelcomeTitle = new Label();
+    private Label labelEmail = new Label();
+    private Label labelPassword = new Label();
+    private Label labelNewMail = new Label();
+    private Label labelNewPassword = new Label();
+    private Label labelNewPseudo = new Label();
+    private Label labelError = new Label();
 
-    public ConnexionMenuController(Stage stage) {
+    private TextField textEmail = new TextField();
+    private TextField textPassword = new TextField();
+    private TextField textNewEmail = new TextField();
+    private TextField textNewPassword = new TextField();
+    private TextField textNewPseudo = new TextField();
+
+    private Button buttonLogin = new Button();
+    private Button buttonNewAccount = new Button();
+    private Button buttonInscription = new Button();
+    private Button buttonLoginMenuReturn = new Button();
+
+    public ConnexionMenuController(Stage stage){
         this.stage = stage;
     }
 
+    public void setting(){
+        stage.setTitle("Menu de connexion");
+        scene = new Scene(root,500,500);
+        stage.setScene(scene);
+
+        setUpScene.setLabel(labelWelcomeTitle,"Bienvenue au casino", Pos.CENTER,100,50,20,300,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
+        setUpScene.setLabel(labelEmail,"Email",Pos.CENTER,60,200,20,150,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
+        setUpScene.setLabel(labelPassword,"Mot de passe",Pos.CENTER,260,200,20,200,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
+        setUpScene.setTextField(textEmail,"",Pos.CENTER,40,250,10,200,new Font(15),true,anchorPane);
+        setUpScene.setTextField(textPassword,"",Pos.CENTER,270,250,10,200,new Font(15),true,anchorPane);
+        setUpScene.setButton(buttonLogin,"Connexion",Pos.CENTER,10,380,20,480,new Font(25),true,anchorPane);
+        setUpScene.setButton(buttonNewAccount,"Nouveau Compte",Pos.CENTER,10,440,20,480,new Font(25),true,anchorPane);
+        setUpScene.setButton(buttonLoginMenuReturn,"Se connecter",Pos.CENTER,10,380,20,480,new Font(25),true,anchorPane);
+        setUpScene.setButton(buttonInscription,"S'inscrire",Pos.CENTER,10,440,20,480,new Font(25),false,anchorPane);
+        setUpScene.setLabel(labelNewMail,"Email :",Pos.CENTER,100,150,20,150,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
+        setUpScene.setLabel(labelNewPassword,"Mot de passe :",Pos.CENTER,30,200,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
+        setUpScene.setLabel(labelNewPseudo,"Pseudonyme :",Pos.CENTER,30,250,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
+        setUpScene.setTextField(textNewEmail,"",Pos.CENTER,250,150,20,200,new Font(15),false,anchorPane);
+        setUpScene.setTextField(textNewPassword,"",Pos.CENTER,250,200,20,200,new Font(15),false,anchorPane);
+        setUpScene.setTextField(textNewPseudo,"",Pos.CENTER,250,250,20,200,new Font(15),false,anchorPane);
+        setUpScene.setLabel(labelError,"Erreur : ",Pos.CENTER,50,330,20,400,new Font(15),Paint.valueOf("RED"),false,anchorPane);
+
+        buttonLogin.setOnMouseClicked((event)->{
+            goToMainMenu();
+        });
+
+        buttonNewAccount.setOnMouseClicked((event)->{
+            goToNewAccountMenu();
+        });
+
+        buttonLoginMenuReturn.setOnMouseClicked((event)->{
+            goToLoginMenu();
+        });
+
+        buttonInscription.setOnMouseClicked((event)->{
+            newAccountGoToMainMenu();
+        });
+
+        root.getChildren().add(anchorPane);
+        stage.show();
+    }
+
     /** Méthode pour se connecter avec un email et un mot de passe **/
-    public void clickConnexion(MouseEvent mouseEvent) throws Exception {
-        if (!this.textEmail.getText().isEmpty() && !this.textPassword.getText().isEmpty()) {
-            this.welcomeTitleLabel.setVisible(false);
-            this.emailLabel.setVisible(false);
-            this.textEmail.setVisible(false);
-            this.passwordLabel.setVisible(false);
-            this.textPassword.setVisible(false);
-            this.loginButton.setVisible(false);
-            this.newAccountButton.setVisible(false);
-            this.errorLabel.setVisible(false);
+    public void goToMainMenu(){
+        if (!textEmail.getText().isEmpty() && !textPassword.getText().isEmpty()) {
+            labelWelcomeTitle.setVisible(false);
+            labelEmail.setVisible(false);
+            textEmail.setVisible(false);
+            labelPassword.setVisible(false);
+            textPassword.setVisible(false);
+            buttonLogin.setVisible(false);
+            buttonNewAccount.setVisible(false);
+            labelError.setVisible(false);
 
             //rechercher de user dans la base de donnée
             //setUser(...) --> récupération de speudo,email, rank
             //récupération nombre jeton et argent de user
 
-            this.switchMainMenu(mouseEvent);
+            switchMainMenu();
         } else {
-            this.setError("Erreur : un ou plusieurs champs sont vides");
+            setError("Erreur : un ou plusieurs champs sont vides");
         }
 
     }
 
     /** Méthode pour changer le menu pour la création d'un nouveau compte **/
-    public void clickNewAccount(MouseEvent mouseEvent) {
-        this.emailLabel.setVisible(false);
-        this.textEmail.setVisible(false);
-        this.passwordLabel.setVisible(false);
-        this.textPassword.setVisible(false);
-        this.loginButton.setVisible(false);
-        this.newAccountButton.setVisible(false);
-        this.welcomeTitleLabel.setText("Nouveau Compte");
-        this.newEmailLabel.setVisible(true);
-        this.newPasswordLabel.setVisible(true);
-        this.newPseudoLabel.setVisible(true);
-        this.textNewEmail.setVisible(true);
-        this.textNewPassword.setVisible(true);
-        this.textNewPseudo.setVisible(true);
-        this.inscriptionButton.setVisible(true);
-        this.loginButtonReturn.setVisible(true);
+    public void goToNewAccountMenu() {
+        labelEmail.setVisible(false);
+        textEmail.setVisible(false);
+        labelPassword.setVisible(false);
+        textPassword.setVisible(false);
+        buttonLogin.setVisible(false);
+        buttonNewAccount.setVisible(false);
+
+        labelWelcomeTitle.setText("Nouveau Compte");
+
+        labelNewMail.setVisible(true);
+        labelNewPassword.setVisible(true);
+        labelNewPseudo.setVisible(true);
+        textNewEmail.setVisible(true);
+        textNewPassword.setVisible(true);
+        textNewPseudo.setVisible(true);
+        buttonInscription.setVisible(true);
+        buttonLoginMenuReturn.setVisible(true);
     }
 
     /** Méthode pour créer un nouveau compte **/
-    public void inscription(MouseEvent mouseEvent) throws Exception {
+    public void newAccountGoToMainMenu(){
         if (!textNewEmail.getText().isEmpty() && !textNewPassword.getText().isEmpty() && !textNewPseudo.getText().isEmpty()) {
-            newEmailLabel.setVisible(false);
-            newPasswordLabel.setVisible(false);
-            newPseudoLabel.setVisible(false);
+            labelNewMail.setVisible(false);
+            labelNewPassword.setVisible(false);
+            labelNewPseudo.setVisible(false);
             textNewEmail.setVisible(false);
             textNewPassword.setVisible(false);
             textNewPseudo.setVisible(false);
-            inscriptionButton.setVisible(false);
-            loginButtonReturn.setVisible(false);
-            errorLabel.setVisible(false);
+            buttonInscription.setVisible(false);
+            buttonLoginMenuReturn.setVisible(false);
+            labelError.setVisible(false);
 
             //création d'un user dans la base de donnée
             //récupération nombre jeton et argent de user
 
             setUser(new User(textNewPseudo.getText(),textNewEmail.getText(),"USER"));
-            switchMainMenu(mouseEvent);
+            switchMainMenu();
         } else {
-            this.setError("Erreur : un ou plusieurs champs sont vides");
+            setError("Erreur : un ou plusieurs champs sont vides");
         }
 
     }
 
     /** Méthode pour changer le menu pour se connecter **/
-    public void connexionReturn(MouseEvent mouseEvent) {
-        this.emailLabel.setVisible(true);
-        this.textEmail.setVisible(true);
-        this.passwordLabel.setVisible(true);
-        this.textPassword.setVisible(true);
-        this.loginButton.setVisible(true);
-        this.newAccountButton.setVisible(true);
-        this.welcomeTitleLabel.setText("Bienvenue au casino");
-        this.newEmailLabel.setVisible(false);
-        this.newPasswordLabel.setVisible(false);
-        this.newPseudoLabel.setVisible(false);
-        this.textNewEmail.setVisible(false);
-        this.textNewPassword.setVisible(false);
-        this.textNewPseudo.setVisible(false);
-        this.inscriptionButton.setVisible(false);
-        this.loginButtonReturn.setVisible(false);
+    public void goToLoginMenu() {
+        labelEmail.setVisible(true);
+        textEmail.setVisible(true);
+        labelPassword.setVisible(true);
+        textPassword.setVisible(true);
+        buttonLogin.setVisible(true);
+        buttonNewAccount.setVisible(true);
+
+        labelWelcomeTitle.setText("Bienvenue au casino");
+
+        labelNewMail.setVisible(false);
+        labelNewPassword.setVisible(false);
+        labelNewPseudo.setVisible(false);
+        textNewEmail.setVisible(false);
+        textNewPassword.setVisible(false);
+        textNewPseudo.setVisible(false);
+        buttonInscription.setVisible(false);
+        buttonLoginMenuReturn.setVisible(false);
     }
 
     /** Méthode pour changer le texte de l'erreur **/
     public void setError(String errorName) {
-        this.errorLabel.setText(errorName);
-        this.errorLabel.setVisible(true);
+        labelError.setText(errorName);
+        labelError.setVisible(true);
     }
 
     public void setUser(User user){
@@ -150,21 +187,11 @@ public class ConnexionMenuController {
     }
 
     /** Méthode pour charger le menu principal **/
-    public void switchMainMenu(MouseEvent mouseEvent) throws Exception {
+    public void switchMainMenu(){
         user = new User("Loic","loic-fery@orange.fr","ADMIN"); //pour tester
         user.addToken(50); // pour tester
 
-        try {
-            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("mainMenuSample.fxml"));
-            loader.setControllerFactory(c -> new MainMenuController(user,stage));
-            Parent root = loader.load();
-            Scene scene = new Scene(root, 800.0D, 800.0D);
-            scene.getStylesheets().add(getClass().getResource("mainMenu.css").toExternalForm());
-            Stage window = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
-            window.setScene(scene);
-            window.show();
-        } catch (IIOException var7) {
-            var7.printStackTrace();
-        }
+        MainMenuController mainMenuController = new MainMenuController(stage,user);
+        mainMenuController.setting();
     }
 }

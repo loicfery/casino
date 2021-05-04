@@ -1,32 +1,29 @@
 package sample;
 
-import games.BlackJack;
 import games.User;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Polyline;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javax.imageio.IIOException;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.*;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class BlackJackMenuController {
 
@@ -38,253 +35,229 @@ public class BlackJackMenuController {
     private final int ORIGIN_Y_USER = 400;
     private final int ORIGIN_Y_CROUPIER = 100;
 
+    private BorderPane  root = new BorderPane();
+    private Scene scene;
     private Stage stage;
+    private AnchorPane anchorPane = new AnchorPane();
+    private SetupScene setUpScene = new SetupScene();
     private User user;
-    private BlackJack blackJack;
-    private List<ImageView> listCardUserFirstHand = new ArrayList<>();
-    private List<ImageView> listCardUserSecondHand = new ArrayList<>();
 
-    @FXML
-    private TextArea textRule;
+    private List<Shape> token1 = new ArrayList<>();
+    private List<Shape> token2 = new ArrayList<>();
+    private List<ImageView> croupierHand = new ArrayList<>();
+    private List<ImageView> userFirstHand = new ArrayList<>();
+    private List<ImageView> userSecondHand = new ArrayList<>();
 
-    @FXML
-    private Rectangle zoneBetUser1;
-    @FXML
-    private Rectangle zoneBetUser2;
+    private TextArea textRule = new TextArea();
 
-    @FXML
-    private Label labelToken;
-    @FXML
-    private Label labelPseudo;
-    @FXML
-    private Label labelError;
-    @FXML
-    private Label labelProfit;
+    private Rectangle zoneBetUser1 = new Rectangle();
+    private Rectangle zoneBetUser2 = new Rectangle();
 
-    @FXML
-    private TextField textBetUser;
+    private Label labelToken = new Label();
+    private Label labelProfit = new Label();
+    private Label labelPseudo = new Label();
+    private Label labelError = new Label();
+    private Label labelToken1 = new Label();
+    private Label labelToken2 = new Label();
+    private Label labelRule = new Label();
 
-    @FXML
-    private Button buttonValidBet;
-    @FXML
-    private Button returnMainMenu;
-    @FXML
-    private Button buttonActionSplit;
+    private TextField textBetUser = new TextField();
 
-    /** premier Jeton **/
-    @FXML
-    private Circle token1Circle1;
-    @FXML
-    private Circle token1Circle2;
-    @FXML
-    private Rectangle token1Rectangle1;
-    @FXML
-    private Rectangle token1Rectangle2;
-    @FXML
-    private Rectangle token1Rectangle3;
-    @FXML
-    private Rectangle token1Rectangle4;
-    @FXML
-    private Polyline token1Polyline1;
-    @FXML
-    private Polyline token1Polyline2;
-    @FXML
-    private Polyline token1Polyline3;
-    @FXML
-    private Polyline token1Polyline4;
-    @FXML
-    private Circle token1Circle3;
-    @FXML
-    private Line token1Line1;
-    @FXML
-    private Line token1Line2;
-    @FXML
-    private Line token1Line3;
-    @FXML
-    private Label token1LabelBetUser;
+    private Button validBetButton = new Button();
+    private Button returnMainMenuButton = new Button();
+    private Button actionSplitButton = new Button();
 
-    /** deuxième jeton **/
-    @FXML
-    private Circle token2Circle1;
-    @FXML
-    private Circle token2Circle2;
-    @FXML
-    private Rectangle token2Rectangle1;
-    @FXML
-    private Rectangle token2Rectangle2;
-    @FXML
-    private Rectangle token2Rectangle3;
-    @FXML
-    private Rectangle token2Rectangle4;
-    @FXML
-    private Polyline token2Polyline1;
-    @FXML
-    private Polyline token2Polyline2;
-    @FXML
-    private Polyline token2Polyline3;
-    @FXML
-    private Polyline token2Polyline4;
-    @FXML
-    private Circle token2Circle3;
-    @FXML
-    private Line token2Line1;
-    @FXML
-    private Line token2Line2;
-    @FXML
-    private Line token2Line3;
-    @FXML
-    private Label token2LabelBetUser;
-
-    /** Toutes les cartes ***********************************************************/
-
-    /** Tous les as **/
-    @FXML
-    private ImageView pictureAsOfHeart;
-    @FXML
-    private ImageView pictureAsOfClover;
-    @FXML
-    private ImageView pictureAsOfSpade;
-    @FXML
-    private ImageView pictureAsOfSquare;
-
-    /** Tous les deux **/
-    @FXML
-    private ImageView pictureTwoOfHeart;
-    @FXML
-    private ImageView pictureTwoOfClover;
-    @FXML
-    private ImageView pictureTwoOfSpade;
-    @FXML
-    private ImageView pictureTwoOfSquare;
-
-    /** Tous les trois **/
-    @FXML
-    private ImageView pictureThreeOfHeart;
-    @FXML
-    private ImageView pictureThreeOfSpade;
-    @FXML
-    private ImageView pictureThreeOfClover;
-    @FXML
-    private ImageView pictureThreeOfSquare;
-
-    /** Tous les quatre **/
-    @FXML
-    private ImageView pictureFourOfHeart;
-    @FXML
-    private ImageView pictureFourOfSpade;
-    @FXML
-    private ImageView pictureFourOfClover;
-    @FXML
-    private ImageView pictureFourOfSquare;
-
-    /** Tous les cinq **/
-    @FXML
-    private ImageView pictureFiveOfHeart;
-    @FXML
-    private ImageView pictureFiveOfSpade;
-    @FXML
-    private ImageView pictureFiveOfClover;
-    @FXML
-    private ImageView pictureFiveOfSquare;
-
-    /** Tous les six **/
-    @FXML
-    private ImageView pictureSixOfHeart;
-    @FXML
-    private ImageView pictureSixOfSpade;
-    @FXML
-    private ImageView pictureSixOfClover;
-    @FXML
-    private ImageView pictureSixOfSquare;
-
-    /** Tous les sept **/
-    @FXML
-    private ImageView pictureSevenOfHeart;
-    @FXML
-    private ImageView pictureSevenOfSpade;
-    @FXML
-    private ImageView pictureSevenOfClover;
-    @FXML
-    private ImageView pictureSevenOfSquare;
-
-    /** Tous les huit **/
-    @FXML
-    private ImageView pictureEightOfHeart;
-    @FXML
-    private ImageView pictureEightOfSpade;
-    @FXML
-    private ImageView pictureEightOfClover;
-    @FXML
-    private ImageView pictureEightOfSquare;
-
-    /** Tous les neuf **/
-    @FXML
-    private ImageView pictureNineOfHeart;
-    @FXML
-    private ImageView pictureNineOfSpade;
-    @FXML
-    private ImageView pictureNineOfClover;
-    @FXML
-    private ImageView pictureNineOfSquare;
-
-    /** Tous les dix **/
-    @FXML
-    private ImageView pictureTenOfHeart;
-    @FXML
-    private ImageView pictureTenOfSpade;
-    @FXML
-    private ImageView pictureTenOfClover;
-    @FXML
-    private ImageView pictureTenOfSquare;
-
-    /** Tous les valets **/
-    @FXML
-    private ImageView pictureJackOfHeart;
-    @FXML
-    private ImageView pictureJackOfSpade;
-    @FXML
-    private ImageView pictureJackOfClover;
-    @FXML
-    private ImageView pictureJackOfSquare;
-
-    /** Toutes les reines **/
-    @FXML
-    private ImageView pictureQueenOfHeart;
-    @FXML
-    private ImageView pictureQueenOfSpade;
-    @FXML
-    private ImageView pictureQueenOfClover;
-    @FXML
-    private ImageView pictureQueenOfSquare;
-
-    /** Tous les rois **/
-    @FXML
-    private ImageView pictureKingOfHeart;
-    @FXML
-    private ImageView pictureKingOfSpade;
-    @FXML
-    private ImageView pictureKingOfClover;
-    @FXML
-    private ImageView pictureKingOfSquare;
+    private Circle circleRule = new Circle();
 
     public BlackJackMenuController(User user,Stage stage){
-        this.user = user;
         this.stage = stage;
+        this.user = user;
     }
 
-    public void initialize(){
-        labelToken.setText("Jetons : "+user.getNumberOfToken());
-        labelPseudo.setText("Joueur : "+user.getPseudo());
+    public void setting(){
+        stage.setTitle("Menu Black Jack");
+        scene = new Scene(root,800,800);
+        stage.setScene(scene);
+
+        setUpScene.setRectangle(zoneBetUser1,327.0,600.0,174.0,147.0,5.0,5.0,Paint.valueOf("#158000"),Paint.valueOf("BLACK"),5.0,StrokeType.INSIDE,true,anchorPane);
+        setUpScene.setRectangle(zoneBetUser2,550,600.0,174.0,147.0,5.0,5.0,Paint.valueOf("#158000"),Paint.valueOf("BLACK"),5.0,StrokeType.INSIDE,false,anchorPane);
+        setUpScene.setLabel(labelToken,"Jeton : "+user.getNumberOfToken(), Pos.CENTER_LEFT,30.0,660.0,55.0,163.0,new Font(30.0), Paint.valueOf("BLACK"),true,anchorPane);
+        setUpScene.setLabel(labelProfit,"Gain : 0", Pos.CENTER_LEFT, 30.0,720.0,55.0,163.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setUpScene.setLabel(labelPseudo,"Joueur : "+user.getPseudo(), Pos.CENTER_LEFT,30.0,600.0,55.0,308.0,new Font(30.0),Color.BLACK,true,anchorPane);
+        setUpScene.setLabel(labelError,"Erreur :", Pos.CENTER,150.0,460.0,36.0,500.0,new Font(30.0),Color.RED,false,anchorPane);
+        setUpScene.setTextField(textBetUser,"Votre mise", Pos.CENTER,280.0,380.0,79.0,252.0,new Font(30.0),true,anchorPane);
+        setUpScene.setButton(returnMainMenuButton,"Quitter",Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
+        setUpScene.setButton(actionSplitButton,"Split",Pos.CENTER,300.0,10.0,72.0,163.0,new Font(30.0),false,anchorPane);
+        setUpScene.setButton(validBetButton,"Miser",Pos.CENTER,320.0,500.0,72.0,163.0,new Font(30.0),true,anchorPane);
+        setUpScene.setCircle(circleRule,16.0,770.0,30.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,true,anchorPane);
+        setUpScene.setLabel(labelRule,"?",Pos.CENTER,754.0,15.0,23,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setUpScene.setTextArea(textRule,50,46.0,600.0,700.0,false,false,anchorPane);
+
+        initToken1();
+        initToken2();
         setRule();
+
+        returnMainMenuButton.setOnMouseClicked((event) -> {
+            returnMainMenu();
+        });
+
+        actionSplitButton.setOnMouseClicked((event)->{
+            actionSplit(event);
+        });
+
+        validBetButton.setOnMouseClicked((event)->{
+            validBet();
+        });
+
+        root.getChildren().add(anchorPane);
+        stage.show();
     }
 
-    /** Méthode pour valider la mise **/
-    public void validBet(MouseEvent mouseEvent) {
-        if(textBetUser.getText().isEmpty()){
+    private void initToken1(){
+        Circle circle = new Circle();
+        setUpScene.setCircle(circle,41.0,400.0,685.0, Paint.valueOf("#1d2fd7"),Paint.valueOf("BLACK"), StrokeType.INSIDE,2.0,false,anchorPane);
+        token1.add(circle);
+        circle = new Circle();
+        setUpScene.setCircle(circle,41.0,400.0,675.0,Paint.valueOf("#1d2fd7"),Paint.valueOf("BLACK"), StrokeType.INSIDE, 2.0,false,anchorPane);
+        token1.add(circle);
+
+        Rectangle rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle, 393.0, 637.0,22.0,15.0,5.0,5.0,Paint.valueOf("WHITE"),Paint.valueOf("WHITE"),1,StrokeType.INSIDE,false,anchorPane);
+        token1.add(rectangle);
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle, 393.0, 687.0,37.0,15.0,5.0,5.0,Paint.valueOf("WHITE"),Paint.valueOf("WHITE"),1.0,StrokeType.INSIDE,false,anchorPane);
+        token1.add(rectangle);
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle, 362.0, 670.0,14.0,25.0,5.0,5.0,Paint.valueOf("WHITE"),Paint.valueOf("WHITE"),1.0,StrokeType.INSIDE,false,anchorPane);
+        token1.add(rectangle);
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle, 415.0, 669.0,14.0,24.0,5.0,5.0,Paint.valueOf("WHITE"),Paint.valueOf("WHITE"),1.0,StrokeType.INSIDE,false,anchorPane);
+        token1.add(rectangle);
+
+        Polyline polyline = new Polyline();
+        setUpScene.setPolyline(polyline,379.0,699.0,Paint.valueOf("WHITE"),Paint.valueOf("WHITE"),StrokeType.INSIDE,new double[]{-13.75,4.25,0.75,-12.0,10.5,-3.0,-4.75,17.0},false,anchorPane);
+        token1.add(polyline);
+        polyline = new Polyline();
+        setUpScene.setPolyline(polyline,424.0,702.0,Paint.valueOf("WHITE"),Paint.valueOf("WHITE"),StrokeType.INSIDE,new double[]{4.75, 8.5, -12.0, -8.75, -4.75, -17.75, 12.5, -2.75},false,anchorPane);
+        token1.add(polyline);
+        polyline = new Polyline();
+        setUpScene.setPolyline(polyline,371.0,639.0,Paint.valueOf("WHITE"),Paint.valueOf("WHITE"),StrokeType.INSIDE,new double[]{7.5, 4.25, 19.25, 15.75, 9.5, 27.75, -2.0, 13.25},false,anchorPane);
+        token1.add(polyline);
+        polyline = new Polyline();
+        setUpScene.setPolyline(polyline,425.0,651.0,Paint.valueOf("WHITE"),Paint.valueOf("WHITE"),StrokeType.INSIDE, new double[]{-13.75, 4.25, -2.0, -7.0, 6.75, 2.5, -4.75, 17.0},false,anchorPane);
+        token1.add(polyline);
+
+        circle = new Circle();
+        setUpScene.setCircle(circle,23.0,400.0,675.0,Paint.valueOf("DODGERBLUE"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,false,anchorPane);
+        token1.add(circle);
+
+        Line line = new Line();
+        setUpScene.setLine(line,493.0,714.0,-100.0,-85.25, 0, 0,Paint.valueOf("BLACK"),2.0,false,anchorPane);
+        token1.add(line);
+        line = new Line();
+        setUpScene.setLine(line,468.0,700.0,-99.5,-87.75, -1.0, 9.5,Paint.valueOf("BLACK"),2.0,false,anchorPane);
+        token1.add(line);
+        line = new Line();
+        setUpScene.setLine(line,522.0,702.0,-97.5,-88.0, 5.25, -5.75,Paint.valueOf("BLACK"),2.0,false,anchorPane);
+        token1.add(line);
+
+        setUpScene.setLabel(labelToken1,"0",Pos.CENTER,341.0,600.0,148.0,119.0,new Font(30.0),Color.BLACK,false,anchorPane);
+    }
+
+    private void initToken2(){
+        Circle circle = new Circle();
+        setUpScene.setCircle(circle,41.0,625.0,685.0, Paint.valueOf("#1d2fd7"),Paint.valueOf("BLACK"), StrokeType.INSIDE,2.0,false,anchorPane);
+        token2.add(circle);
+        circle = new Circle();
+        setUpScene.setCircle(circle,41.0,625,675.0,Paint.valueOf("#1d2fd7"),Paint.valueOf("BLACK"), StrokeType.INSIDE, 2.0,false,anchorPane);
+        token2.add(circle);
+
+        Rectangle rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,618.0, 637.0,22.0,15.0,5.0,5.0,Paint.valueOf("WHITE"),Paint.valueOf("WHITE"),1,StrokeType.INSIDE,false,anchorPane);
+        token2.add(rectangle);
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle, 618.0, 687.0,37.0,15.0,5.0,5.0,Paint.valueOf("WHITE"),Paint.valueOf("WHITE"),1.0,StrokeType.INSIDE,false,anchorPane);
+        token2.add(rectangle);
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle, 587.0, 670.0,14.0,25.0,5.0,5.0,Paint.valueOf("WHITE"),Paint.valueOf("WHITE"),1.0,StrokeType.INSIDE,false,anchorPane);
+        token2.add(rectangle);
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle, 640.0, 669.0,14.0,24.0,5.0,5.0,Paint.valueOf("WHITE"),Paint.valueOf("WHITE"),1.0,StrokeType.INSIDE,false,anchorPane);
+        token2.add(rectangle);
+
+        Polyline polyline = new Polyline();
+        setUpScene.setPolyline(polyline,604.0,699.0,Paint.valueOf("WHITE"),Paint.valueOf("WHITE"),StrokeType.INSIDE,new double[]{-13.75, 4.25, 0.75, -12.0, 10.5, -3.0, -4.75, 17.0},false,anchorPane);
+        token2.add(polyline);
+        polyline = new Polyline();
+        setUpScene.setPolyline(polyline,649,702.0,Paint.valueOf("WHITE"),Paint.valueOf("WHITE"),StrokeType.INSIDE,new double[]{4.75, 8.5, -12.0, -8.75, -4.75, -17.75, 12.5, -2.75},false,anchorPane);
+        token2.add(polyline);
+        polyline = new Polyline();
+        setUpScene.setPolyline(polyline,596,639.0,Paint.valueOf("WHITE"),Paint.valueOf("WHITE"),StrokeType.INSIDE,new double[]{7.5, 4.25, 19.25, 15.75, 9.5, 27.75, -2.0, 13.25},false,anchorPane);
+        token2.add(polyline);
+        polyline = new Polyline();
+        setUpScene.setPolyline(polyline,652,651.0,Paint.valueOf("WHITE"),Paint.valueOf("WHITE"),StrokeType.INSIDE, new double[]{-13.75, 4.25, -2.0, -7.0, 6.75, 2.5, -4.75, 17.0},false,anchorPane);
+        token2.add(polyline);
+
+        circle = new Circle();
+        setUpScene.setCircle(circle,23.0,625,675.0,Paint.valueOf("DODGERBLUE"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,false,anchorPane);
+        token2.add(circle);
+
+        Line line = new Line();
+        setUpScene.setLine(line,718.0,714.0,-100.0,-85.25,0, 0,Paint.valueOf("BLACK"),2.0,false,anchorPane);
+        token2.add(line);
+        line = new Line();
+        setUpScene.setLine(line,693,700.0,-99.5,-87.75, -1.0, 9.5,Paint.valueOf("BLACK"),2.0,false,anchorPane);
+        token2.add(line);
+        line = new Line();
+        setUpScene.setLine(line,747,702.0,-97.5,-88.0, 5.25, -5.75,Paint.valueOf("BLACK"),2.0,false,anchorPane);
+        token2.add(line);
+
+        setUpScene.setLabel(labelToken2,"0",Pos.CENTER,566,600.0,148.0,119.0,new Font(30.0),Color.BLACK,false,anchorPane);
+    }
+
+    /**
+     * Méthode pour écrire les règles du jeux dans une zone de texte
+     **/
+    private void setRule() {
+        try {
+            File fileRuleBlackJack = new File("Regles-BlackJack.txt");
+            BufferedReader buffer = new BufferedReader(new FileReader(fileRuleBlackJack));
+            String line;
+
+            while ((line = buffer.readLine()) != null) {
+                textRule.setText(textRule.getText() + "\n" + line);
+            }
+        } catch (FileNotFoundException fileNotFoundException) {
+            System.out.println("fichier règle non trouvé");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        labelRule.setOnMouseEntered((event)->{
+            showRule();
+        });
+        labelRule.setOnMouseExited((event)->{
+            hideRule();
+        });
+    }
+
+    /**
+     * Méthode pour modifier la visibilité du second jetons (en cas de split)
+     **/
+    public void setTokenVisible(List<Shape> token, boolean visible) {
+        for(int index = 0; index < token.size(); index ++){
+            token.get(index).setVisible(visible);
+        }
+    }
+
+    /**
+     * Méthode pour valider la mise
+     **/
+    public void validBet() {
+        if (textBetUser.getText().isEmpty()) {
             labelError.setText("Il faut entrer une mise");
             labelError.setVisible(true);
-        }
-        else {
+        } else {
             try {
                 int valueOfBet = Integer.parseInt(textBetUser.getText());
 
@@ -300,13 +273,13 @@ public class BlackJackMenuController {
                         labelError.setVisible(false);
                         // ajouter valueOfBet à bet dans la classe BlackJack
                         textBetUser.setVisible(false);
-                        buttonValidBet.setVisible(false);
+                        validBetButton.setVisible(false);
 
                         user.removeToken(valueOfBet);
-                        token1LabelBetUser.setText("1"); // recup valeur de bet
+                        labelToken1.setText("1"); // recup valeur de bet
                         labelToken.setText("Jetons : " + user.getNumberOfToken());
 
-                        setToken1Visible(true);
+                        setTokenVisible(token1,true);
                         startingGame();
                     }
                 }
@@ -316,173 +289,127 @@ public class BlackJackMenuController {
         }
     }
 
-    /** Méthode pour retourner une carte précise parmis les 52 cartes **/
-    public ImageView chooseCard(int cardNumber, String cardRank){
-        switch (cardNumber){
-            case 1 :
-                return getCardByRank(cardRank, pictureAsOfHeart, pictureAsOfSpade, pictureAsOfClover, pictureAsOfSquare);
-            case 2 :
-                return getCardByRank(cardRank, pictureTwoOfHeart, pictureTwoOfSpade, pictureTwoOfClover, pictureTwoOfSquare);
-            case 3 :
-                return getCardByRank(cardRank, pictureThreeOfHeart, pictureThreeOfSpade, pictureThreeOfClover, pictureThreeOfSquare);
-            case 4 :
-                return getCardByRank(cardRank, pictureFourOfHeart, pictureFourOfSpade, pictureFourOfClover, pictureFourOfSquare);
-            case 5 :
-                return getCardByRank(cardRank, pictureFiveOfHeart, pictureFiveOfSpade, pictureFiveOfClover, pictureFiveOfSquare);
-            case 6 :
-                return getCardByRank(cardRank, pictureSixOfHeart, pictureSixOfSpade, pictureSixOfClover, pictureSixOfSquare);
-            case 7 :
-                return getCardByRank(cardRank, pictureSevenOfHeart, pictureSevenOfSpade, pictureSevenOfClover, pictureSevenOfSquare);
-            case 8 :
-                return getCardByRank(cardRank, pictureEightOfHeart, pictureEightOfSpade, pictureEightOfClover, pictureEightOfSquare);
-            case 9 :
-                return getCardByRank(cardRank, pictureNineOfHeart, pictureNineOfSpade, pictureNineOfClover, pictureNineOfSquare);
-            case 10 :
-                return getCardByRank(cardRank, pictureTenOfHeart, pictureTenOfSpade, pictureTenOfClover, pictureTenOfSquare);
-            case 11 :
-                return getCardByRank(cardRank, pictureJackOfHeart, pictureJackOfSpade, pictureJackOfClover, pictureJackOfSquare);
-            case 12 :
-                return getCardByRank(cardRank, pictureQueenOfHeart, pictureQueenOfSpade, pictureQueenOfClover, pictureQueenOfSquare);
-            case 13 :
-                return getCardByRank(cardRank, pictureKingOfHeart, pictureKingOfSpade, pictureKingOfClover, pictureKingOfSquare);
-            default: return null;
-        }
-    }
-
-    /** Méthode pour retourner une carte parmis 4 cartes et un symbole **/
-    private ImageView getCardByRank(String cardRank, ImageView cardOfHeart, ImageView cardOfSpade, ImageView cardOfClover, ImageView cardOfSquare) {
-        switch (cardRank){
-            case "HEART" :
-                return cardOfHeart;
-            case "SPADE" :
-                return cardOfSpade;
-            case "CLOVER" :
-                return cardOfClover;
-            case "SQUARE" :
-                return cardOfSquare;
-            default: return null;
-        }
-    }
-
-    /** Méthode pour modifier la position d'une carte **/
-    private void setUpCard(ImageView card, int positionX, int positionY){
-        card.setLayoutX(positionX);
-        card.setLayoutY(positionY);
-        card.setVisible(true);
-    }
-
-    /** Méthode pour commencer une partie de black jack **/
-    public void startingGame(){
+    /**
+     * Méthode pour commencer une partie de black jack
+     **/
+    public void startingGame() {
         int positionXUser = ORIGIN_X_FIRST_HAND;
         int positionXCroupier = ORIGIN_X_Croupier;
         ImageView card;
 
         // test de fonctionnement
-        card = chooseCard(1,"HEART");
-        listCardUserFirstHand.add(card);
-        setUpCard(card,positionXUser,ORIGIN_Y_USER);
+        card = chooseCard(1, "HEART");
+        userFirstHand.add(card);
+        setUpCard(card, positionXUser, ORIGIN_Y_USER);
         positionXUser += 50;
 
-        setUpCard(chooseCard(8,"SPADE"),positionXCroupier,ORIGIN_Y_CROUPIER);
+        setUpCard(chooseCard(8, "SPADE"), positionXCroupier, ORIGIN_Y_CROUPIER);
         positionXCroupier += 50;
 
-        card = chooseCard(12,"HEART");
-        listCardUserFirstHand.add(card);
-        setUpCard(card,positionXUser,ORIGIN_Y_USER);
+        card = chooseCard(12, "HEART");
+        userFirstHand.add(card);
+        setUpCard(card, positionXUser, ORIGIN_Y_USER);
         positionXUser += 50;
     }
 
-    /** Méthode pour modifier la visibilité du premier jeton **/
-    public void setToken1Visible(boolean tokenState){
-        token1Circle1.setVisible(tokenState);
-        token1Circle2.setVisible(tokenState);
-        token1Rectangle1.setVisible(tokenState);
-        token1Rectangle2.setVisible(tokenState);
-        token1Rectangle3.setVisible(tokenState);
-        token1Rectangle4.setVisible(tokenState);
-        token1Polyline1.setVisible(tokenState);
-        token1Polyline2.setVisible(tokenState);
-        token1Polyline3.setVisible(tokenState);
-        token1Polyline4.setVisible(tokenState);
-        token1Circle3.setVisible(tokenState);
-        token1Line1.setVisible(tokenState);
-        token1Line2.setVisible(tokenState);
-        token1Line3.setVisible(tokenState);
-        token1LabelBetUser.setVisible(true);
-    }
-
-    /** Méthode pour modifier la visibilité du second jetons (en cas de split) **/
-    public void setToken2Visible(boolean tokenState){
-        token2Circle1.setVisible(tokenState);
-        token2Circle2.setVisible(tokenState);
-        token2Rectangle1.setVisible(tokenState);
-        token2Rectangle2.setVisible(tokenState);
-        token2Rectangle3.setVisible(tokenState);
-        token2Rectangle4.setVisible(tokenState);
-        token2Polyline1.setVisible(tokenState);
-        token2Polyline2.setVisible(tokenState);
-        token2Polyline3.setVisible(tokenState);
-        token2Polyline4.setVisible(tokenState);
-        token2Circle3.setVisible(tokenState);
-        token2Line1.setVisible(tokenState);
-        token2Line2.setVisible(tokenState);
-        token2Line3.setVisible(tokenState);
-        token2LabelBetUser.setVisible(true);
-    }
-
-    /** Méthode pour l'action split (2 carte de même numéro) **/
-    public void actionSplit(MouseEvent mouseEvent){
+    /**
+     * Méthode pour l'action split (2 carte de même numéro)
+     **/
+    public void actionSplit(MouseEvent mouseEvent) {
         zoneBetUser2.setVisible(true);
-        setToken2Visible(true);
-        token2LabelBetUser.setText(token1LabelBetUser.getText());
+        setTokenVisible(token2,true);
+        labelToken2.setText(labelToken1.getText());
 
-        listCardUserSecondHand.add(listCardUserFirstHand.get(listCardUserFirstHand.size() - 1));
-        listCardUserFirstHand.remove(listCardUserFirstHand.size() - 1);
-        setUpCard(listCardUserSecondHand.get(0),ORIGIN_X_SECOND_HAND,ORIGIN_Y_USER);
+
+
+        userSecondHand.add(userFirstHand.get(userFirstHand.size() - 1));
+        userFirstHand.remove(userFirstHand.size() - 1);
+        setUpCard(userSecondHand.get(0), ORIGIN_X_SECOND_HAND, ORIGIN_Y_USER);
     }
 
-    /** Méthode pour quitter le jeu et retourner dans le menu principale **/
-    public void returnMainMenu(ActionEvent actionEvent) throws Exception{
-        try {
-            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("mainMenuSample.fxml"));
-            loader.setControllerFactory(c -> new MainMenuController(user,stage));
-            Parent root = loader.load();
-            Scene scene = new Scene(root, 800, 800);
-            //scene.getStylesheets().add(getClass().getResource("mainMenu.css").toExternalForm());
-            Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-            window.setScene(scene);
-            window.show();
-        } catch (IIOException var7) {
-            var7.printStackTrace();
+    /**
+     * Méthode pour retourner une carte précise parmis les 52 cartes
+     **/
+    public ImageView chooseCard(int cardNumber, String cardRank) {
+        switch (cardNumber) {
+            case 1:
+                return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/asOfHeart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/asOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/asOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/asOfSquare.jpg").toExternalForm()));
+            case 2:
+                return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/twoOfheart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/twoOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/twoOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/twoOfSquare.jpg").toExternalForm()));
+            case 3:
+                return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/threeOfHeart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/threeOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/threeOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/threeOfSquare.jpg").toExternalForm()));
+            case 4:
+                return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/fourOfheart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/fourOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/fourOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/fourOfSquare.jpg").toExternalForm()));
+            case 5:
+                return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/fiveOfHeart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/fiveOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/fiveOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/fiveOfSquare.jpg").toExternalForm()));
+            case 6:
+                return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/sixOfheart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/sixOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/sixOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/sixOfSquare.jpg").toExternalForm()));
+            case 7:
+                return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/sevenOfHeart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/sevenOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/sevenofClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/sevenOfSquare.jpg").toExternalForm()));
+            case 8:
+                return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/eightOfHeart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/eightOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/eightOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/eightOfSquare.jpg").toExternalForm()));
+            case 9:
+                return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/nineOfheart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/nineOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/nineOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/nineOfSquare.jpg").toExternalForm()));
+            case 10:
+                return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/tenOfHeart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/tenOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/tenOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/tenOfSquare.jpg").toExternalForm()));
+            case 11:
+                return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/jackOfHeart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/jackOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/jackOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/jackOfSquare.jpg").toExternalForm()));
+            case 12:
+                return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/queenOfHeart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/queenOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/queenOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/queenOfSquare.jpg").toExternalForm()));
+            case 13:
+                return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/kingOfHeart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/kingOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/kingOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/kingOfClover.jpg").toExternalForm()));
+            default:
+                return null;
         }
     }
 
-    /** Méthode pour écrire les règles du jeux dans une zone de texte **/
-    private void setRule(){
-        try {
-            File fileRuleBlackJack = new File("Regles-BlackJack.txt");
-            BufferedReader buffer = new BufferedReader(new FileReader(fileRuleBlackJack));
-            String line;
-
-            while((line = buffer.readLine()) != null){
-                textRule.setText(textRule.getText()+ "\n" + line);
-            }
-        }
-        catch (FileNotFoundException fileNotFoundException){
-            System.out.println("fichier règle non trouvé");
-        }
-        catch (Exception e){
-            e.printStackTrace();
+    /**
+     * Méthode pour retourner une carte parmis 4 cartes et un symbole
+     **/
+    private ImageView getCardByRank(String cardRank, Image cardOfHeart, Image cardOfSpade, Image cardOfClover, Image cardOfSquare) {
+        switch (cardRank) {
+            case "HEART":
+                return new ImageView(cardOfHeart);
+            case "SPADE":
+                return new ImageView(cardOfSpade);
+            case "CLOVER":
+                return new ImageView(cardOfClover);
+            case "SQUARE":
+                return new ImageView(cardOfSquare);
+            default:
+                return null;
         }
     }
 
-    /** Méthode qui montre la zone de texte contenant les règles **/
-    public void showRule(MouseEvent mouseEvent) {
+    /**
+     * Méthode pour modifier la position d'une carte
+     **/
+    private void setUpCard(ImageView card, int positionX, int positionY) {
+        anchorPane.getChildren().add(card);
+        card.setLayoutX(positionX);
+        card.setLayoutY(positionY);
+        card.setVisible(true);
+    }
+
+    /**
+     * Méthode pour quitter le jeu et retourner dans le menu principale
+     **/
+    public void returnMainMenu(){
+        MainMenuController mainMenuController = new MainMenuController(stage,user);
+        mainMenuController.setting();
+    }
+
+    /**
+     * Méthode qui montre la zone de texte contenant les règles
+     **/
+    public void showRule() {
         textRule.setVisible(true);
     }
 
-    /** Méthode qui cacher la zone de texte contenant les règles **/
-    public void hideRule(MouseEvent mouseEvent) {
+    /**
+     * Méthode qui cacher la zone de texte contenant les règles
+     **/
+    public void hideRule() {
         textRule.setVisible(false);
     }
 }

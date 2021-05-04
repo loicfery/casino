@@ -60,7 +60,7 @@ public class InformationMenuController {
     }
 
     public void clickReturn(ActionEvent actionEvent) throws Exception{
-        try {
+       /* try {
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("mainMenuSample.fxml"));
             loader.setControllerFactory(c -> new MainMenuController(user,stage));
             Parent root = loader.load();
@@ -71,7 +71,7 @@ public class InformationMenuController {
             window.show();
         } catch (IIOException var7) {
             var7.printStackTrace();
-        }
+        }*/
     }
 
     public void getUserInformation(String email){

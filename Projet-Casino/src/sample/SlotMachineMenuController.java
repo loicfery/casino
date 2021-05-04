@@ -1,21 +1,22 @@
 package sample;
 
-import games.Bet;
 import games.User;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import javax.imageio.IIOException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,77 +24,79 @@ import java.io.FileReader;
 
 public class SlotMachineMenuController {
 
+    private BorderPane root = new BorderPane();
+    private Scene scene;
     private Stage stage;
-
+    private AnchorPane anchorPane = new AnchorPane();
+    private SetupScene setUpScene = new SetupScene();
     private User user;
-    private Bet bet = new Bet();
 
-    @FXML
-    private ImageView pictureSlot1Seven;
-    @FXML
-    private ImageView pictureSlot2Seven;
-    @FXML
-    private ImageView pictureSlot3Seven;
+    private Rectangle cadreSlotMachine = new Rectangle();
 
-    @FXML
-    private ImageView pictureSlot1Cherry;
-    @FXML
-    private ImageView pictureSlot2Cherry;
-    @FXML
-    private ImageView pictureSlot3Cherry;
+    private Circle circleRule = new Circle();
 
-    @FXML
-    private ImageView pictureSlot1Lemon;
-    @FXML
-    private ImageView pictureSlot2Lemon;
-    @FXML
-    private ImageView pictureSlot3Lemon;
+    private Button startingGameButton = new Button();
+    private Button returnMainMenuButton = new Button();
 
-    @FXML
-    private ImageView pictureSlot1Watermelon;
-    @FXML
-    private ImageView pictureSlot2Watermelon;
-    @FXML
-    private ImageView pictureSlot3Watermelon;
+    private ImageView pictureSlot1 = new ImageView();
+    private ImageView pictureSlot2 = new ImageView();
+    private ImageView pictureSlot3 = new ImageView();
 
-    @FXML
-    private Label labelProfit;
+    private Label labelToken = new Label();
+    private Label labelProfit = new Label();
+    private Label labelUserPseudo = new Label();
+    private Label labelRule = new Label();
+    private Label labelError = new Label();
 
-    public Label labelToken;
-    @FXML
-    private Label labelError;
-    @FXML
-    private Label labelUserPseudo;
+    private TextArea textRule = new TextArea();
 
-    @FXML
-    private Button startingGameButton;
-    @FXML
-    private Button returnMainMenu;
-
-    @FXML
-    private TextArea textRule;
-
-    private ImageView currentPictureSlot1;
-    private ImageView currentPictureSlot2;
-    private ImageView currentPictureSlot3;
-
-    public SlotMachineMenuController(User user,Stage stage){
+    public SlotMachineMenuController(User user, Stage stage){
         this.user = user;
         this.stage = stage;
     }
 
-    public void initialize(){
-        textRule.setEditable(false);
+    public void setting(){
+        stage.setTitle("Machine à sous");
+        scene = new Scene(root,800,800);
+        stage.setScene(scene);
+
+        setUpScene.setRectangle(cadreSlotMachine,105.0,275.0,199.0,601.0,5.0,5.0, Paint.valueOf("RED"),Paint.valueOf("RED"),1.0, StrokeType.INSIDE,true,anchorPane);
+        setUpScene.setButton(startingGameButton,"Actionner", Pos.CENTER,504.0,615.0,134.0,256.0,new Font(25),true,anchorPane);
+        setUpScene.setImageView(pictureSlot1,130.0,300.0,150.0,151.0,new Image(getClass().getResource("image/slot_machine_seven.jpg").toExternalForm()),true,anchorPane);
+        setUpScene.setImageView(pictureSlot2,330,300.0,150.0,151.0,new Image(getClass().getResource("image/slot_machine_seven.jpg").toExternalForm()),true,anchorPane);
+        setUpScene.setImageView(pictureSlot3,530.0,300.0,150.0,151.0,new Image(getClass().getResource("image/slot_machine_seven.jpg").toExternalForm()),true,anchorPane);
+        setUpScene.setLabel(labelProfit,"Gain : 0",Pos.CENTER_LEFT,39.0,686.0,63.0,455.0,new Font(33.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setUpScene.setLabel(labelToken,"Jetons : "+user.getNumberOfToken(),Pos.CENTER_LEFT,39.0,615.0,70.0,455.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setUpScene.setLabel(labelUserPseudo,"Joueur : "+user.getPseudo(),Pos.CENTER_LEFT,39.0,565.0,50.0,463.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setUpScene.setButton(returnMainMenuButton,"Quitter",Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
+        setUpScene.setCircle(circleRule,16.0,770.0,30.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,true,anchorPane);
+        setUpScene.setLabel(labelRule,"?",Pos.CENTER,754.0,15.0,23.0,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setUpScene.setLabel(labelError,"Erreur : ",Pos.CENTER,280.0,488.0,50.0,401.0,new Font(20.0),Paint.valueOf("RED"),false,anchorPane);
+        setUpScene.setTextArea(textRule,200.0,46.0,376.0,560.0,false,false,anchorPane);
+
+        startingGameButton.setOnMouseClicked((event)->{
+            startingGame();
+        });
+
+        labelRule.setOnMouseEntered((event)->{
+            showRule();
+        });
+
+        labelRule.setOnMouseExited((event)->{
+            hideRule();
+        });
+
+        returnMainMenuButton.setOnMouseClicked((event)->{
+            returnMainMenu();
+        });
+
         setRule();
 
-        currentPictureSlot1 = pictureSlot1Seven;
-        currentPictureSlot2 = pictureSlot2Seven;
-        currentPictureSlot3 = pictureSlot3Seven;
-
-        labelUserPseudo.setText("Joueur : "+user.getPseudo());
-        labelToken.setText("Vos jetons : "+user.getNumberOfToken());
+        root.getChildren().add(anchorPane);
+        stage.show();
     }
 
+    /** Méthode qui permet d'écrire le texte pour pouvoir l'afficher **/
     private void setRule(){
         try {
             File fileRuleSlotMachine = new File("Regles-SlotMachine.txt");
@@ -112,79 +115,54 @@ public class SlotMachineMenuController {
         }
     }
 
-    /** Change l'image d'un des trois slots **/
-    public void switchPictureSlot(int element, int slot){
-        currentPictureSlot1.setVisible(false);
-        currentPictureSlot2.setVisible(false);
-        currentPictureSlot3.setVisible(false);
-
-        switch (element) {
+    /** Méthode qui change l'image d'un slot d'après le symbole tiré **/
+    private void switchPicture(int symbol, int slot){
+        switch (symbol) {
             case 1:
             case 7:
             case 10:
-                if(slot == 1) {
-                    currentPictureSlot1 = pictureSlot1Lemon;
-                }
-                if(slot == 2) {
-                    currentPictureSlot2 = pictureSlot2Lemon;
-                }
-                if(slot == 3) {
-                    currentPictureSlot3 = pictureSlot3Lemon;
-                }
+                switchPictureSlot(slot, new Image(getClass().getResource("image/slot_machine_lemon.jpg").toExternalForm()));
                 break;
             case 2:
             case 4:
             case 6:
             case 8:
-                if(slot == 1) {
-                    currentPictureSlot1 = pictureSlot1Watermelon;
-                }
-                if(slot == 2) {
-                    currentPictureSlot2 = pictureSlot2Watermelon;
-                }
-                if(slot == 3) {
-                    currentPictureSlot3 = pictureSlot3Watermelon;
-                }
+                switchPictureSlot(slot,new Image(getClass().getResource("image/slot_machine_watermelon.jpg").toExternalForm()));
                 break;
             case 3:
             case 9:
-                if(slot == 1) {
-                    currentPictureSlot1 = pictureSlot1Cherry;
-                }
-                if(slot == 2) {
-                    currentPictureSlot2 = pictureSlot2Cherry;
-                }
-                if(slot == 3) {
-                    currentPictureSlot3 = pictureSlot3Cherry;
-                }
+                switchPictureSlot(slot,new Image(getClass().getResource("image/slot_machine_cherry.jpg").toExternalForm()));
                 break;
             case 5:
-                if(slot == 1) {
-                    currentPictureSlot1 = pictureSlot1Seven;
-                }
-                if(slot == 2) {
-                    currentPictureSlot2 = pictureSlot2Seven;
-                }
-                if(slot == 3) {
-                    currentPictureSlot3 = pictureSlot3Seven;
-                }
+                switchPictureSlot(slot,new Image(getClass().getResource("image/slot_machine_seven.jpg").toExternalForm()));
                 break;
         }
-        currentPictureSlot1.setVisible(true);
-        currentPictureSlot2.setVisible(true);
-        currentPictureSlot3.setVisible(true);
+    }
+
+    /** Change l'image d'un slot avec l'image en paramètre **/
+    private void switchPictureSlot(int slot, Image newPicture){
+        switch (slot) {
+            case 1 :
+                pictureSlot1.setImage(newPicture);
+                break;
+            case 2 :
+                pictureSlot2.setImage(newPicture);
+                break;
+            case 3 :
+                pictureSlot3.setImage(newPicture);
+        }
     }
 
     /** Lance la machine à sous **/
-    public void startingGame(MouseEvent mouseEvent){
+    private void startingGame(){
         if(user.getNumberOfToken() > 0) {
             labelError.setVisible(false);
             user.removeToken(1);
             labelToken.setText("Jetons : "+user.getNumberOfToken());
             //méthode à finir
-            switchPictureSlot(1, 1);
-            switchPictureSlot(4, 2);
-            switchPictureSlot(2, 3);
+            switchPicture(1, 1);
+            switchPicture(4, 2);
+            switchPicture(2, 3);
         }
         else{
             labelError.setText("Vous n'avez pas assez de jeton");
@@ -193,26 +171,19 @@ public class SlotMachineMenuController {
 
     }
 
-    public void returnMainMenu(ActionEvent actionEvent) throws Exception{
-        try {
-            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("mainMenuSample.fxml"));
-            loader.setControllerFactory(c -> new MainMenuController(user,stage));
-            Parent root = loader.load();
-            Scene scene = new Scene(root, 800, 800);
-            //scene.getStylesheets().add(getClass().getResource("mainMenu.css").toExternalForm());
-            Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-            window.setScene(scene);
-            window.show();
-        } catch (IIOException var7) {
-            var7.printStackTrace();
-        }
+    /** Méthode pour retourner dans le menu principal **/
+    private void returnMainMenu(){
+        MainMenuController mainMenuController = new MainMenuController(stage,user);
+        mainMenuController.setting();
     }
 
-    public void showRule(MouseEvent mouseEvent) {
+    /** Méthode qui montre les règles du jeu **/
+    private void showRule() {
         textRule.setVisible(true);
     }
 
-    public void hideRule(MouseEvent mouseEvent) {
+    /** Méthode qui cache les règles du jeu **/
+    private void hideRule() {
         textRule.setVisible(false);
     }
 }

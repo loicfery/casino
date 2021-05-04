@@ -1,74 +1,102 @@
 package sample;
 
 import games.User;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javax.imageio.IIOException;
+import sample.BlackJackMenuController;
+import sample.RouletteMenuController;
+import sample.SetupScene;
+import sample.SlotMachineMenuController;
 
 public class MainMenuController {
 
-    private User user;
+    private BorderPane root = new BorderPane();
+    private Scene scene;
     private Stage stage;
+    private AnchorPane anchorPane = new AnchorPane();
+    private SetupScene setUpScene = new SetupScene();
+    private User user;
 
-    @FXML
-    private Button logoutButton;
-    @FXML
-    private Button informationButton;
-    @FXML
-    private Button boutiqueButton;
-    @FXML
-    private Button blackJackMenuButton;
-    @FXML
-    private Button slotMachineMenuButton;
-    @FXML
-    private Button rouletteMenuButton;
+    private Button logoutButton = new Button();
+    private Button informationMenuButton = new Button();
+    private Button shopButton = new Button();
+    private Button blackJackMenuButton = new Button();
+    private Button slotMachineMenuButton = new Button();
+    private Button rouletteMenuButton = new Button();
 
-    public MainMenuController(User user,Stage stage) {
-        this.user = user;
+    public MainMenuController(Stage stage,User user){
         this.stage = stage;
+        this.user = user;
     }
 
-    public void logout(MouseEvent mouseEvent) throws Exception {
-        loadingInterface("connexionMenuSample.fxml","",500,500,new ConnexionMenuController(stage),mouseEvent);
+    public void setting(){
+        stage.setTitle("Menu principale");
+        scene = new Scene(root,800,800);
+        stage.setScene(scene);
+
+        setUpScene.setButton(logoutButton,"Déconnexion", Pos.CENTER,20,20,10,200,new Font(10),true,anchorPane);
+        setUpScene.setButton(informationMenuButton,"Informations",Pos.CENTER,20,80,10,200,new Font(10),true,anchorPane);
+        setUpScene.setButton(shopButton,"Boutique",Pos.CENTER,20,140,10,200,new Font(10),true,anchorPane);
+        setUpScene.setButton(blackJackMenuButton,"Black Jack",Pos.CENTER,20,200,10,200,new Font(10),true,anchorPane);
+        setUpScene.setButton(slotMachineMenuButton,"Machine à sous",Pos.CENTER,20,240,10,200,new Font(10),true,anchorPane);
+        setUpScene.setButton(rouletteMenuButton,"Roulette",Pos.CENTER,20,280,10,200,new Font(10),true,anchorPane);
+
+        logoutButton.setOnMouseClicked((event)->{
+            goToConnexionMenu();
+        });
+
+        informationMenuButton.setOnMouseClicked((event)->{
+            goToInformationMenu();
+        });
+
+        shopButton.setOnMouseClicked((event)->{
+            goToShopMenu();
+        });
+
+        blackJackMenuButton.setOnMouseClicked((event)->{
+            goToBlackJackMenu();
+        });
+
+        slotMachineMenuButton.setOnMouseClicked((event)->{
+            goToSlotMachineMenu();
+        });
+
+        rouletteMenuButton.setOnMouseClicked((event)->{
+            goToRouletteMenu();
+        });
+
+        root.getChildren().add(anchorPane);
+        stage.show();
     }
 
-    public void informationUser(MouseEvent mouseEvent) throws Exception{
-        loadingInterface("informationMenuSample.fxml","",500,500,new InformationMenuController(user,stage),mouseEvent);
+    public void goToConnexionMenu(){
+        //loadingInterface.loading("connexionMenuSample.fxml","",500,500,new ConnexionMenuController(stage),mouseEvent);
     }
 
-    public void boutique(MouseEvent mouseEvent) {
+    public void goToInformationMenu(){
+        //loadingInterface.loading("informationMenuSample.fxml","",500,500,new InformationMenuController(user,stage),mouseEvent);
     }
 
-    public void blackJack(MouseEvent mouseEvent) throws Exception{
-        loadingInterface("blackJackMenuSample.fxml","",800,800,new BlackJackMenuController(user,stage),mouseEvent);
+    public void goToShopMenu() {
     }
 
-    public void slotMachine(MouseEvent mouseEvent) throws Exception{
-        loadingInterface("slotMachineMenuSample.fxml","",800,800,new SlotMachineMenuController(user,stage),mouseEvent);
+    public void goToBlackJackMenu(){
+        BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage);
+        blackJackMenuController.setting();
     }
 
-    public void roulette(MouseEvent mouseEvent) throws Exception{
-        loadingInterface("rouletteMenuSample.fxml","",1100,800,new RouletteMenuController(user,stage),mouseEvent);
+    public void goToSlotMachineMenu(){
+        SlotMachineMenuController slotMachineMenuController = new SlotMachineMenuController(user,stage);
+        slotMachineMenuController.setting();
     }
 
-    public void loadingInterface(String nameSample, String nameCSS, int sizeX, int sizeY, Object interfaceController, MouseEvent mouseEvent) throws Exception{
-        try {
-            FXMLLoader loader = new FXMLLoader(this.getClass().getResource(nameSample));
-            loader.setControllerFactory(c -> interfaceController);
-            Parent root = loader.load();
-            Scene scene = new Scene(root, sizeX, sizeY);
-            //scene.getStylesheets().add(getClass().getResource("mainMenu.css").toExternalForm());
-            Stage window = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
-            window.setScene(scene);
-            window.show();
-        } catch (IIOException var7) {
-            var7.printStackTrace();
-        }
+    public void goToRouletteMenu(){
+        RouletteMenuController rouletteMenuController = new RouletteMenuController(user,stage);
+        rouletteMenuController.setting();
     }
 }

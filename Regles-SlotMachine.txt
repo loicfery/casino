@@ -17,4 +17,4 @@ Les différents gains sont les suivants :
 - 3 cerises --> 25 jetons
 - 3 citrons --> 8 jetons
 - 3 pastèques --> 4 jetons
-- 3 symbole différents --> 0 jetons
+- 3 symboles différents --> 0 jetons

@@ -2,16 +2,30 @@ package sample;
 
 import games.User;
 import javafx.animation.PathTransition;
-import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,166 +114,528 @@ public class RouletteMenuController {
     private final int POSITION_Y_CASE_ROULETTE_19 = 441;
     private final int POSITION_X_CASE_ROULETTE_4 = 938;
     private final int POSITION_Y_CASE_ROULETTE_4 = 455;
-
     private final int RADIUS_TOKEN = 16;
-
     private final int ORIGIN_X_TOKEN = 336;
     private final int ORIGIN_Y_TOKEN = 262;
 
-    private User user;
-    private Stage stage;
-
+    private int tokenUsed = 0;
+    private int indexTokenRemove = 0;
+    private boolean startingGame = false;
     private List<Circle> listOfCircleToken = new ArrayList<>();
     private List<Label> listLabelToken = new ArrayList<>();
     private List<Case> listOfCase = new ArrayList<>();
     private List<InformationTokenBet> listOfTokenUsed = new ArrayList<>();
     private List<Integer> listPositionXCaseRoulette = new ArrayList<>();
     private List<Integer> listPositionYCaseRoulette = new ArrayList<>();
-    private int tokenUsed = 0;
-    private int indexTokenRemove = 0;
-    private boolean startingGame = false;
 
-     @FXML
-     private Label labelProfit;
-     @FXML
-     private Label labelTokenUser;
-     @FXML
-     private Label labelPseudo;
-    @FXML
-    private Label labelInformationBetToken;
-    @FXML
-    private Label labelError;
-    @FXML
-    private Button buttonModifyBetToken;
-    @FXML
-    private Button buttonValidBetToken;
-    @FXML
-    private Button buttonStartingGame;
-    @FXML
-    private TextField textBetToken;
-    @FXML
-    private Circle circleBallRoulette;
+    private BorderPane root = new BorderPane();
+    private Scene scene;
+    private Stage stage;
+    private AnchorPane anchorPane = new AnchorPane();
+    private SetupScene setUpScene = new SetupScene();
+    private User user;
 
-     /** cercle et label de 15 jetons pour miser **/
-    @FXML
-    private Circle circleToken1;
-    @FXML
-    private Label labelToken1;
+    private List<Rectangle> listOfRectangleGameBoard = new ArrayList<>();
+    private List<Label> listOfLabelGameBoard = new ArrayList<>();
 
-    @FXML
-    private Circle circleToken2;
-    @FXML
-    private Label labelToken2;
+    private ImageView roulette = new ImageView();
 
-    @FXML
-    private Circle circleToken3;
-    @FXML
-    private Label labelToken3;
+    private Label labelProfit = new Label();
+    private Label labelTokenUser = new Label();
+    private Label labelPseudo = new Label();
+    private Label labelInformationBetToken = new Label();
+    private Label labelError = new Label();
+    private Label labelRule = new Label();
 
-    @FXML
-    private Circle circleToken4;
-    @FXML
-    private Label labelToken4;
+    private Button modifyBetTokenButton = new Button();
+    private Button validBetTokenButton = new Button();
+    private Button startingGameButton = new Button();
+    private Button returnMainMenuButton = new Button();
 
-    @FXML
-    private Circle circleToken5;
-    @FXML
-    private Label labelToken5;
+    private TextField textBetToken = new TextField();
 
-    @FXML
-    private Circle circleToken6;
-    @FXML
-    private Label labelToken6;
+    private Circle circleBallRoulette = new Circle();
+    private Circle circleRule = new Circle();
 
-    @FXML
-    private Circle circleToken7;
-    @FXML
-    private Label labelToken7;
-
-    @FXML
-    private Circle circleToken8;
-    @FXML
-    private Label labelToken8;
-
-    @FXML
-    private Circle circleToken9;
-    @FXML
-    private Label labelToken9;
-
-    @FXML
-    private Circle circleToken10;
-    @FXML
-    private Label labelToken10;
-
-    @FXML
-    private Circle circleToken11;
-    @FXML
-    private Label labelToken11;
-
-    @FXML
-    private Circle circleToken12;
-    @FXML
-    private Label labelToken12;
-
-    @FXML
-    private Circle circleToken13;
-    @FXML
-    private Label labelToken13;
-
-    @FXML
-    private Circle circleToken14;
-    @FXML
-    private Label labelToken14;
-
-    @FXML
-    private Circle circleToken15;
-    @FXML
-    private Label labelToken15;
-
+    private TextArea textRule = new TextArea();
 
     public RouletteMenuController(User user, Stage stage){
         this.user = user;
         this.stage = stage;
     }
 
-    public void initialize(){
-        labelPseudo.setText("Joueur : "+user.getPseudo());
-        labelTokenUser.setText("Jetons : "+user.getNumberOfToken());
+    public void setting(){
+        stage.setTitle("Roulette");
+        scene = new Scene(root,1100,800);
+        stage.setScene(scene);
 
-        listOfCircleToken.add(circleToken1);
-        listOfCircleToken.add(circleToken2);
-        listOfCircleToken.add(circleToken3);
-        listOfCircleToken.add(circleToken4);
-        listOfCircleToken.add(circleToken5);
-        listOfCircleToken.add(circleToken6);
-        listOfCircleToken.add(circleToken7);
-        listOfCircleToken.add(circleToken8);
-        listOfCircleToken.add(circleToken9);
-        listOfCircleToken.add(circleToken10);
-        listOfCircleToken.add(circleToken11);
-        listOfCircleToken.add(circleToken12);
-        listOfCircleToken.add(circleToken13);
-        listOfCircleToken.add(circleToken14);
-        listOfCircleToken.add(circleToken15);
-
-        listLabelToken.add(labelToken1);
-        listLabelToken.add(labelToken2);
-        listLabelToken.add(labelToken3);
-        listLabelToken.add(labelToken4);
-        listLabelToken.add(labelToken5);
-        listLabelToken.add(labelToken6);
-        listLabelToken.add(labelToken7);
-        listLabelToken.add(labelToken8);
-        listLabelToken.add(labelToken9);
-        listLabelToken.add(labelToken10);
-        listLabelToken.add(labelToken11);
-        listLabelToken.add(labelToken12);
-        listLabelToken.add(labelToken13);
-        listLabelToken.add(labelToken14);
-        listLabelToken.add(labelToken15);
-
+        setupGameBoard();
         setCasePosition();
         setCaseRoulette();
+        setRule();
+
+        setUpScene.setImageView(roulette,638.0,350.0,425.0,471.0, new Image(getClass().getResource("image/roulette.jpg").toExternalForm()),true,anchorPane);
+        roulette.setPickOnBounds(true);
+        roulette.setPreserveRatio(true);
+
+        setUpScene.setLabel(labelProfit,"Gain : 0",Pos.CENTER_LEFT,14.0,718.0,68.0,607.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setUpScene.setLabel(labelTokenUser,"Jetons : "+user.getNumberOfToken(),Pos.CENTER_LEFT,14.0,640.0,68.0,613.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setUpScene.setLabel(labelPseudo,"Joueur : "+user.getPseudo(),Pos.CENTER_LEFT,14.0,563.0,68.0,613.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setUpScene.setLabel(labelInformationBetToken,"Information",Pos.CENTER,212.0,368.0,202.0,387.0,new Font(18),Paint.valueOf("BLACK"),false,anchorPane);
+        setUpScene.setButton(modifyBetTokenButton,"Miser",Pos.CENTER,295.0,696.0,68.0,216.0,new Font(20.0),false,anchorPane);
+        setUpScene.setButton(validBetTokenButton,"Miser",Pos.CENTER,295.0,696.0,68.0,216.0,new Font(20.0),false,anchorPane);
+        setUpScene.setTextField(textBetToken,"Mise",Pos.CENTER,234.0,597.0,80.0,338.0,new Font(20.0),false,anchorPane);
+        setUpScene.setButton(startingGameButton,"Starting",Pos.CENTER,25.0,416.0,102.0,251.0,new Font(20.0),true,anchorPane);
+        setUpScene.setLabel(labelError,"Erreur",Pos.CENTER,197.0,600.0,60.0,387.0,new Font(20.0),Paint.valueOf("RED"),false,anchorPane);
+        setUpScene.setCircle(circleBallRoulette,7.0,851.0,563.0,Paint.valueOf("BLACK"),Paint.valueOf("BLACK"),StrokeType.INSIDE,0.0,false,anchorPane);
+        setUpScene.setButton(returnMainMenuButton,"Quitter",Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
+        setUpScene.setCircle(circleRule,16.0,1070.0,30.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,true,anchorPane);
+        setUpScene.setLabel(labelRule,"?",Pos.CENTER,1055.0,15.0,23,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setUpScene.setTextArea(textRule,360,46.0,600.0,700.0,false,false,anchorPane);
+
+        anchorPane.setOnMouseClicked((event)->{
+            choosePositionToken(event);
+        });
+
+        validBetTokenButton.setOnMouseClicked((event)->{
+            validBetToken();
+        });
+
+        modifyBetTokenButton.setOnMouseClicked((event)->{
+            modifyBetToken();
+        });
+
+        startingGameButton.setOnMouseClicked((event)->{
+            startingGame();
+        });
+
+        returnMainMenuButton.setOnMouseClicked((event)->{
+            returnMainMenu();
+        });
+
+        root.getChildren().add(anchorPane);
+        stage.show();
+    }
+
+    /**
+     * Méthode pour écrire les règles du jeux dans une zone de texte
+     **/
+    private void setRule() {
+        try {
+            File fileRuleBlackJack = new File("Regles-Roulette.txt");
+            BufferedReader buffer = new BufferedReader(new FileReader(fileRuleBlackJack));
+            String line;
+
+            while ((line = buffer.readLine()) != null) {
+                textRule.setText(textRule.getText() + "\n" + line);
+            }
+        } catch (FileNotFoundException fileNotFoundException) {
+            System.out.println("fichier règle non trouvé");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        labelRule.setOnMouseEntered((event)->{
+            showRule();
+        });
+        labelRule.setOnMouseExited((event)->{
+            hideRule();
+        });
+    }
+
+    private void setupGameBoard(){
+        Rectangle rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,434.0,78.0,48.0,51.0,5.0,5.0, Paint.valueOf("BLACK"),Paint.valueOf("WHITE"),2.0, StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,485.0,78.0,48.0,51.0,5.0,5.0,Paint.valueOf("RED"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,536.0,78.0,48.0,51.0,5.0,5.0,Paint.valueOf("RED"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,587.0,78.0,48.0,51.0,5.0,5.0,Paint.valueOf("BLACK"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,638.0,78.0,48.0,51.0,5.0,5.0,Paint.valueOf("RED"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,689.0,78.0,48.0,51.0,5.0,5.0,Paint.valueOf("RED"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,740.0,78.0,48.0,51.0,5.0,5.0,Paint.valueOf("BLACK"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,791.0,78.0,48.0,51.0,5.0,5.0,Paint.valueOf("RED"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,842.0,78.0,48.0,51.0,5.0,5.0,Paint.valueOf("RED"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,893.0,78.0,48.0,51.0,5.0,5.0,Paint.valueOf("BLACK"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,944.0,78.0,48.0,51.0,5.0,5.0,Paint.valueOf("RED"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,995.0,78.0,48.0,51.0,5.0,5.0,Paint.valueOf("GREEN"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,383.0,78.0,48.0,51.0,5.0,5.0,Paint.valueOf("RED"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,434.0,126.0,48.0,51.0,5.0,5.0,Paint.valueOf("RED"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,485.0,126.0,48.0,51.0,5.0,5.0,Paint.valueOf("BLACK"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle, 536.0,126.0,48.0,51.0,5.0,5.0,Paint.valueOf("BLACK"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,587.0,126.0,48.0,51.0,5.0,5.0,Paint.valueOf("RED"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,638.0,126.0,48.0,51.0,5.0,5.0,Paint.valueOf("BLACK"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,689.0,126.0,48.0,51.0,5.0,5.0,Paint.valueOf("BLACK"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle, 740.0,126.0,48.0,51.0,5.0,5.0,Paint.valueOf("RED"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,791.0,126.0,48.0,51.0,5.0,5.0,Paint.valueOf("BLACK"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,842.0,126.0,48.0,51.0,5.0,5.0,Paint.valueOf("BLACK"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,893.0,126.0,48.0,51.0,5.0,5.0,Paint.valueOf("RED"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,944.0,126.0,48.0,51.0,5.0,5.0,Paint.valueOf("BLACK"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle, 995.0,126.0,48.0,51.0,5.0,5.0,Paint.valueOf("GREEN"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle, 383.0,126.0,48.0,51.0,5.0,5.0,Paint.valueOf("BLACK"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,434.0,174.0,48.0,51.0,5.0,5.0,Paint.valueOf("BLACK"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,536.0,174.0,48.0,51.0,5.0,5.0,Paint.valueOf("BLACK"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,485.0,174.0,48.0,51.0,5.0,5.0,Paint.valueOf("RED"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,587.0,174.0,48.0,51.0,5.0,5.0,Paint.valueOf("BLACK"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,638.0,174.0,48.0,51.0,5.0,5.0,Paint.valueOf("RED"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,689.0,174.0,48.0,51.0,5.0,5.0,Paint.valueOf("RED"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,740.0,174.0,48.0,51.0,5.0,5.0,Paint.valueOf("BLACK"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,791.0,174.0,48.0,51.0,5.0,5.0,Paint.valueOf("RED"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle, 842.0,174.0,48.0,51.0,5.0,5.0,Paint.valueOf("BLACK"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,893.0,174.0,48.0,51.0,5.0,5.0,Paint.valueOf("BLACK"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,944.0,174.0,48.0,51.0,5.0,5.0,Paint.valueOf("RED"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,995.0,174.0,48.0,51.0,5.0,5.0,Paint.valueOf("GREEN"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,383.0,174.0,48.0,51.0,5.0,5.0,Paint.valueOf("RED"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,383.0,222.0,48.0,204.0,5.0,5.0,Paint.valueOf("GREEN"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,587.0,222.0,48.0,204.0,5.0,5.0,Paint.valueOf("GREEN"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,791.0,222.0,48.0,204.0,5.0,5.0,Paint.valueOf("GREEN"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,383.0,270.0,48.0,100.0,5.0,5.0,Paint.valueOf("GREEN"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,481.0,270.0,48.0,106.0,5.0,5.0,Paint.valueOf("GREEN"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,587.0,270.0,48.0,100.0,5.0,5.0,Paint.valueOf("RED"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,685.0,270.0,48.0,106.0,5.0,5.0,Paint.valueOf("BLACK"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,791.0,270.0,48.0,100.0,5.0,5.0,Paint.valueOf("GREEN"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle, 889.0,270.0,48.0,106.0,5.0,5.0,Paint.valueOf("GREEN"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+        rectangle = new Rectangle();
+        setUpScene.setRectangle(rectangle,319.0,78.0,145.0,64.0,5.0,5.0,Paint.valueOf("GREEN"),Paint.valueOf("WHITE"),2.0,StrokeType.INSIDE,true,anchorPane);
+        listOfRectangleGameBoard.add(rectangle);
+
+
+        Label label = new Label();
+        setUpScene.setLabel(label,"3", Pos.CENTER,383.0,78.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"2", Pos.CENTER,383.0,126.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"1", Pos.CENTER,383.0,174.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"4", Pos.CENTER,434.0,174.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"5", Pos.CENTER,434.0,126.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"6", Pos.CENTER,434.0,78.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"7", Pos.CENTER,485.0,174.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"8", Pos.CENTER,485.0,126.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"9", Pos.CENTER,485.0,78.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"10", Pos.CENTER,536.0,174.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"11", Pos.CENTER,536.0,126.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"12", Pos.CENTER,536.0,78.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"13", Pos.CENTER,587.0,174.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"14", Pos.CENTER,587.0,126.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"15", Pos.CENTER,587.0,78.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"16", Pos.CENTER,638.0,174.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"17", Pos.CENTER,638.0,126.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"18", Pos.CENTER,638.0,78.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"19", Pos.CENTER,689.0,174.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"20", Pos.CENTER,689.0,126.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"21", Pos.CENTER,689.0,78.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"22", Pos.CENTER,740.0,174.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"23", Pos.CENTER,740.0,126.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"24", Pos.CENTER,740.0,78.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"25", Pos.CENTER,791.0,174.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"26", Pos.CENTER,791.0,126.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"27", Pos.CENTER,791.0,78.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"28", Pos.CENTER,842.0,174.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"29", Pos.CENTER,842.0,126.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"30", Pos.CENTER,842.0,78.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"31", Pos.CENTER,893.0,174.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"32", Pos.CENTER,893.0,126.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"33", Pos.CENTER,893.0,78.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"34", Pos.CENTER,944.0,174.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"35", Pos.CENTER,944.0,126.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"36", Pos.CENTER,944.0,78.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"3rd", Pos.CENTER,995.0,78.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"2nd", Pos.CENTER,995.0,126.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"1st", Pos.CENTER,995.0,174.0,48.0,51.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"1 - 12", Pos.CENTER,383.0,222.0,48.0,204.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"13 - 24", Pos.CENTER,587.0,222.0,48.0,204.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"25 - 36", Pos.CENTER,791.0,222.0,48.0,204.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"1 - 18", Pos.CENTER,383.0,270.0,48.0,100.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"PAIRE", Pos.CENTER,484.0,270.0,48.0,100.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"ROUGE", Pos.CENTER,587.0,270.0,48.0,100.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"NOIR", Pos.CENTER,688.0,270.0,48.0,100.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"IMPAIRE", Pos.CENTER,791.0,270.0,48.0,100.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"19 - 36", Pos.CENTER,892.0,270.0,48.0,100.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
+
+        label = new Label();
+        setUpScene.setLabel(label,"0", Pos.CENTER,320.0,78.0,145.0,64.0,new Font(20.0),Paint.valueOf("WHITE"),true,anchorPane);
+        listOfLabelGameBoard.add(label);
     }
 
     /** Création de la liste des cases pour parier **/
@@ -403,7 +779,8 @@ public class RouletteMenuController {
 
             if (mouseEvent.getButton() == MouseButton.PRIMARY) { //clique gauche
                 if (isPositionMouseGood(mousePositionX, mousePositionY)) {
-                    buttonStartingGame.setVisible(false);
+                    createToken();
+                    startingGameButton.setVisible(false);
                     if(getTokenToRemove(mousePositionX,mousePositionY) == -1) {
                         labelError.setVisible(false);
                         setPositionToken(mousePositionX, mousePositionY, listOfCircleToken.get(tokenUsed), listLabelToken.get(tokenUsed), true);
@@ -418,7 +795,7 @@ public class RouletteMenuController {
                 }
             }
             if (mouseEvent.getButton() == MouseButton.SECONDARY) { //clique droit
-                buttonStartingGame.setVisible(false);
+                startingGameButton.setVisible(false);
                 indexTokenRemove = getTokenToRemove(mousePositionX, mousePositionY);
                 if (indexTokenRemove > -1) {
                     if (tokenUsed > 0) {
@@ -429,7 +806,7 @@ public class RouletteMenuController {
                     textBetToken.setText(listOfTokenUsed.get(indexTokenRemove).getValueOfBet());
                     textBetToken.setVisible(true);
                     labelInformationBetToken.setVisible(true);
-                    buttonModifyBetToken.setVisible(true);
+                    modifyBetTokenButton.setVisible(true);
                 }
             }
         }
@@ -496,8 +873,8 @@ public class RouletteMenuController {
                     switch (listOfCaseToken.get(1).getValueCase()){
                         case "1-18" :
                         case "even" :
-                            buttonValidBetToken.setVisible(false);
-                            buttonModifyBetToken.setVisible(false);
+                            validBetTokenButton.setVisible(false);
+                            modifyBetTokenButton.setVisible(false);
                             textBetToken.setVisible(false);
                             return "Vous ne pouvez pas miser \nsur ces deux cases en même temps";
                         case "13-24" :
@@ -507,8 +884,8 @@ public class RouletteMenuController {
                     switch (listOfCaseToken.get(1).getValueCase()){
                         case "red" :
                         case "black" :
-                            buttonValidBetToken.setVisible(false);
-                            buttonModifyBetToken.setVisible(false);
+                            validBetTokenButton.setVisible(false);
+                            modifyBetTokenButton.setVisible(false);
                             textBetToken.setVisible(false);
                             return "Vous ne pouvez pas miser \nsur ces deux cases en même temps";
                         case "25-36" :
@@ -518,8 +895,8 @@ public class RouletteMenuController {
                     switch (listOfCaseToken.get(1).getValueCase()){
                         case "odd" :
                         case "19-36" :
-                            buttonValidBetToken.setVisible(false);
-                            buttonModifyBetToken.setVisible(false);
+                            validBetTokenButton.setVisible(false);
+                            modifyBetTokenButton.setVisible(false);
                             textBetToken.setVisible(false);
                             return "Vous ne pouvez pas miser \nsur ces deux cases en même temps";
                     }
@@ -527,7 +904,7 @@ public class RouletteMenuController {
                     if(listOfCaseToken.get(1).getValueCase().equals("2nd")){
                         return "1;4;7;10;13;16;19;22;25;28;31;34 \n" + "2;5;8;11;14;17;20;23;26;29;32;35";
                     }
-                   break;
+                    break;
                 case "2nd" :
                     if(listOfCaseToken.get(1).getValueCase().equals("3rd")){
                         return "2;5;8;11;14;17;20;23;26;29;32;35 \n" + "3;6;9;12;15;18;21;24;27;30;33;36";
@@ -547,8 +924,8 @@ public class RouletteMenuController {
             return listOfCaseToken.get(0).getValueCase() + ";" + listOfCaseToken.get(1).getValueCase();
         }
         if(listOfCaseToken.size() == 3){
-            buttonValidBetToken.setVisible(false);
-            buttonModifyBetToken.setVisible(false);
+            validBetTokenButton.setVisible(false);
+            modifyBetTokenButton.setVisible(false);
             textBetToken.setVisible(false);
             return "Cette combinaison de case est impossible";
         }
@@ -622,7 +999,7 @@ public class RouletteMenuController {
             listOfTokenUsed.add(informationTokenBet);
         }
         labelInformationBetToken.setVisible(true);
-        buttonValidBetToken.setVisible(true);
+        validBetTokenButton.setVisible(true);
         textBetToken.setText("0");
         textBetToken.setVisible(true);
 
@@ -641,31 +1018,10 @@ public class RouletteMenuController {
             }
         }
         return false;
-       /* if(((positionXToken + RADIUS_TOKEN) >= cases.getOriginX() && (positionXToken + RADIUS_TOKEN) <= cases.getEndX()) && (positionYToken >= cases.getOriginY() && positionYToken <= cases.getEndY())){
-            return true;
-        }
-        else {
-            if(((positionXToken - RADIUS_TOKEN) >= cases.getOriginX() && (positionXToken - RADIUS_TOKEN) <= cases.getEndX()) && (positionYToken >= cases.getOriginY() && positionYToken <= cases.getEndY())){
-                return true;
-            }
-            else {
-                if(((positionYToken + RADIUS_TOKEN) >= cases.getOriginY() && (positionYToken + RADIUS_TOKEN) <= cases.getEndY()) && (positionXToken >= cases.getOriginX() && positionXToken <= cases.getEndX())){
-                    return true;
-                }
-                else{
-                    if(((positionYToken - RADIUS_TOKEN) >= cases.getOriginY() && (positionYToken - RADIUS_TOKEN) <= cases.getEndY()) && (positionXToken >= cases.getOriginX() && positionXToken <= cases.getOriginX())){
-                        return true;
-                    }
-                    else{
-                        return false;
-                    }
-                }
-            }
-        }*/
     }
 
     /** Bouton pour valider la modification d'un jeton **/
-    public void modifyBetToken(MouseEvent mouseEvent) {
+    public void modifyBetToken() {
         if(!textBetToken.getText().isEmpty()) {
             try {
                 int valueOfBet = Integer.parseInt(textBetToken.getText());
@@ -695,14 +1051,14 @@ public class RouletteMenuController {
             tokenUsed++;
         }
 
-        buttonModifyBetToken.setVisible(false);
+        modifyBetTokenButton.setVisible(false);
         textBetToken.setVisible(false);
         labelInformationBetToken.setVisible(false);
-        buttonStartingGame.setVisible(true);
+        startingGameButton.setVisible(true);
     }
 
     /** Boutton pour valider un nouveau jeton posé  **/
-    public void validBetToken(MouseEvent mouseEvent){
+    public void validBetToken(){
         if(!textBetToken.getText().isEmpty()) {
             try {
                 int valueOfBet = Integer.parseInt(textBetToken.getText());
@@ -722,14 +1078,14 @@ public class RouletteMenuController {
             }
 
             System.out.println();
-            buttonValidBetToken.setVisible(false);
+            validBetTokenButton.setVisible(false);
             textBetToken.setVisible(false);
             labelInformationBetToken.setVisible(false);
-            buttonStartingGame.setVisible(true);
+            startingGameButton.setVisible(true);
         }
         else {
             textBetToken.setText("0");
-            validBetToken(mouseEvent);
+            validBetToken();
         }
     }
 
@@ -873,7 +1229,7 @@ public class RouletteMenuController {
     }
 
     /** Boutton pour lancer la roulette et mettre fin aux mises **/
-    public void startingGame(MouseEvent mouseEvent) {
+    public void startingGame() {
         if(tokenUsed == 0){
             labelError.setText("Il faut placer un jeton au minimum");
             labelError.setVisible(true);
@@ -881,10 +1237,10 @@ public class RouletteMenuController {
         else{
             startingGame = true;
             labelError.setVisible(false);
-            buttonStartingGame.setVisible(false);
+            startingGameButton.setVisible(false);
 
             //TranslateTransition translateTransition = new TranslateTransition();
-           // translateTransition.setDuration(Duration.seconds(1));
+            // translateTransition.setDuration(Duration.seconds(1));
             //translateTransition.setNode(circleBallRoulette);
 
             Circle circle = new Circle(140);
@@ -896,5 +1252,38 @@ public class RouletteMenuController {
             circleBallRoulette.setVisible(true);
             transition.play();
         }
+    }
+
+    /** Méthode qui crée un jeton **/
+    public void createToken(){
+        Circle circle = new Circle();
+        setUpScene.setCircle(circle,16.0,336.0,262.0,Paint.valueOf("BLACK"),Paint.valueOf("WHITE"),StrokeType.INSIDE,2.0,false,anchorPane);
+        listOfCircleToken.add(circle);
+
+        Label label = new Label();
+        setUpScene.setLabel(label,"",Pos.CENTER,325.0,252.0,21.0,23.0,new Font(10),Paint.valueOf("WHITE"),false,anchorPane);
+        listLabelToken.add(label);
+    }
+
+    /**
+     * Méthode pour quitter le jeu et retourner dans le menu principale
+     **/
+    public void returnMainMenu(){
+        MainMenuController mainMenuController = new MainMenuController(stage,user);
+        mainMenuController.setting();
+    }
+
+    /**
+     * Méthode qui montre la zone de texte contenant les règles
+     **/
+    public void showRule() {
+        textRule.setVisible(true);
+    }
+
+    /**
+     * Méthode qui cacher la zone de texte contenant les règles
+     **/
+    public void hideRule() {
+        textRule.setVisible(false);
     }
 }

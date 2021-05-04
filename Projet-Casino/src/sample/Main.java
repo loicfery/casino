@@ -11,22 +11,22 @@ public class Main extends Application {
     public Main() {
     }
 
-    public void start(Stage primaryStage) throws Exception {
-        User user = new User("Loic","loic-fery@orange.fr","ADMIN"); //pour tester
-        user.addToken(50); // pour tester
+    public void start(Stage stage) throws Exception {
+        stage.setResizable(false);
+        User user = new User("loic","@","user");
+        user.addToken(50);
 
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("connexionMenuSample.fxml")); //"connexionMenuSample.fxml"
-        loader.setControllerFactory(c -> new ConnexionMenuController(primaryStage));
-        Parent root = loader.load();
+        //BlackJackMenuController blackJackMenuController = new BlackJackMenuController(stage,user);
+        //blackJackMenuController.setting();
 
-        //Parent root = FXMLLoader.load(this.getClass().getResource("slotMachineMenuSample.fxml"));  // Autre façon de faire //
+        //SlotMachineMenuController slotMachineMenuController = new SlotMachineMenuController(user,stage);
+        //slotMachineMenuController.setting();
 
-        primaryStage.setTitle("Projet Casino");
-        Scene scene = new Scene(root, 500, 500); //500.0D, 500.0D --> taille à utiliser à la fin //1100,800
+        //RouletteMenuController rouletteMenuController = new RouletteMenuController(user,stage);
+        //rouletteMenuController.setting();
 
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        ConnexionMenuController controller = new ConnexionMenuController(stage);
+        controller.setting();
     }
 
     public static void main(String[] args) {
