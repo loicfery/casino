@@ -126,10 +126,12 @@ public class BlackJack {
                 if(countValueOfUserHand(listOfUserHand.get(0)) > countValueOfUserHand(listOfUserHand.get(1))){
                     tokenGain = -1 * (bet.getBet(listOfUserHand.get(1).getUser()) + insuranceFirstHandUser);
                     listOfUserHand.get(1).getUser().removeToken(bet.getBet(listOfUserHand.get(1).getUser()) + insuranceFirstHandUser);
+                    System.out.println("test : "+tokenGain);
                 }
                 if(countValueOfUserHand(listOfUserHand.get(0)) < countValueOfUserHand(listOfUserHand.get(1))){
                     tokenGain = bet.getBet(listOfUserHand.get(1).getUser()) - insuranceFirstHandUser;
                     listOfUserHand.get(1).getUser().addToken(tokenGain);
+                    System.out.println("test : "+tokenGain);
                 }
                 if(countValueOfUserHand(listOfUserHand.get(0)) == countValueOfUserHand(listOfUserHand.get(1))){
                     tokenGain = - insuranceFirstHandUser;
@@ -145,6 +147,7 @@ public class BlackJack {
                     if(countValueOfUserHand(listOfUserHand.get(2)) > 21){
                         tokenGain = tokenGain + (-1 * (bet.getBet(listOfUserHand.get(2).getUser()) + insuranceFirstHandUser));
                         listOfUserHand.get(2).getUser().addToken(tokenGain);
+                        System.out.println("test 2 : "+tokenGain);
                         return tokenGain;
                     }
                     if(countValueOfUserHand(listOfUserHand.get(0)) > 21){

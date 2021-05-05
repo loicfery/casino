@@ -50,6 +50,7 @@ public class BlackJackMenuController {
     private BlackJack blackJack;
 
     private boolean split = false;
+    private boolean stand = false;
     private int indexCurrentHand = 1;
 
     private List<Shape> token1 = new ArrayList<>();
@@ -536,7 +537,7 @@ public class BlackJackMenuController {
         actionInsuranceButton.setVisible(true);
         actionDoubleButton.setVisible(true);
         actionStandButton.setVisible(true);
-
+        actionSplitButton.setVisible(true);
         if(blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber() == blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber()){
             actionSplitButton.setVisible(true);
         }
@@ -554,7 +555,9 @@ public class BlackJackMenuController {
 
     /** Méthode pour l'action split (2 carte de même numéro) **/
     private void actionSplit() {
+        setLog("Le joueur "+user.getPseudo()+" a choisit l'action \"Partager\".");
         actionDoubleButton.setVisible(false);
+        actionSplitButton.setVisible(false);
         split = true;
 
         blackJack.actionSplit();
@@ -578,6 +581,7 @@ public class BlackJackMenuController {
 
     /** Méthode pour l'action tirer une carte **/
     private void actionHit(){
+        setLog("Le joueur "+user.getPseudo()+" a choisit l'action \"Tirer une carte\".");
         blackJack.actionHit();
 
         drawCard();
@@ -588,13 +592,17 @@ public class BlackJackMenuController {
 
     /** Méthode pour l'action prendre une assurance **/
     private void actionInsurance(){
+        setLog("Le joueur "+user.getPseudo()+" a choisit l'action \"Assurance\".");
         blackJack.actionInsurance();
         actionInsuranceButton.setVisible(false);
     }
 
     /** Méthode pour l'action doubler la mise **/
     private void actionDouble(){
+        setLog("Le joueur "+user.getPseudo()+" a choisit l'action \"Doubler\".");
         hideAction();
+
+        stand = true;
 
         blackJack.actionDouble();
 
@@ -608,30 +616,21 @@ public class BlackJackMenuController {
 
     /** Méthode pour l'action rester **/
     private void actionStand(){
+        setLog("Le joueur "+user.getPseudo()+" a choisit l'action \"Rester\".");
+        if(!split) {
+            stand = true;
+        }
         blackJack.actionStand();
 
         checkSplit();
     }
 
-    private void checkSplit() {
-        if(!split) {
-            hideAction();
-            croupierTurn();
-
-            int gain = blackJack.betDistribute();
-            labelProfit.setText("Gain : " + gain);
-            labelToken.setText("Jetons : " + user.getNumberOfToken());
-
-            newPartyButton.setVisible(true);
-        }
-        else{
-            split = false;
-            indexCurrentHand = 2;
-        }
-    }
-
     /** Méthode pour l'action abandonner **/
     private void actionSurrender(){
+        if(!split) {
+            stand = true;
+        }
+        setLog("Le joueur "+user.getPseudo()+" a choisit l'action \"Abandonner\".");
         blackJack.actionSurrender();
 
         if(!split) {
@@ -650,7 +649,6 @@ public class BlackJackMenuController {
 
     private void drawCard() {
         int positionCardX;
-        //int indexCard = blackJack.getListOfUserHand().get(indexCurrentHand).getHand().size() - 1;
         Card newCard = blackJack.getListOfUserHand().get(indexCurrentHand).getHand().get(blackJack.getListOfUserHand().get(indexCurrentHand).getHand().size() - 1);
 
         if(indexCurrentHand == 1){
@@ -674,13 +672,19 @@ public class BlackJackMenuController {
     private void verification(){
         if(blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(indexCurrentHand)) > 21){
             if(!split) {
-                hideAction();
+                if(blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)) <= 21){
+                    croupierTurn();
+                    distributeGain();
+                    hideAction();
+                    newPartyButton.setVisible(true);
+                }
+                else {
+                    hideAction();
 
-                int gain = blackJack.betDistribute();
-                labelProfit.setText("Gain : " + gain);
-                labelToken.setText("Jetons : " + user.getNumberOfToken());
+                   distributeGain();
 
-                newPartyButton.setVisible(true);
+                    newPartyButton.setVisible(true);
+                }
             }
             else {
                 split = false;
@@ -691,14 +695,47 @@ public class BlackJackMenuController {
         if(blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(indexCurrentHand)) == 21){
             checkSplit();
         }
+        if(blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(indexCurrentHand)) < 21){
+            if(stand) {
+                hideAction();
+                croupierTurn();
+
+                distributeGain();
+
+                newPartyButton.setVisible(true);
+            }
+        }
+    }
+
+    private void distributeGain(){
+        int gain = blackJack.betDistribute();
+        labelProfit.setText("Gain : " + gain);
+        labelToken.setText("Jetons : " + user.getNumberOfToken());
+    }
+
+    private void checkSplit() {
+        if(!split) {
+            hideAction();
+            croupierTurn();
+
+            distributeGain();
+
+            newPartyButton.setVisible(true);
+        }
+        else{
+            split = false;
+            indexCurrentHand = 2;
+        }
     }
 
     /** Méthode qui correspond au tour du croupier **/
     private void croupierTurn(){
+        setLog("\nC'est au tour du croupier de jouer");
         blackJack.turnCroupier();
 
         for(int index = 1; index < blackJack.getListOfUserHand().get(0).getHand().size(); index ++) {
             ImageView card = chooseCard(blackJack.getListOfUserHand().get(0).getHand().get(index).getNumber(), blackJack.getListOfUserHand().get(0).getHand().get(index).getRank());
+            setLog("Le croupier pioche la carte "+blackJack.getListOfUserHand().get(0).getHand().get(index).getNumber()+" de "+blackJack.getListOfUserHand().get(0).getHand().get(index).getRank());
             croupierHand.add(card);
             setUpCard(card, currentPositionXCroupier, ORIGIN_Y_CROUPIER);
             labelValueCroupierHand.setText("valeur de la main : " + blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(0)));
