@@ -34,7 +34,7 @@ public class BlackJackMenuController {
     private final int ORIGIN_X_Croupier = 300;
     private final int ORIGIN_X_FIRST_HAND = 300;
     private final int ORIGIN_X_SECOND_HAND = 523;
-    private final int ORIGIN_Y_USER = 400;
+    private final int ORIGIN_Y_USER = 380;
     private final int ORIGIN_Y_CROUPIER = 100;
 
     private BorderPane  root = new BorderPane();
@@ -45,6 +45,13 @@ public class BlackJackMenuController {
     private User user;
 
     private BlackJack blackJack;
+
+    private boolean actionSplit = false;
+    private boolean actionInsurance = false;
+    private boolean actionHit = false;
+    private boolean actionDouble = false;
+    private boolean actionStand = false;
+    private boolean actionSurrender = false;
 
     private List<Shape> token1 = new ArrayList<>();
     private List<Shape> token2 = new ArrayList<>();
@@ -110,12 +117,14 @@ public class BlackJackMenuController {
         });
 
         actionSplitButton.setOnMouseClicked((event)->{
-            actionSplit(event);
+            actionSplit();
         });
 
         validBetButton.setOnMouseClicked((event)->{
             validBet();
         });
+
+        blackJack.addUserBet(user);
 
         root.getChildren().add(anchorPane);
         stage.show();
@@ -285,9 +294,11 @@ public class BlackJackMenuController {
                         textBetUser.setVisible(false);
                         validBetButton.setVisible(false);
 
-                        user.removeToken(valueOfBet);
+                        //user.removeToken(valueOfBet);
                         labelToken1.setText("1"); // recup valeur de bet
-                        labelToken.setText("Jetons : " + user.getNumberOfToken());
+                        labelToken.setText("Jetons : " + (user.getNumberOfToken() - valueOfBet));
+
+                        blackJack.userBet(valueOfBet,user);
 
                         setTokenVisible(token1,true);
                         startingGame();
@@ -307,16 +318,18 @@ public class BlackJackMenuController {
         int positionXCroupier = ORIGIN_X_Croupier;
         ImageView card;
 
-        // test de fonctionnement
-        card = chooseCard(1, "HEART");
+        blackJack.gameBegin();
+
+        card = chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(0).getRank());
         userFirstHand.add(card);
         setUpCard(card, positionXUser, ORIGIN_Y_USER);
         positionXUser += 50;
 
-        setUpCard(chooseCard(8, "SPADE"), positionXCroupier, ORIGIN_Y_CROUPIER);
+        card = chooseCard(blackJack.getListOfUserHand().get(0).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(0).getHand().get(0).getRank());
+        setUpCard(card, positionXCroupier, ORIGIN_Y_CROUPIER);
         positionXCroupier += 50;
 
-        card = chooseCard(12, "HEART");
+        card = chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(1).getRank());
         userFirstHand.add(card);
         setUpCard(card, positionXUser, ORIGIN_Y_USER);
         positionXUser += 50;
@@ -325,12 +338,10 @@ public class BlackJackMenuController {
     /**
      * Méthode pour l'action split (2 carte de même numéro)
      **/
-    public void actionSplit(MouseEvent mouseEvent) {
+    public void actionSplit() {
         zoneBetUser2.setVisible(true);
         setTokenVisible(token2,true);
         labelToken2.setText(labelToken1.getText());
-
-
 
         userSecondHand.add(userFirstHand.get(userFirstHand.size() - 1));
         userFirstHand.remove(userFirstHand.size() - 1);

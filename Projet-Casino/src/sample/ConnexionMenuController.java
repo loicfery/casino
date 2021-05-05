@@ -59,7 +59,7 @@ public class ConnexionMenuController {
         setUpScene.setTextField(textPassword,"",Pos.CENTER,270,250,10,200,new Font(15),true,anchorPane);
         setUpScene.setButton(buttonLogin,"Connexion",Pos.CENTER,10,380,20,480,new Font(25),true,anchorPane);
         setUpScene.setButton(buttonNewAccount,"Nouveau Compte",Pos.CENTER,10,440,20,480,new Font(25),true,anchorPane);
-        setUpScene.setButton(buttonLoginMenuReturn,"Se connecter",Pos.CENTER,10,380,20,480,new Font(25),true,anchorPane);
+        setUpScene.setButton(buttonLoginMenuReturn,"Se connecter",Pos.CENTER,10,380,20,480,new Font(25),false,anchorPane);
         setUpScene.setButton(buttonInscription,"S'inscrire",Pos.CENTER,10,440,20,480,new Font(25),false,anchorPane);
         setUpScene.setLabel(labelNewMail,"Email :",Pos.CENTER,100,150,20,150,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
         setUpScene.setLabel(labelNewPassword,"Mot de passe :",Pos.CENTER,30,200,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
