@@ -63,16 +63,10 @@ public class BlackJack {
         }
     }
 
-    public void actionSplit(UserHand userHand){
-        if(listOfUserHand.get(0).getHand().get(0) == listOfUserHand.get(0).getHand().get(1)){
-            action = new ActionInsurance();
-            action.action(listOfUserHand, cards_package, bet);
-        }
-    }
-
     public void addUserBet(User user){
+        //Créer une mise pour user
         bet.addUser(user);
-    } //Créer une mise pour user
+    }
 
     public void gameBegin(){ //Méthode créant une partie de blackJack
         cards_package.initCardPackage();
@@ -154,6 +148,13 @@ public class BlackJack {
             listOfUserHand.remove(i);
         }
         Cards_Package cards_package = new Cards_Package();
+    }
+
+    public void actionSplit(UserHand userHand){
+        if(listOfUserHand.get(0).getHand().get(0) == listOfUserHand.get(0).getHand().get(1)){
+            action = new ActionInsurance();
+            action.action(listOfUserHand, cards_package, bet);
+        }
     }
 
     public void actionDouble(){
