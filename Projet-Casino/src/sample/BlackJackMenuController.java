@@ -1,6 +1,7 @@
 package sample;
 
 import games.BlackJack;
+import games.Card;
 import games.User;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -35,7 +36,8 @@ public class BlackJackMenuController {
     private final int ORIGIN_Y_USER = 380;
     private final int ORIGIN_Y_CROUPIER = 25;
 
-    private int currentPositionXUser;
+    private int currentPositionXUserFirstHand;
+    private int currentPositionXUserSecondHand;
     private int currentPositionXCroupier;
 
     private BorderPane  root = new BorderPane();
@@ -47,12 +49,8 @@ public class BlackJackMenuController {
 
     private BlackJack blackJack;
 
-    private boolean actionSplit = false;
-    private boolean actionInsurance = false;
-    private boolean actionHit = false;
-    private boolean actionDouble = false;
-    private boolean actionStand = false;
-    private boolean actionSurrender = false;
+    private boolean split = false;
+    private int indexCurrentHand = 1;
 
     private List<Shape> token1 = new ArrayList<>();
     private List<Shape> token2 = new ArrayList<>();
@@ -106,13 +104,13 @@ public class BlackJackMenuController {
 
         setUpScene.setRectangle(zoneBetUser1,327.0,600.0,174.0,147.0,5.0,5.0,Paint.valueOf("#158000"),Paint.valueOf("BLACK"),5.0,StrokeType.INSIDE,true,anchorPane);
         setUpScene.setRectangle(zoneBetUser2,550,600.0,174.0,147.0,5.0,5.0,Paint.valueOf("#158000"),Paint.valueOf("BLACK"),5.0,StrokeType.INSIDE,false,anchorPane);
-        setUpScene.setLabel(labelToken,"Jeton : "+user.getNumberOfToken(), Pos.CENTER_LEFT,30.0,660.0,55.0,163.0,new Font(30.0), Paint.valueOf("BLACK"),true,anchorPane);
+        setUpScene.setLabel(labelToken,"Jetons : "+user.getNumberOfToken(), Pos.CENTER_LEFT,30.0,660.0,55.0,163.0,new Font(30.0), Paint.valueOf("BLACK"),true,anchorPane);
         setUpScene.setLabel(labelProfit,"Gain : 0", Pos.CENTER_LEFT, 30.0,720.0,55.0,163.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
         setUpScene.setLabel(labelPseudo,"Joueur : "+user.getPseudo(), Pos.CENTER_LEFT,30.0,600.0,55.0,308.0,new Font(30.0),Color.BLACK,true,anchorPane);
         setUpScene.setLabel(labelError,"Erreur :", Pos.CENTER,100.0,455.0,36.0,700.0,new Font(25.0),Color.RED,false,anchorPane);
         setUpScene.setTextField(textBetUser,"Votre mise", Pos.CENTER,280.0,380.0,79.0,252.0,new Font(30.0),true,anchorPane);
         setUpScene.setButton(returnMainMenuButton,"Quitter",Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
-        setUpScene.setButton(newPartyButton,"Nouvelle party",Pos.CENTER,14.0,80.0,57.0,200.0,new Font(20.0),false,anchorPane);
+        setUpScene.setButton(newPartyButton,"Nouvelle partie",Pos.CENTER,14.0,80.0,57.0,200.0,new Font(20.0),false,anchorPane);
         setUpScene.setButton(validBetButton,"Miser",Pos.CENTER,320.0,500.0,72.0,163.0,new Font(30.0),true,anchorPane);
         setUpScene.setLabel(labelValueUserFirstHand,"",Pos.CENTER,250.0,330.0,20.0,300.0,new Font(20.0),Paint.valueOf("BLACK"),false,anchorPane);
         setUpScene.setLabel(labelValueUserSecondHand,"",Pos.CENTER,473.0,330.0,20.0,300.0,new Font(20.0),Paint.valueOf("BLACK"),false,anchorPane);
@@ -164,6 +162,10 @@ public class BlackJackMenuController {
 
         actionSurrenderButton.setOnMouseClicked((event)->{
             actionSurrender();
+        });
+
+        newPartyButton.setOnMouseClicked((event)->{
+            newGame();
         });
 
         blackJack.addUserBet(user);
@@ -332,16 +334,17 @@ public class BlackJackMenuController {
                         labelError.setVisible(true);
                     } else {
                         labelError.setVisible(false);
-                        // ajouter valueOfBet à bet dans la classe BlackJack
-                        textBetUser.setVisible(false);
-                        validBetButton.setVisible(false);
-
-                        //user.removeToken(valueOfBet);
-                        labelToken1.setText("1"); // recup valeur de bet
-                        labelToken.setText("Jetons : " + (user.getNumberOfToken() - valueOfBet));
 
                         blackJack.addUserBet(user);
                         blackJack.userBet(valueOfBet,user);
+
+                        textBetUser.setVisible(false);
+                        validBetButton.setVisible(false);
+
+                        labelToken1.setVisible(true);
+                        labelToken1.setText(blackJack.getBet().getBet(user)+"");
+                        labelToken.setText("Jetons : " + (user.getNumberOfToken() - valueOfBet));
+
 
                         setTokenVisible(token1,true);
                         startingGame();
@@ -357,7 +360,7 @@ public class BlackJackMenuController {
      * Méthode pour commencer une partie de black jack
      **/
     private void startingGame() {
-        currentPositionXUser = ORIGIN_X_FIRST_HAND;
+        currentPositionXUserFirstHand = ORIGIN_X_FIRST_HAND;
         currentPositionXCroupier = ORIGIN_X_Croupier;
         ImageView card;
 
@@ -365,23 +368,23 @@ public class BlackJackMenuController {
 
         card = chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(0).getRank());
         userFirstHand.add(card);
-        setUpCard(card, currentPositionXUser, ORIGIN_Y_USER);
+        setUpCard(card, currentPositionXUserFirstHand, ORIGIN_Y_USER);
         labelValueUserFirstHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)));
         labelValueUserFirstHand.setVisible(true);
-        currentPositionXUser += 50;
+        currentPositionXUserFirstHand += 25;
 
         card = chooseCard(blackJack.getListOfUserHand().get(0).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(0).getHand().get(0).getRank());
         croupierHand.add(card);
         setUpCard(card, currentPositionXCroupier, ORIGIN_Y_CROUPIER);
         labelValueCroupierHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(0)));
         labelValueCroupierHand.setVisible(true);
-        currentPositionXCroupier += 50;
+        currentPositionXCroupier += 25;
 
         card = chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(1).getRank());
         userFirstHand.add(card);
-        setUpCard(card, currentPositionXUser, ORIGIN_Y_USER);
+        setUpCard(card, currentPositionXUserFirstHand, ORIGIN_Y_USER);
         labelValueUserFirstHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)));
-        currentPositionXUser += 50;
+        currentPositionXUserFirstHand += 25;
 
         showAction();
     }
@@ -444,7 +447,9 @@ public class BlackJackMenuController {
      * Méthode pour modifier la position d'une carte
      **/
     private void setUpCard(ImageView card, int positionX, int positionY) {
-        anchorPane.getChildren().add(card);
+        if(!anchorPane.getChildren().contains(card)){
+            anchorPane.getChildren().add(card);
+        }
         card.setLayoutX(positionX);
         card.setLayoutY(positionY);
         card.setVisible(true);
@@ -494,6 +499,7 @@ public class BlackJackMenuController {
         actionInsuranceButton.setVisible(true);
         actionDoubleButton.setVisible(true);
         actionStandButton.setVisible(true);
+        actionSplitButton.setVisible(true);
 
         if(blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber() == blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber()){
             actionSplitButton.setVisible(true);
@@ -512,27 +518,33 @@ public class BlackJackMenuController {
 
     /** Méthode pour l'action split (2 carte de même numéro) **/
     private void actionSplit() {
+        actionDoubleButton.setVisible(false);
+        split = true;
+
         blackJack.actionSplit();
 
         zoneBetUser2.setVisible(true);
         setTokenVisible(token2,true);
         labelToken2.setText(labelToken1.getText());
+        labelToken2.setVisible(true);
 
-        userSecondHand.add(userFirstHand.get(userFirstHand.size() - 1));
-        userFirstHand.remove(userFirstHand.size() - 1);
-        setUpCard(userSecondHand.get(0), ORIGIN_X_SECOND_HAND, ORIGIN_Y_USER);
+        userSecondHand.add(userFirstHand.get(1));
+        userFirstHand.remove(1);
+        currentPositionXUserSecondHand = ORIGIN_X_SECOND_HAND;
+        setUpCard(userSecondHand.get(0), currentPositionXUserSecondHand, ORIGIN_Y_USER);
+        currentPositionXUserSecondHand += 25;
+        currentPositionXUserFirstHand -= 25;
+
+        labelValueUserFirstHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)));
+        labelValueUserSecondHand.setText("Valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(2)));
+        labelValueUserSecondHand.setVisible(true);
     }
 
     /** Méthode pour l'action tirer une carte **/
     private void actionHit(){
         blackJack.actionHit();
 
-        int indexCard = blackJack.getListOfUserHand().get(1).getHand().size() - 1;
-        ImageView card = chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(indexCard).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(indexCard).getRank());
-        userFirstHand.add(card);
-        setUpCard(card, currentPositionXUser, ORIGIN_Y_USER);
-        labelValueUserFirstHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)));
-        currentPositionXUser += 50;
+        drawCard();
 
         verification();
 
@@ -540,49 +552,115 @@ public class BlackJackMenuController {
 
     /** Méthode pour l'action prendre une assurance **/
     private void actionInsurance(){
-
+        blackJack.actionInsurance();
+        actionInsuranceButton.setVisible(false);
     }
 
     /** Méthode pour l'action doubler la mise **/
     private void actionDouble(){
+        hideAction();
+
+        blackJack.actionDouble();
+
+        drawCard();
+
+        labelToken1.setText(blackJack.getBet().getBet(user)+"");
+
+       verification();
 
     }
 
     /** Méthode pour l'action rester **/
     private void actionStand(){
+        blackJack.actionStand();
 
+        checkSplit();
+    }
+
+    private void checkSplit() {
+        if(!split) {
+            hideAction();
+            croupierTurn();
+
+            int gain = blackJack.betDistribute();
+            labelProfit.setText("Gain : " + gain);
+            labelToken.setText("Jetons : " + user.getNumberOfToken());
+
+            newPartyButton.setVisible(true);
+        }
+        else{
+            split = false;
+            indexCurrentHand = 2;
+        }
     }
 
     /** Méthode pour l'action abandonner **/
     private void actionSurrender(){
+        blackJack.actionSurrender();
+
+        if(!split) {
+            hideAction();
+
+            labelProfit.setText("Gain : -" + blackJack.getBet().getBet(user));
+            labelToken.setText("Jetons : " + user.getNumberOfToken());
+
+            newPartyButton.setVisible(true);
+        }
+        else {
+            split = false;
+            indexCurrentHand = 2;
+        }
+    }
+
+    private void drawCard() {
+        int positionCardX;
+        //int indexCard = blackJack.getListOfUserHand().get(indexCurrentHand).getHand().size() - 1;
+        Card newCard = blackJack.getListOfUserHand().get(indexCurrentHand).getHand().get(blackJack.getListOfUserHand().get(indexCurrentHand).getHand().size() - 1);
+
+        if(indexCurrentHand == 1){
+            positionCardX = currentPositionXUserFirstHand;
+            labelValueUserFirstHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(indexCurrentHand)));
+            currentPositionXUserFirstHand += 25;
+        }
+        else {
+            positionCardX = currentPositionXUserSecondHand;
+            labelValueUserSecondHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(indexCurrentHand)));
+            currentPositionXUserSecondHand += 25;
+        }
+
+        ImageView card = chooseCard(newCard.getNumber(),newCard.getRank());
+        userFirstHand.add(card);
+        setUpCard(card, positionCardX, ORIGIN_Y_USER);
 
     }
 
     /** Méthode de vérifcation si le joueur a atteind 21 ou l'a dépassé **/
     private void verification(){
-        if(blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)) > 21){
-            hideAction();
+        if(blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(indexCurrentHand)) > 21){
+            if(!split) {
+                hideAction();
 
-            System.out.println("plus de 21 : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)));
+                int gain = blackJack.betDistribute();
+                labelProfit.setText("Gain : " + gain);
+                labelToken.setText("Jetons : " + user.getNumberOfToken());
+
+                newPartyButton.setVisible(true);
+            }
+            else {
+                split = false;
+                indexCurrentHand = 2;
+            }
         }
 
-        if(blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)) == 21){
-            hideAction();
-            blackJack.turnCroupier();
-
-            croupierTurn();
-
-            System.out.println("black jack");
+        if(blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(indexCurrentHand)) == 21){
+            checkSplit();
         }
-
-        int gain = blackJack.betDistribute();
-        labelProfit.setText("Gain : "+gain);
-        labelToken.setText("Jetons : "+user.getNumberOfToken());
-        newPartyButton.setVisible(true);
     }
 
     /** Méthode qui correspond au tour du croupier **/
     private void croupierTurn(){
+        blackJack.turnCroupier();
+
         for(int index = 1; index < blackJack.getListOfUserHand().get(0).getHand().size(); index ++) {
             ImageView card = chooseCard(blackJack.getListOfUserHand().get(0).getHand().get(index).getNumber(), blackJack.getListOfUserHand().get(0).getHand().get(index).getRank());
             croupierHand.add(card);
@@ -590,23 +668,12 @@ public class BlackJackMenuController {
             labelValueCroupierHand.setText("valeur de la main : " + blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(0)));
             labelValueCroupierHand.setVisible(true);
             currentPositionXCroupier += 50;
-
-            sleep(2000);
         }
     }
 
-    /**  **/
+    /** Méthode pour une nouvelle partie de black jack **/
     private void newGame(){
-
-    }
-
-    /** Méthode pour ralentir le programme **/
-    private void sleep(int time){
-        try{
-            Thread.sleep(time);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+       BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage);
+       blackJackMenuController.setting();
     }
 }
