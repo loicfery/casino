@@ -55,6 +55,7 @@ public class BlackJack {
         listOfUserHand.get(1).addCard(cards_package);
         listOfUserHand.get(0).addCard(cards_package);
         listOfUserHand.get(1).addCard(cards_package);
+        System.out.println();
     }
 
     //Augmente la mise du joueur user
