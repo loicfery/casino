@@ -2,6 +2,7 @@ package sample;
 
 import games.BlackJack;
 import games.User;
+import games.UserHand;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -75,6 +76,9 @@ public class BlackJackMenuController {
     public BlackJackMenuController(User user,Stage stage){
         this.stage = stage;
         this.user = user;
+
+        UserHand userHand = new UserHand(user);
+        blackJack = new BlackJack();
     }
 
     /** Méthode qui initialise l'interface du black jack **/

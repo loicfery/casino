@@ -1,5 +1,6 @@
 package games;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserHand  {
@@ -7,8 +8,8 @@ public class UserHand  {
     private User user;
 
 
-    public UserHand(List<Card> hand, User user) {
-        this.hand = hand;
+    public UserHand(User user) {
+        this.hand = new ArrayList<>();
         this.user = user;
     }
 
