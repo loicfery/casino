@@ -204,6 +204,10 @@ public class BlackJack {
     public void actionHit(){
         action = new ActionHit(currentHand);
         action.action(listOfUserHand, cards_package, bet);
+
+        if(countValueOfUserHand(listOfUserHand.get(currentHand)) >= 21 && currentHand == 1){
+            currentHand = 2;
+        }
     }
 
     public void actionInsurance(){

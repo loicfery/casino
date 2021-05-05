@@ -402,7 +402,7 @@ public class BlackJackMenuController {
         currentPositionXCroupier += 25;
 
         card = chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(1).getRank());
-        setLog("Le joueur "+user.getPseudo()+" pioche la carte "+blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber()+" de "+blackJack.getListOfUserHand().get(1).getHand().get(1).getRank());
+        setLog("Le joueur "+user.getPseudo()+" pioche la carte "+blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber()+" de "+blackJack.getListOfUserHand().get(1).getHand().get(1).getRank()+"\n");
         userFirstHand.add(card);
         setUpCard(card, currentPositionXUserFirstHand, ORIGIN_Y_USER);
         labelValueUserFirstHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)));
@@ -599,12 +599,14 @@ public class BlackJackMenuController {
 
     /** Méthode pour l'action doubler la mise **/
     private void actionDouble(){
-        setLog("Le joueur "+user.getPseudo()+" a choisit l'action \"Doubler\".");
         hideAction();
 
         stand = true;
 
         blackJack.actionDouble();
+
+        setLog("Le joueur "+user.getPseudo()+" a choisit l'action \"Doubler\".");
+        setLog("La mise est maintenant de "+blackJack.getBet().getBet(user));
 
         drawCard();
 
@@ -650,6 +652,7 @@ public class BlackJackMenuController {
     private void drawCard() {
         int positionCardX;
         Card newCard = blackJack.getListOfUserHand().get(indexCurrentHand).getHand().get(blackJack.getListOfUserHand().get(indexCurrentHand).getHand().size() - 1);
+        setLog("Le joueur "+user.getPseudo()+" pioche la carte "+newCard.getNumber()+" de "+newCard.getRank()+" dans sa main n°"+indexCurrentHand);
 
         if(indexCurrentHand == 1){
             positionCardX = currentPositionXUserFirstHand;
