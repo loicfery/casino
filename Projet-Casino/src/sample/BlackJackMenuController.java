@@ -77,8 +77,7 @@ public class BlackJackMenuController {
         this.stage = stage;
         this.user = user;
 
-        UserHand userHand = new UserHand(user);
-        blackJack = new BlackJack();
+        blackJack = new BlackJack(user);
     }
 
     /** Méthode qui initialise l'interface du black jack **/
