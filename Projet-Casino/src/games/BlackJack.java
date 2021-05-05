@@ -60,6 +60,7 @@ public class BlackJack {
     //Augmente la mise du joueur user
     public void userBet(int valueOfBet, User user){
         bet.addBet(valueOfBet,user);
+        listOfUserHand.get(1).getUser().removeToken(bet.getBet(listOfUserHand.get(1).getUser()));
     }
 
     public void addUserBet(User user){
@@ -93,83 +94,64 @@ public class BlackJack {
         int tokenGain = 0;
 
         if(verifyBlackJack(listOfUserHand.get(0))){
-            if(insuranceFirstHandUser > 0 || verifyBlackJack(listOfUserHand.get(1))){
-                tokenGain = 0;
+            if(insuranceFirstHandUser > 0){
+                tokenGain = bet.getBet(listOfUserHand.get(1).getUser()) + insuranceFirstHandUser;
+            }
+            else if(verifyBlackJack(listOfUserHand.get(1))){
+                tokenGain = bet.getBet(listOfUserHand.get(1).getUser());
             }
             else {
                 tokenGain = -1 * (bet.getBet(listOfUserHand.get(1).getUser()));
-                listOfUserHand.get(1).getUser().removeToken(bet.getBet(listOfUserHand.get(1).getUser()));
             }
             if(listOfUserHand.size() > 2){
                 if(insuranceSecondHandUser <= 0 && !verifyBlackJack(listOfUserHand.get(2))){
                     tokenGain = tokenGain + (-1 * (bet.getBet(listOfUserHand.get(2).getUser())));
-                    listOfUserHand.get(2).getUser().removeToken(bet.getBet(listOfUserHand.get(2).getUser()));
                 }
             }
         }
         else {
             if(verifyBlackJack(listOfUserHand.get(1))){
-                tokenGain = bet.getBet(listOfUserHand.get(1).getUser()) - insuranceFirstHandUser;
-                listOfUserHand.get(1).getUser().addToken(bet.getBet(listOfUserHand.get(1).getUser()) - insuranceFirstHandUser);
-            }
-            else{
-                if(countValueOfUserHand(listOfUserHand.get(1)) > 21){
-                    tokenGain = -1 * (bet.getBet(listOfUserHand.get(1).getUser()) + insuranceFirstHandUser);
-                    listOfUserHand.get(1).getUser().addToken(tokenGain);
-                    return tokenGain;
-                }
-                if(countValueOfUserHand(listOfUserHand.get(0)) > 21){
-                    tokenGain = bet.getBet(listOfUserHand.get(1).getUser()) - insuranceFirstHandUser;
-                    listOfUserHand.get(1).getUser().addToken(tokenGain);
-                    return tokenGain;
-                }
-                if(countValueOfUserHand(listOfUserHand.get(0)) > countValueOfUserHand(listOfUserHand.get(1))){
-                    tokenGain = -1 * (bet.getBet(listOfUserHand.get(1).getUser()) + insuranceFirstHandUser);
-                    listOfUserHand.get(1).getUser().removeToken(bet.getBet(listOfUserHand.get(1).getUser()) + insuranceFirstHandUser);
-                    System.out.println("test : "+tokenGain);
-                }
-                if(countValueOfUserHand(listOfUserHand.get(0)) < countValueOfUserHand(listOfUserHand.get(1))){
-                    tokenGain = bet.getBet(listOfUserHand.get(1).getUser()) - insuranceFirstHandUser;
-                    listOfUserHand.get(1).getUser().addToken(tokenGain);
-                    System.out.println("test : "+tokenGain);
-                }
-                if(countValueOfUserHand(listOfUserHand.get(0)) == countValueOfUserHand(listOfUserHand.get(1))){
-                    tokenGain = - insuranceFirstHandUser;
-                    listOfUserHand.get(1).getUser().removeToken(insuranceFirstHandUser);
-                }
-            }
-            if(listOfUserHand.size() > 2){
-                if(verifyBlackJack(listOfUserHand.get(2))){
-                    tokenGain = tokenGain +  (bet.getBet(listOfUserHand.get(2).getUser()) - insuranceSecondHandUser);
-                    listOfUserHand.get(2).getUser().addToken(bet.getBet(listOfUserHand.get(1).getUser()) - insuranceSecondHandUser);
+                if(listOfUserHand.size() > 2){
+                    tokenGain = bet.getBet(listOfUserHand.get(1).getUser());
                 }
                 else {
-                    if(countValueOfUserHand(listOfUserHand.get(2)) > 21){
-                        tokenGain = tokenGain + (-1 * (bet.getBet(listOfUserHand.get(2).getUser()) + insuranceFirstHandUser));
-                        listOfUserHand.get(2).getUser().addToken(tokenGain);
-                        System.out.println("test 2 : "+tokenGain);
-                        return tokenGain;
-                    }
+                    tokenGain = (int) (bet.getBet(listOfUserHand.get(1).getUser()) * 1.5);
+                }
+            }
+            else{
+                if(countValueOfUserHand(listOfUserHand.get(0)) > 21){
+                    tokenGain = bet.getBet(listOfUserHand.get(1).getUser());
+                    listOfUserHand.get(1).getUser().addToken(tokenGain);
+                    return tokenGain;
+                }
+                if(countValueOfUserHand(listOfUserHand.get(0)) < countValueOfUserHand(listOfUserHand.get(1))){
+                    tokenGain = bet.getBet(listOfUserHand.get(1).getUser());
+                }
+                if(countValueOfUserHand(listOfUserHand.get(0)) == countValueOfUserHand(listOfUserHand.get(1))){
+                    tokenGain = bet.getBet(listOfUserHand.get(1).getUser());
+                }
+            }
+            user.addToken(tokenGain);
+            if(listOfUserHand.size() > 2){
+                if(verifyBlackJack(listOfUserHand.get(2))){
+                    tokenGain = bet.getBet(listOfUserHand.get(2).getUser()) - insuranceSecondHandUser;
+                }
+                else {
                     if(countValueOfUserHand(listOfUserHand.get(0)) > 21){
-                        tokenGain = tokenGain + (bet.getBet(listOfUserHand.get(2).getUser()) - insuranceFirstHandUser);
+                        tokenGain = bet.getBet(listOfUserHand.get(2).getUser());
                         listOfUserHand.get(2).getUser().addToken(tokenGain);
                         return tokenGain;
-                    }
-                    if(countValueOfUserHand(listOfUserHand.get(0)) > countValueOfUserHand(listOfUserHand.get(2))){
-                        tokenGain = tokenGain + (-1 * (bet.getBet(listOfUserHand.get(2).getUser()) + insuranceSecondHandUser));
-                        listOfUserHand.get(2).getUser().removeToken(bet.getBet(listOfUserHand.get(1).getUser()) + insuranceSecondHandUser);
                     }
                     if(countValueOfUserHand(listOfUserHand.get(0)) < countValueOfUserHand(listOfUserHand.get(2))){
-                        tokenGain = tokenGain + (bet.getBet(listOfUserHand.get(2).getUser()) - insuranceSecondHandUser);
-                        listOfUserHand.get(2).getUser().addToken(tokenGain);
+                        tokenGain = bet.getBet(listOfUserHand.get(2).getUser());
                     }
                     if(countValueOfUserHand(listOfUserHand.get(0)) == countValueOfUserHand(listOfUserHand.get(2))){
-                        tokenGain = tokenGain - insuranceSecondHandUser;
-                        listOfUserHand.get(2).getUser().removeToken(insuranceSecondHandUser);
+                        tokenGain = bet.getBet(listOfUserHand.get(2).getUser());
                     }
                 }
             }
         }
+        user.addToken(tokenGain);
         return tokenGain;
     }
 
@@ -198,6 +180,7 @@ public class BlackJack {
     public void actionDouble(){
         action = new ActionDouble();
         action.action(listOfUserHand, cards_package, bet);
+        listOfUserHand.get(1).getUser().removeToken(bet.getBet(listOfUserHand.get(1).getUser()));
         turnCroupier();
     }
 
@@ -211,12 +194,9 @@ public class BlackJack {
     }
 
     public void actionInsurance(){
-        if(currentHand == 1) {
-            insuranceFirstHandUser = bet.getBet(listOfUserHand.get(1).getUser()) / 2; //enlever classe ActionInsurance ?
-        }
-        else {
-            insuranceSecondHandUser = bet.getBet(listOfUserHand.get(2).getUser()) / 2;
-        }
+        insuranceFirstHandUser = bet.getBet(listOfUserHand.get(1).getUser()) / 2; //enlever classe ActionInsurance ?
+        listOfUserHand.get(1).getUser().removeToken(insuranceFirstHandUser);
+
     }
 
     public void actionStand(){
