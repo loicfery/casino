@@ -86,6 +86,7 @@ public class BlackJackMenuController {
     private Button actionDoubleButton = new Button();
     private Button actionSurrenderButton = new Button();
     private Button actionInsuranceButton = new Button();
+    private Button newPartyButton = new Button();
 
     private Circle circleRule = new Circle();
 
@@ -111,6 +112,7 @@ public class BlackJackMenuController {
         setUpScene.setLabel(labelError,"Erreur :", Pos.CENTER,100.0,455.0,36.0,700.0,new Font(25.0),Color.RED,false,anchorPane);
         setUpScene.setTextField(textBetUser,"Votre mise", Pos.CENTER,280.0,380.0,79.0,252.0,new Font(30.0),true,anchorPane);
         setUpScene.setButton(returnMainMenuButton,"Quitter",Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
+        setUpScene.setButton(newPartyButton,"Nouvelle party",Pos.CENTER,14.0,80.0,57.0,200.0,new Font(20.0),false,anchorPane);
         setUpScene.setButton(validBetButton,"Miser",Pos.CENTER,320.0,500.0,72.0,163.0,new Font(30.0),true,anchorPane);
         setUpScene.setLabel(labelValueUserFirstHand,"",Pos.CENTER,250.0,330.0,20.0,300.0,new Font(20.0),Paint.valueOf("BLACK"),false,anchorPane);
         setUpScene.setLabel(labelValueUserSecondHand,"",Pos.CENTER,473.0,330.0,20.0,300.0,new Font(20.0),Paint.valueOf("BLACK"),false,anchorPane);
@@ -338,6 +340,7 @@ public class BlackJackMenuController {
                         labelToken1.setText("1"); // recup valeur de bet
                         labelToken.setText("Jetons : " + (user.getNumberOfToken() - valueOfBet));
 
+                        blackJack.addUserBet(user);
                         blackJack.userBet(valueOfBet,user);
 
                         setTokenVisible(token1,true);
@@ -524,31 +527,14 @@ public class BlackJackMenuController {
     private void actionHit(){
         blackJack.actionHit();
 
-        if(blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)) > 21){
-            hideAction();
-
-            int gain = blackJack.betDistribute();
-            labelProfit.setText("Gain : "+gain);
-
-            System.out.println("plus de 21 : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)));
-        }
-
-        if(blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)) == 21){
-            hideAction();
-            blackJack.turnCroupier();
-
-            int gain = blackJack.betDistribute();
-            labelProfit.setText("Gain : "+gain);
-
-            System.out.println("black jack");
-        }
-
         int indexCard = blackJack.getListOfUserHand().get(1).getHand().size() - 1;
         ImageView card = chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(indexCard).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(indexCard).getRank());
         userFirstHand.add(card);
         setUpCard(card, currentPositionXUser, ORIGIN_Y_USER);
         labelValueUserFirstHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)));
         currentPositionXUser += 50;
+
+        verification();
 
     }
 
@@ -570,5 +556,57 @@ public class BlackJackMenuController {
     /** Méthode pour l'action abandonner **/
     private void actionSurrender(){
 
+    }
+
+    /** Méthode de vérifcation si le joueur a atteind 21 ou l'a dépassé **/
+    private void verification(){
+        if(blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)) > 21){
+            hideAction();
+
+            System.out.println("plus de 21 : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)));
+        }
+
+        if(blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)) == 21){
+            hideAction();
+            blackJack.turnCroupier();
+
+            croupierTurn();
+
+            System.out.println("black jack");
+        }
+
+        int gain = blackJack.betDistribute();
+        labelProfit.setText("Gain : "+gain);
+        labelToken.setText("Jetons : "+user.getNumberOfToken());
+        newPartyButton.setVisible(true);
+    }
+
+    /** Méthode qui correspond au tour du croupier **/
+    private void croupierTurn(){
+        for(int index = 1; index < blackJack.getListOfUserHand().get(0).getHand().size(); index ++) {
+            ImageView card = chooseCard(blackJack.getListOfUserHand().get(0).getHand().get(index).getNumber(), blackJack.getListOfUserHand().get(0).getHand().get(index).getRank());
+            croupierHand.add(card);
+            setUpCard(card, currentPositionXCroupier, ORIGIN_Y_CROUPIER);
+            labelValueCroupierHand.setText("valeur de la main : " + blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(0)));
+            labelValueCroupierHand.setVisible(true);
+            currentPositionXCroupier += 50;
+
+            sleep(2000);
+        }
+    }
+
+    /**  **/
+    private void newGame(){
+
+    }
+
+    /** Méthode pour ralentir le programme **/
+    private void sleep(int time){
+        try{
+            Thread.sleep(time);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
