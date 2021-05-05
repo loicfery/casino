@@ -60,7 +60,6 @@ public class BlackJack {
     //Augmente la mise du joueur user
     public void userBet(int valueOfBet, User user){
         bet.addBet(valueOfBet,user);
-        listOfUserHand.get(1).getUser().removeToken(bet.getBet(listOfUserHand.get(1).getUser()));
     }
 
     public void addUserBet(User user){
@@ -81,6 +80,7 @@ public class BlackJack {
         listOfUserHand.add(userHand);
 
         giveCardToUser();
+        listOfUserHand.get(1).getUser().removeToken(bet.getBet(listOfUserHand.get(1).getUser()));
     }
 
     //Pioche du croupier jusqu'à avoir 17 ou +
