@@ -25,7 +25,7 @@ public class BlackJack {
     public int countValueOfUserHand(UserHand userHand){ //Calcule la valeur total des cartes dans la main d'un joueur
         int somme=0;
         for (int i=0; i<userHand.getHand().size(); i++){
-            if(userHand.getHand().get(i).getNumber() == 0 && somme<11){
+            if(userHand.getHand().get(i).getNumber() == 1 && somme<11){
                 somme = somme+11;
             }
             else {
