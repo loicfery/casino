@@ -499,7 +499,6 @@ public class BlackJackMenuController {
         actionInsuranceButton.setVisible(true);
         actionDoubleButton.setVisible(true);
         actionStandButton.setVisible(true);
-        actionSplitButton.setVisible(true);
 
         if(blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber() == blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber()){
             actionSplitButton.setVisible(true);
