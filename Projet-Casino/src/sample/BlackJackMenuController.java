@@ -59,9 +59,11 @@ public class BlackJackMenuController {
     private List<ImageView> userSecondHand = new ArrayList<>();
 
     private TextArea textRule = new TextArea();
+    private TextArea textLog = new TextArea();
 
     private Rectangle zoneBetUser1 = new Rectangle();
     private Rectangle zoneBetUser2 = new Rectangle();
+    private Rectangle rectangleLog = new Rectangle();
 
     private Label labelToken = new Label();
     private Label labelProfit = new Label();
@@ -73,6 +75,7 @@ public class BlackJackMenuController {
     private Label labelValueUserFirstHand = new Label();
     private Label labelValueUserSecondHand = new Label();
     private Label labelValueCroupierHand = new Label();
+    private Label labelLogParty = new Label();
 
     private TextField textBetUser = new TextField();
 
@@ -126,11 +129,17 @@ public class BlackJackMenuController {
         initToken1();
         initToken2();
 
+        setUpScene.setRectangle(rectangleLog,700.0,15.0,30.0,50.0,10.0,10.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),1.0,StrokeType.INSIDE,true,anchorPane);
+        setUpScene.setLabel(labelLogParty,"Log",Pos.CENTER,700.0,15.0,23.0,50.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setUpScene.setTextArea(textLog,200,46.0,500.0,500.0,false,false,anchorPane);
+
         setUpScene.setCircle(circleRule,16.0,770.0,30.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,true,anchorPane);
         setUpScene.setLabel(labelRule,"?",Pos.CENTER,754.0,15.0,23,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
         setUpScene.setTextArea(textRule,50,46.0,600.0,700.0,false,false,anchorPane);
 
         setRule();
+        setLog("Log de la partie\n");
+        setLog("Le joueur "+user.getPseudo()+" démarre une nouvelle partie.");
 
         returnMainMenuButton.setOnMouseClicked((event) -> {
             returnMainMenu();
@@ -166,6 +175,14 @@ public class BlackJackMenuController {
 
         newPartyButton.setOnMouseClicked((event)->{
             newGame();
+        });
+
+        labelLogParty.setOnMouseEntered((event)->{
+            showLog();
+        });
+
+        labelLogParty.setOnMouseExited((event)->{
+            hideLog();
         });
 
         blackJack.addUserBet(user);
@@ -345,6 +362,7 @@ public class BlackJackMenuController {
                         labelToken1.setText(blackJack.getBet().getBet(user)+"");
                         labelToken.setText("Jetons : " + (user.getNumberOfToken() - valueOfBet));
 
+                        setLog("Le joueur "+user.getPseudo()+" mise "+valueOfBet+" jetons");
 
                         setTokenVisible(token1,true);
                         startingGame();
@@ -367,6 +385,7 @@ public class BlackJackMenuController {
         blackJack.gameBegin();
 
         card = chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(0).getRank());
+        setLog("Le joueur "+user.getPseudo()+" pioche la carte "+blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber()+" de "+blackJack.getListOfUserHand().get(1).getHand().get(0).getRank());
         userFirstHand.add(card);
         setUpCard(card, currentPositionXUserFirstHand, ORIGIN_Y_USER);
         labelValueUserFirstHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)));
@@ -374,6 +393,7 @@ public class BlackJackMenuController {
         currentPositionXUserFirstHand += 25;
 
         card = chooseCard(blackJack.getListOfUserHand().get(0).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(0).getHand().get(0).getRank());
+        setLog("Le croupier pioche la carte "+blackJack.getListOfUserHand().get(0).getHand().get(0).getNumber()+" de "+blackJack.getListOfUserHand().get(0).getHand().get(0).getRank());
         croupierHand.add(card);
         setUpCard(card, currentPositionXCroupier, ORIGIN_Y_CROUPIER);
         labelValueCroupierHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(0)));
@@ -381,6 +401,7 @@ public class BlackJackMenuController {
         currentPositionXCroupier += 25;
 
         card = chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(1).getRank());
+        setLog("Le joueur "+user.getPseudo()+" pioche la carte "+blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber()+" de "+blackJack.getListOfUserHand().get(1).getHand().get(1).getRank());
         userFirstHand.add(card);
         setUpCard(card, currentPositionXUserFirstHand, ORIGIN_Y_USER);
         labelValueUserFirstHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)));
@@ -472,10 +493,26 @@ public class BlackJackMenuController {
     }
 
     /**
-     * Méthode qui cacher la zone de texte contenant les règles
+     * Méthode qui cache la zone de texte contenant les règles
      **/
     private void hideRule() {
         textRule.setVisible(false);
+        setVisibleCards(true);
+    }
+
+    /**
+     * Méthode qui affiche les log de la partie
+     */
+    private void showLog(){
+        setVisibleCards(false);
+        textLog.setVisible(true);
+    }
+
+    /**
+     * Méthode qui cache les log de la partie
+     */
+    private void hideLog(){
+        textLog.setVisible(false);
         setVisibleCards(true);
     }
 
@@ -674,5 +711,9 @@ public class BlackJackMenuController {
     private void newGame(){
        BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage);
        blackJackMenuController.setting();
+    }
+
+    private void setLog(String newLog){
+        textLog.setText(textLog.getText() + "\n" + newLog);
     }
 }
