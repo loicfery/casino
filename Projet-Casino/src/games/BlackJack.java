@@ -10,12 +10,13 @@ public class BlackJack {
     private Bet bet; //Mise
     private ActionBlackJack action; //Action du joueur
     private User user;
-
+    private int insurance;
 
     public BlackJack(User user) {
         cards_package = new Cards_Package();
         listOfUserHand = new ArrayList<>();
         bet = new Bet();
+        insurance = 0;
     }
 
     public int countValueOfUserHand(UserHand userHand){ //Calcule la valeur total des cartes dans la main d'un joueur
@@ -71,18 +72,18 @@ public class BlackJack {
     public void gameBegin(){ //Méthode créant une partie de blackJack
         cards_package.initCardPackage();
         cards_package.mixCardPackage();
-        User croupier = new User("croupier", "null", "null");
-        UserHand croupierhand = new UserHand(croupier);
-        UserHand userHand = new UserHand(user);
-        User split = new User("split", "null", "null");
-        UserHand splitHand = new UserHand(split);
-        User insurance = new User("insurance", "null","null");
-        UserHand insuranceBet = new UserHand(insurance);
 
-        listOfUserHand.add(croupierhand);
+        User croupier = new User("croupier", "null", "null");
+        UserHand croupierHand = new UserHand(croupier);
+        UserHand userHand = new UserHand(user);
+
+        //User split = new User("split", "null", "null");
+        //UserHand splitHand = new UserHand(split);
+        //User insurance = new User("insurance", "null","null");
+        //UserHand insuranceBet = new UserHand(insurance);
+
+        listOfUserHand.add(croupierHand);
         listOfUserHand.add(userHand);
-        listOfUserHand.add(splitHand);
-        listOfUserHand.add(insuranceBet);
 
         //listOfUserHand.set(0, croupierhand);
         //listOfUserHand.set(1,userHand);
@@ -150,11 +151,9 @@ public class BlackJack {
         Cards_Package cards_package = new Cards_Package();
     }
 
-    public void actionSplit(UserHand userHand){
-        if(listOfUserHand.get(0).getHand().get(0) == listOfUserHand.get(0).getHand().get(1)){
-            action = new ActionInsurance();
-            action.action(listOfUserHand, cards_package, bet);
-        }
+    public void actionSplit(){
+        action = new ActionInsurance();
+        action.action(listOfUserHand, cards_package, bet);
     }
 
     public void actionDouble(){
@@ -184,10 +183,6 @@ public class BlackJack {
         action.action(listOfUserHand, cards_package, bet);
         reset();
         gameBegin();
-    }
-
-    public void setAction(ActionBlackJack action){
-        this.action = action;
     }
 
     public List<UserHand> getListOfUserHand(){

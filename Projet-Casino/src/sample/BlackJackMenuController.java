@@ -77,6 +77,11 @@ public class BlackJackMenuController {
     private Button validBetButton = new Button();
     private Button returnMainMenuButton = new Button();
     private Button actionSplitButton = new Button();
+    private Button actionHitButton = new Button();
+    private Button actionStandButton = new Button();
+    private Button actionDoubleButton = new Button();
+    private Button actionSurrenderButton = new Button();
+    private Button actionInsuranceButton = new Button();
 
     private Circle circleRule = new Circle();
 
@@ -102,26 +107,54 @@ public class BlackJackMenuController {
         setUpScene.setLabel(labelError,"Erreur :", Pos.CENTER,150.0,460.0,36.0,500.0,new Font(30.0),Color.RED,false,anchorPane);
         setUpScene.setTextField(textBetUser,"Votre mise", Pos.CENTER,280.0,380.0,79.0,252.0,new Font(30.0),true,anchorPane);
         setUpScene.setButton(returnMainMenuButton,"Quitter",Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
-        setUpScene.setButton(actionSplitButton,"Split",Pos.CENTER,300.0,10.0,72.0,163.0,new Font(30.0),false,anchorPane);
         setUpScene.setButton(validBetButton,"Miser",Pos.CENTER,320.0,500.0,72.0,163.0,new Font(30.0),true,anchorPane);
+
+        setUpScene.setButton(actionSurrenderButton,"Abandonner",Pos.CENTER,30.0,500.0,55.0,250,new Font(20.0),false,anchorPane);
+        setUpScene.setButton(actionHitButton,"Tirer une carte",Pos.CENTER,30.0,430.0,55.0,250,new Font(20.0),false,anchorPane);
+        setUpScene.setButton(actionDoubleButton,"Doubler la mise",Pos.CENTER,30.0,360.0,55.0,250,new Font(20.0),false,anchorPane);
+        setUpScene.setButton(actionStandButton,"Rester",Pos.CENTER,30.0,290.0,55.0,250,new Font(20.0),false,anchorPane);
+        setUpScene.setButton(actionInsuranceButton,"Assurance",Pos.CENTER,30.0,220.0,55.0,250,new Font(20.0),false,anchorPane);
+        setUpScene.setButton(actionSplitButton,"Partager",Pos.CENTER,30.0,150.0,55.0,250,new Font(20.0),false,anchorPane);
+
+        initToken1();
+        initToken2();
+
         setUpScene.setCircle(circleRule,16.0,770.0,30.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,true,anchorPane);
         setUpScene.setLabel(labelRule,"?",Pos.CENTER,754.0,15.0,23,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
         setUpScene.setTextArea(textRule,50,46.0,600.0,700.0,false,false,anchorPane);
 
-        initToken1();
-        initToken2();
         setRule();
 
         returnMainMenuButton.setOnMouseClicked((event) -> {
             returnMainMenu();
         });
 
+        validBetButton.setOnMouseClicked((event)->{
+            validBet();
+        });
+
         actionSplitButton.setOnMouseClicked((event)->{
             actionSplit();
         });
 
-        validBetButton.setOnMouseClicked((event)->{
-            validBet();
+        actionStandButton.setOnMouseClicked((event)->{
+            actionStand();
+        });
+
+        actionHitButton.setOnMouseClicked((event)->{
+            actionHit();
+        });
+
+        actionDoubleButton.setOnMouseClicked((event)->{
+            actionDouble();
+        });
+
+        actionInsuranceButton.setOnMouseClicked((event)->{
+            actionInsurance();
+        });
+
+        actionSurrenderButton.setOnMouseClicked((event)->{
+            actionSurrender();
         });
 
         blackJack.addUserBet(user);
@@ -263,7 +296,7 @@ public class BlackJackMenuController {
     /**
      * Méthode pour modifier la visibilité du second jetons (en cas de split)
      **/
-    public void setTokenVisible(List<Shape> token, boolean visible) {
+    private void setTokenVisible(List<Shape> token, boolean visible) {
         for(int index = 0; index < token.size(); index ++){
             token.get(index).setVisible(visible);
         }
@@ -272,7 +305,7 @@ public class BlackJackMenuController {
     /**
      * Méthode pour valider la mise
      **/
-    public void validBet() {
+    private void validBet() {
         if (textBetUser.getText().isEmpty()) {
             labelError.setText("Il faut entrer une mise");
             labelError.setVisible(true);
@@ -313,7 +346,7 @@ public class BlackJackMenuController {
     /**
      * Méthode pour commencer une partie de black jack
      **/
-    public void startingGame() {
+    private void startingGame() {
         int positionXUser = ORIGIN_X_FIRST_HAND;
         int positionXCroupier = ORIGIN_X_Croupier;
         ImageView card;
@@ -326,6 +359,7 @@ public class BlackJackMenuController {
         positionXUser += 50;
 
         card = chooseCard(blackJack.getListOfUserHand().get(0).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(0).getHand().get(0).getRank());
+        croupierHand.add(card);
         setUpCard(card, positionXCroupier, ORIGIN_Y_CROUPIER);
         positionXCroupier += 50;
 
@@ -333,25 +367,14 @@ public class BlackJackMenuController {
         userFirstHand.add(card);
         setUpCard(card, positionXUser, ORIGIN_Y_USER);
         positionXUser += 50;
-    }
 
-    /**
-     * Méthode pour l'action split (2 carte de même numéro)
-     **/
-    public void actionSplit() {
-        zoneBetUser2.setVisible(true);
-        setTokenVisible(token2,true);
-        labelToken2.setText(labelToken1.getText());
-
-        userSecondHand.add(userFirstHand.get(userFirstHand.size() - 1));
-        userFirstHand.remove(userFirstHand.size() - 1);
-        setUpCard(userSecondHand.get(0), ORIGIN_X_SECOND_HAND, ORIGIN_Y_USER);
+        showAction();
     }
 
     /**
      * Méthode pour retourner une carte précise parmis les 52 cartes
      **/
-    public ImageView chooseCard(int cardNumber, String cardRank) {
+    private ImageView chooseCard(int cardNumber, String cardRank) {
         switch (cardNumber) {
             case 1:
                 return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/asOfHeart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/asOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/asOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/asOfSquare.jpg").toExternalForm()));
@@ -415,7 +438,7 @@ public class BlackJackMenuController {
     /**
      * Méthode pour quitter le jeu et retourner dans le menu principale
      **/
-    public void returnMainMenu(){
+    private void returnMainMenu(){
         MainMenuController mainMenuController = new MainMenuController(stage,user);
         mainMenuController.setting();
     }
@@ -423,14 +446,91 @@ public class BlackJackMenuController {
     /**
      * Méthode qui montre la zone de texte contenant les règles
      **/
-    public void showRule() {
-        textRule.setVisible(true);
+    private void showRule() {
+       setVisibleCards(false);
+       textRule.setVisible(true);
     }
 
     /**
      * Méthode qui cacher la zone de texte contenant les règles
      **/
-    public void hideRule() {
+    private void hideRule() {
         textRule.setVisible(false);
+        setVisibleCards(true);
+    }
+
+    /** Méthode qui modifie la visibilité des cartes tirés **/
+    private void setVisibleCards(boolean vissible){
+        for(int index = 0; index < userFirstHand.size(); index ++){
+            userFirstHand.get(index).setVisible(vissible);
+        }
+        for(int index = 0; index < userSecondHand.size(); index ++){
+            userSecondHand.get(index).setVisible(vissible);
+        }
+        for(int index = 0; index < croupierHand.size(); index ++){
+            croupierHand.get(index).setVisible(vissible);
+        }
+    }
+
+    /** Méthode qui affiche les boutons d'actions **/
+    private void showAction(){
+        actionHitButton.setVisible(true);
+        actionSurrenderButton.setVisible(true);
+        actionInsuranceButton.setVisible(true);
+        actionDoubleButton.setVisible(true);
+        actionStandButton.setVisible(true);
+
+        if(blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber() == blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber()){
+            actionSplitButton.setVisible(true);
+        }
+    }
+
+    /** Méthode qui cache les boutons d'actions **/
+    private void hideAction(){
+        actionHitButton.setVisible(false);
+        actionSurrenderButton.setVisible(false);
+        actionInsuranceButton.setVisible(false);
+        actionDoubleButton.setVisible(false);
+        actionStandButton.setVisible(false);
+        actionSplitButton.setVisible(false);
+    }
+
+    /** Méthode pour l'action split (2 carte de même numéro) **/
+    private void actionSplit() {
+        blackJack.actionSplit();
+
+        zoneBetUser2.setVisible(true);
+        setTokenVisible(token2,true);
+        labelToken2.setText(labelToken1.getText());
+
+        userSecondHand.add(userFirstHand.get(userFirstHand.size() - 1));
+        userFirstHand.remove(userFirstHand.size() - 1);
+        setUpCard(userSecondHand.get(0), ORIGIN_X_SECOND_HAND, ORIGIN_Y_USER);
+    }
+
+    /** Méthode pour l'action tirer une carte **/
+    private void actionHit(){
+        blackJack.actionHit();
+
+    }
+
+    /** Méthode pour l'action prendre une assurance **/
+    private void actionInsurance(){
+
+    }
+
+    /** Méthode pour l'action doubler la mise **/
+    private void actionDouble(){
+
+    }
+
+    /** Méthode pour l'action rester **/
+    private void actionStand(){
+
+    }
+
+    /** Méthode pour l'action abandonner **/
+    private void actionSurrender(){
+
     }
 }
