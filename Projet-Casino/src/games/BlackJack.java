@@ -113,17 +113,17 @@ public class BlackJack {
                     tokenGain = bet.getBet(listOfUserHand.get(1).getUser());
                 }
                 else {
-                    tokenGain = (int) (bet.getBet(listOfUserHand.get(1).getUser()) * 1.5);
+                    tokenGain = (int) (bet.getBet(listOfUserHand.get(1).getUser()) + (bet.getBet(listOfUserHand.get(1).getUser()) * 1.5) );
                 }
             }
             else{
                 if(countValueOfUserHand(listOfUserHand.get(0)) > 21){
-                    tokenGain = bet.getBet(listOfUserHand.get(1).getUser());
+                    tokenGain = bet.getBet(listOfUserHand.get(1).getUser())*2;
                     listOfUserHand.get(1).getUser().addToken(tokenGain);
                     return tokenGain;
                 }
                 if(countValueOfUserHand(listOfUserHand.get(0)) < countValueOfUserHand(listOfUserHand.get(1)) && (countValueOfUserHand(listOfUserHand.get(1) ) <21)){
-                    tokenGain = bet.getBet(listOfUserHand.get(1).getUser());
+                    tokenGain = bet.getBet(listOfUserHand.get(1).getUser())*2;
                 }
                 if(countValueOfUserHand(listOfUserHand.get(0)) == countValueOfUserHand(listOfUserHand.get(1))){
                     tokenGain = bet.getBet(listOfUserHand.get(1).getUser());
@@ -137,12 +137,12 @@ public class BlackJack {
                 }
                 else {
                     if(countValueOfUserHand(listOfUserHand.get(0)) > 21){
-                        tokenGain = bet.getBet(listOfUserHand.get(2).getUser());
+                        tokenGain = bet.getBet(listOfUserHand.get(2).getUser())*2;
                         listOfUserHand.get(2).getUser().addToken(tokenGain);
                         return tokenGain;
                     }
                     if((countValueOfUserHand(listOfUserHand.get(0)) < countValueOfUserHand(listOfUserHand.get(2))) && (countValueOfUserHand(listOfUserHand.get(1) ) <21)){
-                        tokenGain = bet.getBet(listOfUserHand.get(2).getUser());
+                        tokenGain = bet.getBet(listOfUserHand.get(2).getUser())*2;
                     }
                     if(countValueOfUserHand(listOfUserHand.get(0)) == countValueOfUserHand(listOfUserHand.get(2))){
                         tokenGain = bet.getBet(listOfUserHand.get(2).getUser());
