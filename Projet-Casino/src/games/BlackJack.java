@@ -14,6 +14,7 @@ public class BlackJack {
     private int insuranceSecondHandUser;
 
     public BlackJack(User user) {
+        this.user = user;
         cards_package = new Cards_Package();
         listOfUserHand = new ArrayList<>();
         bet = new Bet();
@@ -117,7 +118,7 @@ public class BlackJack {
                 tokenGain = -1 * (bet.getBet(listOfUserHand.get(1).getUser()));
                 listOfUserHand.get(1).getUser().removeToken(bet.getBet(listOfUserHand.get(1).getUser()));
             }
-            if(listOfUserHand.get(2) != null){
+            if(listOfUserHand.size() > 2){
                 if(insuranceSecondHandUser > 0 || verifyBlackJack(listOfUserHand.get(2))){
                     tokenGain = 0;
                 }
@@ -146,7 +147,7 @@ public class BlackJack {
                     listOfUserHand.get(1).getUser().removeToken(insuranceFirstHandUser);
                 }
             }
-            if(listOfUserHand.get(2) != null){
+            if(listOfUserHand.size() > 2){
                 if(verifyBlackJack(listOfUserHand.get(2))){
                     tokenGain = bet.getBet(listOfUserHand.get(2).getUser()) - insuranceSecondHandUser;
                     listOfUserHand.get(2).getUser().addToken(bet.getBet(listOfUserHand.get(1).getUser()) - insuranceSecondHandUser);
@@ -207,11 +208,17 @@ public class BlackJack {
 
     public void reset(){
         bet.removeBet(bet.getBet(listOfUserHand.get(1).getUser()), listOfUserHand.get(1).getUser());
-        bet.removeBet(bet.getBet(listOfUserHand.get(2).getUser()), listOfUserHand.get(1).getUser());
-        bet.removeBet(bet.getBet(listOfUserHand.get(3).getUser()), listOfUserHand.get(1).getUser());
+        if(listOfUserHand.size() > 2) {
+            bet.removeBet(bet.getBet(listOfUserHand.get(2).getUser()), listOfUserHand.get(1).getUser());
+        }
+        //bet.removeBet(bet.getBet(listOfUserHand.get(3).getUser()), listOfUserHand.get(1).getUser());
+
         bet.removeUser(listOfUserHand.get(1).getUser());
-        bet.removeUser(listOfUserHand.get(2).getUser());
-        bet.removeUser(listOfUserHand.get(3).getUser());
+        if(listOfUserHand.size() > 2) {
+            bet.removeUser(listOfUserHand.get(2).getUser());
+        }
+        //bet.removeUser(listOfUserHand.get(3).getUser());
+
         for(int i = 0; i < listOfUserHand.size(); i++){
             listOfUserHand.remove(i);
         }
