@@ -10,34 +10,31 @@ public class SlotMachine {
     //bobine de la machine
     private String results[] = new String[3]; //tableau des trois images tirées
     private Bet bet; //mise
+    private User user;
     private ArrayList<String> image; //Les différentes images de la machine, tenter de faire un enum {7, CERISE, ROND...} (image au choix)
-    private enum SlotImages {
-        SEVEN,
-        CHERRY,
-        WATERMELON,
-        LEMON;
-    };
 
-
-    public SlotMachine(){
+    public SlotMachine(User user){
+        this.user = user;
         bet = new Bet();
         image = new ArrayList<>();
-
     };
 
-    public void userBet(int valueOfBet, User user){
-        // a completer
-        bet.addBet(valueOfBet,user);
+    public void userBet(User user){
+        bet.addBet(1,user);
     }; //Mise du joueur, un seul jeton à la fois
 
     public void useSlotMachine(){
         //a completer
+        user.removeToken(1);
         Random random = new Random();
         int nb;
         for (int i =0; i < 3;i++ ){
             nb = random.nextInt(10);
             results[i] = slot[nb];
-            }
+        }
+        int value;
+        value = verifySlot();
+        user.addToken(value);
     }; //utilisation de la machine à sous
 
     public int verifySlot(){
