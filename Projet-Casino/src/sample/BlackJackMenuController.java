@@ -720,6 +720,7 @@ public class BlackJackMenuController {
 
     /** Méthode pour une nouvelle partie de black jack **/
     private void newGame(){
+        blackJack.reset();
        BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage);
        blackJackMenuController.setting();
     }
