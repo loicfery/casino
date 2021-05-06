@@ -163,9 +163,9 @@ public class SlotMachineMenuController {
 
     /** Méthode qui lance la machine à sous **/
     private void startingGame(){
+        labelToken.setText("Jetons : "+user.getNumberOfToken());
         if(user.getNumberOfToken() > 0) {
             labelError.setVisible(false);
-            labelToken.setText("Jetons : "+user.getNumberOfToken());
             slotMachine.useSlotMachine();
             switchPicture(slotMachine.getNbImage().get(0), 1);
             switchPicture(slotMachine.getNbImage().get(1), 2);
