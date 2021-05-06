@@ -1,5 +1,6 @@
 package sample;
 
+import games.SlotMachine;
 import games.User;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -50,9 +51,14 @@ public class SlotMachineMenuController {
 
     private TextArea textRule = new TextArea();
 
+    private final SlotMachine slotMachine;
+
+
     public SlotMachineMenuController(User user, Stage stage){
         this.user = user;
         this.stage = stage;
+
+        slotMachine = new SlotMachine(user);
     }
 
     /** Méthode qui initialise le'interface de la machine à sous **/
@@ -157,14 +163,16 @@ public class SlotMachineMenuController {
 
     /** Méthode qui lance la machine à sous **/
     private void startingGame(){
+        labelToken.setText("Jetons : "+user.getNumberOfToken());
         if(user.getNumberOfToken() > 0) {
             labelError.setVisible(false);
-            //user.removeToken(1);
+            slotMachine.useSlotMachine();
+            switchPicture(slotMachine.getNbImage().get(0)+1, 1);
+            switchPicture(slotMachine.getNbImage().get(1)+1, 2);
+            switchPicture(slotMachine.getNbImage().get(2)+1, 3);
+            labelProfit.setText("Gain :" +slotMachine.verifySlot());
+            slotMachine.reset();
             labelToken.setText("Jetons : "+user.getNumberOfToken());
-            //méthode à finir
-            switchPicture(1, 1);
-            switchPicture(4, 2);
-            switchPicture(2, 3);
         }
         else{
             labelError.setText("Vous n'avez pas assez de jeton");
