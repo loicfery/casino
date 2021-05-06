@@ -76,7 +76,7 @@ public class BlackJack {
             listOfUserHand.get(0).addCard(cards_package);
         }
     }
-    public int betDistribute() { //Distribution des gains au joueur
+    public void betDistribute() { //Distribution des gains au joueur
         int tokenGain = 0;
         if (verifyBlackJack(listOfUserHand.get(0))) {
             if (insuranceFirstHandUser > 0) {
@@ -86,7 +86,7 @@ public class BlackJack {
             }
             if (listOfUserHand.size() > 2) {
                 if (insuranceSecondHandUser <= 0 && !verifyBlackJack(listOfUserHand.get(2))) {
-                    tokenGain = -1 * (bet.getBet(listOfUserHand.get(2).getUser()));
+                    tokenGain = bet.getBet(listOfUserHand.get(2).getUser());
                 }
             }
         }
@@ -101,7 +101,8 @@ public class BlackJack {
                 if (countValueOfUserHand(listOfUserHand.get(0)) > 21) {
                     tokenGain = bet.getBet(listOfUserHand.get(1).getUser()) * 2;
                     listOfUserHand.get(1).getUser().addToken(tokenGain);
-                    return tokenGain;
+                    user.addToken(tokenGain);
+                    return;
                 }
                 if (countValueOfUserHand(listOfUserHand.get(0)) < countValueOfUserHand(listOfUserHand.get(1)) && (countValueOfUserHand(listOfUserHand.get(1)) < 21)) {
                     tokenGain = bet.getBet(listOfUserHand.get(1).getUser()) * 2;
@@ -124,7 +125,8 @@ public class BlackJack {
                     if (countValueOfUserHand(listOfUserHand.get(0)) > 21) {
                         tokenGain = bet.getBet(listOfUserHand.get(2).getUser()) * 2;
                         listOfUserHand.get(2).getUser().addToken(tokenGain);
-                        return tokenGain;
+                        user.addToken(tokenGain);
+                        return;
                     }
                     if ((countValueOfUserHand(listOfUserHand.get(0)) < countValueOfUserHand(listOfUserHand.get(2))) && (countValueOfUserHand(listOfUserHand.get(2)) < 21)) {
                         tokenGain = bet.getBet(listOfUserHand.get(2).getUser()) * 2;
@@ -134,9 +136,7 @@ public class BlackJack {
                         }
                     }
                 }
-
             user.addToken(tokenGain);
-            return tokenGain;
         }
 
         public void reset(){ //Suprimme les mains et les bets pour redémarrer une partie
@@ -160,7 +160,7 @@ public class BlackJack {
         public void actionDouble(){ //Appelle l'action qui double la mise
             action = new ActionDouble();
             action.action(listOfUserHand, cards_package, bet);
-            listOfUserHand.get(1).getUser().removeToken(bet.getBet(listOfUserHand.get(1).getUser()));
+            listOfUserHand.get(1).getUser().removeToken(bet.getBet(listOfUserHand.get(1).getUser())/2);
             turnCroupier();
         }
         public void actionHit(){ //Appelle l'action qui fait piocher le joueur

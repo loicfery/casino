@@ -52,6 +52,7 @@ public class BlackJackMenuController {
     private boolean split = false;
     private boolean stand = false;
     private int indexCurrentHand = 1;
+    private int valueTokenUserBegin;
 
     private final List<Shape> token1 = new ArrayList<>();
     private final List<Shape> token2 = new ArrayList<>();
@@ -95,6 +96,7 @@ public class BlackJackMenuController {
     public BlackJackMenuController(User user,Stage stage){
         this.stage = stage;
         this.user = user;
+        this.valueTokenUserBegin = user.getNumberOfToken();
 
         blackJack = new BlackJack(user);
     }
@@ -514,6 +516,7 @@ public class BlackJackMenuController {
 
     /** Méthode pour l'action split (2 carte de même numéro) **/
     private void actionSplit() {
+        int valueToken = blackJack.getBet().getBet(user);
         setLog("Le joueur "+user.getPseudo()+" a choisit l'action \"Partager\".");
         actionDoubleButton.setVisible(false);
         actionSplitButton.setVisible(false);
@@ -523,7 +526,14 @@ public class BlackJackMenuController {
 
         zoneBetUser2.setVisible(true);
         setTokenVisible(token2,true);
-        labelToken2.setText(labelToken1.getText());
+        if(valueToken % 2 != 0 ){
+            labelToken2.setText(valueToken/2+"");
+            labelToken1.setText((valueToken/2) + 1+"");
+        }
+        else {
+            labelToken2.setText(valueToken/2+"");
+            labelToken1.setText(valueToken/2+"");
+        }
         labelToken2.setVisible(true);
 
         userSecondHand.add(userFirstHand.get(1));
@@ -670,7 +680,9 @@ public class BlackJackMenuController {
     }
 
     private void distributeGain(){
-        int gain = blackJack.betDistribute();
+        blackJack.betDistribute();
+        int gain = user.getNumberOfToken() - valueTokenUserBegin;
+
         labelProfit.setText("Gain : " + gain);
         labelToken.setText("Jetons : " + user.getNumberOfToken());
     }

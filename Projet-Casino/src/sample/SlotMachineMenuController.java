@@ -159,7 +159,7 @@ public class SlotMachineMenuController {
     private void startingGame(){
         if(user.getNumberOfToken() > 0) {
             labelError.setVisible(false);
-            user.removeToken(1);
+            //user.removeToken(1);
             labelToken.setText("Jetons : "+user.getNumberOfToken());
             //méthode à finir
             switchPicture(1, 1);
