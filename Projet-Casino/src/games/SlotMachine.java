@@ -11,12 +11,12 @@ public class SlotMachine {
     private String results[] = new String[3]; //tableau des trois images tirées
     private Bet bet; //mise
     private User user;
-    private ArrayList<Integer> image; //Les différentes images de la machine, tenter de faire un enum {7, CERISE, ROND...} (image au choix)
+    private ArrayList<Integer> nbImage; //Les différentes images de la machine, tenter de faire un enum {7, CERISE, ROND...} (image au choix)
 
     public SlotMachine(User user){
         this.user = user;
         bet = new Bet();
-        image = new ArrayList<>();
+        nbImage = new ArrayList<>();
     };
 
     public void userBet(User user){
@@ -31,7 +31,7 @@ public class SlotMachine {
         for (int i =0; i < 3;i++ ){
             nb = random.nextInt(10);
             results[i] = slot[nb];
-            image.add(nb);
+            nbImage.add(nb);
         }
         giveTokenBet(user);
     }; //utilisation de la machine à sous
@@ -60,11 +60,13 @@ public class SlotMachine {
     }; //gain de l'utilisateur, 160 pour 3 SEVEN, 25 pour 3 CHERRY, 8 pour 3 LEMON, 4 pour 3 WATERMELON, 0 sinon
 
 
-    public ArrayList<Integer> getImage() {
-        return image;
+    public ArrayList<Integer> getNbImage() {
+        return nbImage;
     }
 
     public void reset(){
+        bet.removeBet(bet.getBet(user), user);
+        nbImage = new ArrayList<Integer>();
 
     }
 }

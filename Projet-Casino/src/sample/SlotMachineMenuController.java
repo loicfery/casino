@@ -165,14 +165,13 @@ public class SlotMachineMenuController {
     private void startingGame(){
         if(user.getNumberOfToken() > 0) {
             labelError.setVisible(false);
-            //user.removeToken(1);
             labelToken.setText("Jetons : "+user.getNumberOfToken());
             slotMachine.useSlotMachine();
-            switchPicture(slotMachine.getImage().get(1), 1);
-            switchPicture(slotMachine.getImage().get(1), 2);
-            switchPicture(slotMachine.getImage().get(1), 3);
+            switchPicture(slotMachine.getNbImage().get(0), 1);
+            switchPicture(slotMachine.getNbImage().get(1), 2);
+            switchPicture(slotMachine.getNbImage().get(2), 3);
             labelProfit.setText("Gain :" +slotMachine.verifySlot());
-
+            slotMachine.reset();
         }
         else{
             labelError.setText("Vous n'avez pas assez de jeton");
