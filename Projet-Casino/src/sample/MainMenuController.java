@@ -4,14 +4,16 @@ import games.User;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import sample.BlackJackMenuController;
-import sample.RouletteMenuController;
-import sample.SetupScene;
-import sample.SlotMachineMenuController;
+import javafx.scene.image.ImageView;;
+
 
 public class MainMenuController {
 
@@ -25,9 +27,12 @@ public class MainMenuController {
     private Button logoutButton = new Button();
     private Button informationMenuButton = new Button();
     private Button shopButton = new Button();
-    private Button blackJackMenuButton = new Button();
-    private Button slotMachineMenuButton = new Button();
-    private Button rouletteMenuButton = new Button();
+
+    private ImageView pictureBlackJackMenu = new ImageView();
+    private ImageView pictureSlotMachine = new ImageView();
+    private ImageView pictureRoulette = new ImageView();
+    private ImageView pictureShop = new ImageView();
+
 
     public MainMenuController(Stage stage,User user){
         this.stage = stage;
@@ -37,14 +42,17 @@ public class MainMenuController {
     public void setting(){
         stage.setTitle("Menu principale");
         scene = new Scene(root,800,800);
+        scene.getStylesheets().add(getClass().getResource("mainMenu.css").toExternalForm());
         stage.setScene(scene);
 
-        setUpScene.setButton(logoutButton,"Déconnexion", Pos.CENTER,20,20,10,200,new Font(10),true,anchorPane);
-        setUpScene.setButton(informationMenuButton,"Informations",Pos.CENTER,20,80,10,200,new Font(10),true,anchorPane);
-        setUpScene.setButton(shopButton,"Boutique",Pos.CENTER,20,140,10,200,new Font(10),true,anchorPane);
-        setUpScene.setButton(blackJackMenuButton,"Black Jack",Pos.CENTER,20,200,10,200,new Font(10),true,anchorPane);
-        setUpScene.setButton(slotMachineMenuButton,"Machine à sous",Pos.CENTER,20,240,10,200,new Font(10),true,anchorPane);
-        setUpScene.setButton(rouletteMenuButton,"Roulette",Pos.CENTER,20,280,10,200,new Font(10),true,anchorPane);
+        setUpScene.setImageView(pictureBlackJackMenu,20.0,170.0,300.0,370.0,new Image(getClass().getResource("image/blackjack.png").toExternalForm()),true,anchorPane);
+        setUpScene.setImageView(pictureSlotMachine,410.0,490.0,290.0,370.0,new Image(getClass().getResource("image/slot_machine.jpg").toExternalForm()),true,anchorPane);
+        setUpScene.setImageView(pictureRoulette,20.0,490.0,290.0,370.0,new Image(getClass().getResource("image/roulette2.jpg").toExternalForm()),true,anchorPane);
+        setUpScene.setImageView(pictureShop,380,20,100,150,new Image(getClass().getResource("image/shop.jpg").toExternalForm()),true,anchorPane);
+
+        setUpScene.setButton(logoutButton,"Déconnexion", Pos.CENTER,20,20,100,150,new Font(10),true,anchorPane);
+        setUpScene.setButton(informationMenuButton,"Informations",Pos.CENTER,200,20,100,150,new Font(10),true,anchorPane);
+
 
         logoutButton.setOnMouseClicked((event)->{
             goToConnexionMenu();
@@ -54,19 +62,19 @@ public class MainMenuController {
             goToInformationMenu();
         });
 
-        shopButton.setOnMouseClicked((event)->{
+        pictureShop.setOnMouseClicked((event)->{
             goToShopMenu();
         });
 
-        blackJackMenuButton.setOnMouseClicked((event)->{
+        pictureBlackJackMenu.setOnMouseClicked((event)->{
             goToBlackJackMenu();
         });
 
-        slotMachineMenuButton.setOnMouseClicked((event)->{
+        pictureSlotMachine.setOnMouseClicked((event)->{
             goToSlotMachineMenu();
         });
 
-        rouletteMenuButton.setOnMouseClicked((event)->{
+        pictureRoulette.setOnMouseClicked((event)->{
             goToRouletteMenu();
         });
 
@@ -75,7 +83,8 @@ public class MainMenuController {
     }
 
     public void goToConnexionMenu(){
-        //loadingInterface.loading("connexionMenuSample.fxml","",500,500,new ConnexionMenuController(stage),mouseEvent);
+        ConnexionMenuController controller = new ConnexionMenuController(stage);
+        controller.setting();
     }
 
     public void goToInformationMenu(){

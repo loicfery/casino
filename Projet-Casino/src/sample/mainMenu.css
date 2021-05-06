@@ -1,12 +1,4 @@
-BorderPane
+.root
 {
-    -fx-background-color: white;
-}
-
-
-.menu
-{
-    -fx-min-height: 30;
-    -fx-max-height: 30;
-
+    -fx-background-color: green;
 }
