@@ -16,10 +16,5 @@ public class ActionSplit implements ActionBlackJack {
         bet.removeBet(splitBet, listOfUserHand.get(1).getUser());
         bet.addBet(splitBet, listOfUserHand.get(2).getUser());
 
-        //listOfUserHand.get(2).getHand().set(0,listOfUserHand.get(1).getHand().get(1));
-        //listOfUserHand.get(1).removeCard(listOfUserHand.get(1).getHand().get(1));
-        //bet.addUser(listOfUserHand.get(2).getUser());
-        //bet.addBet(bet.getBet(listOfUserHand.get(1).getUser()), listOfUserHand.get(2).getUser());
-
     }
 }

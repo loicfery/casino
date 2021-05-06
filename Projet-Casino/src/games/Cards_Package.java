@@ -22,19 +22,6 @@ public class Cards_Package {
             Card clover = new Card(i, "CLOVER");
             listOfCard.add(clover);
         }
-
-        /*if(card_package.isEmpty()){
-            for(int i =0; i<12; i++){
-                Card heart = new Card(i, "HEART");
-                card_package.add(heart);
-                Card tile = new Card(i, "SQUARE");
-                card_package.add(tile);
-                Card spade = new Card(i, "SPADE");
-                card_package.add(spade);
-                Card clover = new Card(i, "CLOVER");
-                card_package.add(clover);
-            }
-        }*/
     }
 
     public void mixCardPackage(){ // "mélange" le packet (croupier avantageux) A compléter
