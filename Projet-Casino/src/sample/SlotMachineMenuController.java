@@ -2,6 +2,10 @@ package sample;
 
 import games.SlotMachine;
 import games.User;
+import javafx.animation.Animation;
+import javafx.animation.PathTransition;
+import javafx.animation.Transition;
+import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,11 +16,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeType;
+import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -59,6 +62,7 @@ public class SlotMachineMenuController {
         this.stage = stage;
 
         slotMachine = new SlotMachine(user);
+        animation();
     }
 
     /** Méthode qui initialise le'interface de la machine à sous **/
@@ -196,4 +200,15 @@ public class SlotMachineMenuController {
     private void hideRule() {
         textRule.setVisible(false);
     }
+
+    private void animation(){
+        Thread thread = new Thread(){
+            public void run(){
+
+            }
+        };
+        thread.start();
+    }
+
+
 }

@@ -10,7 +10,7 @@ public class ActionHit implements ActionBlackJack{
         this.currentHand = currentHand;
     }
     @Override
-    public void action(List<UserHand> listOfUserHand, Cards_Package cards_package, Bet bet) {
-        listOfUserHand.get(currentHand).addCard(cards_package);
+    public void action(List<UserHand> listOfUserHand, CardPackage card_package, Bet bet) {
+        listOfUserHand.get(currentHand).addCard(card_package);
     }
 }

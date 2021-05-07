@@ -123,4 +123,19 @@ public class SetupScene {
         imageView.setVisible(visible);
         anchorPane.getChildren().add(imageView);
     }
+
+    public void setLine(Line line, double layoutX, double layoutY, double startX, double endX, double startY, double endY, Paint colorLine, double strokeWidth, Paint strokeColor, StrokeType strokeType, boolean visible, AnchorPane anchorPane){
+        line.setLayoutX(layoutX);
+        line.setLayoutY(layoutY);
+        line.setStartY(startX);
+        line.setStartY(startY);
+        line.setEndX(endX);
+        line.setEndY(endY);
+        line.setFill(colorLine);
+        line.setStrokeWidth(strokeWidth);
+        line.setStrokeType(strokeType);
+        line.setStroke(strokeColor);
+        line.setVisible(visible);
+        anchorPane.getChildren().add(line);
+    }
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ActionSplit implements ActionBlackJack {
     @Override
-    public void action(List<UserHand> listOfUserHand, Cards_Package cards_package, Bet bet) {
+    public void action(List<UserHand> listOfUserHand, CardPackage card_package, Bet bet) {
         int splitBet = bet.getBet(listOfUserHand.get(1).getUser()) / 2;
         Card card = listOfUserHand.get(1).getHand().get(1);
         listOfUserHand.get(1).removeCard(card);

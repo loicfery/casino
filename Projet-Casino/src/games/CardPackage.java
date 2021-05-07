@@ -3,11 +3,10 @@ package games;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Cards_Package {
+public class CardPackage {
     private ArrayList<Card> listOfCard;
-    private final int numberOfCard = 52;
 
-    public Cards_Package() {}
+    public CardPackage() {}
 
     public void initCardPackage(){ //Créer un packet trié (à supprimer si inutile)
         listOfCard = new ArrayList<>();
@@ -38,7 +37,7 @@ public class Cards_Package {
         return c;
     }
 
-    public ArrayList<Card> getCard_package() {
+    public ArrayList<Card> getCardPackage() {
         return listOfCard;
     }
 
