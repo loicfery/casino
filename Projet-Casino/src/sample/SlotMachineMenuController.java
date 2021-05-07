@@ -2,10 +2,7 @@ package sample;
 
 import games.SlotMachine;
 import games.User;
-import javafx.animation.Animation;
-import javafx.animation.PathTransition;
-import javafx.animation.Transition;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,16 +12,21 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import java.applet.AudioClip;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import java.net.URL;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SlotMachineMenuController {
 
@@ -34,6 +36,11 @@ public class SlotMachineMenuController {
     private AnchorPane anchorPane = new AnchorPane();
     private SetupScene setUpScene = new SetupScene();
     private User user;
+
+    private List<Rectangle> listOfRectangleAnimate = new ArrayList<>();
+    private List<FillTransition> listOfFillTransition = new ArrayList<>();
+
+    private AudioClip soundPayout;
 
     private Rectangle cadreSlotMachine = new Rectangle();
 
@@ -62,7 +69,6 @@ public class SlotMachineMenuController {
         this.stage = stage;
 
         slotMachine = new SlotMachine(user);
-        animation();
     }
 
     /** Méthode qui initialise le'interface de la machine à sous **/
@@ -86,6 +92,9 @@ public class SlotMachineMenuController {
         setUpScene.setLabel(labelError,"Erreur : ",Pos.CENTER,280.0,488.0,50.0,401.0,new Font(20.0),Paint.valueOf("RED"),false,anchorPane);
         setUpScene.setTextArea(textRule,200.0,46.0,376.0,560.0,false,false,anchorPane);
 
+        URL url = getClass().getResource("sound/slotMachinePayout.wav");
+        soundPayout = java.applet.Applet.newAudioClip(url);
+
         startingGameButton.setOnMouseClicked((event)->{
             startingGame();
         });
@@ -106,6 +115,8 @@ public class SlotMachineMenuController {
 
         root.getChildren().add(anchorPane);
         stage.show();
+
+        animation();
     }
 
     /** Méthode qui permet d'écrire le texte pour pouvoir l'afficher **/
@@ -174,7 +185,11 @@ public class SlotMachineMenuController {
             switchPicture(slotMachine.getNbImage().get(0)+1, 1);
             switchPicture(slotMachine.getNbImage().get(1)+1, 2);
             switchPicture(slotMachine.getNbImage().get(2)+1, 3);
-            labelProfit.setText("Gain :" +slotMachine.verifySlot());
+            int gain = slotMachine.verifySlot();
+            labelProfit.setText("Gain : " +gain);
+            if(gain > 0){
+                soundPayout.play();
+            }
             slotMachine.reset();
             labelToken.setText("Jetons : "+user.getNumberOfToken());
         }
@@ -202,13 +217,54 @@ public class SlotMachineMenuController {
     }
 
     private void animation(){
-        Thread thread = new Thread(){
-            public void run(){
+        int indexColor = 0;
+        Color[] colors = {Color.YELLOW,Color.GREEN};
 
-            }
-        };
-        thread.start();
+        int layoutX = 105;
+        for(int index = 0; index < 12; index ++){
+            listOfRectangleAnimate.add(createRectangleAnimate(layoutX,268,50,8));
+            layoutX += 50;
+        }
+        System.out.println(layoutX);
+
+        int layoutY = 269;
+        for(int index = 0; index < 4; index ++){
+            listOfRectangleAnimate.add(createRectangleAnimate(105,layoutY,8,53));
+            layoutY += 53;
+        }
+
+        layoutX = 113;
+        for(int index = 0; index < 12; index ++){
+            listOfRectangleAnimate.add(createRectangleAnimate(layoutX,473,50,8));
+            layoutX += 50;
+        }
+
+        layoutY = 268;
+        for(int index = 0; index < 4; index ++){
+            listOfRectangleAnimate.add(createRectangleAnimate(705,layoutY,8,52));
+            layoutY += 52;
+        }
+
+
+        for(int index = 0; index < listOfRectangleAnimate.size(); index ++){
+            listOfFillTransition.add(animate(listOfRectangleAnimate.get(index),colors[indexColor],colors[(indexColor + 1)%2]));
+            indexColor = (indexColor + 1) % 2;
+        }
     }
 
+    private FillTransition animate(Rectangle rectangle, Color firstColor, Color secondColor){
+        FillTransition animation = new FillTransition(Duration.millis(500),rectangle, firstColor,secondColor);
+        animation.setCycleCount(Transition.INDEFINITE);
+        animation.setAutoReverse(true);
+        animation.play();
+        return animation;
+    }
 
+    private Rectangle createRectangleAnimate(double layoutX, double layoutY, double width, double height){
+        Rectangle rectangle = new Rectangle(layoutX,layoutY,width,height);
+        anchorPane.getChildren().add(rectangle);
+        return rectangle;
+    }
 }
+
+
