@@ -19,10 +19,10 @@ public class ConnexionMenuController {
     private Scene scene;
     private Stage stage;
     private AnchorPane anchorPane = new AnchorPane();
-    private SetupScene setUpScene = new SetupScene();
+    private SetupScene setupScene = new SetupScene();
     private User user;
 
-    private Label labelWelcomeTitle = new Label();
+    private Label labelTitle = new Label();
     private Label labelEmail = new Label();
     private Label labelPassword = new Label();
     private Label labelNewMail = new Label();
@@ -52,22 +52,22 @@ public class ConnexionMenuController {
         scene.getStylesheets().add(getClass().getResource("connexionMenu.css").toExternalForm());
         stage.setScene(scene);
 
-        setUpScene.setLabel(labelWelcomeTitle,"Bienvenue au casino", Pos.CENTER,100,50,20,300,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
-        setUpScene.setLabel(labelEmail,"Email",Pos.CENTER,60,200,20,150,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
-        setUpScene.setLabel(labelPassword,"Mot de passe",Pos.CENTER,260,200,20,200,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
-        setUpScene.setTextField(textEmail,"",Pos.CENTER,40,250,10,200,new Font(15),true,anchorPane);
-        setUpScene.setTextField(textPassword,"",Pos.CENTER,270,250,10,200,new Font(15),true,anchorPane);
-        setUpScene.setButton(buttonLogin,"Connexion",Pos.CENTER,10,380,20,480,new Font(25),true,anchorPane);
-        setUpScene.setButton(buttonNewAccount,"Nouveau Compte",Pos.CENTER,10,440,20,480,new Font(25),true,anchorPane);
-        setUpScene.setButton(buttonLoginMenuReturn,"Se connecter",Pos.CENTER,10,380,20,480,new Font(25),false,anchorPane);
-        setUpScene.setButton(buttonInscription,"S'inscrire",Pos.CENTER,10,440,20,480,new Font(25),false,anchorPane);
-        setUpScene.setLabel(labelNewMail,"Email :",Pos.CENTER,100,150,20,150,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
-        setUpScene.setLabel(labelNewPassword,"Mot de passe :",Pos.CENTER,30,200,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
-        setUpScene.setLabel(labelNewPseudo,"Pseudonyme :",Pos.CENTER,30,250,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
-        setUpScene.setTextField(textNewEmail,"",Pos.CENTER,250,150,20,200,new Font(15),false,anchorPane);
-        setUpScene.setTextField(textNewPassword,"",Pos.CENTER,250,200,20,200,new Font(15),false,anchorPane);
-        setUpScene.setTextField(textNewPseudo,"",Pos.CENTER,250,250,20,200,new Font(15),false,anchorPane);
-        setUpScene.setLabel(labelError,"Erreur : ",Pos.CENTER,50,330,20,400,new Font(15),Paint.valueOf("RED"),false,anchorPane);
+        setupScene.setLabel(labelTitle,"Bienvenue au casino", Pos.CENTER,100,50,20,300,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelEmail,"Email",Pos.CENTER,60,200,20,150,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelPassword,"Mot de passe",Pos.CENTER,260,200,20,200,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setTextField(textEmail,"",Pos.CENTER,40,250,10,200,new Font(15),true,anchorPane);
+        setupScene.setTextField(textPassword,"",Pos.CENTER,270,250,10,200,new Font(15),true,anchorPane);
+        setupScene.setButton(buttonLogin,"Connexion",Pos.CENTER,10,380,20,480,new Font(25),true,anchorPane);
+        setupScene.setButton(buttonNewAccount,"Nouveau Compte",Pos.CENTER,10,440,20,480,new Font(25),true,anchorPane);
+        setupScene.setButton(buttonLoginMenuReturn,"Se connecter",Pos.CENTER,10,380,20,480,new Font(25),false,anchorPane);
+        setupScene.setButton(buttonInscription,"S'inscrire",Pos.CENTER,10,440,20,480,new Font(25),false,anchorPane);
+        setupScene.setLabel(labelNewMail,"Email :",Pos.CENTER,100,150,20,150,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
+        setupScene.setLabel(labelNewPassword,"Mot de passe :",Pos.CENTER,30,200,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
+        setupScene.setLabel(labelNewPseudo,"Pseudonyme :",Pos.CENTER,30,250,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
+        setupScene.setTextField(textNewEmail,"",Pos.CENTER,250,150,20,200,new Font(15),false,anchorPane);
+        setupScene.setTextField(textNewPassword,"",Pos.CENTER,250,200,20,200,new Font(15),false,anchorPane);
+        setupScene.setTextField(textNewPseudo,"",Pos.CENTER,250,250,20,200,new Font(15),false,anchorPane);
+        setupScene.setLabel(labelError,"Erreur : ",Pos.CENTER,50,330,20,400,new Font(15),Paint.valueOf("RED"),false,anchorPane);
 
         buttonLogin.setOnMouseClicked((event)->{
             goToMainMenu();
@@ -90,9 +90,9 @@ public class ConnexionMenuController {
     }
 
     /** Méthode pour se connecter avec un email et un mot de passe **/
-    public void goToMainMenu(){
+    private void goToMainMenu(){
         if (!textEmail.getText().isEmpty() && !textPassword.getText().isEmpty()) {
-            labelWelcomeTitle.setVisible(false);
+            labelTitle.setVisible(false);
             labelEmail.setVisible(false);
             textEmail.setVisible(false);
             labelPassword.setVisible(false);
@@ -113,7 +113,7 @@ public class ConnexionMenuController {
     }
 
     /** Méthode pour changer le menu pour la création d'un nouveau compte **/
-    public void goToNewAccountMenu() {
+    private void goToNewAccountMenu() {
         labelEmail.setVisible(false);
         textEmail.setVisible(false);
         labelPassword.setVisible(false);
@@ -121,7 +121,7 @@ public class ConnexionMenuController {
         buttonLogin.setVisible(false);
         buttonNewAccount.setVisible(false);
 
-        labelWelcomeTitle.setText("Nouveau Compte");
+        labelTitle.setText("Nouveau Compte");
 
         labelNewMail.setVisible(true);
         labelNewPassword.setVisible(true);
@@ -134,7 +134,7 @@ public class ConnexionMenuController {
     }
 
     /** Méthode pour créer un nouveau compte **/
-    public void newAccountGoToMainMenu(){
+    private void newAccountGoToMainMenu(){
         if (!textNewEmail.getText().isEmpty() && !textNewPassword.getText().isEmpty() && !textNewPseudo.getText().isEmpty()) {
             labelNewMail.setVisible(false);
             labelNewPassword.setVisible(false);
@@ -158,7 +158,7 @@ public class ConnexionMenuController {
     }
 
     /** Méthode pour changer le menu pour se connecter **/
-    public void goToLoginMenu() {
+    private void goToLoginMenu() {
         labelEmail.setVisible(true);
         textEmail.setVisible(true);
         labelPassword.setVisible(true);
@@ -166,7 +166,7 @@ public class ConnexionMenuController {
         buttonLogin.setVisible(true);
         buttonNewAccount.setVisible(true);
 
-        labelWelcomeTitle.setText("Bienvenue au casino");
+        labelTitle.setText("Bienvenue au casino");
 
         labelNewMail.setVisible(false);
         labelNewPassword.setVisible(false);
@@ -179,17 +179,17 @@ public class ConnexionMenuController {
     }
 
     /** Méthode pour changer le texte de l'erreur **/
-    public void setError(String errorName) {
+    private void setError(String errorName) {
         labelError.setText(errorName);
         labelError.setVisible(true);
     }
 
-    public void setUser(User user){
+    private void setUser(User user){
         this.user = user;
     }
 
     /** Méthode pour charger le menu principal **/
-    public void switchMainMenu(){
+    private void switchMainMenu(){
         user = new User("Loic","loic-fery@orange.fr","ADMIN"); //pour tester
         user.addToken(50); // pour tester
 

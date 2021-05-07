@@ -7,9 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;;
@@ -21,7 +18,7 @@ public class MainMenuController {
     private Scene scene;
     private Stage stage;
     private AnchorPane anchorPane = new AnchorPane();
-    private SetupScene setUpScene = new SetupScene();
+    private SetupScene setupScene = new SetupScene();
     private User user;
 
     private Button logoutButton = new Button();
@@ -45,13 +42,13 @@ public class MainMenuController {
         scene.getStylesheets().add(getClass().getResource("mainMenu.css").toExternalForm());
         stage.setScene(scene);
 
-        setUpScene.setImageView(pictureBlackJackMenu,20.0,170.0,300.0,370.0,new Image(getClass().getResource("image/blackjack.png").toExternalForm()),true,anchorPane);
-        setUpScene.setImageView(pictureSlotMachine,410.0,490.0,290.0,370.0,new Image(getClass().getResource("image/slot_machine.jpg").toExternalForm()),true,anchorPane);
-        setUpScene.setImageView(pictureRoulette,20.0,490.0,290.0,370.0,new Image(getClass().getResource("image/roulette2.jpg").toExternalForm()),true,anchorPane);
-        setUpScene.setImageView(pictureShop,380,20,100,150,new Image(getClass().getResource("image/shop.jpg").toExternalForm()),true,anchorPane);
+        setupScene.setImageView(pictureBlackJackMenu,20.0,170.0,300.0,370.0,new Image(getClass().getResource("image/blackjack.png").toExternalForm()),true,anchorPane);
+        setupScene.setImageView(pictureSlotMachine,410.0,490.0,290.0,370.0,new Image(getClass().getResource("image/slot_machine.jpg").toExternalForm()),true,anchorPane);
+        setupScene.setImageView(pictureRoulette,20.0,490.0,290.0,370.0,new Image(getClass().getResource("image/roulette2.jpg").toExternalForm()),true,anchorPane);
+        setupScene.setImageView(pictureShop,380,20,100,150,new Image(getClass().getResource("image/shop.jpg").toExternalForm()),true,anchorPane);
 
-        setUpScene.setButton(logoutButton,"Déconnexion", Pos.CENTER,20,20,100,150,new Font(10),true,anchorPane);
-        setUpScene.setButton(informationMenuButton,"Informations",Pos.CENTER,200,20,100,150,new Font(10),true,anchorPane);
+        setupScene.setButton(logoutButton,"Déconnexion", Pos.CENTER,20,20,100,150,new Font(10),true,anchorPane);
+        setupScene.setButton(informationMenuButton,"Informations",Pos.CENTER,200,20,100,150,new Font(10),true,anchorPane);
 
 
         logoutButton.setOnMouseClicked((event)->{
@@ -82,29 +79,29 @@ public class MainMenuController {
         stage.show();
     }
 
-    public void goToConnexionMenu(){
+    private void goToConnexionMenu(){
         ConnexionMenuController controller = new ConnexionMenuController(stage);
         controller.setting();
     }
 
-    public void goToInformationMenu(){
+    private void goToInformationMenu(){
         //loadingInterface.loading("informationMenuSample.fxml","",500,500,new InformationMenuController(user,stage),mouseEvent);
     }
 
-    public void goToShopMenu() {
+    private void goToShopMenu() {
     }
 
-    public void goToBlackJackMenu(){
+    private void goToBlackJackMenu(){
         BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage);
         blackJackMenuController.setting();
     }
 
-    public void goToSlotMachineMenu(){
+    private void goToSlotMachineMenu(){
         SlotMachineMenuController slotMachineMenuController = new SlotMachineMenuController(user,stage);
         slotMachineMenuController.setting();
     }
 
-    public void goToRouletteMenu(){
+    private void goToRouletteMenu(){
         RouletteMenuController rouletteMenuController = new RouletteMenuController(user,stage);
         rouletteMenuController.setting();
     }
