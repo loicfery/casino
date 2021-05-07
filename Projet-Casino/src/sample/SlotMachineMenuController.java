@@ -8,11 +8,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.effect.Bloom;
+import javafx.scene.effect.MotionBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import java.applet.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import java.io.File;
+
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
@@ -22,7 +28,6 @@ import javafx.util.Duration;
 import java.net.URL;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -92,7 +97,8 @@ public class SlotMachineMenuController {
         setUpScene.setLabel(labelError,"Erreur : ",Pos.CENTER,280.0,488.0,50.0,401.0,new Font(20.0),Paint.valueOf("RED"),false,anchorPane);
         setUpScene.setTextArea(textRule,200.0,46.0,376.0,560.0,false,false,anchorPane);
 
-        URL url = getClass().getResource("sound/slotMachinePayout.wav");
+
+        URL url = getClass().getResource("sound/slotMachinePayoutSound.wav");
         soundPayout = java.applet.Applet.newAudioClip(url);
 
         startingGameButton.setOnMouseClicked((event)->{
@@ -182,9 +188,11 @@ public class SlotMachineMenuController {
         if(user.getNumberOfToken() > 0) {
             labelError.setVisible(false);
             slotMachine.useSlotMachine();
+
             switchPicture(slotMachine.getNbImage().get(0)+1, 1);
             switchPicture(slotMachine.getNbImage().get(1)+1, 2);
             switchPicture(slotMachine.getNbImage().get(2)+1, 3);
+
             int gain = slotMachine.verifySlot();
             labelProfit.setText("Gain : " +gain);
             if(gain > 0){
@@ -225,7 +233,6 @@ public class SlotMachineMenuController {
             listOfRectangleAnimate.add(createRectangleAnimate(layoutX,268,50,8));
             layoutX += 50;
         }
-        System.out.println(layoutX);
 
         int layoutY = 269;
         for(int index = 0; index < 4; index ++){
@@ -244,7 +251,6 @@ public class SlotMachineMenuController {
             listOfRectangleAnimate.add(createRectangleAnimate(705,layoutY,8,52));
             layoutY += 52;
         }
-
 
         for(int index = 0; index < listOfRectangleAnimate.size(); index ++){
             listOfFillTransition.add(animate(listOfRectangleAnimate.get(index),colors[indexColor],colors[(indexColor + 1)%2]));
