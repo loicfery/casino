@@ -100,7 +100,6 @@ public class BlackJack {
                 if (countValueOfUserHand(listOfUserHand.get(0)) > 21) {
                     tokenGain = bet.getBet(listOfUserHand.get(1).getUser()) * 2;
                     listOfUserHand.get(1).getUser().addToken(tokenGain);
-                    user.addToken(tokenGain);
                     return;
                 }
                 if (countValueOfUserHand(listOfUserHand.get(0)) < countValueOfUserHand(listOfUserHand.get(1)) && (countValueOfUserHand(listOfUserHand.get(1)) < 21)) {
@@ -111,32 +110,31 @@ public class BlackJack {
                 }
             }
         }
-            user.addToken(tokenGain);
-            tokenGain = 0;
-            if (listOfUserHand.size() > 2) {
-                if (verifyBlackJack(listOfUserHand.get(2)) && !verifyBlackJack(listOfUserHand.get(0))) {
+        user.addToken(tokenGain);
+        tokenGain = 0;
+        if (listOfUserHand.size() > 2) {
+            if (verifyBlackJack(listOfUserHand.get(2)) && !verifyBlackJack(listOfUserHand.get(0))) {
+                tokenGain = bet.getBet(listOfUserHand.get(2).getUser()) * 2;
+            }
+            if(verifyBlackJack(listOfUserHand.get(2)) && verifyBlackJack(listOfUserHand.get(0))){
+                tokenGain = bet.getBet(listOfUserHand.get(2).getUser());
+            }
+            else {
+                if (countValueOfUserHand(listOfUserHand.get(0)) > 21) {
+                    tokenGain = bet.getBet(listOfUserHand.get(2).getUser()) * 2;
+                    listOfUserHand.get(2).getUser().addToken(tokenGain);
+                    return;
+                }
+                if ((countValueOfUserHand(listOfUserHand.get(0)) < countValueOfUserHand(listOfUserHand.get(2))) && (countValueOfUserHand(listOfUserHand.get(2)) < 21)) {
                     tokenGain = bet.getBet(listOfUserHand.get(2).getUser()) * 2;
                 }
-                if(verifyBlackJack(listOfUserHand.get(2)) && verifyBlackJack(listOfUserHand.get(0))){
+                if (countValueOfUserHand(listOfUserHand.get(0)) == countValueOfUserHand(listOfUserHand.get(2))) {
                     tokenGain = bet.getBet(listOfUserHand.get(2).getUser());
                 }
-                else {
-                    if (countValueOfUserHand(listOfUserHand.get(0)) > 21) {
-                        tokenGain = bet.getBet(listOfUserHand.get(2).getUser()) * 2;
-                        listOfUserHand.get(2).getUser().addToken(tokenGain);
-                        user.addToken(tokenGain);
-                        return;
-                    }
-                    if ((countValueOfUserHand(listOfUserHand.get(0)) < countValueOfUserHand(listOfUserHand.get(2))) && (countValueOfUserHand(listOfUserHand.get(2)) < 21)) {
-                        tokenGain = bet.getBet(listOfUserHand.get(2).getUser()) * 2;
-                        }
-                    if (countValueOfUserHand(listOfUserHand.get(0)) == countValueOfUserHand(listOfUserHand.get(2))) {
-                        tokenGain = bet.getBet(listOfUserHand.get(2).getUser());
-                        }
-                    }
-                }
-            user.addToken(tokenGain);
+            }
         }
+        user.addToken(tokenGain);
+    }
 
         public void reset(){ //Suprimme les mains et les bets pour redémarrer une partie
             bet.removeBet(bet.getBet(listOfUserHand.get(1).getUser()), listOfUserHand.get(1).getUser());
