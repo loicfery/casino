@@ -15,6 +15,8 @@ import javafx.scene.layout.BorderPane;
 import java.applet.AudioClip;
 import java.io.File;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
@@ -42,6 +44,7 @@ public class SlotMachineMenuController {
     private List<FillTransition> listOfFillTransition = new ArrayList<>();
 
     private AudioClip soundPayout;
+    private MediaPlayer soundSlot;
 
     private Rectangle cadreSlotMachine = new Rectangle();
 
@@ -101,8 +104,10 @@ public class SlotMachineMenuController {
         setUpScene.setTextArea(textRule,200.0,46.0,376.0,560.0,false,false,anchorPane);
 
 
-        URL url = getClass().getResource("sound/slotMachinePayoutSound.wav");
-        soundPayout = java.applet.Applet.newAudioClip(url);
+        soundPayout = java.applet.Applet.newAudioClip(getClass().getResource("sound/slotMachinePayoutSound.wav"));
+        soundSlot = new MediaPlayer(new Media(getClass().getResource("sound/slotMachineSlotsSound.mp3").toExternalForm()));
+        soundSlot.setVolume(0.1);
+        soundSlot.setCycleCount(Transition.INDEFINITE);
 
         startingGameButton.setOnMouseClicked((event)->{
             startingGame();
@@ -190,9 +195,10 @@ public class SlotMachineMenuController {
             labelError.setVisible(false);
             slotMachine.useSlotMachine();
 
-            switchPicture(slotMachine.getNbImage().get(0)+1, 1);
-            switchPicture(slotMachine.getNbImage().get(1)+1, 2);
-            switchPicture(slotMachine.getNbImage().get(2)+1, 3);
+            startingGameButton.setDisable(true);
+            soundSlot.play();
+            animationSlot(slotMachine.getNbImage().get(0) + 1, slotMachine.getNbImage().get(1) + 1, slotMachine.getNbImage().get(2) + 1);
+            startingGameButton.setDisable(false);
 
             int gain = slotMachine.verifySlot();
             labelProfit.setText("Gain : " +gain);
@@ -291,6 +297,36 @@ public class SlotMachineMenuController {
         }
         anchorPane.getChildren().add(star);
         return star;
+    }
+
+    private void animationSlot(int symbolOne, int symbolTwo, int symbolThree){
+        Timeline timeline = new Timeline();
+        Duration timePoint = Duration.ZERO;
+        Duration pause = Duration.seconds(0.3);
+        int symbol = 1;
+
+        for(int index = 0; index < 11; index ++) {
+            int finalSymbol = symbol;
+            KeyFrame keyFrame = new KeyFrame(timePoint, e -> switchPicture(finalSymbol,1));
+            timeline.getKeyFrames().add(keyFrame);
+
+            timePoint = timePoint.add(pause);
+            keyFrame = new KeyFrame(timePoint, e -> switchPicture((finalSymbol + 1)%10, 2));
+            timeline.getKeyFrames().add(keyFrame);
+
+            timePoint = timePoint.add(pause);
+            keyFrame = new KeyFrame(timePoint, e -> switchPicture((finalSymbol + 2)%10, 3));
+            timeline.getKeyFrames().add(keyFrame);
+
+            symbol = (symbol + 1) % 10;
+        }
+
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> soundSlot.pause()));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> switchPicture(symbolOne,1)));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> switchPicture(symbolTwo,2)));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> switchPicture(symbolThree,3)));
+
+        timeline.play();
     }
 }
 

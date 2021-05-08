@@ -13,6 +13,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
@@ -23,6 +25,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +51,8 @@ public class BlackJackMenuController {
     private final User user;
 
     private final BlackJack blackJack;
+
+    private MediaPlayer soundThreeCardsDealing;
 
     private boolean split = false;
     private boolean stand = false;
@@ -143,6 +148,10 @@ public class BlackJackMenuController {
         setRule();
         setLog("Log de la partie\n");
         setLog("Le joueur "+user.getPseudo()+" démarre une nouvelle partie.");
+
+        URL url = getClass().getResource("sound/dealingThreeCardsSound.mp3");
+        Media media = new Media(url.toExternalForm());
+        soundThreeCardsDealing = new MediaPlayer(media);
 
         returnMainMenuButton.setOnMouseClicked((event) -> returnMainMenu());
 
@@ -364,6 +373,7 @@ public class BlackJackMenuController {
         ImageView card;
 
         blackJack.gameBegin();
+        soundThreeCardsDealing.play();
 
         card = chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(0).getRank());
         setLog("Le joueur "+user.getPseudo()+" pioche la carte "+blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber()+" de "+blackJack.getListOfUserHand().get(1).getHand().get(0).getRank());
