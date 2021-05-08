@@ -207,6 +207,8 @@ public class SlotMachineMenuController {
 
     /** Méthode pour retourner dans le menu principal **/
     private void returnMainMenu(){
+        soundSlot.stop();
+        soundPayout.stop();
         MainMenuController mainMenuController = new MainMenuController(stage,user);
         mainMenuController.setting();
     }
