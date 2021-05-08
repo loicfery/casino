@@ -23,7 +23,6 @@ import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import java.net.URL;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -198,7 +197,6 @@ public class SlotMachineMenuController {
             startingGameButton.setDisable(true);
             soundSlot.play();
             animationSlot(slotMachine.getNbImage().get(0) + 1, slotMachine.getNbImage().get(1) + 1, slotMachine.getNbImage().get(2) + 1);
-            startingGameButton.setDisable(false);
 
             int gain = slotMachine.verifySlot();
             labelProfit.setText("Gain : " +gain);
@@ -325,6 +323,7 @@ public class SlotMachineMenuController {
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> switchPicture(symbolOne,1)));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> switchPicture(symbolTwo,2)));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> switchPicture(symbolThree,3)));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e ->  startingGameButton.setDisable(false)));
 
         timeline.play();
     }

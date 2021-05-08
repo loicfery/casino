@@ -3,6 +3,8 @@ package sample;
 import games.BlackJack;
 import games.Card;
 import games.User;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,6 +22,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -149,9 +152,7 @@ public class BlackJackMenuController {
         setLog("Log de la partie\n");
         setLog("Le joueur "+user.getPseudo()+" démarre une nouvelle partie.");
 
-        URL url = getClass().getResource("sound/dealingThreeCardsSound.mp3");
-        Media media = new Media(url.toExternalForm());
-        soundThreeCardsDealing = new MediaPlayer(media);
+        soundThreeCardsDealing = new MediaPlayer(new Media(getClass().getResource("sound/dealingThreeCardsSound.mp3").toExternalForm()));
 
         returnMainMenuButton.setOnMouseClicked((event) -> returnMainMenu());
 
@@ -737,5 +738,46 @@ public class BlackJackMenuController {
 
     private void setLog(String newLog){
         textLog.setText(textLog.getText() + "\n" + newLog);
+    }
+
+    private void animationCardBegin(){
+        currentPositionXUserFirstHand = ORIGIN_X_FIRST_HAND;
+        currentPositionXCroupier = ORIGIN_X_Croupier;
+        ImageView card;
+        Timeline timeline = new Timeline();
+        Duration timePoint = Duration.ZERO;
+        Duration pause = Duration.seconds(0.3);
+
+
+        card = chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(0).getRank());
+        setLog("Le joueur "+user.getPseudo()+" pioche la carte "+blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber()+" de "+blackJack.getListOfUserHand().get(1).getHand().get(0).getRank());
+        userFirstHand.add(card);
+        setupCard(card, currentPositionXUserFirstHand, ORIGIN_Y_USER);
+        labelValueUserFirstHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)));
+        labelValueUserFirstHand.setVisible(true);
+        currentPositionXUserFirstHand += 25;
+
+        card = chooseCard(blackJack.getListOfUserHand().get(0).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(0).getHand().get(0).getRank());
+        setLog("Le croupier pioche la carte "+blackJack.getListOfUserHand().get(0).getHand().get(0).getNumber()+" de "+blackJack.getListOfUserHand().get(0).getHand().get(0).getRank());
+        croupierHand.add(card);
+        setupCard(card, currentPositionXCroupier, ORIGIN_Y_CROUPIER);
+        labelValueCroupierHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(0)));
+        labelValueCroupierHand.setVisible(true);
+        currentPositionXCroupier += 25;
+
+        card = chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(1).getRank());
+        setLog("Le joueur "+user.getPseudo()+" pioche la carte "+blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber()+" de "+blackJack.getListOfUserHand().get(1).getHand().get(1).getRank()+"\n");
+        userFirstHand.add(card);
+        setupCard(card, currentPositionXUserFirstHand, ORIGIN_Y_USER);
+        labelValueUserFirstHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)));
+        currentPositionXUserFirstHand += 25;
+
+        //KeyFrame keyFrame = new KeyFrame(timePoint, e -> switchPicture((finalSymbol + 2)%10, 3));
+        timePoint = timePoint.add(pause);
+        //timeline.getKeyFrames().add(keyFrame);
+
+
+
+        timeline.play();
     }
 }
