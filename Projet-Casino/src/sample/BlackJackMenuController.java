@@ -29,6 +29,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +56,8 @@ public class BlackJackMenuController {
 
     private final BlackJack blackJack;
 
-    private MediaPlayer soundCard;
+    private MediaPlayer cardSound;
+    private MediaPlayer tokenSound;
 
     private boolean split = false;
     private boolean stand = false;
@@ -152,8 +154,10 @@ public class BlackJackMenuController {
         setLog("Log de la partie\n");
         setLog("Le joueur "+user.getPseudo()+" démarre une nouvelle partie.");
 
-        soundCard = new MediaPlayer(new Media(getClass().getResource("sound/dealingThreeCardsSound.mp3").toExternalForm()));
-        soundCard.setCycleCount(Transition.INDEFINITE);
+        cardSound = new MediaPlayer(new Media(getClass().getResource("sound/dealingThreeCardsSound.mp3").toExternalForm()));
+        cardSound.setCycleCount(Transition.INDEFINITE);
+
+        tokenSound = new MediaPlayer(new Media(getClass().getResource("sound/tokenSound.mp3").toExternalForm()));
 
         returnMainMenuButton.setOnMouseClicked((event) -> returnMainMenu());
 
@@ -341,7 +345,10 @@ public class BlackJackMenuController {
                     if (newTokenUser < 0) {
                         labelError.setText("Vous n'avez pas assez de jeton");
                         labelError.setVisible(true);
-                    } else {
+                    }
+                    else {
+                        tokenSound.play();
+
                         labelError.setVisible(false);
 
                         blackJack.addUserBet(user);
@@ -357,7 +364,11 @@ public class BlackJackMenuController {
                         setLog("Le joueur "+user.getPseudo()+" mise "+valueOfBet+" jetons");
 
                         setTokenVisible(token1,true);
-                        startingGame();
+
+                        Timeline timeline = new Timeline();
+                        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2),e -> startingGame()));
+                        timeline.play();
+
                     }
                 }
             } catch (Exception e) {
@@ -366,13 +377,14 @@ public class BlackJackMenuController {
         }
     }
 
+
     /**
      * Méthode pour commencer une partie de black jack
      **/
     private void startingGame() {
         currentPositionXUserFirstHand = ORIGIN_X_FIRST_HAND;
         currentPositionXCroupier = ORIGIN_X_Croupier;
-        ImageView card;
+        //ImageView card;
 
         blackJack.gameBegin();
         animationCardBegin();
@@ -636,10 +648,10 @@ public class BlackJackMenuController {
         Timeline timeline = new Timeline();
         Duration timePoint = Duration.seconds(0.5);
 
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> soundCard.pause()));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> soundCard.setStartTime(Duration.ZERO)));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> cardSound.pause()));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> cardSound.setStartTime(Duration.ZERO)));
 
-        soundCard.play();
+        cardSound.play();
         timeline.play();
 
         setLog("Le joueur "+user.getPseudo()+" pioche la carte "+newCard.getNumber()+" de "+newCard.getRank()+" dans sa main n°"+indexCurrentHand);
@@ -754,7 +766,7 @@ public class BlackJackMenuController {
         Duration timePoint = Duration.ZERO;
         Duration pause = Duration.seconds(0.4);
 
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e ->  soundCard.play()));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e ->  cardSound.play()));
 
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> setLog("Le joueur "+user.getPseudo()+" pioche la carte "+blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber()+" de "+blackJack.getListOfUserHand().get(1).getHand().get(0).getRank())));
         timeline.getKeyFrames().add(new KeyFrame(timePoint,e -> userFirstHand.add(chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(0).getRank()))));
@@ -778,8 +790,8 @@ public class BlackJackMenuController {
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelValueUserFirstHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)))));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> currentPositionXUserFirstHand += 25));
 
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> soundCard.pause()));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> soundCard.setStartTime(Duration.ZERO)));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> cardSound.pause()));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> cardSound.setStartTime(Duration.ZERO)));
 
         timeline.play();
     }
