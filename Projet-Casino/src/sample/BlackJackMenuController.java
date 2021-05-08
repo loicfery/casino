@@ -374,9 +374,9 @@ public class BlackJackMenuController {
         ImageView card;
 
         blackJack.gameBegin();
-        soundThreeCardsDealing.play();
+        animationCardBegin();
 
-        card = chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(0).getRank());
+        /*card = chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(0).getRank());
         setLog("Le joueur "+user.getPseudo()+" pioche la carte "+blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber()+" de "+blackJack.getListOfUserHand().get(1).getHand().get(0).getRank());
         userFirstHand.add(card);
         setupCard(card, currentPositionXUserFirstHand, ORIGIN_Y_USER);
@@ -397,7 +397,7 @@ public class BlackJackMenuController {
         userFirstHand.add(card);
         setupCard(card, currentPositionXUserFirstHand, ORIGIN_Y_USER);
         labelValueUserFirstHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)));
-        currentPositionXUserFirstHand += 25;
+        currentPositionXUserFirstHand += 25;*/
 
         showAction();
     }
@@ -743,40 +743,33 @@ public class BlackJackMenuController {
     private void animationCardBegin(){
         currentPositionXUserFirstHand = ORIGIN_X_FIRST_HAND;
         currentPositionXCroupier = ORIGIN_X_Croupier;
-        ImageView card;
         Timeline timeline = new Timeline();
         Duration timePoint = Duration.ZERO;
-        Duration pause = Duration.seconds(0.3);
+        Duration pause = Duration.seconds(0.4);
 
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e ->  soundThreeCardsDealing.play()));
 
-        card = chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(0).getRank());
-        setLog("Le joueur "+user.getPseudo()+" pioche la carte "+blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber()+" de "+blackJack.getListOfUserHand().get(1).getHand().get(0).getRank());
-        userFirstHand.add(card);
-        setupCard(card, currentPositionXUserFirstHand, ORIGIN_Y_USER);
-        labelValueUserFirstHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)));
-        labelValueUserFirstHand.setVisible(true);
-        currentPositionXUserFirstHand += 25;
-
-        card = chooseCard(blackJack.getListOfUserHand().get(0).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(0).getHand().get(0).getRank());
-        setLog("Le croupier pioche la carte "+blackJack.getListOfUserHand().get(0).getHand().get(0).getNumber()+" de "+blackJack.getListOfUserHand().get(0).getHand().get(0).getRank());
-        croupierHand.add(card);
-        setupCard(card, currentPositionXCroupier, ORIGIN_Y_CROUPIER);
-        labelValueCroupierHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(0)));
-        labelValueCroupierHand.setVisible(true);
-        currentPositionXCroupier += 25;
-
-        card = chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(1).getRank());
-        setLog("Le joueur "+user.getPseudo()+" pioche la carte "+blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber()+" de "+blackJack.getListOfUserHand().get(1).getHand().get(1).getRank()+"\n");
-        userFirstHand.add(card);
-        setupCard(card, currentPositionXUserFirstHand, ORIGIN_Y_USER);
-        labelValueUserFirstHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)));
-        currentPositionXUserFirstHand += 25;
-
-        //KeyFrame keyFrame = new KeyFrame(timePoint, e -> switchPicture((finalSymbol + 2)%10, 3));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> setLog("Le joueur "+user.getPseudo()+" pioche la carte "+blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber()+" de "+blackJack.getListOfUserHand().get(1).getHand().get(0).getRank())));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint,e -> userFirstHand.add(chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(0).getRank()))));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> setupCard(chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(0).getRank()), currentPositionXUserFirstHand, ORIGIN_Y_USER)));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelValueUserFirstHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)))));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelValueUserFirstHand.setVisible(true)));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> currentPositionXUserFirstHand += 25));
         timePoint = timePoint.add(pause);
-        //timeline.getKeyFrames().add(keyFrame);
 
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> setLog("Le croupier pioche la carte "+blackJack.getListOfUserHand().get(0).getHand().get(0).getNumber()+" de "+blackJack.getListOfUserHand().get(0).getHand().get(0).getRank())));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> croupierHand.add(chooseCard(blackJack.getListOfUserHand().get(0).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(0).getHand().get(0).getRank()))));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> setupCard(chooseCard(blackJack.getListOfUserHand().get(0).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(0).getHand().get(0).getRank()), currentPositionXCroupier, ORIGIN_Y_CROUPIER)));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelValueCroupierHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(0)))));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelValueCroupierHand.setVisible(true)));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e ->  currentPositionXCroupier += 25));
+        timePoint  =timePoint.add(pause);
 
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> setLog("Le joueur "+user.getPseudo()+" pioche la carte "+blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber()+" de "+blackJack.getListOfUserHand().get(1).getHand().get(1).getRank()+"\n")));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> userFirstHand.add(chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(1).getRank()))));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> setupCard(chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(1).getRank()), currentPositionXUserFirstHand, ORIGIN_Y_USER)));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelValueUserFirstHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)))));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> currentPositionXUserFirstHand += 25));
 
         timeline.play();
     }
