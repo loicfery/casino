@@ -30,10 +30,13 @@ public class MainMenuController {
     private ImageView pictureRoulette = new ImageView();
     private ImageView pictureShop = new ImageView();
 
+    private double soundVolume;
 
-    public MainMenuController(Stage stage,User user){
+
+    public MainMenuController(Stage stage,User user, double soundVolume){
         this.stage = stage;
         this.user = user;
+        this.soundVolume = soundVolume;
     }
 
     public void setting(){
@@ -92,7 +95,7 @@ public class MainMenuController {
     }
 
     private void goToBlackJackMenu(){
-        BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage);
+        BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage,soundVolume);
         blackJackMenuController.setting();
     }
 
@@ -102,7 +105,13 @@ public class MainMenuController {
     }
 
     private void goToRouletteMenu(){
-        RouletteMenuController rouletteMenuController = new RouletteMenuController(user,stage);
+        RouletteMenuController rouletteMenuController = new RouletteMenuController(user,stage,soundVolume);
         rouletteMenuController.setting();
+    }
+
+    private void setSoundVolume(double newSoundVolume){
+        if(newSoundVolume <= 1.0 && newSoundVolume >= 0){
+            this.soundVolume = newSoundVolume;
+        }
     }
 }

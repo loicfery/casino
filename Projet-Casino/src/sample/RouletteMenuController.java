@@ -62,6 +62,7 @@ public class RouletteMenuController {
 
     private List<Rectangle> listOfRectangleGameBoard = new ArrayList<>();
     private List<Label> listOfLabelGameBoard = new ArrayList<>();
+    private double soundVolume;
 
     private ImageView roulette = new ImageView();
 
@@ -84,9 +85,10 @@ public class RouletteMenuController {
 
     private TextArea textRule = new TextArea();
 
-    public RouletteMenuController(User user, Stage stage){
+    public RouletteMenuController(User user, Stage stage, double soundVolume){
         this.user = user;
         this.stage = stage;
+        this.soundVolume = soundVolume;
     }
 
     /** Méthode qui initialise l'interface de la roulette **/
@@ -1196,7 +1198,7 @@ public class RouletteMenuController {
      * Méthode pour quitter le jeu et retourner dans le menu principale
      **/
     private void returnMainMenu(){
-        MainMenuController mainMenuController = new MainMenuController(stage,user);
+        MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume);
         mainMenuController.setting();
     }
 
@@ -1220,5 +1222,11 @@ public class RouletteMenuController {
 
     private void hideLog(){
 
+    }
+
+    private void setSoundVolume(double newSoundVolume){
+        if(newSoundVolume <= 1.0 && newSoundVolume >= 0){
+            soundVolume = newSoundVolume;
+        }
     }
 }

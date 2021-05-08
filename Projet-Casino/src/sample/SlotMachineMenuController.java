@@ -45,6 +45,7 @@ public class SlotMachineMenuController {
     private AudioClip soundPayout;
     private MediaPlayer soundSlot;
 
+    private double soundVolume = 0.5;
     private Rectangle cadreSlotMachine = new Rectangle();
 
     private Circle circleRule = new Circle();
@@ -104,8 +105,9 @@ public class SlotMachineMenuController {
 
 
         soundPayout = java.applet.Applet.newAudioClip(getClass().getResource("sound/slotMachinePayoutSound.wav"));
+
         soundSlot = new MediaPlayer(new Media(getClass().getResource("sound/slotMachineSlotsSound.mp3").toExternalForm()));
-        soundSlot.setVolume(0.1);
+        soundSlot.setVolume(soundVolume);
         soundSlot.setCycleCount(Transition.INDEFINITE);
 
         startingGameButton.setOnMouseClicked((event)->{
@@ -209,7 +211,7 @@ public class SlotMachineMenuController {
     private void returnMainMenu(){
         soundSlot.stop();
         soundPayout.stop();
-        MainMenuController mainMenuController = new MainMenuController(stage,user);
+        MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume);
         mainMenuController.setting();
     }
 
@@ -331,6 +333,12 @@ public class SlotMachineMenuController {
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e ->  startingGameButton.setDisable(false)));
 
         timeline.play();
+    }
+
+    private void setSoundVolume(double newSoundVolume){
+        if(newSoundVolume >= 0 && newSoundVolume <= 1.0){
+            this.soundVolume = newSoundVolume;
+        }
     }
 }
 

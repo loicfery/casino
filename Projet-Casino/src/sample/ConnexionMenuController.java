@@ -22,6 +22,8 @@ public class ConnexionMenuController {
     private SetupScene setupScene = new SetupScene();
     private User user;
 
+    private double soundVolume;
+
     private Label labelTitle = new Label();
     private Label labelEmail = new Label();
     private Label labelPassword = new Label();
@@ -43,6 +45,7 @@ public class ConnexionMenuController {
 
     public ConnexionMenuController(Stage stage){
         this.stage = stage;
+        this.soundVolume = 0.5;
     }
 
     /** Méthode qui initialise l'interface de connexion **/
@@ -193,7 +196,13 @@ public class ConnexionMenuController {
         user = new User("Loic","loic-fery@orange.fr","ADMIN"); //pour tester
         user.addToken(50); // pour tester
 
-        MainMenuController mainMenuController = new MainMenuController(stage,user);
+        MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume);
         mainMenuController.setting();
+    }
+
+    private void setSoundVolume(double newSoundVolume){
+        if(newSoundVolume <= 1.0 && newSoundVolume >= 0){
+            soundVolume = newSoundVolume;
+        }
     }
 }

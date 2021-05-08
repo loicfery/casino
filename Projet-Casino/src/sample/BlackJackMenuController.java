@@ -59,6 +59,8 @@ public class BlackJackMenuController {
     private MediaPlayer cardSound;
     private MediaPlayer tokenSound;
 
+    private double soundVolume;
+
     private boolean split = false;
     private boolean stand = false;
     private int indexCurrentHand = 1;
@@ -103,9 +105,10 @@ public class BlackJackMenuController {
 
     private final Circle circleRule = new Circle();
 
-    public BlackJackMenuController(User user,Stage stage){
+    public BlackJackMenuController(User user,Stage stage, double soundVolume){
         this.stage = stage;
         this.user = user;
+        this.soundVolume = soundVolume;
         this.valueTokenUserBegin = user.getNumberOfToken();
 
         blackJack = new BlackJack(user);
@@ -156,8 +159,10 @@ public class BlackJackMenuController {
 
         cardSound = new MediaPlayer(new Media(getClass().getResource("sound/dealingThreeCardsSound.mp3").toExternalForm()));
         cardSound.setCycleCount(Transition.INDEFINITE);
+        cardSound.setVolume(soundVolume);
 
         tokenSound = new MediaPlayer(new Media(getClass().getResource("sound/tokenSound.mp3").toExternalForm()));
+        tokenSound.setVolume(soundVolume);
 
         returnMainMenuButton.setOnMouseClicked((event) -> returnMainMenu());
 
@@ -466,7 +471,7 @@ public class BlackJackMenuController {
      * Méthode pour quitter le jeu et retourner dans le menu principale
      **/
     private void returnMainMenu(){
-        MainMenuController mainMenuController = new MainMenuController(stage,user);
+        MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume);
         mainMenuController.setting();
     }
 
@@ -751,7 +756,7 @@ public class BlackJackMenuController {
     /** Méthode pour une nouvelle partie de black jack **/
     private void newGame(){
         blackJack.reset();
-       BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage);
+       BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage,soundVolume);
        blackJackMenuController.setting();
     }
 
@@ -794,5 +799,11 @@ public class BlackJackMenuController {
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> cardSound.setStartTime(Duration.ZERO)));
 
         timeline.play();
+    }
+
+    private void setSoundVolume(double newSoundVolume){
+        if(newSoundVolume >= 0 && newSoundVolume <= 1.0){
+            this.soundVolume = newSoundVolume;
+        }
     }
 }
