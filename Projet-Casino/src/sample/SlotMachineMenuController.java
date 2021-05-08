@@ -197,14 +197,6 @@ public class SlotMachineMenuController {
             startingGameButton.setDisable(true);
             soundSlot.play();
             animationSlot(slotMachine.getNbImage().get(0) + 1, slotMachine.getNbImage().get(1) + 1, slotMachine.getNbImage().get(2) + 1);
-
-            int gain = slotMachine.verifySlot();
-            labelProfit.setText("Gain : " +gain);
-            if(gain > 0){
-                soundPayout.play();
-            }
-            slotMachine.reset();
-            labelToken.setText("Jetons : "+user.getNumberOfToken());
         }
         else{
             labelError.setText("Vous n'avez pas assez de jeton");
@@ -303,7 +295,7 @@ public class SlotMachineMenuController {
         Duration pause = Duration.seconds(0.3);
         int symbol = 1;
 
-        for(int index = 0; index < 11; index ++) {
+        for(int index = 0; index < 6; index ++) {
             int finalSymbol = symbol;
             KeyFrame keyFrame = new KeyFrame(timePoint, e -> switchPicture(finalSymbol,1));
             timeline.getKeyFrames().add(keyFrame);
@@ -320,9 +312,20 @@ public class SlotMachineMenuController {
         }
 
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> soundSlot.pause()));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> soundSlot.setStartTime(Duration.ZERO)));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> switchPicture(symbolOne,1)));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> switchPicture(symbolTwo,2)));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> switchPicture(symbolThree,3)));
+
+        int gain = slotMachine.verifySlot();
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelProfit.setText("Gain : " +gain)));
+
+        if(gain > 0){
+            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> soundPayout.play()));
+        }
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> slotMachine.reset()));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelToken.setText("Jetons : "+user.getNumberOfToken())));
+
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e ->  startingGameButton.setDisable(false)));
 
         timeline.play();
