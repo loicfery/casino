@@ -8,15 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.effect.Bloom;
-import javafx.scene.effect.MotionBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import java.applet.AudioClip;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import java.io.File;
 
 import javafx.scene.paint.Color;
@@ -51,6 +47,10 @@ public class SlotMachineMenuController {
 
     private Circle circleRule = new Circle();
 
+    private Polygon star1;
+    private Polygon star2;
+    private Polygon star3;
+
     private Button startingGameButton = new Button();
     private Button returnMainMenuButton = new Button();
 
@@ -84,6 +84,9 @@ public class SlotMachineMenuController {
         stage.setScene(scene);
 
         setUpScene.setRectangle(cadreSlotMachine,105.0,275.0,199.0,601.0,5.0,5.0, Paint.valueOf("RED"),Paint.valueOf("RED"),1.0, StrokeType.INSIDE,true,anchorPane);
+
+        animation();
+
         setUpScene.setButton(startingGameButton,"Actionner", Pos.CENTER,504.0,615.0,134.0,256.0,new Font(25),true,anchorPane);
         setUpScene.setImageView(pictureSlot1,130.0,300.0,150.0,151.0,new Image(getClass().getResource("image/slot_machine_seven.jpg").toExternalForm()),true,anchorPane);
         setUpScene.setImageView(pictureSlot2,330,300.0,150.0,151.0,new Image(getClass().getResource("image/slot_machine_seven.jpg").toExternalForm()),true,anchorPane);
@@ -121,8 +124,6 @@ public class SlotMachineMenuController {
 
         root.getChildren().add(anchorPane);
         stage.show();
-
-        animation();
     }
 
     /** Méthode qui permet d'écrire le texte pour pouvoir l'afficher **/
@@ -227,6 +228,13 @@ public class SlotMachineMenuController {
     private void animation(){
         int indexColor = 0;
         Color[] colors = {Color.YELLOW,Color.GREEN};
+        star1 = createStarAnimate(500,40,Paint.valueOf("YELLOW"));
+        star2 = createStarAnimate(300,40,Paint.valueOf("BLUE"));
+        star3 = createStarAnimate(100,40,Paint.valueOf("YELLOW"));
+
+        listOfFillTransition.add(animate(star1,Color.BLUE,Color.YELLOW));
+        listOfFillTransition.add(animate(star2,Color.YELLOW,Color.BLUE));
+        listOfFillTransition.add(animate(star3,Color.BLUE,Color.YELLOW));
 
         int layoutX = 105;
         for(int index = 0; index < 12; index ++){
@@ -258,8 +266,8 @@ public class SlotMachineMenuController {
         }
     }
 
-    private FillTransition animate(Rectangle rectangle, Color firstColor, Color secondColor){
-        FillTransition animation = new FillTransition(Duration.millis(500),rectangle, firstColor,secondColor);
+    private FillTransition animate(Shape shape, Color firstColor, Color secondColor){
+        FillTransition animation = new FillTransition(Duration.millis(500),shape, firstColor,secondColor);
         animation.setCycleCount(Transition.INDEFINITE);
         animation.setAutoReverse(true);
         animation.play();
@@ -270,6 +278,19 @@ public class SlotMachineMenuController {
         Rectangle rectangle = new Rectangle(layoutX,layoutY,width,height);
         anchorPane.getChildren().add(rectangle);
         return rectangle;
+    }
+
+    private Polygon createStarAnimate(double layoutX, double layoutY, Paint color){
+        Polygon star = new Polygon();
+        star.setLayoutX(layoutX);
+        star.setLayoutY(layoutY);
+        star.setFill(color);
+        double[] points = new double[]{10,85,85,75,110,10,135,75,210,85,160,125,170,190,110,150,50,190,60,125};
+        for(int index = 0; index < points.length; index ++) {
+            star.getPoints().add(points[index]);
+        }
+        anchorPane.getChildren().add(star);
+        return star;
     }
 }
 
