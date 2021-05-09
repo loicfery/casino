@@ -1,7 +1,8 @@
 package sample;
 
 import games.User;
-import javafx.animation.PathTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -44,10 +45,9 @@ public class RouletteMenuController implements InterfaceMenu{
     private boolean startingGame = false;
     private final List<Circle> listOfCircleToken = new ArrayList<>();
     private final List<Label> listLabelToken = new ArrayList<>();
-    private final List<Case> listOfCase = new ArrayList<>();
+    private final List<Case> listOfCaseBet = new ArrayList<>();
     private final List<InformationTokenBet> listOfTokenUsed = new ArrayList<>();
-    private final List<Integer> listPositionXCaseRoulette = new ArrayList<>();
-    private final List<Integer> listPositionYCaseRoulette = new ArrayList<>();
+    private final List<Case> listOfCaseRoulette = new ArrayList<>();
 
     private final BorderPane root = new BorderPane();
     private final Stage stage;
@@ -61,6 +61,7 @@ public class RouletteMenuController implements InterfaceMenu{
     private boolean backgroundAnimation;
 
     private MediaPlayer tokenSound;
+    private MediaPlayer rouletteSound;
 
     private final ImageView roulette = new ImageView();
 
@@ -81,7 +82,7 @@ public class RouletteMenuController implements InterfaceMenu{
 
     private final Circle circleBallRoulette = new Circle();
     private final Circle circleRule = new Circle();
-    private  Circle circleSetting = new Circle();
+    private final Circle circleSetting = new Circle();
 
     private final Rectangle rectangleLog = new Rectangle();
 
@@ -121,7 +122,7 @@ public class RouletteMenuController implements InterfaceMenu{
         setupScene.setTextField(textBetToken,"Mise",Pos.CENTER,234.0,597.0,80.0,338.0,new Font(20.0),false,anchorPane);
         setupScene.setButton(startingGameButton,"Starting",Pos.CENTER,25.0,416.0,102.0,251.0,new Font(20.0),true,anchorPane);
         setupScene.setLabel(labelError,"Erreur",Pos.CENTER,197.0,600.0,60.0,387.0,new Font(20.0),Paint.valueOf("RED"),false,anchorPane);
-        setupScene.setCircle(circleBallRoulette,7.0,851.0,563.0,Paint.valueOf("BLACK"),Paint.valueOf("BLACK"),StrokeType.INSIDE,0.0,false,anchorPane);
+        setupScene.setCircle(circleBallRoulette,7.0,950,475,Paint.valueOf("BLACK"),Paint.valueOf("BLACK"),StrokeType.INSIDE,0.0,false,anchorPane);
         setupScene.setButton(returnMainMenuButton,"Quitter",Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
 
         setupScene.setCircle(circleSetting,18,970,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("GREEN"),StrokeType.INSIDE,1.0,true,anchorPane);
@@ -134,8 +135,8 @@ public class RouletteMenuController implements InterfaceMenu{
         setupScene.setLabel(labelRule,"?",Pos.CENTER,1055.0,15.0,23,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setTextArea(textRule,360,46.0,600.0,700.0,false,false,anchorPane);
 
-        tokenSound = createSoundToken();
-        tokenSound.setVolume(soundVolume);
+        createSoundToken();
+        createSoundRoulette();
 
         anchorPane.setOnMouseClicked((event)-> choosePositionToken(event));
         validBetTokenButton.setOnMouseClicked((event)-> validBetToken());
@@ -572,133 +573,96 @@ public class RouletteMenuController implements InterfaceMenu{
 
     /** Méthode de création de la liste des cases pour parier **/
     private void setCasePosition(){
-        listOfCase.add(new Case(320,78,384,223,"green","0"));
-        listOfCase.add(new Case(383,174,434,222,"red","1"));
-        listOfCase.add(new Case(383,126,434,174,"black","2"));
-        listOfCase.add(new Case(383,78,434,126,"red","3"));
-        listOfCase.add(new Case(434,174,485,222,"black","4"));
-        listOfCase.add(new Case(434,126,485,174,"red","5"));
-        listOfCase.add(new Case(434,78,485,126,"black","6"));
-        listOfCase.add(new Case(485,174,536,222,"red","7"));
-        listOfCase.add(new Case(485,126,536,174,"black","8"));
-        listOfCase.add(new Case(485,78,536,126,"red","9"));
-        listOfCase.add(new Case(536,174,587,222,"black","10"));
-        listOfCase.add(new Case(536,126,587,174,"black","11"));
-        listOfCase.add(new Case(536,78,587,126,"red","12"));
-        listOfCase.add(new Case(587,174,638,222,"black","13"));
-        listOfCase.add(new Case(587,126,638,174,"red","14"));
-        listOfCase.add(new Case(587,78,638,126,"black","15"));
-        listOfCase.add(new Case(638,174,689,222,"red","16"));
-        listOfCase.add(new Case(638,126,689,174,"black","17"));
-        listOfCase.add(new Case(638,78,689,126,"red","18"));
-        listOfCase.add(new Case(689,174,740,222,"red","19"));
-        listOfCase.add(new Case(689,126,740,174,"black","20"));
-        listOfCase.add(new Case(689,78,740,126,"red","21"));
-        listOfCase.add(new Case(740,174,791,222,"black","22"));
-        listOfCase.add(new Case(740,126,791,174,"red","23"));
-        listOfCase.add(new Case(740,78,791,126,"black","24"));
-        listOfCase.add(new Case(791,174,842,222,"red","25"));
-        listOfCase.add(new Case(791,126,842,174,"black","26"));
-        listOfCase.add(new Case(791,78,842,126,"red","27"));
-        listOfCase.add(new Case(842,174,893,222,"black","28"));
-        listOfCase.add(new Case(842,126,893,174,"black","29"));
-        listOfCase.add(new Case(842,78,893,126,"red","30"));
-        listOfCase.add(new Case(893,174,944,222,"black","31"));
-        listOfCase.add(new Case(893,126,944,174,"red","32"));
-        listOfCase.add(new Case(893,78,944,126,"black","33"));
-        listOfCase.add(new Case(944,174,995,222,"red","34"));
-        listOfCase.add(new Case(944,126,995,174,"black","35"));
-        listOfCase.add(new Case(944,78,995,126,"red","36"));
-        listOfCase.add(new Case(995,174,1046,222,"green","1st"));
-        listOfCase.add(new Case(995,126,1046,174,"green","2nd"));
-        listOfCase.add(new Case(995,78,1046,126,"green","3rd"));
-        listOfCase.add(new Case(383,222,587,270,"green","1-12"));
-        listOfCase.add(new Case(383,270,483,318,"green","1-18"));
-        listOfCase.add(new Case(484,270,584,318,"green","even"));
-        listOfCase.add(new Case(587,222,791,270,"green","13-24"));
-        listOfCase.add(new Case(587,270,687,718,"green","red"));
-        listOfCase.add(new Case(688,270,788,718,"green","black"));
-        listOfCase.add(new Case(791,222,995,270,"green","25-36"));
-        listOfCase.add(new Case(791,270,891,318,"green","odd"));
-        listOfCase.add(new Case(892,270,992,318,"green","19-36"));
+        listOfCaseBet.add(new Case(320,78,384,223,"green","0"));
+        listOfCaseBet.add(new Case(383,174,434,222,"red","1"));
+        listOfCaseBet.add(new Case(383,126,434,174,"black","2"));
+        listOfCaseBet.add(new Case(383,78,434,126,"red","3"));
+        listOfCaseBet.add(new Case(434,174,485,222,"black","4"));
+        listOfCaseBet.add(new Case(434,126,485,174,"red","5"));
+        listOfCaseBet.add(new Case(434,78,485,126,"black","6"));
+        listOfCaseBet.add(new Case(485,174,536,222,"red","7"));
+        listOfCaseBet.add(new Case(485,126,536,174,"black","8"));
+        listOfCaseBet.add(new Case(485,78,536,126,"red","9"));
+        listOfCaseBet.add(new Case(536,174,587,222,"black","10"));
+        listOfCaseBet.add(new Case(536,126,587,174,"black","11"));
+        listOfCaseBet.add(new Case(536,78,587,126,"red","12"));
+        listOfCaseBet.add(new Case(587,174,638,222,"black","13"));
+        listOfCaseBet.add(new Case(587,126,638,174,"red","14"));
+        listOfCaseBet.add(new Case(587,78,638,126,"black","15"));
+        listOfCaseBet.add(new Case(638,174,689,222,"red","16"));
+        listOfCaseBet.add(new Case(638,126,689,174,"black","17"));
+        listOfCaseBet.add(new Case(638,78,689,126,"red","18"));
+        listOfCaseBet.add(new Case(689,174,740,222,"red","19"));
+        listOfCaseBet.add(new Case(689,126,740,174,"black","20"));
+        listOfCaseBet.add(new Case(689,78,740,126,"red","21"));
+        listOfCaseBet.add(new Case(740,174,791,222,"black","22"));
+        listOfCaseBet.add(new Case(740,126,791,174,"red","23"));
+        listOfCaseBet.add(new Case(740,78,791,126,"black","24"));
+        listOfCaseBet.add(new Case(791,174,842,222,"red","25"));
+        listOfCaseBet.add(new Case(791,126,842,174,"black","26"));
+        listOfCaseBet.add(new Case(791,78,842,126,"red","27"));
+        listOfCaseBet.add(new Case(842,174,893,222,"black","28"));
+        listOfCaseBet.add(new Case(842,126,893,174,"black","29"));
+        listOfCaseBet.add(new Case(842,78,893,126,"red","30"));
+        listOfCaseBet.add(new Case(893,174,944,222,"black","31"));
+        listOfCaseBet.add(new Case(893,126,944,174,"red","32"));
+        listOfCaseBet.add(new Case(893,78,944,126,"black","33"));
+        listOfCaseBet.add(new Case(944,174,995,222,"red","34"));
+        listOfCaseBet.add(new Case(944,126,995,174,"black","35"));
+        listOfCaseBet.add(new Case(944,78,995,126,"red","36"));
+        listOfCaseBet.add(new Case(995,174,1046,222,"green","1st"));
+        listOfCaseBet.add(new Case(995,126,1046,174,"green","2nd"));
+        listOfCaseBet.add(new Case(995,78,1046,126,"green","3rd"));
+        listOfCaseBet.add(new Case(383,222,587,270,"green","1-12"));
+        listOfCaseBet.add(new Case(383,270,483,318,"green","1-18"));
+        listOfCaseBet.add(new Case(484,270,584,318,"green","even"));
+        listOfCaseBet.add(new Case(587,222,791,270,"green","13-24"));
+        listOfCaseBet.add(new Case(587,270,687,718,"green","red"));
+        listOfCaseBet.add(new Case(688,270,788,718,"green","black"));
+        listOfCaseBet.add(new Case(791,222,995,270,"green","25-36"));
+        listOfCaseBet.add(new Case(791,270,891,318,"green","odd"));
+        listOfCaseBet.add(new Case(892,270,992,318,"green","19-36"));
     }
 
     /** Méthode de création de la liste des position des cases de la roulette **/
     private void setCasePositionRoulette(){
-        listPositionXCaseRoulette.add(984);
-        listPositionYCaseRoulette.add(475);
-        listPositionXCaseRoulette.add(963);
-        listPositionYCaseRoulette.add(493);
-        listPositionXCaseRoulette.add(972);
-        listPositionYCaseRoulette.add(513);
-        listPositionXCaseRoulette.add(979);
-        listPositionYCaseRoulette.add(535);
-        listPositionXCaseRoulette.add(982);
-        listPositionYCaseRoulette.add(557);
-        listPositionXCaseRoulette.add(982);
-        listPositionYCaseRoulette.add(579);
-        listPositionXCaseRoulette.add(976);
-        listPositionYCaseRoulette.add(600);
-        listPositionXCaseRoulette.add(967);
-        listPositionYCaseRoulette.add(620);
-        listPositionXCaseRoulette.add(957);
-        listPositionYCaseRoulette.add(641);
-        listPositionXCaseRoulette.add(942);
-        listPositionYCaseRoulette.add(658);
-        listPositionXCaseRoulette.add(925);
-        listPositionYCaseRoulette.add(670);
-        listPositionXCaseRoulette.add(906);
-        listPositionYCaseRoulette.add(680);
-        listPositionXCaseRoulette.add(885);
-        listPositionYCaseRoulette.add(691);
-        listPositionXCaseRoulette.add(861);
-        listPositionYCaseRoulette.add(694);
-        listPositionXCaseRoulette.add(841);
-        listPositionYCaseRoulette.add(693);
-        listPositionXCaseRoulette.add(816);
-        listPositionYCaseRoulette.add(694);
-        listPositionXCaseRoulette.add(794);
-        listPositionYCaseRoulette.add(686);
-        listPositionXCaseRoulette.add(775);
-        listPositionYCaseRoulette.add(674);
-        listPositionXCaseRoulette.add(757);
-        listPositionYCaseRoulette.add(660);
-        listPositionXCaseRoulette.add(742);
-        listPositionYCaseRoulette.add(645);
-        listPositionXCaseRoulette.add(729);
-        listPositionYCaseRoulette.add(624);
-        listPositionXCaseRoulette.add(718);
-        listPositionYCaseRoulette.add(603);
-        listPositionXCaseRoulette.add(714);
-        listPositionYCaseRoulette.add(580);
-        listPositionXCaseRoulette.add(716);
-        listPositionYCaseRoulette.add(556);
-        listPositionXCaseRoulette.add(715);
-        listPositionYCaseRoulette.add(533);
-        listPositionXCaseRoulette.add(722);
-        listPositionYCaseRoulette.add(512);
-        listPositionXCaseRoulette.add(734);
-        listPositionYCaseRoulette.add(492);
-        listPositionXCaseRoulette.add(745);
-        listPositionYCaseRoulette.add(469);
-        listPositionXCaseRoulette.add(765);
-        listPositionYCaseRoulette.add(454);
-        listPositionXCaseRoulette.add(786);
-        listPositionYCaseRoulette.add(443);
-        listPositionXCaseRoulette.add(807);
-        listPositionYCaseRoulette.add(433);
-        listPositionXCaseRoulette.add(829);
-        listPositionYCaseRoulette.add(426);
-        listPositionXCaseRoulette.add(850);
-        listPositionYCaseRoulette.add(425);
-        listPositionXCaseRoulette.add(875);
-        listPositionYCaseRoulette.add(428);
-        listPositionXCaseRoulette.add(898);
-        listPositionYCaseRoulette.add(433);
-        listPositionXCaseRoulette.add(920);
-        listPositionYCaseRoulette.add(441);
-        listPositionXCaseRoulette.add(938);
-        listPositionYCaseRoulette.add(455);
+        listOfCaseRoulette.add(new Case(950,475,0,0,"red","21"));
+        listOfCaseRoulette.add(new Case(963,493,0,0,"black","2"));
+        listOfCaseRoulette.add(new Case(972,513,0,0,"red","25"));
+        listOfCaseRoulette.add(new Case(979,535,0,0,"black","17"));
+        listOfCaseRoulette.add(new Case(982,557,0,0,"red","34"));
+        listOfCaseRoulette.add(new Case(982,579,0,0,"black","6"));
+        listOfCaseRoulette.add(new Case(976,600,0,0,"red","27"));
+        listOfCaseRoulette.add(new Case(967,620,0,0,"black","13"));
+        listOfCaseRoulette.add(new Case(957,641,0,0,"red","36"));
+        listOfCaseRoulette.add(new Case(942,658,0,0,"black","11"));
+        listOfCaseRoulette.add(new Case(925,670,0,0,"red","30"));
+        listOfCaseRoulette.add(new Case(906,680,0,0,"black","8"));
+        listOfCaseRoulette.add(new Case(885,691,0,0,"red","23"));
+        listOfCaseRoulette.add(new Case(861,694,0,0,"black","10"));
+        listOfCaseRoulette.add(new Case(841,693,0,0,"red","5"));
+        listOfCaseRoulette.add(new Case(816,694,0,0,"black","24"));
+        listOfCaseRoulette.add(new Case(794,686,0,0,"red","16"));
+        listOfCaseRoulette.add(new Case(775,674,0,0,"black","33"));
+        listOfCaseRoulette.add(new Case(757,660,0,0,"red","1"));
+        listOfCaseRoulette.add(new Case(742,645,0,0,"black","20"));
+        listOfCaseRoulette.add(new Case(729,624,0,0,"red","14"));
+        listOfCaseRoulette.add(new Case(718,603,0,0,"black","31"));
+        listOfCaseRoulette.add(new Case(714,580,0,0,"red","9"));
+        listOfCaseRoulette.add(new Case(716,556,0,0,"black","22"));
+        listOfCaseRoulette.add(new Case(715,533,0,0,"red","18"));
+        listOfCaseRoulette.add(new Case(722,512,0,0,"black","29"));
+        listOfCaseRoulette.add(new Case(734,492,0,0,"red","7"));
+        listOfCaseRoulette.add(new Case(745,469,0,0,"black","28"));
+        listOfCaseRoulette.add(new Case(765,454,0,0,"red","12"));
+        listOfCaseRoulette.add(new Case(786,443,0,0,"black","35"));
+        listOfCaseRoulette.add(new Case(807,433,0,0,"red","3"));
+        listOfCaseRoulette.add(new Case(829,426,0,0,"black","26"));
+        listOfCaseRoulette.add(new Case(850,425,0,0,"green","0"));
+        listOfCaseRoulette.add(new Case(845,428,0,0,"red","32"));
+        listOfCaseRoulette.add(new Case(898,433,0,0,"black","15"));
+        listOfCaseRoulette.add(new Case(920,441,0,0,"red","19"));
+        listOfCaseRoulette.add(new Case(938,455,0,0,"black","4"));
     }
 
     /** Méthode d'action pour poser un jeton ou modifier sa position ou sa valeur **/
@@ -914,9 +878,9 @@ public class RouletteMenuController implements InterfaceMenu{
     /** Méthode qui récupère toutes les informations du jeton posé **/
     private void betToken(int positionXToken, int positionYToken, Circle circleToken, Label labelToken){
         List<Case> listOfCaseToken = new ArrayList<>();
-        for(int index = 0; index < listOfCase.size(); index ++){
-            if(tokenInTheCase(listOfCase.get(index),positionXToken,positionYToken)){
-                listOfCaseToken.add(listOfCase.get(index));
+        for(int index = 0; index < listOfCaseBet.size(); index ++){
+            if(tokenInTheCase(listOfCaseBet.get(index),positionXToken,positionYToken)){
+                listOfCaseToken.add(listOfCaseBet.get(index));
             }
         }
         InformationTokenBet informationTokenBet = new InformationTokenBet(circleToken,labelToken,listOfCaseToken);
@@ -1007,7 +971,7 @@ public class RouletteMenuController implements InterfaceMenu{
                     listLabelToken.get(tokenUsed).setText(textBetToken.getText());
                     tokenUsed++;
                     tokenSound.play();
-                    tokenSound = createSoundToken();
+                    createSoundToken();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -1027,7 +991,7 @@ public class RouletteMenuController implements InterfaceMenu{
 
     /** Méthode qui retourne la case qui possède une certaine valeur **/
     private Case getCase(String valueOfCase){
-        for (Case aCase : listOfCase) {
+        for (Case aCase : listOfCaseBet) {
             if (aCase.getValueCase().equals(valueOfCase)) {
                 return aCase;
             }
@@ -1175,15 +1139,39 @@ public class RouletteMenuController implements InterfaceMenu{
             labelError.setVisible(false);
             startingGameButton.setVisible(false);
 
-            Circle circle = new Circle(140);
-            PathTransition transition = new PathTransition();
-            transition.setNode(circleBallRoulette);
-            transition.setDuration(Duration.seconds(2));
-            transition.setPath(circle);
-            transition.setCycleCount(PathTransition.INDEFINITE);
-            circleBallRoulette.setVisible(true);
-            transition.play();
+            Timeline timeline = new Timeline();
+            Duration timePoint = Duration.ZERO;
+            int indexList = 0;
+            int caseChoose = 0;
+
+            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> circleBallRoulette.setVisible(true)));
+
+            for(int index = 0; index < 111; index ++){ //3 tours
+                int finalIndexList = indexList;
+                timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> setPositionBallRoulette(listOfCaseRoulette.get(finalIndexList).getOriginX(),listOfCaseRoulette.get(finalIndexList).getOriginY())));
+                timePoint = timePoint.add(Duration.seconds(0.05));
+                indexList = (indexList + 1) % listOfCaseRoulette.size();
+            }
+
+            for(int index = 0; index < listOfCaseRoulette.size(); index++){
+                int finalIndexList = index;
+                timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> setPositionBallRoulette(listOfCaseRoulette.get(finalIndexList).getOriginX(),listOfCaseRoulette.get(finalIndexList).getOriginY())));
+                timePoint = timePoint.add(Duration.seconds(0.05));
+                if(Integer.parseInt(listOfCaseRoulette.get(index).getValueCase()) == caseChoose){
+                    break;
+                }
+            }
+
+            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> createSoundRoulette()));
+
+            rouletteSound.play();
+            timeline.play();
         }
+    }
+
+    private void setPositionBallRoulette(double layoutX, double layoutY){
+        circleBallRoulette.setLayoutY(layoutY);
+        circleBallRoulette.setLayoutX(layoutX);
     }
 
     /** Méthode qui crée un jeton **/
@@ -1243,9 +1231,13 @@ public class RouletteMenuController implements InterfaceMenu{
         backgroundAnimation = newBackgroundAnimation;
     }
 
-    private MediaPlayer createSoundToken(){
-        MediaPlayer mediaPlayer = new MediaPlayer(new Media(getClass().getResource("sound/tokenSound.mp3").toExternalForm()));
-        mediaPlayer.setVolume(soundVolume);
-        return mediaPlayer;
+    private void createSoundToken(){
+        tokenSound = new MediaPlayer(new Media(getClass().getResource("sound/tokenSound.mp3").toExternalForm()));
+        tokenSound.setVolume(soundVolume);
+    }
+
+    private void createSoundRoulette(){
+        rouletteSound = new MediaPlayer(new Media(getClass().getResource("sound/rouletteSound.mp3").toExternalForm()));
+        rouletteSound.setVolume(soundVolume);
     }
 }

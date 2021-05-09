@@ -12,7 +12,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import java.applet.AudioClip;
 import java.io.File;
 
 import javafx.scene.media.Media;
@@ -43,7 +42,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
     private final List<FillTransition> listOfFillTransition = new ArrayList<>();
     private boolean backgroundAnimation;
 
-    private AudioClip soundPayout;
+    private MediaPlayer soundPayout;
     private MediaPlayer soundSlot;
     private double soundVolume;
 
@@ -116,8 +115,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
         setupScene.setLabel(labelError,"Erreur : ",Pos.CENTER,280.0,488.0,50.0,401.0,new Font(20.0),Paint.valueOf("RED"),false,anchorPane);
         setupScene.setTextArea(textRule,200.0,46.0,376.0,560.0,false,false,anchorPane);
 
-        soundPayout = java.applet.Applet.newAudioClip(getClass().getResource("sound/slotMachinePayoutSound.wav"));
-
+        createSoundPayout();
         createSoundSlot();
 
         startingGameButton.setOnMouseClicked((event)-> startingGame());
@@ -362,6 +360,11 @@ public class SlotMachineMenuController implements InterfaceMenu{
     private void createSoundSlot(){
         soundSlot = new MediaPlayer(new Media(getClass().getResource("sound/slotMachineSlotsSound.mp3").toExternalForm()));
         soundSlot.setVolume(soundVolume);
+    }
+
+    private void createSoundPayout(){
+        soundPayout = new MediaPlayer(new Media(getClass().getResource("sound/slotMachinePayoutSound.wav").toExternalForm()));
+        soundPayout.setVolume(soundVolume);
     }
 
     private void setAnimationState(boolean visible){
