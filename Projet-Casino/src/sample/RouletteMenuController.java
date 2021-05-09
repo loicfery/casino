@@ -14,6 +14,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -29,7 +30,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RouletteMenuController {
+public class RouletteMenuController implements InterfaceMenu{
 
     private final int ORIGIN_X_1 = 320;
     private final int ORIGIN_Y_1 = 78;
@@ -59,6 +60,7 @@ public class RouletteMenuController {
     private AnchorPane anchorPane = new AnchorPane();
     private SetupScene setupScene = new SetupScene();
     private User user;
+    private InterfaceMenuSetting interfaceMenuSetting;
 
     private List<Rectangle> listOfRectangleGameBoard = new ArrayList<>();
     private List<Label> listOfLabelGameBoard = new ArrayList<>();
@@ -72,6 +74,7 @@ public class RouletteMenuController {
     private Label labelInformationBetToken = new Label();
     private Label labelError = new Label();
     private Label labelRule = new Label();
+    private Label labelLogParty = new Label();
 
     private Button modifyBetTokenButton = new Button();
     private Button validBetTokenButton = new Button();
@@ -82,8 +85,13 @@ public class RouletteMenuController {
 
     private Circle circleBallRoulette = new Circle();
     private Circle circleRule = new Circle();
+    private Circle circleSetting = new Circle();
+
+    private Rectangle rectangleLog = new Rectangle();
 
     private TextArea textRule = new TextArea();
+    private TextArea textLog = new TextArea();
+
 
     public RouletteMenuController(User user, Stage stage, double soundVolume){
         this.user = user;
@@ -118,29 +126,23 @@ public class RouletteMenuController {
         setupScene.setLabel(labelError,"Erreur",Pos.CENTER,197.0,600.0,60.0,387.0,new Font(20.0),Paint.valueOf("RED"),false,anchorPane);
         setupScene.setCircle(circleBallRoulette,7.0,851.0,563.0,Paint.valueOf("BLACK"),Paint.valueOf("BLACK"),StrokeType.INSIDE,0.0,false,anchorPane);
         setupScene.setButton(returnMainMenuButton,"Quitter",Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
+
+        setupScene.setCircle(circleSetting,18,970,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("GREEN"),StrokeType.INSIDE,1.0,true,anchorPane);
+
+        setupScene.setRectangle(rectangleLog,1000.0,15.0,30.0,50.0,10.0,10.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),1.0,StrokeType.INSIDE,true,anchorPane);
+        setupScene.setLabel(labelLogParty,"Log",Pos.CENTER,1000.0,15.0,23.0,50.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setTextArea(textLog,500,46.0,500.0,500.0,false,false,anchorPane);
+
         setupScene.setCircle(circleRule,16.0,1070.0,30.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,true,anchorPane);
         setupScene.setLabel(labelRule,"?",Pos.CENTER,1055.0,15.0,23,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setTextArea(textRule,360,46.0,600.0,700.0,false,false,anchorPane);
 
-        anchorPane.setOnMouseClicked((event)->{
-            choosePositionToken(event);
-        });
-
-        validBetTokenButton.setOnMouseClicked((event)->{
-            validBetToken();
-        });
-
-        modifyBetTokenButton.setOnMouseClicked((event)->{
-            modifyBetToken();
-        });
-
-        startingGameButton.setOnMouseClicked((event)->{
-            startingGame();
-        });
-
-        returnMainMenuButton.setOnMouseClicked((event)->{
-            returnMainMenu();
-        });
+        anchorPane.setOnMouseClicked((event)-> choosePositionToken(event));
+        validBetTokenButton.setOnMouseClicked((event)-> validBetToken());
+        modifyBetTokenButton.setOnMouseClicked((event)-> modifyBetToken());
+        startingGameButton.setOnMouseClicked((event)-> startingGame());
+        returnMainMenuButton.setOnMouseClicked((event)-> returnMainMenu());
+        circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
 
         root.getChildren().add(anchorPane);
         stage.show();
@@ -1224,9 +1226,14 @@ public class RouletteMenuController {
 
     }
 
-    private void setSoundVolume(double newSoundVolume){
+    public void setSoundVolume(double newSoundVolume){
         if(newSoundVolume <= 1.0 && newSoundVolume >= 0){
             soundVolume = newSoundVolume;
         }
+    }
+
+    private void goToMenuSetting(){
+        interfaceMenuSetting = new InterfaceMenuSetting(this,soundVolume);
+        interfaceMenuSetting.setting();
     }
 }

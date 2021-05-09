@@ -4,8 +4,13 @@ import games.User;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.StrokeType;
 import javafx.stage.Stage;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
@@ -13,7 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 
 
-public class ConnexionMenuController {
+public class ConnexionMenuController implements InterfaceMenu{
 
     private BorderPane root = new BorderPane();
     private Scene scene;
@@ -21,6 +26,7 @@ public class ConnexionMenuController {
     private AnchorPane anchorPane = new AnchorPane();
     private SetupScene setupScene = new SetupScene();
     private User user;
+    private InterfaceMenuSetting interfaceMenuSetting;
 
     private double soundVolume;
 
@@ -42,6 +48,9 @@ public class ConnexionMenuController {
     private Button buttonNewAccount = new Button();
     private Button buttonInscription = new Button();
     private Button buttonLoginMenuReturn = new Button();
+
+    private Circle circleSetting = new Circle();
+
 
     public ConnexionMenuController(Stage stage){
         this.stage = stage;
@@ -72,21 +81,13 @@ public class ConnexionMenuController {
         setupScene.setTextField(textNewPseudo,"",Pos.CENTER,250,250,20,200,new Font(15),false,anchorPane);
         setupScene.setLabel(labelError,"Erreur : ",Pos.CENTER,50,330,20,400,new Font(15),Paint.valueOf("RED"),false,anchorPane);
 
-        buttonLogin.setOnMouseClicked((event)->{
-            goToMainMenu();
-        });
+        setupScene.setCircle(circleSetting,18,475,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
 
-        buttonNewAccount.setOnMouseClicked((event)->{
-            goToNewAccountMenu();
-        });
-
-        buttonLoginMenuReturn.setOnMouseClicked((event)->{
-            goToLoginMenu();
-        });
-
-        buttonInscription.setOnMouseClicked((event)->{
-            newAccountGoToMainMenu();
-        });
+        buttonLogin.setOnMouseClicked((event)-> goToMainMenu());
+        buttonNewAccount.setOnMouseClicked((event)-> goToNewAccountMenu());
+        buttonLoginMenuReturn.setOnMouseClicked((event)-> goToLoginMenu());
+        buttonInscription.setOnMouseClicked((event)-> newAccountGoToMainMenu());
+        circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
 
         root.getChildren().add(anchorPane);
         stage.show();
@@ -200,9 +201,14 @@ public class ConnexionMenuController {
         mainMenuController.setting();
     }
 
-    private void setSoundVolume(double newSoundVolume){
+    public void setSoundVolume(double newSoundVolume){
         if(newSoundVolume <= 1.0 && newSoundVolume >= 0){
             soundVolume = newSoundVolume;
         }
+    }
+
+    private void goToMenuSetting(){
+        interfaceMenuSetting = new InterfaceMenuSetting(this,soundVolume);
+        interfaceMenuSetting.setting();
     }
 }

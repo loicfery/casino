@@ -18,6 +18,7 @@ import java.io.File;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
@@ -30,25 +31,28 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SlotMachineMenuController {
+public class SlotMachineMenuController implements InterfaceMenu{
 
     private BorderPane root = new BorderPane();
     private Scene scene;
     private Stage stage;
     private AnchorPane anchorPane = new AnchorPane();
-    private SetupScene setUpScene = new SetupScene();
+    private SetupScene setupScene = new SetupScene();
     private User user;
+    private InterfaceMenuSetting interfaceMenuSetting;
 
     private List<Rectangle> listOfRectangleAnimate = new ArrayList<>();
     private List<FillTransition> listOfFillTransition = new ArrayList<>();
 
     private AudioClip soundPayout;
     private MediaPlayer soundSlot;
+    private double soundVolume;
 
-    private double soundVolume = 0.5;
     private Rectangle cadreSlotMachine = new Rectangle();
+    private Rectangle rectangleLog = new Rectangle();
 
     private Circle circleRule = new Circle();
+    private Circle circleSetting = new Circle();
 
     private Polygon star1;
     private Polygon star2;
@@ -66,17 +70,20 @@ public class SlotMachineMenuController {
     private Label labelUserPseudo = new Label();
     private Label labelRule = new Label();
     private Label labelError = new Label();
+    private Label labelLogParty = new Label();
 
     private TextArea textRule = new TextArea();
+    private TextArea textLog = new TextArea();
 
     private final SlotMachine slotMachine;
 
 
-    public SlotMachineMenuController(User user, Stage stage){
+    public SlotMachineMenuController(User user, Stage stage, double soundVolume){
         this.user = user;
         this.stage = stage;
-
+        this.soundVolume = soundVolume;
         slotMachine = new SlotMachine(user);
+
     }
 
     /** Méthode qui initialise le'interface de la machine à sous **/
@@ -86,23 +93,29 @@ public class SlotMachineMenuController {
         scene.getStylesheets().add(getClass().getResource("slotMachineMenu.css").toExternalForm());
         stage.setScene(scene);
 
-        setUpScene.setRectangle(cadreSlotMachine,105.0,275.0,199.0,601.0,5.0,5.0, Paint.valueOf("RED"),Paint.valueOf("RED"),1.0, StrokeType.INSIDE,true,anchorPane);
+        setupScene.setRectangle(cadreSlotMachine,105.0,275.0,199.0,601.0,5.0,5.0, Paint.valueOf("RED"),Paint.valueOf("RED"),1.0, StrokeType.INSIDE,true,anchorPane);
 
         animation();
 
-        setUpScene.setButton(startingGameButton,"Actionner", Pos.CENTER,504.0,615.0,134.0,256.0,new Font(25),true,anchorPane);
-        setUpScene.setImageView(pictureSlot1,130.0,300.0,150.0,151.0,new Image(getClass().getResource("image/slot_machine_seven.jpg").toExternalForm()),true,anchorPane);
-        setUpScene.setImageView(pictureSlot2,330,300.0,150.0,151.0,new Image(getClass().getResource("image/slot_machine_seven.jpg").toExternalForm()),true,anchorPane);
-        setUpScene.setImageView(pictureSlot3,530.0,300.0,150.0,151.0,new Image(getClass().getResource("image/slot_machine_seven.jpg").toExternalForm()),true,anchorPane);
-        setUpScene.setLabel(labelProfit,"Gain : 0",Pos.CENTER_LEFT,39.0,686.0,63.0,455.0,new Font(33.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setUpScene.setLabel(labelToken,"Jetons : "+user.getNumberOfToken(),Pos.CENTER_LEFT,39.0,615.0,70.0,455.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setUpScene.setLabel(labelUserPseudo,"Joueur : "+user.getPseudo(),Pos.CENTER_LEFT,39.0,565.0,50.0,463.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setUpScene.setButton(returnMainMenuButton,"Quitter",Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
-        setUpScene.setCircle(circleRule,16.0,770.0,30.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,true,anchorPane);
-        setUpScene.setLabel(labelRule,"?",Pos.CENTER,754.0,15.0,23.0,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setUpScene.setLabel(labelError,"Erreur : ",Pos.CENTER,280.0,488.0,50.0,401.0,new Font(20.0),Paint.valueOf("RED"),false,anchorPane);
-        setUpScene.setTextArea(textRule,200.0,46.0,376.0,560.0,false,false,anchorPane);
+        setupScene.setButton(startingGameButton,"Actionner", Pos.CENTER,504.0,615.0,134.0,256.0,new Font(25),true,anchorPane);
+        setupScene.setImageView(pictureSlot1,130.0,300.0,150.0,151.0,new Image(getClass().getResource("image/slot_machine_seven.jpg").toExternalForm()),true,anchorPane);
+        setupScene.setImageView(pictureSlot2,330,300.0,150.0,151.0,new Image(getClass().getResource("image/slot_machine_seven.jpg").toExternalForm()),true,anchorPane);
+        setupScene.setImageView(pictureSlot3,530.0,300.0,150.0,151.0,new Image(getClass().getResource("image/slot_machine_seven.jpg").toExternalForm()),true,anchorPane);
+        setupScene.setLabel(labelProfit,"Gain : 0",Pos.CENTER_LEFT,39.0,686.0,63.0,455.0,new Font(33.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelToken,"Jetons : "+user.getNumberOfToken(),Pos.CENTER_LEFT,39.0,615.0,70.0,455.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelUserPseudo,"Joueur : "+user.getPseudo(),Pos.CENTER_LEFT,39.0,565.0,50.0,463.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setButton(returnMainMenuButton,"Quitter",Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
 
+        setupScene.setCircle(circleSetting,18,670,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("BLUE"),StrokeType.INSIDE,1.0,true,anchorPane);
+
+        setupScene.setRectangle(rectangleLog,700.0,15.0,30.0,50.0,10.0,10.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),1.0,StrokeType.INSIDE,true,anchorPane);
+        setupScene.setLabel(labelLogParty,"Log",Pos.CENTER,700.0,15.0,23.0,50.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setTextArea(textLog,200,46.0,500.0,500.0,false,false,anchorPane);
+
+        setupScene.setCircle(circleRule,16.0,770.0,30.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,true,anchorPane);
+        setupScene.setLabel(labelRule,"?",Pos.CENTER,754.0,15.0,23.0,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelError,"Erreur : ",Pos.CENTER,280.0,488.0,50.0,401.0,new Font(20.0),Paint.valueOf("RED"),false,anchorPane);
+        setupScene.setTextArea(textRule,200.0,46.0,376.0,560.0,false,false,anchorPane);
 
         soundPayout = java.applet.Applet.newAudioClip(getClass().getResource("sound/slotMachinePayoutSound.wav"));
 
@@ -110,21 +123,11 @@ public class SlotMachineMenuController {
         soundSlot.setVolume(soundVolume);
         soundSlot.setCycleCount(Transition.INDEFINITE);
 
-        startingGameButton.setOnMouseClicked((event)->{
-            startingGame();
-        });
-
-        labelRule.setOnMouseEntered((event)->{
-            showRule();
-        });
-
-        labelRule.setOnMouseExited((event)->{
-            hideRule();
-        });
-
-        returnMainMenuButton.setOnMouseClicked((event)->{
-            returnMainMenu();
-        });
+        startingGameButton.setOnMouseClicked((event)-> startingGame());
+        labelRule.setOnMouseEntered((event)-> showRule());
+        labelRule.setOnMouseExited((event)-> hideRule());
+        returnMainMenuButton.setOnMouseClicked((event)-> returnMainMenu());
+        circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
 
         setRule();
 
@@ -335,10 +338,16 @@ public class SlotMachineMenuController {
         timeline.play();
     }
 
-    private void setSoundVolume(double newSoundVolume){
+    public void setSoundVolume(double newSoundVolume){
         if(newSoundVolume >= 0 && newSoundVolume <= 1.0){
             this.soundVolume = newSoundVolume;
+            soundSlot.setVolume(soundVolume);
         }
+    }
+
+    private void goToMenuSetting(){
+        interfaceMenuSetting = new InterfaceMenuSetting(this,soundVolume);
+        interfaceMenuSetting.setting();
     }
 }
 

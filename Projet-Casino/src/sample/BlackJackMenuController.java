@@ -19,6 +19,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
@@ -29,11 +30,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlackJackMenuController {
+public class BlackJackMenuController implements InterfaceMenu{
 
     private final int BET_MIN = 2;
     private final int BET_MAX = 100;
@@ -53,6 +53,7 @@ public class BlackJackMenuController {
     private final AnchorPane anchorPane = new AnchorPane();
     private final SetupScene setupScene = new SetupScene();
     private final User user;
+    private InterfaceMenuSetting interfaceMenuSetting;
 
     private final BlackJack blackJack;
 
@@ -64,7 +65,7 @@ public class BlackJackMenuController {
     private boolean split = false;
     private boolean stand = false;
     private int indexCurrentHand = 1;
-    private int valueTokenUserBegin;
+    private final int valueTokenUserBegin;
 
     private final List<Shape> token1 = new ArrayList<>();
     private final List<Shape> token2 = new ArrayList<>();
@@ -104,6 +105,7 @@ public class BlackJackMenuController {
     private final Button newPartyButton = new Button();
 
     private final Circle circleRule = new Circle();
+    private Circle circleSetting = new Circle();
 
     public BlackJackMenuController(User user,Stage stage, double soundVolume){
         this.stage = stage;
@@ -145,6 +147,8 @@ public class BlackJackMenuController {
         initToken1();
         initToken2();
 
+        setupScene.setCircle(circleSetting,18,670,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("GREEN"),StrokeType.INSIDE,1.0,true,anchorPane);
+
         setupScene.setRectangle(rectangleLog,700.0,15.0,30.0,50.0,10.0,10.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),1.0,StrokeType.INSIDE,true,anchorPane);
         setupScene.setLabel(labelLogParty,"Log",Pos.CENTER,700.0,15.0,23.0,50.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setTextArea(textLog,200,46.0,500.0,500.0,false,false,anchorPane);
@@ -165,27 +169,17 @@ public class BlackJackMenuController {
         tokenSound.setVolume(soundVolume);
 
         returnMainMenuButton.setOnMouseClicked((event) -> returnMainMenu());
-
         validBetButton.setOnMouseClicked((event)->  validBet());
-
         actionSplitButton.setOnMouseClicked((event)-> actionSplit());
-
         actionStandButton.setOnMouseClicked((event)-> actionStand());
-
         actionHitButton.setOnMouseClicked((event)-> actionHit());
-
         actionDoubleButton.setOnMouseClicked((event)-> actionDouble());
-
         actionInsuranceButton.setOnMouseClicked((event)-> actionInsurance());
-
         actionSurrenderButton.setOnMouseClicked((event)-> actionSurrender());
-
         newPartyButton.setOnMouseClicked((event)->  newGame());
-
         labelLogParty.setOnMouseEntered((event)-> showLog());
-
         labelLogParty.setOnMouseExited((event)->  hideLog());
-
+        circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
         blackJack.addUserBet(user);
 
         root.getChildren().add(anchorPane);
@@ -389,33 +383,9 @@ public class BlackJackMenuController {
     private void startingGame() {
         currentPositionXUserFirstHand = ORIGIN_X_FIRST_HAND;
         currentPositionXCroupier = ORIGIN_X_Croupier;
-        //ImageView card;
 
         blackJack.gameBegin();
         animationCardBegin();
-
-        /*card = chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(0).getRank());
-        setLog("Le joueur "+user.getPseudo()+" pioche la carte "+blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber()+" de "+blackJack.getListOfUserHand().get(1).getHand().get(0).getRank());
-        userFirstHand.add(card);
-        setupCard(card, currentPositionXUserFirstHand, ORIGIN_Y_USER);
-        labelValueUserFirstHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)));
-        labelValueUserFirstHand.setVisible(true);
-        currentPositionXUserFirstHand += 25;
-
-        card = chooseCard(blackJack.getListOfUserHand().get(0).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(0).getHand().get(0).getRank());
-        setLog("Le croupier pioche la carte "+blackJack.getListOfUserHand().get(0).getHand().get(0).getNumber()+" de "+blackJack.getListOfUserHand().get(0).getHand().get(0).getRank());
-        croupierHand.add(card);
-        setupCard(card, currentPositionXCroupier, ORIGIN_Y_CROUPIER);
-        labelValueCroupierHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(0)));
-        labelValueCroupierHand.setVisible(true);
-        currentPositionXCroupier += 25;
-
-        card = chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(1).getRank());
-        setLog("Le joueur "+user.getPseudo()+" pioche la carte "+blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber()+" de "+blackJack.getListOfUserHand().get(1).getHand().get(1).getRank()+"\n");
-        userFirstHand.add(card);
-        setupCard(card, currentPositionXUserFirstHand, ORIGIN_Y_USER);
-        labelValueUserFirstHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)));
-        currentPositionXUserFirstHand += 25;*/
 
         showAction();
     }
@@ -801,9 +771,16 @@ public class BlackJackMenuController {
         timeline.play();
     }
 
-    private void setSoundVolume(double newSoundVolume){
+    public void setSoundVolume(double newSoundVolume){
         if(newSoundVolume >= 0 && newSoundVolume <= 1.0){
             this.soundVolume = newSoundVolume;
+            tokenSound.setVolume(soundVolume);
+            cardSound.setVolume(soundVolume);
         }
+    }
+
+    private void goToMenuSetting(){
+        interfaceMenuSetting = new InterfaceMenuSetting(this,soundVolume);
+        interfaceMenuSetting.setting();
     }
 }

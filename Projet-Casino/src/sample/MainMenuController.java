@@ -7,12 +7,16 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;;
 
 
-public class MainMenuController {
+public class MainMenuController implements InterfaceMenu{
 
     private BorderPane root = new BorderPane();
     private Scene scene;
@@ -20,6 +24,7 @@ public class MainMenuController {
     private AnchorPane anchorPane = new AnchorPane();
     private SetupScene setupScene = new SetupScene();
     private User user;
+    private InterfaceMenuSetting interfaceMenuSetting;
 
     private Button logoutButton = new Button();
     private Button informationMenuButton = new Button();
@@ -29,6 +34,8 @@ public class MainMenuController {
     private ImageView pictureSlotMachine = new ImageView();
     private ImageView pictureRoulette = new ImageView();
     private ImageView pictureShop = new ImageView();
+
+    private Circle circleSetting = new Circle();
 
     private double soundVolume;
 
@@ -53,30 +60,15 @@ public class MainMenuController {
         setupScene.setButton(logoutButton,"Déconnexion", Pos.CENTER,20,20,100,150,new Font(10),true,anchorPane);
         setupScene.setButton(informationMenuButton,"Informations",Pos.CENTER,200,20,100,150,new Font(10),true,anchorPane);
 
+        setupScene.setCircle(circleSetting,18,670,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())), Paint.valueOf("GREEN"), StrokeType.INSIDE,1.0,true,anchorPane);
 
-        logoutButton.setOnMouseClicked((event)->{
-            goToConnexionMenu();
-        });
-
-        informationMenuButton.setOnMouseClicked((event)->{
-            goToInformationMenu();
-        });
-
-        pictureShop.setOnMouseClicked((event)->{
-            goToShopMenu();
-        });
-
-        pictureBlackJackMenu.setOnMouseClicked((event)->{
-            goToBlackJackMenu();
-        });
-
-        pictureSlotMachine.setOnMouseClicked((event)->{
-            goToSlotMachineMenu();
-        });
-
-        pictureRoulette.setOnMouseClicked((event)->{
-            goToRouletteMenu();
-        });
+        logoutButton.setOnMouseClicked((event)-> goToConnexionMenu());
+        informationMenuButton.setOnMouseClicked((event)-> goToInformationMenu());
+        pictureShop.setOnMouseClicked((event)-> goToShopMenu());
+        pictureBlackJackMenu.setOnMouseClicked((event)-> goToBlackJackMenu());
+        pictureSlotMachine.setOnMouseClicked((event)-> goToSlotMachineMenu());
+        pictureRoulette.setOnMouseClicked((event)-> goToRouletteMenu());
+        circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
 
         root.getChildren().add(anchorPane);
         stage.show();
@@ -100,7 +92,7 @@ public class MainMenuController {
     }
 
     private void goToSlotMachineMenu(){
-        SlotMachineMenuController slotMachineMenuController = new SlotMachineMenuController(user,stage);
+        SlotMachineMenuController slotMachineMenuController = new SlotMachineMenuController(user,stage,soundVolume);
         slotMachineMenuController.setting();
     }
 
@@ -109,9 +101,14 @@ public class MainMenuController {
         rouletteMenuController.setting();
     }
 
-    private void setSoundVolume(double newSoundVolume){
-        if(newSoundVolume <= 1.0 && newSoundVolume >= 0){
+    public void setSoundVolume(double newSoundVolume){
+        if(newSoundVolume >= 0 && newSoundVolume <= 1.0){
             this.soundVolume = newSoundVolume;
         }
+    }
+
+    private void goToMenuSetting(){
+        interfaceMenuSetting = new InterfaceMenuSetting(this,soundVolume);
+        interfaceMenuSetting.setting();
     }
 }

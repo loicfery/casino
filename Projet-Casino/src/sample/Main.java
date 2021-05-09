@@ -13,7 +13,7 @@ public class Main extends Application {
         User user = new User("loic","loic@email.com","ADMIN");
         user.addToken(50);
 
-        SlotMachineMenuController slotMachineMenuController = new SlotMachineMenuController(user,stage);
+        SlotMachineMenuController slotMachineMenuController = new SlotMachineMenuController(user,stage,0.5);
         slotMachineMenuController.setting();
 
         //ConnexionMenuController controller = new ConnexionMenuController(stage);
