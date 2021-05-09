@@ -783,4 +783,5 @@ public class BlackJackMenuController implements InterfaceMenu{
         interfaceMenuSetting = new InterfaceMenuSetting(this,soundVolume);
         interfaceMenuSetting.setting();
     }
+
 }

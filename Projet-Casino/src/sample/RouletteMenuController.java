@@ -14,6 +14,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -65,6 +67,8 @@ public class RouletteMenuController implements InterfaceMenu{
     private List<Rectangle> listOfRectangleGameBoard = new ArrayList<>();
     private List<Label> listOfLabelGameBoard = new ArrayList<>();
     private double soundVolume;
+
+    private MediaPlayer tokenSound;
 
     private ImageView roulette = new ImageView();
 
@@ -136,6 +140,9 @@ public class RouletteMenuController implements InterfaceMenu{
         setupScene.setCircle(circleRule,16.0,1070.0,30.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,true,anchorPane);
         setupScene.setLabel(labelRule,"?",Pos.CENTER,1055.0,15.0,23,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setTextArea(textRule,360,46.0,600.0,700.0,false,false,anchorPane);
+
+        tokenSound = createSoundToken();
+        tokenSound.setVolume(soundVolume);
 
         anchorPane.setOnMouseClicked((event)-> choosePositionToken(event));
         validBetTokenButton.setOnMouseClicked((event)-> validBetToken());
@@ -1003,6 +1010,8 @@ public class RouletteMenuController implements InterfaceMenu{
                     listOfTokenUsed.get(tokenUsed).setValueOfBet(textBetToken.getText());
                     listLabelToken.get(tokenUsed).setText(textBetToken.getText());
                     tokenUsed++;
+                    tokenSound.play();
+                    tokenSound = createSoundToken();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -1229,11 +1238,18 @@ public class RouletteMenuController implements InterfaceMenu{
     public void setSoundVolume(double newSoundVolume){
         if(newSoundVolume <= 1.0 && newSoundVolume >= 0){
             soundVolume = newSoundVolume;
+            tokenSound.setVolume(soundVolume);
         }
     }
 
     private void goToMenuSetting(){
         interfaceMenuSetting = new InterfaceMenuSetting(this,soundVolume);
         interfaceMenuSetting.setting();
+    }
+
+    private MediaPlayer createSoundToken(){
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media(getClass().getResource("sound/tokenSound.mp3").toExternalForm()));
+        mediaPlayer.setVolume(soundVolume);
+        return mediaPlayer;
     }
 }

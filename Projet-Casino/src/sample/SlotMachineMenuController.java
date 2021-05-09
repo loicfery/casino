@@ -119,9 +119,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
 
         soundPayout = java.applet.Applet.newAudioClip(getClass().getResource("sound/slotMachinePayoutSound.wav"));
 
-        soundSlot = new MediaPlayer(new Media(getClass().getResource("sound/slotMachineSlotsSound.mp3").toExternalForm()));
-        soundSlot.setVolume(soundVolume);
-        soundSlot.setCycleCount(Transition.INDEFINITE);
+        createSoundSlot();
 
         startingGameButton.setOnMouseClicked((event)-> startingGame());
         labelRule.setOnMouseEntered((event)-> showRule());
@@ -200,7 +198,6 @@ public class SlotMachineMenuController implements InterfaceMenu{
             slotMachine.useSlotMachine();
 
             startingGameButton.setDisable(true);
-            soundSlot.play();
             animationSlot(slotMachine.getNbImage().get(0) + 1, slotMachine.getNbImage().get(1) + 1, slotMachine.getNbImage().get(2) + 1);
         }
         else{
@@ -302,7 +299,9 @@ public class SlotMachineMenuController implements InterfaceMenu{
         Duration pause = Duration.seconds(0.3);
         int symbol = 1;
 
-        for(int index = 0; index < 6; index ++) {
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> soundSlot.play()));
+
+        for(int index = 0; index < 10; index ++) {
             int finalSymbol = symbol;
             KeyFrame keyFrame = new KeyFrame(timePoint, e -> switchPicture(finalSymbol,1));
             timeline.getKeyFrames().add(keyFrame);
@@ -318,11 +317,11 @@ public class SlotMachineMenuController implements InterfaceMenu{
             symbol = (symbol + 1) % 10;
         }
 
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> soundSlot.pause()));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> soundSlot.setStartTime(Duration.ZERO)));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> switchPicture(symbolOne,1)));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> switchPicture(symbolTwo,2)));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> switchPicture(symbolThree,3)));
+
+        timePoint = timePoint.add(Duration.seconds(1));
 
         int gain = slotMachine.verifySlot();
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelProfit.setText("Gain : " +gain)));
@@ -333,6 +332,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> slotMachine.reset()));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelToken.setText("Jetons : "+user.getNumberOfToken())));
 
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> createSoundSlot()));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e ->  startingGameButton.setDisable(false)));
 
         timeline.play();
@@ -348,6 +348,11 @@ public class SlotMachineMenuController implements InterfaceMenu{
     private void goToMenuSetting(){
         interfaceMenuSetting = new InterfaceMenuSetting(this,soundVolume);
         interfaceMenuSetting.setting();
+    }
+
+    private void createSoundSlot(){
+        soundSlot = new MediaPlayer(new Media(getClass().getResource("sound/slotMachineSlotsSound.mp3").toExternalForm()));
+        soundSlot.setVolume(soundVolume);
     }
 }
 
