@@ -18,37 +18,37 @@ import javafx.scene.image.ImageView;;
 
 public class MainMenuController implements InterfaceMenu{
 
-    private BorderPane root = new BorderPane();
-    private Scene scene;
-    private Stage stage;
-    private AnchorPane anchorPane = new AnchorPane();
-    private SetupScene setupScene = new SetupScene();
-    private User user;
-    private InterfaceMenuSetting interfaceMenuSetting;
+    private final BorderPane root = new BorderPane();
+    private final Stage stage;
+    private final AnchorPane anchorPane = new AnchorPane();
+    private final SetupScene setupScene = new SetupScene();
+    private final User user;
 
-    private Button logoutButton = new Button();
-    private Button informationMenuButton = new Button();
-    private Button shopButton = new Button();
+    private final Button logoutButton = new Button();
+    private final Button informationMenuButton = new Button();
+    private final Button shopButton = new Button();
 
-    private ImageView pictureBlackJackMenu = new ImageView();
-    private ImageView pictureSlotMachine = new ImageView();
-    private ImageView pictureRoulette = new ImageView();
-    private ImageView pictureShop = new ImageView();
+    private final ImageView pictureBlackJackMenu = new ImageView();
+    private final ImageView pictureSlotMachine = new ImageView();
+    private final ImageView pictureRoulette = new ImageView();
+    private final ImageView pictureShop = new ImageView();
 
-    private Circle circleSetting = new Circle();
+    private final Circle circleSetting = new Circle();
 
     private double soundVolume;
+    private boolean backgroundAnimation;
 
 
-    public MainMenuController(Stage stage,User user, double soundVolume){
+    public MainMenuController(Stage stage,User user, double soundVolume, boolean backgroundAnimation){
         this.stage = stage;
         this.user = user;
         this.soundVolume = soundVolume;
+        this.backgroundAnimation = backgroundAnimation;
     }
 
     public void setting(){
         stage.setTitle("Menu principale");
-        scene = new Scene(root,800,800);
+        Scene scene = new Scene(root, 800, 800);
         scene.getStylesheets().add(getClass().getResource("mainMenu.css").toExternalForm());
         stage.setScene(scene);
 
@@ -87,17 +87,17 @@ public class MainMenuController implements InterfaceMenu{
     }
 
     private void goToBlackJackMenu(){
-        BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage,soundVolume);
+        BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage,soundVolume,backgroundAnimation);
         blackJackMenuController.setting();
     }
 
     private void goToSlotMachineMenu(){
-        SlotMachineMenuController slotMachineMenuController = new SlotMachineMenuController(user,stage,soundVolume);
+        SlotMachineMenuController slotMachineMenuController = new SlotMachineMenuController(user,stage,soundVolume,backgroundAnimation);
         slotMachineMenuController.setting();
     }
 
     private void goToRouletteMenu(){
-        RouletteMenuController rouletteMenuController = new RouletteMenuController(user,stage,soundVolume);
+        RouletteMenuController rouletteMenuController = new RouletteMenuController(user,stage,soundVolume,backgroundAnimation);
         rouletteMenuController.setting();
     }
 
@@ -107,8 +107,12 @@ public class MainMenuController implements InterfaceMenu{
         }
     }
 
+    public void setBackgroundAnimation(boolean newBackgroundAnimation){
+        backgroundAnimation = newBackgroundAnimation;
+    }
+
     private void goToMenuSetting(){
-        interfaceMenuSetting = new InterfaceMenuSetting(this,soundVolume);
+        InterfaceMenuSetting interfaceMenuSetting = new InterfaceMenuSetting(this, soundVolume,backgroundAnimation);
         interfaceMenuSetting.setting();
     }
 }

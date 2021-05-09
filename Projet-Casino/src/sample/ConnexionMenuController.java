@@ -20,47 +20,47 @@ import javafx.scene.control.Button;
 
 public class ConnexionMenuController implements InterfaceMenu{
 
-    private BorderPane root = new BorderPane();
-    private Scene scene;
-    private Stage stage;
-    private AnchorPane anchorPane = new AnchorPane();
-    private SetupScene setupScene = new SetupScene();
+    private final BorderPane root = new BorderPane();
+    private final Stage stage;
+    private final AnchorPane anchorPane = new AnchorPane();
+    private final SetupScene setupScene = new SetupScene();
     private User user;
-    private InterfaceMenuSetting interfaceMenuSetting;
 
     private double soundVolume;
+    private boolean backgroundAnimation;
 
-    private Label labelTitle = new Label();
-    private Label labelEmail = new Label();
-    private Label labelPassword = new Label();
-    private Label labelNewMail = new Label();
-    private Label labelNewPassword = new Label();
-    private Label labelNewPseudo = new Label();
-    private Label labelError = new Label();
+    private final Label labelTitle = new Label();
+    private final Label labelEmail = new Label();
+    private final Label labelPassword = new Label();
+    private final Label labelNewMail = new Label();
+    private final Label labelNewPassword = new Label();
+    private final Label labelNewPseudo = new Label();
+    private final Label labelError = new Label();
 
-    private TextField textEmail = new TextField();
-    private TextField textPassword = new TextField();
-    private TextField textNewEmail = new TextField();
-    private TextField textNewPassword = new TextField();
-    private TextField textNewPseudo = new TextField();
+    private final TextField textEmail = new TextField();
+    private final TextField textPassword = new TextField();
+    private final TextField textNewEmail = new TextField();
+    private final TextField textNewPassword = new TextField();
+    private final TextField textNewPseudo = new TextField();
 
-    private Button buttonLogin = new Button();
-    private Button buttonNewAccount = new Button();
-    private Button buttonInscription = new Button();
-    private Button buttonLoginMenuReturn = new Button();
+    private final Button buttonLogin = new Button();
+    private final Button buttonNewAccount = new Button();
+    private final Button buttonInscription = new Button();
+    private final Button buttonLoginMenuReturn = new Button();
 
-    private Circle circleSetting = new Circle();
+    private final Circle circleSetting = new Circle();
 
 
     public ConnexionMenuController(Stage stage){
         this.stage = stage;
         this.soundVolume = 0.5;
+        this.backgroundAnimation = true;
     }
 
     /** Méthode qui initialise l'interface de connexion **/
     public void setting(){
         stage.setTitle("Menu de connexion");
-        scene = new Scene(root,500,500);
+        Scene scene = new Scene(root, 500, 500);
         scene.getStylesheets().add(getClass().getResource("connexionMenu.css").toExternalForm());
         stage.setScene(scene);
 
@@ -197,7 +197,7 @@ public class ConnexionMenuController implements InterfaceMenu{
         user = new User("Loic","loic-fery@orange.fr","ADMIN"); //pour tester
         user.addToken(50); // pour tester
 
-        MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume);
+        MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume,backgroundAnimation);
         mainMenuController.setting();
     }
 
@@ -207,8 +207,12 @@ public class ConnexionMenuController implements InterfaceMenu{
         }
     }
 
+    public void setBackgroundAnimation(boolean newBackgroundAnimation){
+        backgroundAnimation = newBackgroundAnimation;
+    }
+
     private void goToMenuSetting(){
-        interfaceMenuSetting = new InterfaceMenuSetting(this,soundVolume);
+        InterfaceMenuSetting interfaceMenuSetting = new InterfaceMenuSetting(this, soundVolume,backgroundAnimation);
         interfaceMenuSetting.setting();
     }
 }

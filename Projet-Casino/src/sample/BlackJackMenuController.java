@@ -35,11 +35,8 @@ import java.util.List;
 
 public class BlackJackMenuController implements InterfaceMenu{
 
-    private final int BET_MIN = 2;
-    private final int BET_MAX = 100;
     private final int ORIGIN_X_Croupier = 300;
     private final int ORIGIN_X_FIRST_HAND = 300;
-    private final int ORIGIN_X_SECOND_HAND = 523;
     private final int ORIGIN_Y_USER = 380;
     private final int ORIGIN_Y_CROUPIER = 25;
 
@@ -47,13 +44,11 @@ public class BlackJackMenuController implements InterfaceMenu{
     private int currentPositionXUserSecondHand;
     private int currentPositionXCroupier;
 
-    private BorderPane  root = new BorderPane();
-    private  Scene scene;
+    private final BorderPane  root = new BorderPane();
     private final Stage stage;
     private final AnchorPane anchorPane = new AnchorPane();
     private final SetupScene setupScene = new SetupScene();
     private final User user;
-    private InterfaceMenuSetting interfaceMenuSetting;
 
     private final BlackJack blackJack;
 
@@ -61,6 +56,7 @@ public class BlackJackMenuController implements InterfaceMenu{
     private MediaPlayer tokenSound;
 
     private double soundVolume;
+    private boolean backgroundAnimation;
 
     private boolean split = false;
     private boolean stand = false;
@@ -105,13 +101,14 @@ public class BlackJackMenuController implements InterfaceMenu{
     private final Button newPartyButton = new Button();
 
     private final Circle circleRule = new Circle();
-    private Circle circleSetting = new Circle();
+    private final Circle circleSetting = new Circle();
 
-    public BlackJackMenuController(User user,Stage stage, double soundVolume){
+    public BlackJackMenuController(User user,Stage stage, double soundVolume, boolean backgroundAnimation){
         this.stage = stage;
         this.user = user;
         this.soundVolume = soundVolume;
         this.valueTokenUserBegin = user.getNumberOfToken();
+        this.backgroundAnimation = backgroundAnimation;
 
         blackJack = new BlackJack(user);
     }
@@ -119,7 +116,7 @@ public class BlackJackMenuController implements InterfaceMenu{
     /** Méthode qui initialise l'interface du black jack **/
     public void setting(){
         stage.setTitle("Menu Black Jack");
-        scene = new Scene(root,800,800);
+        Scene scene = new Scene(root, 800, 800);
         scene.getStylesheets().add(getClass().getResource("blackJackMenu.css").toExternalForm());
         stage.setScene(scene);
 
@@ -319,9 +316,9 @@ public class BlackJackMenuController implements InterfaceMenu{
     /**
      * Méthode pour modifier la visibilité du second jetons (en cas de split)
      **/
-    private void setTokenVisible(List<Shape> token, boolean visible) {
+    private void setTokenVisible(List<Shape> token) {
         for (Shape shape : token) {
-            shape.setVisible(visible);
+            shape.setVisible(true);
         }
     }
 
@@ -336,6 +333,8 @@ public class BlackJackMenuController implements InterfaceMenu{
             try {
                 int valueOfBet = Integer.parseInt(textBetUser.getText());
 
+                int BET_MIN = 2;
+                int BET_MAX = 100;
                 if (valueOfBet < BET_MIN || valueOfBet > BET_MAX) {
                     labelError.setText("Vous ne pouvez miser qu'entre 2 et 100 jetons");
                     labelError.setVisible(true);
@@ -362,7 +361,7 @@ public class BlackJackMenuController implements InterfaceMenu{
 
                         setLog("Le joueur "+user.getPseudo()+" mise "+valueOfBet+" jetons");
 
-                        setTokenVisible(token1,true);
+                        setTokenVisible(token1);
 
                         Timeline timeline = new Timeline();
                         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2),e -> startingGame()));
@@ -441,7 +440,7 @@ public class BlackJackMenuController implements InterfaceMenu{
      * Méthode pour quitter le jeu et retourner dans le menu principale
      **/
     private void returnMainMenu(){
-        MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume);
+        MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume,backgroundAnimation);
         mainMenuController.setting();
     }
 
@@ -524,7 +523,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         blackJack.actionSplit();
 
         zoneBetUser2.setVisible(true);
-        setTokenVisible(token2,true);
+        setTokenVisible(token2);
         if(valueToken % 2 != 0 ){
             labelToken2.setText(valueToken/2+"");
             labelToken1.setText((valueToken/2) + 1+"");
@@ -537,7 +536,7 @@ public class BlackJackMenuController implements InterfaceMenu{
 
         userSecondHand.add(userFirstHand.get(1));
         userFirstHand.remove(1);
-        currentPositionXUserSecondHand = ORIGIN_X_SECOND_HAND;
+        currentPositionXUserSecondHand = 523;
         setupCard(userSecondHand.get(0), currentPositionXUserSecondHand, ORIGIN_Y_USER);
         currentPositionXUserSecondHand += 25;
         currentPositionXUserFirstHand -= 25;
@@ -726,7 +725,7 @@ public class BlackJackMenuController implements InterfaceMenu{
     /** Méthode pour une nouvelle partie de black jack **/
     private void newGame(){
         blackJack.reset();
-       BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage,soundVolume);
+       BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage,soundVolume,backgroundAnimation);
        blackJackMenuController.setting();
     }
 
@@ -779,9 +778,12 @@ public class BlackJackMenuController implements InterfaceMenu{
         }
     }
 
-    private void goToMenuSetting(){
-        interfaceMenuSetting = new InterfaceMenuSetting(this,soundVolume);
-        interfaceMenuSetting.setting();
+    public void setBackgroundAnimation(boolean newBackgroundAnimation){
+        backgroundAnimation = newBackgroundAnimation;
     }
 
+    private void goToMenuSetting(){
+        InterfaceMenuSetting interfaceMenuSetting = new InterfaceMenuSetting(this, soundVolume,backgroundAnimation);
+        interfaceMenuSetting.setting();
+    }
 }

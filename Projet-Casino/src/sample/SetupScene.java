@@ -147,4 +147,14 @@ public class SetupScene {
         slider.setVisible(visible);
         anchorPane.getChildren().add(slider);
     }
+
+    public void setCheckBox(CheckBox checkBox, double layoutX, double layoutY, double prefHeight, double prefWidth, boolean selected,boolean visible, AnchorPane anchorPane){
+        checkBox.setLayoutX(layoutX);
+        checkBox.setLayoutY(layoutY);
+        checkBox.setPrefHeight(prefHeight);
+        checkBox.setPrefWidth(prefWidth);
+        checkBox.setSelected(selected);
+        checkBox.setVisible(visible);
+        anchorPane.getChildren().add(checkBox);
+    }
 }

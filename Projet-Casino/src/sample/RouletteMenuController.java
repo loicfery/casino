@@ -34,79 +34,72 @@ import java.util.List;
 
 public class RouletteMenuController implements InterfaceMenu{
 
-    private final int ORIGIN_X_1 = 320;
     private final int ORIGIN_Y_1 = 78;
-    private final int END_X_1 = 1046;
     private final int END_Y_1 = 222;
-    private final int ORIGIN_X_2 = 383;
-    private final int ORIGIN_Y_2 = 222;
-    private final int END_X_2 = 992;
-    private final int END_Y_2 = 318;
-    private final int RADIUS_TOKEN = 16;
     private final int ORIGIN_X_TOKEN = 336;
     private final int ORIGIN_Y_TOKEN = 262;
 
     private int tokenUsed = 0;
     private int indexTokenRemove = 0;
     private boolean startingGame = false;
-    private List<Circle> listOfCircleToken = new ArrayList<>();
-    private List<Label> listLabelToken = new ArrayList<>();
-    private List<Case> listOfCase = new ArrayList<>();
-    private List<InformationTokenBet> listOfTokenUsed = new ArrayList<>();
-    private List<Integer> listPositionXCaseRoulette = new ArrayList<>();
-    private List<Integer> listPositionYCaseRoulette = new ArrayList<>();
+    private final List<Circle> listOfCircleToken = new ArrayList<>();
+    private final List<Label> listLabelToken = new ArrayList<>();
+    private final List<Case> listOfCase = new ArrayList<>();
+    private final List<InformationTokenBet> listOfTokenUsed = new ArrayList<>();
+    private final List<Integer> listPositionXCaseRoulette = new ArrayList<>();
+    private final List<Integer> listPositionYCaseRoulette = new ArrayList<>();
 
-    private BorderPane root = new BorderPane();
-    private Scene scene;
-    private Stage stage;
-    private AnchorPane anchorPane = new AnchorPane();
-    private SetupScene setupScene = new SetupScene();
-    private User user;
-    private InterfaceMenuSetting interfaceMenuSetting;
+    private final BorderPane root = new BorderPane();
+    private final Stage stage;
+    private final AnchorPane anchorPane = new AnchorPane();
+    private final SetupScene setupScene = new SetupScene();
+    private final User user;
 
-    private List<Rectangle> listOfRectangleGameBoard = new ArrayList<>();
-    private List<Label> listOfLabelGameBoard = new ArrayList<>();
+    private final List<Rectangle> listOfRectangleGameBoard = new ArrayList<>();
+    private final List<Label> listOfLabelGameBoard = new ArrayList<>();
     private double soundVolume;
+    private boolean backgroundAnimation;
 
     private MediaPlayer tokenSound;
 
-    private ImageView roulette = new ImageView();
+    private final ImageView roulette = new ImageView();
 
-    private Label labelProfit = new Label();
-    private Label labelTokenUser = new Label();
-    private Label labelPseudo = new Label();
-    private Label labelInformationBetToken = new Label();
-    private Label labelError = new Label();
-    private Label labelRule = new Label();
-    private Label labelLogParty = new Label();
+    private final Label labelProfit = new Label();
+    private final Label labelTokenUser = new Label();
+    private final Label labelPseudo = new Label();
+    private final Label labelInformationBetToken = new Label();
+    private final Label labelError = new Label();
+    private final Label labelRule = new Label();
+    private final Label labelLogParty = new Label();
 
-    private Button modifyBetTokenButton = new Button();
-    private Button validBetTokenButton = new Button();
-    private Button startingGameButton = new Button();
-    private Button returnMainMenuButton = new Button();
+    private final Button modifyBetTokenButton = new Button();
+    private final Button validBetTokenButton = new Button();
+    private final Button startingGameButton = new Button();
+    private final Button returnMainMenuButton = new Button();
 
-    private TextField textBetToken = new TextField();
+    private final TextField textBetToken = new TextField();
 
-    private Circle circleBallRoulette = new Circle();
-    private Circle circleRule = new Circle();
-    private Circle circleSetting = new Circle();
+    private final Circle circleBallRoulette = new Circle();
+    private final Circle circleRule = new Circle();
+    private  Circle circleSetting = new Circle();
 
-    private Rectangle rectangleLog = new Rectangle();
+    private final Rectangle rectangleLog = new Rectangle();
 
-    private TextArea textRule = new TextArea();
-    private TextArea textLog = new TextArea();
+    private final TextArea textRule = new TextArea();
+    private final TextArea textLog = new TextArea();
 
 
-    public RouletteMenuController(User user, Stage stage, double soundVolume){
+    public RouletteMenuController(User user, Stage stage, double soundVolume, boolean backgroundAnimation){
         this.user = user;
         this.stage = stage;
         this.soundVolume = soundVolume;
+        this.backgroundAnimation = backgroundAnimation;
     }
 
     /** Méthode qui initialise l'interface de la roulette **/
     public void setting(){
         stage.setTitle("Roulette");
-        scene = new Scene(root,1100,800);
+        Scene scene = new Scene(root, 1100, 800);
         scene.getStylesheets().add(getClass().getResource("rouletteMenu.css").toExternalForm());
         stage.setScene(scene);
 
@@ -903,16 +896,18 @@ public class RouletteMenuController implements InterfaceMenu{
 
     /** Vérifie la zone pour poser un jeton **/
     private boolean isPositionMouseGood(int positionX, int positionY){
+        int ORIGIN_X_1 = 320;
+        int END_X_1 = 1046;
         if((positionX >= ORIGIN_X_1 && positionX <= END_X_1) && (positionY >= ORIGIN_Y_1 && positionY <= END_Y_1)){
             return true;
         }
         else{
-            if((positionX >= ORIGIN_X_2 && positionX <= END_X_2) && (positionY >= ORIGIN_Y_2 && positionY <= END_Y_2)){
-                return true;
-            }
-            else {
-                return false;
-            }
+            int ORIGIN_X_2 = 383;
+            int ORIGIN_Y_2 = 222;
+            int END_X_2 = 992;
+            int END_Y_2 = 318;
+
+            return (positionX >= ORIGIN_X_2 && positionX <= END_X_2) && (positionY >= ORIGIN_Y_2 && positionY <= END_Y_2);
         }
     }
 
@@ -946,6 +941,7 @@ public class RouletteMenuController implements InterfaceMenu{
 
     /** Méthode qui vérifie si un jeton est passé sur une case **/
     private boolean tokenInTheCase(Case cases, int positionXToken, int positionYToken){
+        int RADIUS_TOKEN = 16;
         for(int x = (positionXToken - RADIUS_TOKEN); x <= (positionXToken + RADIUS_TOKEN); x++){
             for(int y = (positionYToken - RADIUS_TOKEN); y <= (positionYToken + RADIUS_TOKEN); y++){
                 if((Math.pow(Math.abs(x - positionXToken),2) + Math.pow(Math.abs(y - positionYToken),2))  == Math.pow(RADIUS_TOKEN,2)){
@@ -1031,9 +1027,9 @@ public class RouletteMenuController implements InterfaceMenu{
 
     /** Méthode qui retourne la case qui possède une certaine valeur **/
     private Case getCase(String valueOfCase){
-        for(int index = 0; index < listOfCase.size(); index ++){
-            if(listOfCase.get(index).getValueCase().equals(valueOfCase)){
-                return listOfCase.get(index);
+        for (Case aCase : listOfCase) {
+            if (aCase.getValueCase().equals(valueOfCase)) {
+                return aCase;
             }
         }
         return null;
@@ -1179,10 +1175,6 @@ public class RouletteMenuController implements InterfaceMenu{
             labelError.setVisible(false);
             startingGameButton.setVisible(false);
 
-            //TranslateTransition translateTransition = new TranslateTransition();
-            // translateTransition.setDuration(Duration.seconds(1));
-            //translateTransition.setNode(circleBallRoulette);
-
             Circle circle = new Circle(140);
             PathTransition transition = new PathTransition();
             transition.setNode(circleBallRoulette);
@@ -1209,7 +1201,7 @@ public class RouletteMenuController implements InterfaceMenu{
      * Méthode pour quitter le jeu et retourner dans le menu principale
      **/
     private void returnMainMenu(){
-        MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume);
+        MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume,backgroundAnimation);
         mainMenuController.setting();
     }
 
@@ -1243,8 +1235,12 @@ public class RouletteMenuController implements InterfaceMenu{
     }
 
     private void goToMenuSetting(){
-        interfaceMenuSetting = new InterfaceMenuSetting(this,soundVolume);
+        InterfaceMenuSetting interfaceMenuSetting = new InterfaceMenuSetting(this, soundVolume,backgroundAnimation);
         interfaceMenuSetting.setting();
+    }
+
+    public void setBackgroundAnimation(boolean newBackgroundAnimation){
+        backgroundAnimation = newBackgroundAnimation;
     }
 
     private MediaPlayer createSoundToken(){

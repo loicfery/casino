@@ -33,55 +33,51 @@ import java.util.List;
 
 public class SlotMachineMenuController implements InterfaceMenu{
 
-    private BorderPane root = new BorderPane();
-    private Scene scene;
-    private Stage stage;
-    private AnchorPane anchorPane = new AnchorPane();
-    private SetupScene setupScene = new SetupScene();
-    private User user;
-    private InterfaceMenuSetting interfaceMenuSetting;
+    private final BorderPane root = new BorderPane();
+    private final Stage stage;
+    private final AnchorPane anchorPane = new AnchorPane();
+    private final SetupScene setupScene = new SetupScene();
+    private final User user;
 
-    private List<Rectangle> listOfRectangleAnimate = new ArrayList<>();
-    private List<FillTransition> listOfFillTransition = new ArrayList<>();
+    private final List<Rectangle> listOfRectangleAnimate = new ArrayList<>();
+    private final List<FillTransition> listOfFillTransition = new ArrayList<>();
+    private boolean backgroundAnimation;
 
     private AudioClip soundPayout;
     private MediaPlayer soundSlot;
     private double soundVolume;
 
-    private Rectangle cadreSlotMachine = new Rectangle();
-    private Rectangle rectangleLog = new Rectangle();
+    private final Rectangle cadreSlotMachine = new Rectangle();
+    private final Rectangle rectangleLog = new Rectangle();
 
-    private Circle circleRule = new Circle();
-    private Circle circleSetting = new Circle();
+    private final Circle circleRule = new Circle();
+    private final Circle circleSetting = new Circle();
 
-    private Polygon star1;
-    private Polygon star2;
-    private Polygon star3;
+    private final Button startingGameButton = new Button();
+    private final Button returnMainMenuButton = new Button();
 
-    private Button startingGameButton = new Button();
-    private Button returnMainMenuButton = new Button();
+    private final ImageView pictureSlot1 = new ImageView();
+    private final ImageView pictureSlot2 = new ImageView();
+    private final ImageView pictureSlot3 = new ImageView();
 
-    private ImageView pictureSlot1 = new ImageView();
-    private ImageView pictureSlot2 = new ImageView();
-    private ImageView pictureSlot3 = new ImageView();
+    private final Label labelToken = new Label();
+    private final Label labelProfit = new Label();
+    private final Label labelUserPseudo = new Label();
+    private final Label labelRule = new Label();
+    private final Label labelError = new Label();
+    private final Label labelLogParty = new Label();
 
-    private Label labelToken = new Label();
-    private Label labelProfit = new Label();
-    private Label labelUserPseudo = new Label();
-    private Label labelRule = new Label();
-    private Label labelError = new Label();
-    private Label labelLogParty = new Label();
-
-    private TextArea textRule = new TextArea();
-    private TextArea textLog = new TextArea();
+    private final TextArea textRule = new TextArea();
+    private final TextArea textLog = new TextArea();
 
     private final SlotMachine slotMachine;
 
 
-    public SlotMachineMenuController(User user, Stage stage, double soundVolume){
+    public SlotMachineMenuController(User user, Stage stage, double soundVolume, boolean backgroundAnimation){
         this.user = user;
         this.stage = stage;
         this.soundVolume = soundVolume;
+        this.backgroundAnimation = backgroundAnimation;
         slotMachine = new SlotMachine(user);
 
     }
@@ -89,13 +85,16 @@ public class SlotMachineMenuController implements InterfaceMenu{
     /** Méthode qui initialise le'interface de la machine à sous **/
     public void setting(){
         stage.setTitle("Machine à sous");
-        scene = new Scene(root,800,800);
+        Scene scene = new Scene(root, 800, 800);
         scene.getStylesheets().add(getClass().getResource("slotMachineMenu.css").toExternalForm());
         stage.setScene(scene);
 
         setupScene.setRectangle(cadreSlotMachine,105.0,275.0,199.0,601.0,5.0,5.0, Paint.valueOf("RED"),Paint.valueOf("RED"),1.0, StrokeType.INSIDE,true,anchorPane);
 
         animation();
+        if(!backgroundAnimation){
+            setAnimationState(false);
+        }
 
         setupScene.setButton(startingGameButton,"Actionner", Pos.CENTER,504.0,615.0,134.0,256.0,new Font(25),true,anchorPane);
         setupScene.setImageView(pictureSlot1,130.0,300.0,150.0,151.0,new Image(getClass().getResource("image/slot_machine_seven.jpg").toExternalForm()),true,anchorPane);
@@ -211,7 +210,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
     private void returnMainMenu(){
         soundSlot.stop();
         soundPayout.stop();
-        MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume);
+        MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume,backgroundAnimation);
         mainMenuController.setting();
     }
 
@@ -228,9 +227,9 @@ public class SlotMachineMenuController implements InterfaceMenu{
     private void animation(){
         int indexColor = 0;
         Color[] colors = {Color.YELLOW,Color.GREEN};
-        star1 = createStarAnimate(500,40,Paint.valueOf("YELLOW"));
-        star2 = createStarAnimate(300,40,Paint.valueOf("BLUE"));
-        star3 = createStarAnimate(100,40,Paint.valueOf("YELLOW"));
+        Polygon star1 = createStarAnimate(500, Paint.valueOf("YELLOW"));
+        Polygon star2 = createStarAnimate(300, Paint.valueOf("BLUE"));
+        Polygon star3 = createStarAnimate(100, Paint.valueOf("YELLOW"));
 
         listOfFillTransition.add(animate(star1,Color.BLUE,Color.YELLOW));
         listOfFillTransition.add(animate(star2,Color.YELLOW,Color.BLUE));
@@ -260,8 +259,8 @@ public class SlotMachineMenuController implements InterfaceMenu{
             layoutY += 52;
         }
 
-        for(int index = 0; index < listOfRectangleAnimate.size(); index ++){
-            listOfFillTransition.add(animate(listOfRectangleAnimate.get(index),colors[indexColor],colors[(indexColor + 1)%2]));
+        for (Rectangle rectangle : listOfRectangleAnimate) {
+            listOfFillTransition.add(animate(rectangle, colors[indexColor], colors[(indexColor + 1) % 2]));
             indexColor = (indexColor + 1) % 2;
         }
     }
@@ -280,14 +279,14 @@ public class SlotMachineMenuController implements InterfaceMenu{
         return rectangle;
     }
 
-    private Polygon createStarAnimate(double layoutX, double layoutY, Paint color){
+    private Polygon createStarAnimate(double layoutX, Paint color){
         Polygon star = new Polygon();
         star.setLayoutX(layoutX);
-        star.setLayoutY(layoutY);
+        star.setLayoutY(40);
         star.setFill(color);
         double[] points = new double[]{10,85,85,75,110,10,135,75,210,85,160,125,170,190,110,150,50,190,60,125};
-        for(int index = 0; index < points.length; index ++) {
-            star.getPoints().add(points[index]);
+        for (double point : points) {
+            star.getPoints().add(point);
         }
         anchorPane.getChildren().add(star);
         return star;
@@ -346,13 +345,36 @@ public class SlotMachineMenuController implements InterfaceMenu{
     }
 
     private void goToMenuSetting(){
-        interfaceMenuSetting = new InterfaceMenuSetting(this,soundVolume);
+        InterfaceMenuSetting interfaceMenuSetting = new InterfaceMenuSetting(this, soundVolume,backgroundAnimation);
         interfaceMenuSetting.setting();
+    }
+
+    public void setBackgroundAnimation(boolean newBackgroundAnimation){
+        backgroundAnimation = newBackgroundAnimation;
+        if(backgroundAnimation){
+            setAnimationState(true);
+        }
+        else {
+            setAnimationState(false);
+        }
     }
 
     private void createSoundSlot(){
         soundSlot = new MediaPlayer(new Media(getClass().getResource("sound/slotMachineSlotsSound.mp3").toExternalForm()));
         soundSlot.setVolume(soundVolume);
+    }
+
+    private void setAnimationState(boolean visible){
+        if(!visible) {
+            for (FillTransition fillTransition : listOfFillTransition) {
+                fillTransition.pause();
+            }
+        }
+        else {
+            for (FillTransition fillTransition : listOfFillTransition) {
+                fillTransition.play();
+            }
+        }
     }
 }
 
