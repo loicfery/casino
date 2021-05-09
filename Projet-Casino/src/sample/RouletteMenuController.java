@@ -85,6 +85,7 @@ public class RouletteMenuController implements InterfaceMenu{
     private final Circle circleSetting = new Circle();
 
     private final Rectangle rectangleLog = new Rectangle();
+    private final Rectangle rectangleInformationBet = new Rectangle();
 
     private final TextArea textRule = new TextArea();
     private final TextArea textLog = new TextArea();
@@ -116,6 +117,7 @@ public class RouletteMenuController implements InterfaceMenu{
         setupScene.setLabel(labelProfit,"Gain : 0",Pos.CENTER_LEFT,14.0,718.0,68.0,607.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelTokenUser,"Jetons : "+user.getNumberOfToken(),Pos.CENTER_LEFT,14.0,640.0,68.0,613.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelPseudo,"Joueur : "+user.getPseudo(),Pos.CENTER_LEFT,14.0,563.0,68.0,613.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setRectangle(rectangleInformationBet,212,368,202,387,5.0,5.0,Paint.valueOf("WHITE"),Paint.valueOf("WHITE"),1.0,StrokeType.INSIDE,false,anchorPane);
         setupScene.setLabel(labelInformationBetToken,"Information",Pos.CENTER,212.0,368.0,202.0,387.0,new Font(18),Paint.valueOf("BLACK"),false,anchorPane);
         setupScene.setButton(modifyBetTokenButton,"Miser",Pos.CENTER,295.0,696.0,68.0,216.0,new Font(20.0),false,anchorPane);
         setupScene.setButton(validBetTokenButton,"Miser",Pos.CENTER,295.0,696.0,68.0,216.0,new Font(20.0),false,anchorPane);
@@ -683,6 +685,7 @@ public class RouletteMenuController implements InterfaceMenu{
                     }
                     else {
                         labelInformationBetToken.setVisible(false);
+                        rectangleInformationBet.setVisible(false);
                         textBetToken.setVisible(false);
                         labelError.setText("Vous ne pouvez pas placer de jeton ici");
                         labelError.setVisible(true);
@@ -700,6 +703,7 @@ public class RouletteMenuController implements InterfaceMenu{
                     labelInformationBetToken.setText("Mise d'un jeton  \n" + "Cases sélectionnées : \n" + listOfTokenUsed.get(indexTokenRemove).getCases() + "\n Cases misées : \n" + getCasesBet(listOfTokenUsed.get(indexTokenRemove).getListOfCaseToken(), listOfTokenUsed.get(indexTokenRemove).getCircleToken())); //recup combinaison avec methode
                     textBetToken.setText(listOfTokenUsed.get(indexTokenRemove).getValueOfBet());
                     textBetToken.setVisible(true);
+                    rectangleInformationBet.setVisible(false);
                     labelInformationBetToken.setVisible(true);
                     modifyBetTokenButton.setVisible(true);
                 }
@@ -895,6 +899,7 @@ public class RouletteMenuController implements InterfaceMenu{
         else {
             listOfTokenUsed.add(informationTokenBet);
         }
+        rectangleInformationBet.setVisible(true);
         labelInformationBetToken.setVisible(true);
         validBetTokenButton.setVisible(true);
         textBetToken.setText("0");
@@ -951,6 +956,7 @@ public class RouletteMenuController implements InterfaceMenu{
 
         modifyBetTokenButton.setVisible(false);
         textBetToken.setVisible(false);
+        rectangleInformationBet.setVisible(false);
         labelInformationBetToken.setVisible(false);
         startingGameButton.setVisible(true);
     }
@@ -958,28 +964,41 @@ public class RouletteMenuController implements InterfaceMenu{
     /** Méthode pour valider un nouveau jeton posé  **/
     private void validBetToken(){
         if(!textBetToken.getText().isEmpty()) {
+            int valueOfBet = 0;
+
             try {
-                int valueOfBet = Integer.parseInt(textBetToken.getText());
-                if (valueOfBet <= 0) {
-                    setPositionToken(ORIGIN_X_TOKEN, ORIGIN_Y_TOKEN, listOfCircleToken.get(tokenUsed), listLabelToken.get(tokenUsed), false);
-                    if (tokenUsed >= 0 && listOfTokenUsed.size() > 0) {
-                        listOfTokenUsed.remove(tokenUsed);
-                        listLabelToken.get(tokenUsed).setText("0");
-                    }
-                } else {
-                    listOfTokenUsed.get(tokenUsed).setValueOfBet(textBetToken.getText());
-                    listLabelToken.get(tokenUsed).setText(textBetToken.getText());
-                    tokenUsed++;
-                    tokenSound.play();
-                    createSoundToken();
+                valueOfBet = Integer.parseInt(textBetToken.getText());
+                labelError.setVisible(false);
+            }
+            catch (Exception e) {
+                rectangleInformationBet.setVisible(false);
+                labelInformationBetToken.setVisible(false);
+                validBetTokenButton.setVisible(false);
+                textBetToken.setVisible(false);
+                startingGameButton.setVisible(true);
+                labelError.setText("Il faut miser une valeur entière");
+                labelError.setVisible(true);
+                return;
+            }
+
+            if (valueOfBet <= 0) {
+                setPositionToken(ORIGIN_X_TOKEN, ORIGIN_Y_TOKEN, listOfCircleToken.get(tokenUsed), listLabelToken.get(tokenUsed), false);
+                if (tokenUsed >= 0 && listOfTokenUsed.size() > 0) {
+                    listOfTokenUsed.remove(tokenUsed);
+                    listLabelToken.get(tokenUsed).setText("0");
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } else {
+                listOfTokenUsed.get(tokenUsed).setValueOfBet(valueOfBet+"");
+                listLabelToken.get(tokenUsed).setText(valueOfBet+"");
+                tokenUsed++;
+                tokenSound.play();
+                createSoundToken();
             }
 
             System.out.println();
             validBetTokenButton.setVisible(false);
             textBetToken.setVisible(false);
+            rectangleInformationBet.setVisible(false);
             labelInformationBetToken.setVisible(false);
             startingGameButton.setVisible(true);
         }
