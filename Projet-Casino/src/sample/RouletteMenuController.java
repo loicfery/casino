@@ -1242,8 +1242,8 @@ public class RouletteMenuController implements InterfaceMenu{
     }
 
     private void goToMenuSetting(){
-        InterfaceMenuSetting interfaceMenuSetting = new InterfaceMenuSetting(this, soundVolume,backgroundAnimation);
-        interfaceMenuSetting.setting();
+        settingMenuController settingMenuController = new settingMenuController(this, soundVolume,backgroundAnimation);
+        settingMenuController.setting();
     }
 
     public void setBackgroundAnimation(boolean newBackgroundAnimation){

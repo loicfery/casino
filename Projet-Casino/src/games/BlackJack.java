@@ -195,4 +195,5 @@ public class BlackJack {
             return listOfUserHand;
         }
         public Bet getBet(){return bet;}
+        public int getInsuranceUser(){return insuranceUser;}
 }

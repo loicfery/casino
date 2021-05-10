@@ -13,7 +13,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class InterfaceMenuSetting {
+public class settingMenuController {
 
     private final InterfaceMenu interfaceMenu;
     private final BorderPane root = new BorderPane();
@@ -32,7 +32,7 @@ public class InterfaceMenuSetting {
 
     private final CheckBox backgroundAnimationCheckBox = new CheckBox();
 
-    public InterfaceMenuSetting(InterfaceMenu interfaceMenu, double soundVolume, boolean backgroundAnimation){
+    public settingMenuController(InterfaceMenu interfaceMenu, double soundVolume, boolean backgroundAnimation){
         this.interfaceMenu = interfaceMenu;
         this.soundVolume = soundVolume;
         this.backgroundAnimation = backgroundAnimation;
