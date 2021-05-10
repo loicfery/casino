@@ -13,8 +13,8 @@ public class Main extends Application {
         User user = new User("loic","loic@email.com","ADMIN");
         user.addToken(50);
 
-       BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage,0.3,true);
-       blackJackMenuController.setting();
+        MainMenuController mainMenuController = new MainMenuController(stage,user,0.5,true);
+        mainMenuController.setting();
 
         //ConnexionMenuController controller = new ConnexionMenuController(stage);
         //controller.setting();

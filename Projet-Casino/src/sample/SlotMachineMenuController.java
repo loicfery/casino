@@ -9,12 +9,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import java.io.File;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -27,9 +25,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +37,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
     private final User user;
     private final SettingMenuController settingMenuController;
     private final LogMenuController logMenuController;
+    private final RuleMenuController ruleMenuController;
 
     private final List<Rectangle> listOfRectangleAnimate = new ArrayList<>();
     private final List<FillTransition> listOfFillTransition = new ArrayList<>();
@@ -71,8 +67,6 @@ public class SlotMachineMenuController implements InterfaceMenu{
     private final Label labelError = new Label();
     private final Label labelLog = new Label();
 
-    private final TextArea textRule = new TextArea();
-
     private final SlotMachine slotMachine;
 
 
@@ -84,6 +78,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
         slotMachine = new SlotMachine(user);
         logMenuController = new LogMenuController();
         settingMenuController = new SettingMenuController(this, soundVolume,backgroundAnimation);
+        ruleMenuController = new RuleMenuController(this);
     }
 
     /** Méthode qui initialise le'interface de la machine à sous **/
@@ -122,41 +117,18 @@ public class SlotMachineMenuController implements InterfaceMenu{
         setupScene.setCircle(circleRule,16.0,770.0,30.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,true,anchorPane);
         setupScene.setLabel(labelRule,"?",Pos.CENTER,754.0,15.0,23.0,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelError,"Erreur : ",Pos.CENTER,280.0,488.0,50.0,401.0,new Font(20.0),Paint.valueOf("RED"),false,anchorPane);
-        setupScene.setTextArea(textRule,200.0,46.0,376.0,560.0,false,false,anchorPane);
 
         createSoundPayout();
         createSoundSlot();
 
         startingGameButton.setOnMouseClicked((event)-> startingGame());
-        labelRule.setOnMouseEntered((event)-> showRule());
-        labelRule.setOnMouseExited((event)-> hideRule());
         returnMainMenuButton.setOnMouseClicked((event)-> returnMainMenu());
         circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
         labelLog.setOnMouseClicked((event) -> goToLogMenu());
-
-        setRule();
+        labelRule.setOnMouseClicked((event)-> goToRuleMenu());
 
         root.getChildren().add(anchorPane);
         stage.show();
-    }
-
-    /** Méthode qui permet d'écrire le texte pour pouvoir l'afficher **/
-    private void setRule(){
-        try {
-            File fileRuleSlotMachine = new File("Regles-SlotMachine.txt");
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileRuleSlotMachine));
-            String line;
-
-            while((line = bufferedReader.readLine()) != null){
-                textRule.setText(textRule.getText()+"\n"+line);
-            }
-        }
-        catch (FileNotFoundException fileNotFoundException){
-            System.out.println("Fichier règle non trouvé");
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
     /** Méthode qui change l'image d'un slot d'après le symbole tiré **/
@@ -222,16 +194,6 @@ public class SlotMachineMenuController implements InterfaceMenu{
         soundPayout.stop();
         MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume,backgroundAnimation);
         mainMenuController.setting();
-    }
-
-    /** Méthode qui montre les règles du jeu **/
-    private void showRule() {
-        textRule.setVisible(true);
-    }
-
-    /** Méthode qui cache les règles du jeu **/
-    private void hideRule() {
-        textRule.setVisible(false);
     }
 
     private void animation(){
@@ -395,6 +357,11 @@ public class SlotMachineMenuController implements InterfaceMenu{
     private void goToLogMenu(){
         logMenuController.exitLogMenu();
         logMenuController.setting();
+    }
+
+    private void goToRuleMenu(){
+        ruleMenuController.exitRuleMenu();
+        ruleMenuController.setting();
     }
 }
 

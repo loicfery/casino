@@ -39,6 +39,7 @@ public class SettingMenuController {
         AnchorPane anchorPane = new AnchorPane();
         BorderPane root = new BorderPane();
         stageSetting = new Stage();
+        stageSetting.setResizable(false);
         Scene sceneSetting = new Scene(root, 500, 500);
         //scene.getStylesheets().add(getClass().getResource("interfaceMenuSetting.css").toExternalForm());
         stageSetting.setScene(sceneSetting);

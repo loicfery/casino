@@ -1,0 +1,35 @@
+Le but du joueur est de se rapprocher de 21 sans le dépasser.
+Pour cela il va recevoir 2 cartes qui donneront une valeur, le joueur aura alors plusieurs choix :
+
+- Tirer une carte : Vous souhaitez prendre une autre carte, que le croupier vous distribue.
+		            Si le joueur tire et qu’il dépasse 21, il perd sa mise.
+
+- Rester : Vous restez si vous êtes satisfait de votre main, que le total est suffisant
+
+
+- Doubler la mise : Vous doublez votre mise et vous recevez une carte, une seulement
+
+- Partager : Si les deux premières cartes du joueur forment une paire, il a la possibilité de les séparer en deux mains distinctes,
+             de miser le même montant sur chacune d’elles et de les jouer séparément.
+			 Tout 21 obtenu après un split ne compte pas comme « blackjack ».
+
+- Assurance : Si la carte apparente du croupier est un As, le joueur peut prendre une assurance pour se prémunir d’un blackjack,
+              c’est à dire effectuer une mise correspondant à la moitié de sa mise initiale.
+	          Si la seconde carte du croupier est un 10 ou une figure, le joueur gagne 2 fois son assurance plus son coût
+	          mais si la seconde carte du croupier n’a pas pour valeur 10, la mise d’assurance est perdue.
+
+Le croupier est le dernier joueur à agir, il continue de jouer sa main comme tout joueur après le tour des joueurs.
+Si le croupier fait blackjack, il ramasse toutes les mises, y compris les partages et les doubles,
+à l’exception des joueurs ayant aussi un black jack.
+
+Si le croupier saute, c’est-à-dire dépasse 21, tous les joueurs qui sont encore en lice gagnent.
+Sinon, les joueurs qui ont un total supérieur à celui du croupier gagnent et les joueurs qui ont un total inférieur perdent.
+En cas d’égalité, la mise du joueur est remboursée.
+
+Chaque carte numérotée de 2 à 10 a sa valeur nominale.
+Les valets, les dames et les rois (les figures), ont une valeur de 10 points.
+L’As vaut 1 point ou 11 points, au choix du joueur.
+
+
+
+

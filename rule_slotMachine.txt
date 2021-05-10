@@ -1,5 +1,3 @@
-Règle des machines à sous : 
-
 Il y a 3 bobines contenant 10 symboles au totale, chaque bobine contient :
 
 - 1 sept

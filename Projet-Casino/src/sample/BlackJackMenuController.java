@@ -11,7 +11,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,10 +27,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +47,8 @@ public class BlackJackMenuController implements InterfaceMenu{
     private final SetupScene setupScene = new SetupScene();
     private final User user;
     private final LogMenuController logMenuController;
-    private SettingMenuController settingMenuController;
+    private final SettingMenuController settingMenuController;
+    private final RuleMenuController ruleMenuController;
 
     private final BlackJack blackJack;
 
@@ -73,8 +69,6 @@ public class BlackJackMenuController implements InterfaceMenu{
     private final List<ImageView> croupierHand = new ArrayList<>();
     private final List<ImageView> userFirstHand = new ArrayList<>();
     private final List<ImageView> userSecondHand = new ArrayList<>();
-
-    private final TextArea textRule = new TextArea();
 
     private final Rectangle zoneBetUser1 = new Rectangle();
     private final Rectangle zoneBetUser2 = new Rectangle();
@@ -115,6 +109,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         this.backgroundAnimation = backgroundAnimation;
         logMenuController = new LogMenuController();
         settingMenuController = new SettingMenuController(this, soundVolume,backgroundAnimation);
+        ruleMenuController = new RuleMenuController(this);
         blackJack = new BlackJack(user);
     }
 
@@ -161,9 +156,7 @@ public class BlackJackMenuController implements InterfaceMenu{
 
         setupScene.setCircle(circleRule,16.0,770.0,30.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,true,anchorPane);
         setupScene.setLabel(labelRule,"?",Pos.CENTER,754.0,15.0,23,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setTextArea(textRule,50,46.0,600.0,700.0,false,false,anchorPane);
 
-        setRule();
         logMenuController.getLog("Log de la partie\n");
         logMenuController.getLog("Le joueur "+user.getPseudo()+" démarre une nouvelle partie.");
 
@@ -184,6 +177,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         labelLog.setOnMouseClicked((event)-> goToLogMenu());
         circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
         blackJack.addUserBet(user);
+        labelRule.setOnMouseClicked((event)-> goToRuleMenu());
 
         root.getChildren().add(anchorPane);
         stage.show();
@@ -291,32 +285,6 @@ public class BlackJackMenuController implements InterfaceMenu{
         token2.add(line);
 
         setupScene.setLabel(labelToken2,"0",Pos.CENTER,566,600.0,148.0,119.0,new Font(30.0),Color.BLACK,false,anchorPane);
-    }
-
-    /**
-     * Méthode pour écrire les règles du jeux dans une zone de texte
-     **/
-    private void setRule() {
-        try {
-            File fileRuleBlackJack = new File("Regles-BlackJack.txt");
-            BufferedReader buffer = new BufferedReader(new FileReader(fileRuleBlackJack));
-            String line;
-
-            while ((line = buffer.readLine()) != null) {
-                textRule.setText(textRule.getText() + "\n" + line);
-            }
-        } catch (FileNotFoundException fileNotFoundException) {
-            System.out.println("fichier règle non trouvé");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        labelRule.setOnMouseEntered((event)->{
-            showRule();
-        });
-        labelRule.setOnMouseExited((event)->{
-            hideRule();
-        });
     }
 
     /**
@@ -448,22 +416,6 @@ public class BlackJackMenuController implements InterfaceMenu{
         logMenuController.exitLogMenu();
         MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume,backgroundAnimation);
         mainMenuController.setting();
-    }
-
-    /**
-     * Méthode qui montre la zone de texte contenant les règles
-     **/
-    private void showRule() {
-       setVisibleCards(false);
-       textRule.setVisible(true);
-    }
-
-    /**
-     * Méthode qui cache la zone de texte contenant les règles
-     **/
-    private void hideRule() {
-        textRule.setVisible(false);
-        setVisibleCards(true);
     }
 
     /** Méthode qui modifie la visibilité des cartes tirés **/
@@ -828,5 +780,10 @@ public class BlackJackMenuController implements InterfaceMenu{
     private void createCardSound(){
         cardSound = new MediaPlayer(new Media(getClass().getResource("sound/dealingThreeCardsSound.mp3").toExternalForm()));
         cardSound.setVolume(soundVolume);
+    }
+
+    private void goToRuleMenu(){
+        ruleMenuController.exitRuleMenu();
+        ruleMenuController.setting();
     }
 }

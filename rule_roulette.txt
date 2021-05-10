@@ -1,0 +1,31 @@
+La roulette est composé de 36 nombres allant de 0 à 36.
+Le but du jeu est basé sur la chance, il faut miser des sommes sur des nombres et si l'un d'entre-eux est gagnant
+alors vous gagnez votre mise plus un multiplicateur en fonction de la façon dont vous avez misé(e).
+
+Il existe plusieurs façon de miser afin de remporter les manches.
+
+Possibilités de jeu :
+
+- Le Plein : Vous misez ici sur un ou plusieurs numéros de façon séparer. Lorsqu'un numéro sur lequel vous avez miser est gagnant vous remportez 35 fois la mise sur ce numéro !
+
+- Le Cheval : Cette mise consiste à placer un ou plusiuers jetons à cheval sur deux numéros adjacents sur le tapis. 
+              Si la bille tombe sur l'un des deux numéros sur lesquels vos jetons sont à cheval vous remportez 17 fois votre mise !
+
+- La Transversale : Comme son nom l'indique, elle vous permet de miser sur une ligne composée de 3 numéros. 
+                    Si la bille tombe sur l'un de ces 3 numéros, vous remportez 11 fois votre mise !
+
+- Le Carré : Cette mise consiste à placer un jeton sur 4 numéros adjacents (formant un carré sur le tapis).
+             Si la bille tombe sur l'un des 4 numéros, vous remportez 8 fois votre mise !
+
+- La Douzaine : Comme pour la transversale, elle vous permet de miser sur 2 lignes adjacentes, dont 6 numéros en tout.
+                Si la bille tombe sur l'un des 6 numéros, vous remportez 5 fois votre mise !
+
+- La Colonne (horizontale) : Permet de miser sur une colonne entiére (0 exclus). Si la bille tombe sur l'un des 12 numéros, vous remportez 2 fois votre mise !
+
+- 12P, 12M, 12D : Ces mises représentent respectivements les 12 premiers/milieu/derniers numéros. Tout comme la colonne vous remportez 2 fois votre mise !
+
+- Rouge/ Noir/ Pair/ Impair/ Manque(1-18)/ Passe(19-36) : Aussi appeler les chances simples, vous permet de miser soit sur rouge, noir, pair, impair,
+  la manque (numéros entre 1 et 18) et la passe (numéros entre 19 et 36). Si la bille tombe sur l'une des configurations citée, vous remporterez 1 fois la mise !
+
+
+ATTENTION : Si le 0 tombe, celui-ci annule toutes les chances simples ! En effet, le 0 étant un numéro à part ni pair ni impair ni passe ni manque, seul ce numéro gagnera !

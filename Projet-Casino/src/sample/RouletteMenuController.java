@@ -9,7 +9,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -29,10 +28,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +54,7 @@ public class RouletteMenuController implements InterfaceMenu{
     private final User user;
     private final SettingMenuController settingMenuController;
     private final LogMenuController logMenuController;
+    private final RuleMenuController ruleMenuController;
 
     private final List<Rectangle> listOfRectangleGameBoard = new ArrayList<>();
     private final List<Label> listOfLabelGameBoard = new ArrayList<>();
@@ -92,8 +88,6 @@ public class RouletteMenuController implements InterfaceMenu{
     private final Rectangle rectangleLog = new Rectangle();
     private final Rectangle rectangleInformationBet = new Rectangle();
 
-    private final TextArea textRule = new TextArea();
-
 
     public RouletteMenuController(User user, Stage stage, double soundVolume, boolean backgroundAnimation){
         this.user = user;
@@ -102,6 +96,7 @@ public class RouletteMenuController implements InterfaceMenu{
         this.backgroundAnimation = backgroundAnimation;
         logMenuController = new LogMenuController();
         settingMenuController = new SettingMenuController(this,soundVolume,backgroundAnimation);
+        ruleMenuController = new RuleMenuController(this);
     }
 
     /** Méthode qui initialise l'interface de la roulette **/
@@ -119,7 +114,6 @@ public class RouletteMenuController implements InterfaceMenu{
         setupGameBoard();
         setCasePosition();
         setCasePositionRoulette();
-        setRule();
 
         setupScene.setImageView(roulette,638.0,350.0,425.0,471.0, new Image(getClass().getResource("image/roulette.jpg").toExternalForm()),true,anchorPane);
         roulette.setPickOnBounds(true);
@@ -145,7 +139,6 @@ public class RouletteMenuController implements InterfaceMenu{
 
         setupScene.setCircle(circleRule,16.0,1070.0,30.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,true,anchorPane);
         setupScene.setLabel(labelRule,"?",Pos.CENTER,1055.0,15.0,23,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setTextArea(textRule,360,46.0,600.0,700.0,false,false,anchorPane);
 
         createSoundToken();
         createSoundRoulette();
@@ -157,35 +150,10 @@ public class RouletteMenuController implements InterfaceMenu{
         returnMainMenuButton.setOnMouseClicked((event)-> returnMainMenu());
         circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
         labelLog.setOnMouseClicked((event) -> goToLogMenu());
+        labelRule.setOnMouseClicked((event)-> goToRuleMenu());
 
         root.getChildren().add(anchorPane);
         stage.show();
-    }
-
-    /**
-     * Méthode pour écrire les règles du jeux dans une zone de texte
-     **/
-    private void setRule() {
-        try {
-            File fileRuleBlackJack = new File("Regles-Roulette.txt");
-            BufferedReader buffer = new BufferedReader(new FileReader(fileRuleBlackJack));
-            String line;
-
-            while ((line = buffer.readLine()) != null) {
-                textRule.setText(textRule.getText() + "\n" + line);
-            }
-        } catch (FileNotFoundException fileNotFoundException) {
-            System.out.println("fichier règle non trouvé");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        labelRule.setOnMouseEntered((event)->{
-            showRule();
-        });
-        labelRule.setOnMouseExited((event)->{
-            hideRule();
-        });
     }
 
     /** Méthode qui crée la grille de mise **/
@@ -1225,27 +1193,6 @@ public class RouletteMenuController implements InterfaceMenu{
         mainMenuController.setting();
     }
 
-    /**
-     * Méthode qui montre la zone de texte contenant les règles
-     **/
-    private void showRule() {
-        textRule.setVisible(true);
-    }
-
-    /**
-     * Méthode qui cacher la zone de texte contenant les règles
-     **/
-    private void hideRule() {
-        textRule.setVisible(false);
-    }
-
-    private void showLog(){
-
-    }
-
-    private void hideLog(){
-
-    }
 
     public void setSoundVolume(double newSoundVolume){
         if(newSoundVolume <= 1.0 && newSoundVolume >= 0){
@@ -1276,6 +1223,11 @@ public class RouletteMenuController implements InterfaceMenu{
     private void goToLogMenu(){
         logMenuController.exitLogMenu();
         logMenuController.setting();
+    }
+
+    private void goToRuleMenu(){
+        ruleMenuController.exitRuleMenu();
+        ruleMenuController.setting();
     }
 
 }
