@@ -1,7 +1,5 @@
 package sample;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
@@ -13,11 +11,10 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class settingMenuController {
+public class SettingMenuController {
 
     private final InterfaceMenu interfaceMenu;
-    private final BorderPane root = new BorderPane();
-    private final AnchorPane anchorPane = new AnchorPane();
+    private Stage stageSetting;
     private final SetupScene setupScene = new SetupScene();
 
     private double soundVolume;
@@ -32,26 +29,28 @@ public class settingMenuController {
 
     private final CheckBox backgroundAnimationCheckBox = new CheckBox();
 
-    public settingMenuController(InterfaceMenu interfaceMenu, double soundVolume, boolean backgroundAnimation){
+    public SettingMenuController(InterfaceMenu interfaceMenu, double soundVolume, boolean backgroundAnimation){
         this.interfaceMenu = interfaceMenu;
         this.soundVolume = soundVolume;
         this.backgroundAnimation = backgroundAnimation;
     }
 
     public void setting(){
-        Stage stageSetting = new Stage();
+        AnchorPane anchorPane = new AnchorPane();
+        BorderPane root = new BorderPane();
+        stageSetting = new Stage();
         Scene sceneSetting = new Scene(root, 500, 500);
         //scene.getStylesheets().add(getClass().getResource("interfaceMenuSetting.css").toExternalForm());
         stageSetting.setScene(sceneSetting);
 
-        setupScene.setLabel(titleLabel,"Paramètres", Pos.CENTER,150,15,30,200,new Font(30), Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(titleLabel,"Paramètres", Pos.CENTER,150,15,30,200,new Font(30), Paint.valueOf("BLACK"),true, anchorPane);
 
-        setupScene.setLabel(soundVolumeTitleLabel,"volume son : ",Pos.CENTER_LEFT,50,200,20,100,new Font(15),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setSlider(soundVolumeSlider,160,200,23,200,0.0,1.0, soundVolume,true,anchorPane);
-        setupScene.setLabel(soundVolumeLabel,""+(int)(soundVolume * 100),Pos.CENTER,370,200,23,80,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(soundVolumeTitleLabel,"volume son : ",Pos.CENTER_LEFT,50,200,20,100,new Font(15),Paint.valueOf("BLACK"),true, anchorPane);
+        setupScene.setSlider(soundVolumeSlider,160,200,23,200,0.0,1.0, soundVolume,true, anchorPane);
+        setupScene.setLabel(soundVolumeLabel,""+(int)(soundVolume * 100),Pos.CENTER,370,200,23,80,new Font(20),Paint.valueOf("BLACK"),true, anchorPane);
 
-        setupScene.setLabel(backgroundAnimationLabel,"Animation arrière plan :",Pos.CENTER_LEFT,50,250,20,200,new Font(15),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setCheckBox(backgroundAnimationCheckBox,210,250,20,20,backgroundAnimation,true,anchorPane);
+        setupScene.setLabel(backgroundAnimationLabel,"Animation arrière plan :",Pos.CENTER_LEFT,50,250,20,200,new Font(15),Paint.valueOf("BLACK"),true, anchorPane);
+        setupScene.setCheckBox(backgroundAnimationCheckBox,210,250,20,20,backgroundAnimation,true, anchorPane);
 
         soundVolumeSlider.valueProperty().addListener(observable -> {
             soundVolume = soundVolumeSlider.getValue();
@@ -66,5 +65,11 @@ public class settingMenuController {
 
         root.getChildren().add(anchorPane);
         stageSetting.show();
+    }
+
+    public void exitSettingMenu(){
+        if(stageSetting != null) {
+            stageSetting.close();
+        }
     }
 }

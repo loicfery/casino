@@ -3,6 +3,8 @@ package sample;
 import games.User;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -24,6 +26,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 import java.io.BufferedReader;
@@ -54,6 +57,8 @@ public class RouletteMenuController implements InterfaceMenu{
     private final AnchorPane anchorPane = new AnchorPane();
     private final SetupScene setupScene = new SetupScene();
     private final User user;
+    private final SettingMenuController settingMenuController;
+    private final LogMenuController logMenuController;
 
     private final List<Rectangle> listOfRectangleGameBoard = new ArrayList<>();
     private final List<Label> listOfLabelGameBoard = new ArrayList<>();
@@ -71,7 +76,7 @@ public class RouletteMenuController implements InterfaceMenu{
     private final Label labelInformationBetToken = new Label();
     private final Label labelError = new Label();
     private final Label labelRule = new Label();
-    private final Label labelLogParty = new Label();
+    private final Label labelLog = new Label();
 
     private final Button modifyBetTokenButton = new Button();
     private final Button validBetTokenButton = new Button();
@@ -88,7 +93,6 @@ public class RouletteMenuController implements InterfaceMenu{
     private final Rectangle rectangleInformationBet = new Rectangle();
 
     private final TextArea textRule = new TextArea();
-    private final TextArea textLog = new TextArea();
 
 
     public RouletteMenuController(User user, Stage stage, double soundVolume, boolean backgroundAnimation){
@@ -96,11 +100,18 @@ public class RouletteMenuController implements InterfaceMenu{
         this.stage = stage;
         this.soundVolume = soundVolume;
         this.backgroundAnimation = backgroundAnimation;
+        logMenuController = new LogMenuController();
+        settingMenuController = new SettingMenuController(this,soundVolume,backgroundAnimation);
     }
 
     /** Méthode qui initialise l'interface de la roulette **/
     public void setting(){
-        stage.setTitle("Roulette");
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                Platform.exit();
+            }
+        });
         Scene scene = new Scene(root, 1100, 800);
         scene.getStylesheets().add(getClass().getResource("rouletteMenu.css").toExternalForm());
         stage.setScene(scene);
@@ -130,8 +141,7 @@ public class RouletteMenuController implements InterfaceMenu{
         setupScene.setCircle(circleSetting,18,970,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("GREEN"),StrokeType.INSIDE,1.0,true,anchorPane);
 
         setupScene.setRectangle(rectangleLog,1000.0,15.0,30.0,50.0,10.0,10.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),1.0,StrokeType.INSIDE,true,anchorPane);
-        setupScene.setLabel(labelLogParty,"Log",Pos.CENTER,1000.0,15.0,23.0,50.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setTextArea(textLog,500,46.0,500.0,500.0,false,false,anchorPane);
+        setupScene.setLabel(labelLog,"Log",Pos.CENTER,1000.0,15.0,23.0,50.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
 
         setupScene.setCircle(circleRule,16.0,1070.0,30.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,true,anchorPane);
         setupScene.setLabel(labelRule,"?",Pos.CENTER,1055.0,15.0,23,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
@@ -146,6 +156,7 @@ public class RouletteMenuController implements InterfaceMenu{
         startingGameButton.setOnMouseClicked((event)-> startingGame());
         returnMainMenuButton.setOnMouseClicked((event)-> returnMainMenu());
         circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
+        labelLog.setOnMouseClicked((event) -> goToLogMenu());
 
         root.getChildren().add(anchorPane);
         stage.show();
@@ -1208,6 +1219,8 @@ public class RouletteMenuController implements InterfaceMenu{
      * Méthode pour quitter le jeu et retourner dans le menu principale
      **/
     private void returnMainMenu(){
+        settingMenuController.exitSettingMenu();
+        logMenuController.exitLogMenu();
         MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume,backgroundAnimation);
         mainMenuController.setting();
     }
@@ -1242,7 +1255,7 @@ public class RouletteMenuController implements InterfaceMenu{
     }
 
     private void goToMenuSetting(){
-        settingMenuController settingMenuController = new settingMenuController(this, soundVolume,backgroundAnimation);
+        settingMenuController.exitSettingMenu();
         settingMenuController.setting();
     }
 
@@ -1259,4 +1272,10 @@ public class RouletteMenuController implements InterfaceMenu{
         rouletteSound = new MediaPlayer(new Media(getClass().getResource("sound/rouletteSound.mp3").toExternalForm()));
         rouletteSound.setVolume(soundVolume);
     }
+
+    private void goToLogMenu(){
+        logMenuController.exitLogMenu();
+        logMenuController.setting();
+    }
+
 }

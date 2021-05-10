@@ -3,6 +3,8 @@ package sample;
 import games.SlotMachine;
 import games.User;
 import javafx.animation.*;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -22,6 +24,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 import java.io.BufferedReader;
@@ -37,6 +40,8 @@ public class SlotMachineMenuController implements InterfaceMenu{
     private final AnchorPane anchorPane = new AnchorPane();
     private final SetupScene setupScene = new SetupScene();
     private final User user;
+    private final SettingMenuController settingMenuController;
+    private final LogMenuController logMenuController;
 
     private final List<Rectangle> listOfRectangleAnimate = new ArrayList<>();
     private final List<FillTransition> listOfFillTransition = new ArrayList<>();
@@ -64,10 +69,9 @@ public class SlotMachineMenuController implements InterfaceMenu{
     private final Label labelUserPseudo = new Label();
     private final Label labelRule = new Label();
     private final Label labelError = new Label();
-    private final Label labelLogParty = new Label();
+    private final Label labelLog = new Label();
 
     private final TextArea textRule = new TextArea();
-    private final TextArea textLog = new TextArea();
 
     private final SlotMachine slotMachine;
 
@@ -78,12 +82,18 @@ public class SlotMachineMenuController implements InterfaceMenu{
         this.soundVolume = soundVolume;
         this.backgroundAnimation = backgroundAnimation;
         slotMachine = new SlotMachine(user);
-
+        logMenuController = new LogMenuController();
+        settingMenuController = new SettingMenuController(this, soundVolume,backgroundAnimation);
     }
 
     /** Méthode qui initialise le'interface de la machine à sous **/
     public void setting(){
-        stage.setTitle("Machine à sous");
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                Platform.exit();
+            }
+        });
         Scene scene = new Scene(root, 800, 800);
         scene.getStylesheets().add(getClass().getResource("slotMachineMenu.css").toExternalForm());
         stage.setScene(scene);
@@ -107,8 +117,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
         setupScene.setCircle(circleSetting,18,670,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("BLUE"),StrokeType.INSIDE,1.0,true,anchorPane);
 
         setupScene.setRectangle(rectangleLog,700.0,15.0,30.0,50.0,10.0,10.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),1.0,StrokeType.INSIDE,true,anchorPane);
-        setupScene.setLabel(labelLogParty,"Log",Pos.CENTER,700.0,15.0,23.0,50.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setTextArea(textLog,200,46.0,500.0,500.0,false,false,anchorPane);
+        setupScene.setLabel(labelLog,"Log",Pos.CENTER,700.0,15.0,23.0,50.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
 
         setupScene.setCircle(circleRule,16.0,770.0,30.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,true,anchorPane);
         setupScene.setLabel(labelRule,"?",Pos.CENTER,754.0,15.0,23.0,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
@@ -123,6 +132,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
         labelRule.setOnMouseExited((event)-> hideRule());
         returnMainMenuButton.setOnMouseClicked((event)-> returnMainMenu());
         circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
+        labelLog.setOnMouseClicked((event) -> goToLogMenu());
 
         setRule();
 
@@ -206,6 +216,8 @@ public class SlotMachineMenuController implements InterfaceMenu{
 
     /** Méthode pour retourner dans le menu principal **/
     private void returnMainMenu(){
+        settingMenuController.exitSettingMenu();
+        logMenuController.exitLogMenu();
         soundSlot.stop();
         soundPayout.stop();
         MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume,backgroundAnimation);
@@ -343,7 +355,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
     }
 
     private void goToMenuSetting(){
-        settingMenuController settingMenuController = new settingMenuController(this, soundVolume,backgroundAnimation);
+        settingMenuController.exitSettingMenu();
         settingMenuController.setting();
     }
 
@@ -378,6 +390,11 @@ public class SlotMachineMenuController implements InterfaceMenu{
                 fillTransition.play();
             }
         }
+    }
+
+    private void goToLogMenu(){
+        logMenuController.exitLogMenu();
+        logMenuController.setting();
     }
 }
 

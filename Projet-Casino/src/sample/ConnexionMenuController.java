@@ -1,6 +1,8 @@
 package sample;
 
 import games.User;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -15,6 +17,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
+import javafx.stage.WindowEvent;
 
 
 public class ConnexionMenuController implements InterfaceMenu{
@@ -24,6 +27,7 @@ public class ConnexionMenuController implements InterfaceMenu{
     private final AnchorPane anchorPane = new AnchorPane();
     private final SetupScene setupScene = new SetupScene();
     private User user;
+    private final SettingMenuController settingMenuController;
 
     private double soundVolume;
     private boolean backgroundAnimation;
@@ -54,11 +58,17 @@ public class ConnexionMenuController implements InterfaceMenu{
         this.stage = stage;
         this.soundVolume = 0.5;
         this.backgroundAnimation = true;
+        settingMenuController = new SettingMenuController(this, soundVolume,backgroundAnimation);
     }
 
     /** Méthode qui initialise l'interface de connexion **/
     public void setting(){
-        stage.setTitle("Menu de connexion");
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                Platform.exit();
+            }
+        });
         Scene scene = new Scene(root, 500, 500);
         scene.getStylesheets().add(getClass().getResource("connexionMenu.css").toExternalForm());
         stage.setScene(scene);
@@ -103,6 +113,7 @@ public class ConnexionMenuController implements InterfaceMenu{
             buttonLogin.setVisible(false);
             buttonNewAccount.setVisible(false);
             labelError.setVisible(false);
+            settingMenuController.exitSettingMenu();
 
             //rechercher de user dans la base de donnée
             //setUser(...) --> récupération de speudo,email, rank
@@ -123,6 +134,7 @@ public class ConnexionMenuController implements InterfaceMenu{
         textPassword.setVisible(false);
         buttonLogin.setVisible(false);
         buttonNewAccount.setVisible(false);
+        settingMenuController.exitSettingMenu();
 
         labelTitle.setText("Nouveau Compte");
 
@@ -148,6 +160,7 @@ public class ConnexionMenuController implements InterfaceMenu{
             buttonInscription.setVisible(false);
             buttonLoginMenuReturn.setVisible(false);
             labelError.setVisible(false);
+            settingMenuController.exitSettingMenu();
 
             //création d'un user dans la base de donnée
             //récupération nombre jeton et argent de user
@@ -179,6 +192,7 @@ public class ConnexionMenuController implements InterfaceMenu{
         textNewPseudo.setVisible(false);
         buttonInscription.setVisible(false);
         buttonLoginMenuReturn.setVisible(false);
+        settingMenuController.exitSettingMenu();
     }
 
     /** Méthode pour changer le texte de l'erreur **/
@@ -211,7 +225,7 @@ public class ConnexionMenuController implements InterfaceMenu{
     }
 
     private void goToMenuSetting(){
-        settingMenuController settingMenuController = new settingMenuController(this, soundVolume,backgroundAnimation);
+        settingMenuController.exitSettingMenu();
         settingMenuController.setting();
     }
 }

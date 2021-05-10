@@ -5,6 +5,8 @@ import games.Card;
 import games.User;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -23,6 +25,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 import java.io.BufferedReader;
@@ -49,6 +52,7 @@ public class BlackJackMenuController implements InterfaceMenu{
     private final SetupScene setupScene = new SetupScene();
     private final User user;
     private final LogMenuController logMenuController;
+    private SettingMenuController settingMenuController;
 
     private final BlackJack blackJack;
 
@@ -110,12 +114,18 @@ public class BlackJackMenuController implements InterfaceMenu{
         this.valueTokenUserBegin = user.getNumberOfToken();
         this.backgroundAnimation = backgroundAnimation;
         logMenuController = new LogMenuController();
+        settingMenuController = new SettingMenuController(this, soundVolume,backgroundAnimation);
         blackJack = new BlackJack(user);
     }
 
     /** Méthode qui initialise l'interface du black jack **/
     public void setting(){
-        stage.setTitle("Menu Black Jack");
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                Platform.exit();
+            }
+        });
         Scene scene = new Scene(root, 800, 800);
         scene.getStylesheets().add(getClass().getResource("blackJackMenu.css").toExternalForm());
         stage.setScene(scene);
@@ -434,6 +444,8 @@ public class BlackJackMenuController implements InterfaceMenu{
      * Méthode pour quitter le jeu et retourner dans le menu principale
      **/
     private void returnMainMenu(){
+        settingMenuController.exitSettingMenu();
+        logMenuController.exitLogMenu();
         MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume,backgroundAnimation);
         mainMenuController.setting();
     }
@@ -804,7 +816,7 @@ public class BlackJackMenuController implements InterfaceMenu{
     }
 
     private void goToMenuSetting(){
-        settingMenuController settingMenuController = new settingMenuController(this, soundVolume,backgroundAnimation);
+        settingMenuController.exitSettingMenu();
         settingMenuController.setting();
     }
 

@@ -1,6 +1,8 @@
 package sample;
 
 import games.User;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,7 +15,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.scene.image.ImageView;;
+import javafx.scene.image.ImageView;
+import javafx.stage.WindowEvent;;
 
 
 public class MainMenuController implements InterfaceMenu{
@@ -23,6 +26,7 @@ public class MainMenuController implements InterfaceMenu{
     private final AnchorPane anchorPane = new AnchorPane();
     private final SetupScene setupScene = new SetupScene();
     private final User user;
+    private SettingMenuController settingMenuController;
 
     private final Button logoutButton = new Button();
     private final Button informationMenuButton = new Button();
@@ -44,10 +48,16 @@ public class MainMenuController implements InterfaceMenu{
         this.user = user;
         this.soundVolume = soundVolume;
         this.backgroundAnimation = backgroundAnimation;
+        settingMenuController = new SettingMenuController(this, soundVolume,backgroundAnimation);
     }
 
     public void setting(){
-        stage.setTitle("Menu principale");
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                Platform.exit();
+            }
+        });
         Scene scene = new Scene(root, 800, 800);
         scene.getStylesheets().add(getClass().getResource("mainMenu.css").toExternalForm());
         stage.setScene(scene);
@@ -75,28 +85,34 @@ public class MainMenuController implements InterfaceMenu{
     }
 
     private void goToConnexionMenu(){
+        settingMenuController.exitSettingMenu();
         ConnexionMenuController controller = new ConnexionMenuController(stage);
         controller.setting();
     }
 
     private void goToInformationMenu(){
+        settingMenuController.exitSettingMenu();
         //loadingInterface.loading("informationMenuSample.fxml","",500,500,new InformationMenuController(user,stage),mouseEvent);
     }
 
     private void goToShopMenu() {
+        settingMenuController.exitSettingMenu();
     }
 
     private void goToBlackJackMenu(){
+        settingMenuController.exitSettingMenu();
         BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage,soundVolume,backgroundAnimation);
         blackJackMenuController.setting();
     }
 
     private void goToSlotMachineMenu(){
+        settingMenuController.exitSettingMenu();
         SlotMachineMenuController slotMachineMenuController = new SlotMachineMenuController(user,stage,soundVolume,backgroundAnimation);
         slotMachineMenuController.setting();
     }
 
     private void goToRouletteMenu(){
+        settingMenuController.exitSettingMenu();
         RouletteMenuController rouletteMenuController = new RouletteMenuController(user,stage,soundVolume,backgroundAnimation);
         rouletteMenuController.setting();
     }
@@ -112,7 +128,7 @@ public class MainMenuController implements InterfaceMenu{
     }
 
     private void goToMenuSetting(){
-        settingMenuController settingMenuController = new settingMenuController(this, soundVolume,backgroundAnimation);
+        settingMenuController.exitSettingMenu();
         settingMenuController.setting();
     }
 }
