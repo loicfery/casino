@@ -155,6 +155,26 @@ public class SlotMachineMenuController implements InterfaceMenu{
         }
     }
 
+    private String getPicture(int symbol){
+        switch(symbol){
+            case 1:
+            case 7:
+            case 10:
+                return "citron";
+            case 2:
+            case 4:
+            case 6:
+            case 8:
+               return "pastèque";
+            case 3:
+            case 9:
+               return "cerise";
+            case 5:
+                return "7";
+            default: return "";
+        }
+    }
+
     /** Méthode qui change l'image d'un slot avec l'image en paramètre **/
     private void switchPictureSlot(int slot, Image newPicture){
         switch (slot) {
@@ -173,10 +193,13 @@ public class SlotMachineMenuController implements InterfaceMenu{
     private void startingGame(){
         labelToken.setText("Jetons : "+user.getNumberOfToken());
         if(user.getNumberOfToken() > 0) {
+            logMenuController.resetLog();
+            logMenuController.getLog("Le joueur "+user.getPseudo()+" démarre une nouvelle partie.");
             labelError.setVisible(false);
             slotMachine.useSlotMachine();
 
             startingGameButton.setDisable(true);
+            logMenuController.getLog("Le joueur "+user.getPseudo()+" a lancé la machine à sous");
             animationSlot(slotMachine.getNbImage().get(0) + 1, slotMachine.getNbImage().get(1) + 1, slotMachine.getNbImage().get(2) + 1);
         }
         else{
@@ -190,6 +213,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
     private void returnMainMenu(){
         settingMenuController.exitSettingMenu();
         logMenuController.exitLogMenu();
+        ruleMenuController.exitRuleMenu();
         soundSlot.stop();
         soundPayout.stop();
         MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume,backgroundAnimation);
@@ -289,13 +313,22 @@ public class SlotMachineMenuController implements InterfaceMenu{
         }
 
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> switchPicture(symbolOne,1)));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Premier symbole : "+getPicture(symbolOne))));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> switchPicture(symbolTwo,2)));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Deuxième symbole : "+getPicture(symbolTwo))));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> switchPicture(symbolThree,3)));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Troisième symbole : "+getPicture(symbolThree))));
 
         timePoint = timePoint.add(Duration.seconds(1));
 
         int gain = slotMachine.verifySlot();
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelProfit.setText("Gain : " +gain)));
+        if(gain > 0){
+            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Le joueur "+user.getPseudo()+" a gagné "+gain+" jetons.")));
+        }
+        else {
+            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Le joueur "+user.getPseudo()+" a gagné aucun jeton.")));
+        }
 
         if(gain > 0){
             timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> soundPayout.play()));
@@ -307,7 +340,9 @@ public class SlotMachineMenuController implements InterfaceMenu{
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e ->  startingGameButton.setDisable(false)));
 
         timeline.play();
+
     }
+
 
     public void setSoundVolume(double newSoundVolume){
         if(newSoundVolume >= 0 && newSoundVolume <= 1.0){

@@ -13,7 +13,7 @@ public class Main extends Application {
         User user = new User("loic","loic@email.com","ADMIN");
         user.addToken(50);
 
-        MainMenuController mainMenuController = new MainMenuController(stage,user,0.5,true);
+        MainMenuController mainMenuController = new MainMenuController(stage,user,0.1,true);
         mainMenuController.setting();
 
         //ConnexionMenuController controller = new ConnexionMenuController(stage);

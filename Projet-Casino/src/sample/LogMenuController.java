@@ -18,7 +18,7 @@ public class LogMenuController {
     private final SetupScene setupScene = new SetupScene();
     private Stage stageLog;
 
-    private final List<String> listOfLog = new ArrayList<>();
+    private List<String> listOfLog = new ArrayList<>();
 
     private final Label labelTitle = new Label();
     private final TextArea textLog = new TextArea();
@@ -55,5 +55,9 @@ public class LogMenuController {
         if (stageLog != null) {
             stageLog.close();
         }
+    }
+
+    public void resetLog(){
+        listOfLog = new ArrayList<>();
     }
 }
