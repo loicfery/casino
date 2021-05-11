@@ -53,5 +53,9 @@ public class User {
     public void removeMoney(int numberOfMoney){
         this.amountOfMoney = this.amountOfMoney - numberOfMoney;
     }
+
+    public void setPseudo(String newPseudo){ pseudo = newPseudo; }
+
+    public void setEmail(String newEmail){ email = newEmail; }
 }
 

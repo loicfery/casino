@@ -1,6 +1,8 @@
 package sample;
 
 import games.User;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -18,6 +20,7 @@ import javafx.scene.text.Font;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 
 
 public class ConnexionMenuController implements InterfaceMenu{
@@ -121,7 +124,7 @@ public class ConnexionMenuController implements InterfaceMenu{
 
             switchMainMenu();
         } else {
-            setError("Erreur : un ou plusieurs champs sont vides");
+            showError("Un ou plusieurs champs sont vides");
         }
 
     }
@@ -168,7 +171,7 @@ public class ConnexionMenuController implements InterfaceMenu{
             setUser(new User(textNewPseudo.getText(),textNewEmail.getText(),"USER"));
             switchMainMenu();
         } else {
-            setError("Erreur : un ou plusieurs champs sont vides");
+            showError("Un ou plusieurs champs sont vides");
         }
 
     }
@@ -196,9 +199,16 @@ public class ConnexionMenuController implements InterfaceMenu{
     }
 
     /** Méthode pour changer le texte de l'erreur **/
-    private void setError(String errorName) {
-        labelError.setText(errorName);
-        labelError.setVisible(true);
+    private void showError(String message) {
+        Timeline timeline = new Timeline();
+        Duration timePoint = Duration.ZERO;
+
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelError.setText(message)));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelError.setVisible(true)));
+        timePoint = timePoint.add(Duration.seconds(3));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelError.setVisible(false)));
+
+        timeline.play();
     }
 
     private void setUser(User user){

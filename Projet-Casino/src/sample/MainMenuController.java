@@ -92,7 +92,8 @@ public class MainMenuController implements InterfaceMenu{
 
     private void goToInformationMenu(){
         settingMenuController.exitSettingMenu();
-        //loadingInterface.loading("informationMenuSample.fxml","",500,500,new InformationMenuController(user,stage),mouseEvent);
+        InformationMenuController informationMenuController = new InformationMenuController(user,stage,soundVolume,backgroundAnimation);
+        informationMenuController.setting();
     }
 
     private void goToShopMenu() {
