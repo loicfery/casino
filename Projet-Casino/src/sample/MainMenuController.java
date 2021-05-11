@@ -26,11 +26,11 @@ public class MainMenuController implements InterfaceMenu{
     private final AnchorPane anchorPane = new AnchorPane();
     private final SetupScene setupScene = new SetupScene();
     private final User user;
-    private SettingMenuController settingMenuController;
+    private final SettingMenuController settingMenuController;
 
     private final Button logoutButton = new Button();
     private final Button informationMenuButton = new Button();
-    private final Button shopButton = new Button();
+    private final Button historyShoppingButton = new Button();
 
     private final ImageView pictureBlackJackMenu = new ImageView();
     private final ImageView pictureSlotMachine = new ImageView();
@@ -65,12 +65,13 @@ public class MainMenuController implements InterfaceMenu{
         setupScene.setImageView(pictureBlackJackMenu,20.0,170.0,300.0,370.0,new Image(getClass().getResource("image/blackjack.png").toExternalForm()),true,anchorPane);
         setupScene.setImageView(pictureSlotMachine,410.0,490.0,290.0,370.0,new Image(getClass().getResource("image/slot_machine.jpg").toExternalForm()),true,anchorPane);
         setupScene.setImageView(pictureRoulette,20.0,490.0,290.0,370.0,new Image(getClass().getResource("image/roulette2.jpg").toExternalForm()),true,anchorPane);
-        setupScene.setImageView(pictureShop,380,20,100,150,new Image(getClass().getResource("image/shop.jpg").toExternalForm()),true,anchorPane);
+        setupScene.setImageView(pictureShop,490,20,80,120,new Image(getClass().getResource("image/shop.jpg").toExternalForm()),true,anchorPane);
 
-        setupScene.setButton(logoutButton,"Déconnexion", Pos.CENTER,20,20,100,150,new Font(10),true,anchorPane);
-        setupScene.setButton(informationMenuButton,"Informations",Pos.CENTER,200,20,100,150,new Font(10),true,anchorPane);
+        setupScene.setButton(logoutButton,"Déconnexion", Pos.CENTER,20,20,80,120,new Font(15),true,anchorPane);
+        setupScene.setButton(informationMenuButton,"Informations",Pos.CENTER,170,20,80,120,new Font(15),true,anchorPane);
+        setupScene.setButton(historyShoppingButton,"Historique achats",Pos.CENTER,320,20,80,140,new Font(15),true,anchorPane);
 
-        setupScene.setCircle(circleSetting,18,670,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())), Paint.valueOf("GREEN"), StrokeType.INSIDE,1.0,true,anchorPane);
+        setupScene.setCircle(circleSetting,30,750,40,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())), Paint.valueOf("GREEN"), StrokeType.INSIDE,1.0,true,anchorPane);
 
         logoutButton.setOnMouseClicked((event)-> goToConnexionMenu());
         informationMenuButton.setOnMouseClicked((event)-> goToInformationMenu());
@@ -79,6 +80,7 @@ public class MainMenuController implements InterfaceMenu{
         pictureSlotMachine.setOnMouseClicked((event)-> goToSlotMachineMenu());
         pictureRoulette.setOnMouseClicked((event)-> goToRouletteMenu());
         circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
+        historyShoppingButton.setOnMouseClicked((event) -> goToHistoryShoppingMenu());
 
         root.getChildren().add(anchorPane);
         stage.show();
@@ -116,6 +118,11 @@ public class MainMenuController implements InterfaceMenu{
         settingMenuController.exitSettingMenu();
         RouletteMenuController rouletteMenuController = new RouletteMenuController(user,stage,soundVolume,backgroundAnimation);
         rouletteMenuController.setting();
+    }
+
+    private void goToHistoryShoppingMenu(){
+        HistoryShoppingMenuController historyShoppingMenuController = new HistoryShoppingMenuController(user,stage,soundVolume,backgroundAnimation);
+        historyShoppingMenuController.setting();
     }
 
     public void setSoundVolume(double newSoundVolume){
