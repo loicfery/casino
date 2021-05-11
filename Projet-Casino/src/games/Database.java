@@ -96,7 +96,13 @@ public class Database {
     }
 
     public ResultSet select(String nameOfTable, String condition) {
-        String request = "SELECT * FROM " + nameOfTable + "WHERE" + condition;
+        String request;
+        if(condition.length() == 0){
+            request = "SELECT * FROM " + nameOfTable;
+        }
+        else {
+            request = "SELECT * FROM " + nameOfTable + "WHERE" + condition;
+        }
         try {
             Statement statement = connection.createStatement();
             return statement.executeQuery(request);
