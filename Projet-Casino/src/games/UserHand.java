@@ -7,6 +7,9 @@ public class UserHand  {
     private List<Card> hand;
     private User user;
 
+    public UserHand(){
+        this.hand = new ArrayList<>();
+    }
 
     public UserHand(User user) {
         this.hand = new ArrayList<>();

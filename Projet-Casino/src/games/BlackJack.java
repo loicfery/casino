@@ -11,6 +11,8 @@ public class BlackJack {
     private int insuranceUser;
     private int currentHand = 1;
 
+    public BlackJack(){}
+
     public BlackJack(User user) {
         this.user = user;
         card_package = new CardPackage();
@@ -36,9 +38,7 @@ public class BlackJack {
     }
     //Vérifie si le joueur à fait un blackJack (si la valeur de ses cartes est 21)
     public boolean verifyBlackJack(UserHand userHand){
-        int valueOfHand;
-        valueOfHand = countValueOfUserHand(userHand);
-        if(valueOfHand == 21){
+        if(countValueOfUserHand(userHand) == 21){
             return true;
         }
         return false;

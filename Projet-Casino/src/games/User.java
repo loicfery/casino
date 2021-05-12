@@ -25,8 +25,7 @@ public class User {
 
     /** Récupère le nombre total de jeton de l'utilisateur **/
     public void getToken(){
-        //recupération nombre de token dans base de donnée
-        //this.numberOfToken = ...;
+
     }
 
     /** Récupère la somme totale d'argent de l'utilisateur **/
