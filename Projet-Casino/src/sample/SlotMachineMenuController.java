@@ -71,6 +71,9 @@ public class SlotMachineMenuController implements InterfaceMenu{
 
     private final SlotMachine slotMachine;
 
+    /** Base de données **/
+    private final String tableHistoryPartyGame  = "historiquepartiesjouees";
+    private final String columnGameSlotMachine = "slot machine";
 
     public SlotMachineMenuController(User user, Stage stage, Database database, double soundVolume, boolean backgroundAnimation){
         this.user = user;
@@ -338,7 +341,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
             timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> soundPayout.play()));
         }
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> slotMachine.reset()));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> database.insert("historiquepartiesjouees","\""+user.getEmail()+"\","+gain+",\"slot machine\"")));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> database.insert(tableHistoryPartyGame,"\""+user.getEmail()+"\","+gain+",\""+columnGameSlotMachine+"\"")));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelToken.setText("Jetons : "+user.getToken())));
 
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> createSoundSlot()));

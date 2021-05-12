@@ -59,6 +59,12 @@ public class InformationMenuController implements InterfaceMenu{
     private final TextField textPseudonym = new TextField();
     private final TextField textPassword = new TextField();
 
+    /** Base de données **/
+    private final String tableUser = "utilisateur";
+    private final String columnMailUser = "MailUser";
+    private final String columnNameUser = "NameUser";
+    private final String columnPassword = "Password";
+
     public InformationMenuController(User user, Stage stage, Database database, double soundVolume, boolean backgroundAnimation){
         this.user = user;
         this.stage = stage;
@@ -116,7 +122,7 @@ public class InformationMenuController implements InterfaceMenu{
 
     private void getPassword(String email){
         try {
-            ResultSet resultSet = database.select("utilisateur", "MailUser = \"" + email + "\"");
+            ResultSet resultSet = database.select(tableUser, columnMailUser+" = \"" + email + "\"");
             if(resultSet.next()) {
                 textPassword.setText(resultSet.getString(3));
             }
@@ -140,12 +146,12 @@ public class InformationMenuController implements InterfaceMenu{
         if(!textEmail.getText().isEmpty()){
             if(ControleSaisie.validEmail(textEmail.getText())) { //vérification email pas déjà pris
                 try {
-                    ResultSet resultSet = database.select("utilisateur", "MailUser = \"" + textEmail.getText() + "\"");
+                    ResultSet resultSet = database.select(tableUser, columnMailUser+" = \"" + textEmail.getText() + "\"");
                     if (resultSet.next()) {
                         showStatusChanged("Cette email est déjà utilisé", Color.RED);
                     }
                     else {
-                        database.update("utilisateur","MailUser","\""+textEmail.getText()+"\"","MailUser = \""+user.getEmail()+"\"");
+                        database.update(tableUser,"MailUser","\""+textEmail.getText()+"\"",columnMailUser+" = \""+user.getEmail()+"\"");
                         user.setEmail(textEmail.getText());
                         showStatusChanged("L'email a été modifié", Color.GREEN);
                     }
@@ -167,7 +173,7 @@ public class InformationMenuController implements InterfaceMenu{
     private void changePseudonym(){
         if(!textPseudonym.getText().isEmpty()){
             if(ControleSaisie.isUsername(textPseudonym.getText()) && textPseudonym.getText().length() > 5) {
-                database.update("utilisateur","NameUser","\""+textPseudonym.getText()+"\"","MailUser = \""+user.getEmail()+"\"");
+                database.update(tableUser,columnNameUser,"\""+textPseudonym.getText()+"\"",columnMailUser+" = \""+user.getEmail()+"\"");
                 user.setPseudo(textPseudonym.getText());
                 showStatusChanged("Le pseudonyme a été modifié", Color.GREEN);
             }
@@ -186,7 +192,7 @@ public class InformationMenuController implements InterfaceMenu{
     private void changePassword(){
         if(!textPassword.getText().isEmpty()){
             if(ControleSaisie.validPassword(textPassword.getText()) && textPassword.getText().length() > 5){
-                database.update("utilisateur","Password","\""+textPassword.getText()+"\"","MailUser = \""+user.getEmail()+"\"");
+                database.update(tableUser,columnPassword,"\""+textPassword.getText()+"\"",columnMailUser+" = \""+user.getEmail()+"\"");
                 showStatusChanged("Le mot de passe a été modifié", Color.GREEN);
             }
             else {

@@ -9,6 +9,12 @@ public class User {
     private String rank;
     private Database database;
 
+    /** Base de données **/
+    private final String tableUser = "utilisateur";
+    private final String columnEmailUser = "MailUser";
+    private final String columnToken = "Token";
+    private final String columnMoney = "Money";
+
     public User(String pseudo, String email, String rank, int numberOfToken, int amountOfMoney, Database database) {
         this.pseudo = pseudo;
         this.email = email;
@@ -28,25 +34,25 @@ public class User {
     /** Ajoute des jetons **/
     public void addToken(int numberOfToken){
         this.numberOfToken = this.numberOfToken + numberOfToken;
-        database.update("utilisateur","Token",this.numberOfToken+"","MailUser = \""+email+"\"");
+        database.update(tableUser,columnToken,this.numberOfToken+"",columnEmailUser+" = \""+email+"\"");
     }
 
     /** Ajoute une somme d'argent **/
     public void addMoney(int numberOfMoney){
         this.amountOfMoney = this.amountOfMoney + numberOfMoney;
-        database.update("utilisateur","Money",this.amountOfMoney+"","MailUser = \""+email+"\"");
+        database.update(tableUser,columnMoney,this.amountOfMoney+"",columnEmailUser+" = \""+email+"\"");
     }
 
     /** Enlève des jetons **/
     public void removeToken(int numberOfToken){
         this.numberOfToken = this.numberOfToken - numberOfToken;
-        database.update("utilisateur","Token",this.numberOfToken+"","MailUser = \""+email+"\"");
+        database.update(tableUser,columnToken,this.numberOfToken+"",columnEmailUser+" = \""+email+"\"");
     }
 
     /** Enlève une somme d'argent **/
     public void removeMoney(int numberOfMoney){
         this.amountOfMoney = this.amountOfMoney - numberOfMoney;
-        database.update("utilisateur","Money",this.amountOfMoney+"","MailUser = \""+email+"\"");
+        database.update(tableUser,columnMoney,this.amountOfMoney+"",columnEmailUser+" = \""+email+"\"");
     }
 
     public void setPseudo(String newPseudo){ pseudo = newPseudo; }
