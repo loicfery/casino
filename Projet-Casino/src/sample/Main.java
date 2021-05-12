@@ -11,7 +11,7 @@ public class Main extends Application {
     public void start(Stage stage) throws  Exception{
         Database database = new Database("casino","root","Poussin13!"); //base de données loic (si vous voulez tester avec la votre changer les valeurs)
 
-        //stage.setResizable(false);
+        stage.setResizable(false);
 
         ConnexionMenuController controller = new ConnexionMenuController(stage,database);
         controller.setting();
