@@ -557,6 +557,7 @@ public class BlackJackMenuController implements InterfaceMenu{
             labelProfit.setText("Gain : -" + tokenLose);
             labelToken.setText("Jetons : " + user.getToken());
             newPartyButton.setVisible(true);
+            database.insert("historiquepartiesjouees","\""+user.getEmail()+"\",\"Black Jack\","+tokenLose);
         }
         else {
             surrender = true;
@@ -658,6 +659,8 @@ public class BlackJackMenuController implements InterfaceMenu{
             logMenuController.getLog("Le joueur "+user.getPseudo()+" ne perd et ne gagne aucun jeton.");
         }
 
+        System.out.println("token gain : "+gain);
+        database.insert("historiquepartiesjouees","\""+user.getEmail()+"\","+gain+",\"Black Jack\"");
         labelProfit.setText("Gain : " + gain);
         labelToken.setText("Jetons : " + user.getToken());
     }

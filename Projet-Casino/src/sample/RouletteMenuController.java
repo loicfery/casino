@@ -1202,6 +1202,7 @@ public class RouletteMenuController implements InterfaceMenu{
         if(newSoundVolume <= 1.0 && newSoundVolume >= 0){
             soundVolume = newSoundVolume;
             tokenSound.setVolume(soundVolume);
+            rouletteSound.setVolume(soundVolume);
         }
     }
 

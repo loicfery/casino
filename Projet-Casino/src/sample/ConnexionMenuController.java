@@ -113,19 +113,19 @@ public class ConnexionMenuController implements InterfaceMenu{
     /** Méthode pour se connecter avec un email et un mot de passe **/
     private void goToMainMenu(){
         if (!textEmail.getText().isEmpty() && !textPassword.getText().isEmpty()) {
-            labelTitle.setVisible(false);
-            labelEmail.setVisible(false);
-            textEmail.setVisible(false);
-            labelPassword.setVisible(false);
-            textPassword.setVisible(false);
-            buttonLogin.setVisible(false);
-            buttonNewAccount.setVisible(false);
-            labelError.setVisible(false);
-            settingMenuController.exitSettingMenu();
-
             try {
                 ResultSet resultSet = database.select("utilisateur", "MailUser = \"" + textEmail.getText() + "\" && Password = \"" + textPassword.getText() + "\"");
                 if (resultSet.next()) {
+                    labelTitle.setVisible(false);
+                    labelEmail.setVisible(false);
+                    textEmail.setVisible(false);
+                    labelPassword.setVisible(false);
+                    textPassword.setVisible(false);
+                    buttonLogin.setVisible(false);
+                    buttonNewAccount.setVisible(false);
+                    labelError.setVisible(false);
+                    settingMenuController.exitSettingMenu();
+
                     user = new User(resultSet.getString(2), resultSet.getString(1), resultSet.getString(6), resultSet.getInt(5), resultSet.getInt(4), database);
                     switchMainMenu();
                 }

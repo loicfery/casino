@@ -338,6 +338,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
             timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> soundPayout.play()));
         }
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> slotMachine.reset()));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> database.insert("historiquepartiesjouees","\""+user.getEmail()+"\","+gain+",\"slot machine\"")));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelToken.setText("Jetons : "+user.getToken())));
 
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> createSoundSlot()));
@@ -352,6 +353,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
         if(newSoundVolume >= 0 && newSoundVolume <= 1.0){
             this.soundVolume = newSoundVolume;
             soundSlot.setVolume(soundVolume);
+            soundPayout.setVolume(soundVolume);
         }
     }
 
