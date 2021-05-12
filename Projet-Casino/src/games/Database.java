@@ -107,7 +107,7 @@ public class Database {
             Statement statement = connection.createStatement();
             return statement.executeQuery(request);
         } catch (SQLException e) {
-            shutdown("Anomalie lors de l'execution de la requête");
+            shutdown("Anomalie lors de l'execution de la requête : "+request);
         }
         return null;
     }
