@@ -9,7 +9,10 @@ public class Main extends Application {
     }
 
     public void start(Stage stage) throws  Exception{
-        Database database = new Database("casino","root","Poussin13!"); //base de données loic (si vous voulez tester avec la votre changer les valeurs)
+        String bd = "casino";
+        String userName = "root";
+        String password = "";
+        Database database = new Database(bd,userName,password); //si vous voulez tester avec la votre changer les valeurs
 
         stage.setResizable(false);
 
