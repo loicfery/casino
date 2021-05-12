@@ -1,5 +1,6 @@
 package sample;
 
+import games.Database;
 import games.User;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -27,6 +28,7 @@ public class MainMenuController implements InterfaceMenu{
     private final SetupScene setupScene = new SetupScene();
     private final User user;
     private final SettingMenuController settingMenuController;
+    private final Database database;
 
     private final Button logoutButton = new Button();
     private final Button informationMenuButton = new Button();
@@ -43,12 +45,13 @@ public class MainMenuController implements InterfaceMenu{
     private boolean backgroundAnimation;
 
 
-    public MainMenuController(Stage stage,User user, double soundVolume, boolean backgroundAnimation){
+    public MainMenuController(Stage stage,User user, Database database, double soundVolume, boolean backgroundAnimation){
         this.stage = stage;
         this.user = user;
         this.soundVolume = soundVolume;
         this.backgroundAnimation = backgroundAnimation;
         settingMenuController = new SettingMenuController(this, soundVolume,backgroundAnimation);
+        this.database = database;
     }
 
     public void setting(){
@@ -88,13 +91,13 @@ public class MainMenuController implements InterfaceMenu{
 
     private void goToConnexionMenu(){
         settingMenuController.exitSettingMenu();
-        ConnexionMenuController controller = new ConnexionMenuController(stage);
+        ConnexionMenuController controller = new ConnexionMenuController(stage,database);
         controller.setting();
     }
 
     private void goToInformationMenu(){
         settingMenuController.exitSettingMenu();
-        InformationMenuController informationMenuController = new InformationMenuController(user,stage,soundVolume,backgroundAnimation);
+        InformationMenuController informationMenuController = new InformationMenuController(user,stage, database,soundVolume,backgroundAnimation);
         informationMenuController.setting();
     }
 
@@ -104,19 +107,19 @@ public class MainMenuController implements InterfaceMenu{
 
     private void goToBlackJackMenu(){
         settingMenuController.exitSettingMenu();
-        BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage,soundVolume,backgroundAnimation);
+        BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage, database,soundVolume,backgroundAnimation);
         blackJackMenuController.setting();
     }
 
     private void goToSlotMachineMenu(){
         settingMenuController.exitSettingMenu();
-        SlotMachineMenuController slotMachineMenuController = new SlotMachineMenuController(user,stage,soundVolume,backgroundAnimation);
+        SlotMachineMenuController slotMachineMenuController = new SlotMachineMenuController(user,stage,database,soundVolume,backgroundAnimation);
         slotMachineMenuController.setting();
     }
 
     private void goToRouletteMenu(){
         settingMenuController.exitSettingMenu();
-        RouletteMenuController rouletteMenuController = new RouletteMenuController(user,stage,soundVolume,backgroundAnimation);
+        RouletteMenuController rouletteMenuController = new RouletteMenuController(user,stage, database,soundVolume,backgroundAnimation);
         rouletteMenuController.setting();
     }
 

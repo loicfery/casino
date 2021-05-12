@@ -1,5 +1,6 @@
 package sample;
 
+import games.Database;
 import games.User;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -22,6 +23,8 @@ import javafx.scene.control.Button;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
+import java.sql.ResultSet;
+
 
 public class ConnexionMenuController implements InterfaceMenu{
 
@@ -31,6 +34,7 @@ public class ConnexionMenuController implements InterfaceMenu{
     private final SetupScene setupScene = new SetupScene();
     private User user;
     private final SettingMenuController settingMenuController;
+    private final Database database;
 
     private double soundVolume;
     private boolean backgroundAnimation;
@@ -57,11 +61,12 @@ public class ConnexionMenuController implements InterfaceMenu{
     private final Circle circleSetting = new Circle();
 
 
-    public ConnexionMenuController(Stage stage){
+    public ConnexionMenuController(Stage stage, Database database){
         this.stage = stage;
         this.soundVolume = 0.5;
         this.backgroundAnimation = true;
         settingMenuController = new SettingMenuController(this, soundVolume,backgroundAnimation);
+        this.database = database;
     }
 
     /** Méthode qui initialise l'interface de connexion **/
@@ -118,11 +123,18 @@ public class ConnexionMenuController implements InterfaceMenu{
             labelError.setVisible(false);
             settingMenuController.exitSettingMenu();
 
-            //rechercher de user dans la base de donnée
-            //setUser(...) --> récupération de speudo,email, rank
-            //récupération nombre jeton et argent de user
+            try {
+                ResultSet resultSet = database.select("utilisateur", "MailUser = \"" + textEmail.getText() + "\" && Password = \"" + textPassword.getText() + "\"");
+                if (resultSet.next()) {
+                    user = new User(resultSet.getString(2), resultSet.getString(1), resultSet.getString(6), resultSet.getInt(5), resultSet.getInt(4), database);
+                    switchMainMenu();
+                }
+                else {
+                    showError("L'email ou le mot de passe est incorrect");
+                }
+            }
+            catch (Exception e){}
 
-            switchMainMenu();
         } else {
             showError("Un ou plusieurs champs sont vides");
         }
@@ -165,10 +177,8 @@ public class ConnexionMenuController implements InterfaceMenu{
             labelError.setVisible(false);
             settingMenuController.exitSettingMenu();
 
-            //création d'un user dans la base de donnée
-            //récupération nombre jeton et argent de user
-
-            setUser(new User(textNewPseudo.getText(),textNewEmail.getText(),"USER"));
+            database.insert("utilisateur","\""+textEmail.getText()+"\",\""+textNewPseudo.getText()+"\",\""+textNewPassword.getText()+"\",0,100,\"USER\"");
+            setUser(new User(textNewPseudo.getText(),textNewEmail.getText(),"USER",0,100,database));
             switchMainMenu();
         } else {
             showError("Un ou plusieurs champs sont vides");
@@ -217,10 +227,7 @@ public class ConnexionMenuController implements InterfaceMenu{
 
     /** Méthode pour charger le menu principal **/
     private void switchMainMenu(){
-        user = new User("Loic","loic-fery@orange.fr","ADMIN"); //pour tester
-        user.addToken(50); // pour tester
-
-        MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume,backgroundAnimation);
+        MainMenuController mainMenuController = new MainMenuController(stage,user, database, soundVolume,backgroundAnimation);
         mainMenuController.setting();
     }
 

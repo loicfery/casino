@@ -1,5 +1,6 @@
 package sample;
 
+import games.Database;
 import games.User;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -28,6 +29,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +57,7 @@ public class RouletteMenuController implements InterfaceMenu{
     private final SettingMenuController settingMenuController;
     private final LogMenuController logMenuController;
     private final RuleMenuController ruleMenuController;
+    private final Database database;
 
     private final List<Rectangle> listOfRectangleGameBoard = new ArrayList<>();
     private final List<Label> listOfLabelGameBoard = new ArrayList<>();
@@ -89,7 +92,7 @@ public class RouletteMenuController implements InterfaceMenu{
     private final Rectangle rectangleInformationBet = new Rectangle();
 
 
-    public RouletteMenuController(User user, Stage stage, double soundVolume, boolean backgroundAnimation){
+    public RouletteMenuController(User user, Stage stage, Database database, double soundVolume, boolean backgroundAnimation){
         this.user = user;
         this.stage = stage;
         this.soundVolume = soundVolume;
@@ -97,6 +100,7 @@ public class RouletteMenuController implements InterfaceMenu{
         logMenuController = new LogMenuController();
         settingMenuController = new SettingMenuController(this,soundVolume,backgroundAnimation);
         ruleMenuController = new RuleMenuController(this);
+        this.database = database;
     }
 
     /** Méthode qui initialise l'interface de la roulette **/
@@ -120,7 +124,7 @@ public class RouletteMenuController implements InterfaceMenu{
         roulette.setPreserveRatio(true);
 
         setupScene.setLabel(labelProfit,"Gain : 0",Pos.CENTER_LEFT,14.0,718.0,68.0,607.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelTokenUser,"Jetons : "+user.getNumberOfToken(),Pos.CENTER_LEFT,14.0,640.0,68.0,613.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelTokenUser,"Jetons : "+user.getToken(),Pos.CENTER_LEFT,14.0,640.0,68.0,613.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelPseudo,"Joueur : "+user.getPseudo(),Pos.CENTER_LEFT,14.0,563.0,68.0,613.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setRectangle(rectangleInformationBet,212,368,202,387,5.0,5.0,Paint.valueOf("WHITE"),Paint.valueOf("WHITE"),1.0,StrokeType.INSIDE,false,anchorPane);
         setupScene.setLabel(labelInformationBetToken,"Information",Pos.CENTER,212.0,368.0,202.0,387.0,new Font(18),Paint.valueOf("BLACK"),false,anchorPane);
@@ -1189,7 +1193,7 @@ public class RouletteMenuController implements InterfaceMenu{
     private void returnMainMenu(){
         settingMenuController.exitSettingMenu();
         logMenuController.exitLogMenu();
-        MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume,backgroundAnimation);
+        MainMenuController mainMenuController = new MainMenuController(stage,user, database,soundVolume,backgroundAnimation);
         mainMenuController.setting();
     }
 

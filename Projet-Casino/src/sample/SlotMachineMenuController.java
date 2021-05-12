@@ -1,5 +1,6 @@
 package sample;
 
+import games.Database;
 import games.SlotMachine;
 import games.User;
 import javafx.animation.*;
@@ -38,6 +39,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
     private final SettingMenuController settingMenuController;
     private final LogMenuController logMenuController;
     private final RuleMenuController ruleMenuController;
+    private final Database database;
 
     private final List<Rectangle> listOfRectangleAnimate = new ArrayList<>();
     private final List<FillTransition> listOfFillTransition = new ArrayList<>();
@@ -70,7 +72,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
     private final SlotMachine slotMachine;
 
 
-    public SlotMachineMenuController(User user, Stage stage, double soundVolume, boolean backgroundAnimation){
+    public SlotMachineMenuController(User user, Stage stage, Database database, double soundVolume, boolean backgroundAnimation){
         this.user = user;
         this.stage = stage;
         this.soundVolume = soundVolume;
@@ -79,6 +81,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
         logMenuController = new LogMenuController();
         settingMenuController = new SettingMenuController(this, soundVolume,backgroundAnimation);
         ruleMenuController = new RuleMenuController(this);
+        this.database = database;
     }
 
     /** Méthode qui initialise le'interface de la machine à sous **/
@@ -105,7 +108,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
         setupScene.setImageView(pictureSlot2,330,300.0,150.0,151.0,new Image(getClass().getResource("image/slot_machine_seven.jpg").toExternalForm()),true,anchorPane);
         setupScene.setImageView(pictureSlot3,530.0,300.0,150.0,151.0,new Image(getClass().getResource("image/slot_machine_seven.jpg").toExternalForm()),true,anchorPane);
         setupScene.setLabel(labelProfit,"Gain : 0",Pos.CENTER_LEFT,39.0,686.0,63.0,455.0,new Font(33.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelToken,"Jetons : "+user.getNumberOfToken(),Pos.CENTER_LEFT,39.0,615.0,70.0,455.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelToken,"Jetons : "+user.getToken(),Pos.CENTER_LEFT,39.0,615.0,70.0,455.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelUserPseudo,"Joueur : "+user.getPseudo(),Pos.CENTER_LEFT,39.0,565.0,50.0,463.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setButton(returnMainMenuButton,"Quitter",Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
 
@@ -191,12 +194,13 @@ public class SlotMachineMenuController implements InterfaceMenu{
 
     /** Méthode qui lance la machine à sous **/
     private void startingGame(){
-        labelToken.setText("Jetons : "+user.getNumberOfToken());
-        if(user.getNumberOfToken() > 0) {
+        labelToken.setText("Jetons : "+user.getToken());
+        if(user.getToken() > 0) {
             logMenuController.resetLog();
             logMenuController.getLog("Le joueur "+user.getPseudo()+" démarre une nouvelle partie.");
             labelError.setVisible(false);
             slotMachine.useSlotMachine();
+            labelToken.setText("Jetons : "+user.getToken());
 
             startingGameButton.setDisable(true);
             logMenuController.getLog("Le joueur "+user.getPseudo()+" a lancé la machine à sous");
@@ -216,7 +220,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
         ruleMenuController.exitRuleMenu();
         soundSlot.stop();
         soundPayout.stop();
-        MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume,backgroundAnimation);
+        MainMenuController mainMenuController = new MainMenuController(stage,user,database,soundVolume,backgroundAnimation);
         mainMenuController.setting();
     }
 
@@ -334,7 +338,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
             timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> soundPayout.play()));
         }
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> slotMachine.reset()));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelToken.setText("Jetons : "+user.getNumberOfToken())));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelToken.setText("Jetons : "+user.getToken())));
 
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> createSoundSlot()));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e ->  startingGameButton.setDisable(false)));
