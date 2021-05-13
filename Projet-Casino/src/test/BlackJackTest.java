@@ -1,12 +1,12 @@
 package test;
 
-import games.*;
+/*import games.*;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;*/
 
-class BlackJackTest {
+/*class BlackJackTest {
 
     @org.junit.jupiter.api.Test
     void countValueOfUserHand() {
@@ -121,4 +121,4 @@ class BlackJackTest {
     @org.junit.jupiter.api.Test
     void getInsuranceUser() {
     }
-}
+}*/

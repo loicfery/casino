@@ -333,12 +333,12 @@ public class SlotMachineMenuController implements InterfaceMenu{
         if(gain > 0){
             timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> soundPayout.play()));
             timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Le joueur "+user.getPseudo()+" a gagné "+gain+" jetons.")));
-            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> database.insert(tableHistoryPartyGame,"\""+user.getEmail()+"\","+gain+",\""+columnGameSlotMachine+"\"")));
+            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> database.insert(tableHistoryPartyGame,"'"+user.getEmail()+"',"+gain+",'"+columnGameSlotMachine+"'")));
 
         }
         else {
             timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Le joueur "+user.getPseudo()+" a gagné aucun jeton.")));
-            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> database.insert(tableHistoryPartyGame,"\""+user.getEmail()+"\","+-1+",\""+columnGameSlotMachine+"\"")));
+            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> database.insert(tableHistoryPartyGame,"'"+user.getEmail()+"',-1, '"+columnGameSlotMachine+"'")));
 
         }
 

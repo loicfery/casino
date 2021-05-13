@@ -15,7 +15,7 @@ public class Database {
         this.result = null;
         String url = "jdbc:mysql://localhost:3306/" + bd + "?user=" + userName
                 + "&password=" + passWord + "&useSSL=false&useUnicode=true" +
-                "&serverTimezone=UTC";
+                "&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false";
         System.out.println(url);
         authenticate(url);
     }

@@ -61,9 +61,9 @@ public class ConnexionMenuController implements InterfaceMenu{
     private final Circle circleSetting = new Circle();
 
     /** Base de données **/
-    private final String tableUser = "utilisateur";
-    private final String columnMailUser = "MailUser";
-    private final String columnPassword = "Password";
+    private final String tableUser = "Utilisateurs";
+    private final String columnMailUser = "MailUser_Utilisateurs";
+    private final String columnPassword = "Password_Utilisateurs";
 
     public ConnexionMenuController(Stage stage, Database database){
         this.stage = stage;
@@ -118,7 +118,7 @@ public class ConnexionMenuController implements InterfaceMenu{
     private void goToMainMenu(){
         if (!textEmail.getText().isEmpty() && !textPassword.getText().isEmpty()) {
             try {
-                ResultSet resultSet = database.select(tableUser, columnMailUser+" = \"" + textEmail.getText() + "\" && "+ columnPassword +" = \"" + textPassword.getText() + "\"");
+                ResultSet resultSet = database.select(tableUser, columnMailUser+" = '" + textEmail.getText() + "' and "+ columnPassword +" = '" + textPassword.getText() + "'");
                 if (resultSet.next()) {
                     labelTitle.setVisible(false);
                     labelEmail.setVisible(false);
@@ -181,7 +181,7 @@ public class ConnexionMenuController implements InterfaceMenu{
             labelError.setVisible(false);
             settingMenuController.exitSettingMenu();
 
-            database.insert(tableUser,"\""+textEmail.getText()+"\",\""+textNewPseudo.getText()+"\",\""+textNewPassword.getText()+"\",0,100,\"USER\"");
+            database.insert(tableUser,"null, '"+textNewPseudo.getText()+"', '"+textEmail.getText()+"','"+textNewPassword.getText()+"',100,0");
             setUser(new User(textNewPseudo.getText(),textNewEmail.getText(),"USER",0,100,database));
             switchMainMenu();
         } else {
