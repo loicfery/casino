@@ -48,7 +48,18 @@ class BlackJackTest {
 
     @org.junit.jupiter.api.Test
     void giveCardToUser() {
-
+        BlackJack blackJack = new BlackJack();
+        UserHand croupier = new UserHand();
+        UserHand joueur = new UserHand();
+        CardPackage cardPackage = new CardPackage();
+        cardPackage.initCardPackage();
+        int res = 2;
+        blackJack.getListOfUserHand().add(0, croupier);
+        blackJack.getListOfUserHand().add(1, joueur);
+        blackJack.giveCardToUser();
+        assertEquals(blackJack.getListOfUserHand().get(1).getHand().size(), res, "Le joueur a 2 cartes");
+        res = 1;
+        assertEquals(blackJack.getListOfUserHand().get(0).getHand().size(), res, "Le joueur a 1 cartes");
     }
 
     @org.junit.jupiter.api.Test
