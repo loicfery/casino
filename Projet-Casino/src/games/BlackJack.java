@@ -11,7 +11,9 @@ public class BlackJack {
     private int insuranceUser;
     private int currentHand = 1;
 
-    public BlackJack(){}
+    public BlackJack(){
+        listOfUserHand = new ArrayList<>();
+    }
 
     public BlackJack(User user) {
         this.user = user;
