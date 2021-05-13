@@ -1,5 +1,6 @@
 package sample;
 
+import games.Database;
 import games.User;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -27,10 +28,11 @@ public class MainMenuController implements InterfaceMenu{
     private final SetupScene setupScene = new SetupScene();
     private final User user;
     private final SettingMenuController settingMenuController;
+    private final Database database;
 
     private final Button logoutButton = new Button();
     private final Button informationMenuButton = new Button();
-    private final Button historyShoppingButton = new Button();
+    private final Button historyGamePlayedButton = new Button();
 
     private final ImageView pictureBlackJackMenu = new ImageView();
     private final ImageView pictureSlotMachine = new ImageView();
@@ -43,12 +45,13 @@ public class MainMenuController implements InterfaceMenu{
     private boolean backgroundAnimation;
 
 
-    public MainMenuController(Stage stage,User user, double soundVolume, boolean backgroundAnimation){
+    public MainMenuController(Stage stage,User user, Database database, double soundVolume, boolean backgroundAnimation){
         this.stage = stage;
         this.user = user;
         this.soundVolume = soundVolume;
         this.backgroundAnimation = backgroundAnimation;
         settingMenuController = new SettingMenuController(this, soundVolume,backgroundAnimation);
+        this.database = database;
     }
 
     public void setting(){
@@ -65,11 +68,11 @@ public class MainMenuController implements InterfaceMenu{
         setupScene.setImageView(pictureBlackJackMenu,20.0,170.0,300.0,370.0,new Image(getClass().getResource("image/blackjack.png").toExternalForm()),true,anchorPane);
         setupScene.setImageView(pictureSlotMachine,410.0,490.0,290.0,370.0,new Image(getClass().getResource("image/slot_machine.jpg").toExternalForm()),true,anchorPane);
         setupScene.setImageView(pictureRoulette,20.0,490.0,290.0,370.0,new Image(getClass().getResource("image/roulette2.jpg").toExternalForm()),true,anchorPane);
-        setupScene.setImageView(pictureShop,490,20,80,120,new Image(getClass().getResource("image/shop.jpg").toExternalForm()),true,anchorPane);
+        setupScene.setImageView(pictureShop,315,20,80,120,new Image(getClass().getResource("image/shop.jpg").toExternalForm()),true,anchorPane);
 
         setupScene.setButton(logoutButton,"Déconnexion", Pos.CENTER,20,20,80,120,new Font(15),true,anchorPane);
         setupScene.setButton(informationMenuButton,"Informations",Pos.CENTER,170,20,80,120,new Font(15),true,anchorPane);
-        setupScene.setButton(historyShoppingButton,"Historique achats",Pos.CENTER,320,20,80,140,new Font(15),true,anchorPane);
+        setupScene.setButton(historyGamePlayedButton,"Historique jeux",Pos.CENTER,470,20,80,150,new Font(15),true,anchorPane);
 
         setupScene.setCircle(circleSetting,30,750,40,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())), Paint.valueOf("GREEN"), StrokeType.INSIDE,1.0,true,anchorPane);
 
@@ -80,7 +83,7 @@ public class MainMenuController implements InterfaceMenu{
         pictureSlotMachine.setOnMouseClicked((event)-> goToSlotMachineMenu());
         pictureRoulette.setOnMouseClicked((event)-> goToRouletteMenu());
         circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
-        historyShoppingButton.setOnMouseClicked((event) -> goToHistoryShoppingMenu());
+        historyGamePlayedButton.setOnMouseClicked((event)-> goToHistoryGamePlayedMenu());
 
         root.getChildren().add(anchorPane);
         stage.show();
@@ -88,41 +91,44 @@ public class MainMenuController implements InterfaceMenu{
 
     private void goToConnexionMenu(){
         settingMenuController.exitSettingMenu();
-        ConnexionMenuController controller = new ConnexionMenuController(stage);
+        ConnexionMenuController controller = new ConnexionMenuController(stage,database);
         controller.setting();
     }
 
     private void goToInformationMenu(){
         settingMenuController.exitSettingMenu();
-        InformationMenuController informationMenuController = new InformationMenuController(user,stage,soundVolume,backgroundAnimation);
+        InformationMenuController informationMenuController = new InformationMenuController(user,stage, database,soundVolume,backgroundAnimation);
         informationMenuController.setting();
     }
 
     private void goToShopMenu() {
         settingMenuController.exitSettingMenu();
+        ShopMenuController shopMenuController = new ShopMenuController(stage,user,database,soundVolume,backgroundAnimation);
+        shopMenuController.setting();
     }
 
     private void goToBlackJackMenu(){
         settingMenuController.exitSettingMenu();
-        BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage,soundVolume,backgroundAnimation);
+        BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage, database,soundVolume,backgroundAnimation);
         blackJackMenuController.setting();
     }
 
     private void goToSlotMachineMenu(){
         settingMenuController.exitSettingMenu();
-        SlotMachineMenuController slotMachineMenuController = new SlotMachineMenuController(user,stage,soundVolume,backgroundAnimation);
+        SlotMachineMenuController slotMachineMenuController = new SlotMachineMenuController(user,stage,database,soundVolume,backgroundAnimation);
         slotMachineMenuController.setting();
     }
 
     private void goToRouletteMenu(){
         settingMenuController.exitSettingMenu();
-        RouletteMenuController rouletteMenuController = new RouletteMenuController(user,stage,soundVolume,backgroundAnimation);
+        RouletteMenuController rouletteMenuController = new RouletteMenuController(user,stage, database,soundVolume,backgroundAnimation);
         rouletteMenuController.setting();
     }
 
-    private void goToHistoryShoppingMenu(){
-        HistoryShoppingMenuController historyShoppingMenuController = new HistoryShoppingMenuController(user,stage,soundVolume,backgroundAnimation);
-        historyShoppingMenuController.setting();
+    private void goToHistoryGamePlayedMenu(){
+        settingMenuController.exitSettingMenu();
+        HistoryGamePlayedMenuController historyGamePlayedMenuController = new HistoryGamePlayedMenuController(user,stage,database,soundVolume,backgroundAnimation);
+        historyGamePlayedMenuController.setting();
     }
 
     public void setSoundVolume(double newSoundVolume){

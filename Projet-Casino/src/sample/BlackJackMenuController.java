@@ -2,6 +2,7 @@ package sample;
 
 import games.BlackJack;
 import games.Card;
+import games.Database;
 import games.User;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -49,6 +50,7 @@ public class BlackJackMenuController implements InterfaceMenu{
     private final LogMenuController logMenuController;
     private final SettingMenuController settingMenuController;
     private final RuleMenuController ruleMenuController;
+    private final Database database;
 
     private final BlackJack blackJack;
 
@@ -101,16 +103,21 @@ public class BlackJackMenuController implements InterfaceMenu{
     private final Circle circleRule = new Circle();
     private final Circle circleSetting = new Circle();
 
-    public BlackJackMenuController(User user,Stage stage, double soundVolume, boolean backgroundAnimation){
+    /** Base de données **/
+    private final String tableHistoryPartyGame = "historiquepartiesjouees";
+    private final String columnGameBlackJack = "Black Jack";
+
+    public BlackJackMenuController(User user,Stage stage, Database database, double soundVolume, boolean backgroundAnimation){
         this.stage = stage;
         this.user = user;
         this.soundVolume = soundVolume;
-        this.valueTokenUserBegin = user.getNumberOfToken();
+        this.valueTokenUserBegin = user.getToken();
         this.backgroundAnimation = backgroundAnimation;
         logMenuController = new LogMenuController();
         settingMenuController = new SettingMenuController(this, soundVolume,backgroundAnimation);
         ruleMenuController = new RuleMenuController(this);
         blackJack = new BlackJack(user);
+        this.database = database;
     }
 
     /** Méthode qui initialise l'interface du black jack **/
@@ -127,7 +134,7 @@ public class BlackJackMenuController implements InterfaceMenu{
 
         setupScene.setRectangle(zoneBetUser1,327.0,600.0,174.0,147.0,5.0,5.0,Paint.valueOf("#158000"),Paint.valueOf("BLACK"),5.0,StrokeType.INSIDE,true,anchorPane);
         setupScene.setRectangle(zoneBetUser2,550,600.0,174.0,147.0,5.0,5.0,Paint.valueOf("#158000"),Paint.valueOf("BLACK"),5.0,StrokeType.INSIDE,false,anchorPane);
-        setupScene.setLabel(labelToken,"Jetons : "+user.getNumberOfToken(), Pos.CENTER_LEFT,30.0,660.0,55.0,163.0,new Font(30.0), Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelToken,"Jetons : "+user.getToken(), Pos.CENTER_LEFT,30.0,660.0,55.0,163.0,new Font(30.0), Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelProfit,"Gain : 0", Pos.CENTER_LEFT, 30.0,720.0,55.0,163.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelPseudo,"Joueur : "+user.getPseudo(), Pos.CENTER_LEFT,30.0,600.0,55.0,308.0,new Font(30.0),Color.BLACK,true,anchorPane);
         setupScene.setLabel(labelError,"Erreur :", Pos.CENTER,100.0,455.0,36.0,700.0,new Font(25.0),Color.RED,false,anchorPane);
@@ -313,7 +320,7 @@ public class BlackJackMenuController implements InterfaceMenu{
                     labelError.setText("Vous ne pouvez miser qu'entre 2 et 100 jetons");
                     labelError.setVisible(true);
                 } else {
-                    int newTokenUser = user.getNumberOfToken() - valueOfBet;
+                    int newTokenUser = user.getToken() - valueOfBet;
                     if (newTokenUser < 0) {
                         labelError.setText("Vous n'avez pas assez de jeton");
                         labelError.setVisible(true);
@@ -331,7 +338,7 @@ public class BlackJackMenuController implements InterfaceMenu{
 
                         labelToken1.setVisible(true);
                         labelToken1.setText(blackJack.getBet().getBet(user)+"");
-                        labelToken.setText("Jetons : " + (user.getNumberOfToken() - valueOfBet));
+                        labelToken.setText("Jetons : " + (user.getToken() - valueOfBet));
 
                         logMenuController.getLog("Le joueur "+user.getPseudo()+" mise "+valueOfBet+" jetons");
 
@@ -414,7 +421,7 @@ public class BlackJackMenuController implements InterfaceMenu{
     private void returnMainMenu(){
         settingMenuController.exitSettingMenu();
         logMenuController.exitLogMenu();
-        MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume,backgroundAnimation);
+        MainMenuController mainMenuController = new MainMenuController(stage,user, database,soundVolume,backgroundAnimation);
         mainMenuController.setting();
     }
 
@@ -552,8 +559,9 @@ public class BlackJackMenuController implements InterfaceMenu{
 
             logMenuController.getLog("Le joueur "+user.getPseudo()+" a perdu "+tokenLose+" jetons.");
             labelProfit.setText("Gain : -" + tokenLose);
-            labelToken.setText("Jetons : " + user.getNumberOfToken());
+            labelToken.setText("Jetons : " + user.getToken());
             newPartyButton.setVisible(true);
+            database.insert(tableHistoryPartyGame,"\""+user.getEmail()+"\",\""+columnGameBlackJack+"\","+tokenLose);
         }
         else {
             surrender = true;
@@ -640,7 +648,7 @@ public class BlackJackMenuController implements InterfaceMenu{
 
     private void distributeGain(){
         blackJack.betDistribute();
-        int gain = user.getNumberOfToken() - valueTokenUserBegin;
+        int gain = user.getToken() - valueTokenUserBegin;
 
         if(gain < 0){
             logMenuController.getLog("Le croupier a gagné.");
@@ -655,8 +663,10 @@ public class BlackJackMenuController implements InterfaceMenu{
             logMenuController.getLog("Le joueur "+user.getPseudo()+" ne perd et ne gagne aucun jeton.");
         }
 
+        System.out.println("token gain : "+gain);
+        database.insert(tableHistoryPartyGame,"\""+user.getEmail()+"\","+gain+",\""+columnGameBlackJack+"\"");
         labelProfit.setText("Gain : " + gain);
-        labelToken.setText("Jetons : " + user.getNumberOfToken());
+        labelToken.setText("Jetons : " + user.getToken());
     }
 
     private void checkSplit() {
@@ -712,7 +722,7 @@ public class BlackJackMenuController implements InterfaceMenu{
     private void newGame(){
         blackJack.reset();
         logMenuController.exitLogMenu();
-       BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage,soundVolume,backgroundAnimation);
+       BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage, database,soundVolume,backgroundAnimation);
        blackJackMenuController.setting();
 
     }

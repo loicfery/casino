@@ -1,5 +1,6 @@
 package sample;
 
+import games.Database;
 import games.User;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -23,6 +24,8 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
+import java.sql.ResultSet;
+
 
 public class InformationMenuController implements InterfaceMenu{
 
@@ -32,6 +35,7 @@ public class InformationMenuController implements InterfaceMenu{
     private final SetupScene setupScene = new SetupScene();
     private final User user;
     private final SettingMenuController settingMenuController;
+    private final Database database;
 
     private double soundVolume;
     private boolean backgroundAnimation;
@@ -55,12 +59,19 @@ public class InformationMenuController implements InterfaceMenu{
     private final TextField textPseudonym = new TextField();
     private final TextField textPassword = new TextField();
 
-    public InformationMenuController(User user, Stage stage, double soundVolume, boolean backgroundAnimation){
+    /** Base de données **/
+    private final String tableUser = "utilisateur";
+    private final String columnMailUser = "MailUser";
+    private final String columnNameUser = "NameUser";
+    private final String columnPassword = "Password";
+
+    public InformationMenuController(User user, Stage stage, Database database, double soundVolume, boolean backgroundAnimation){
         this.user = user;
         this.stage = stage;
         this.soundVolume = soundVolume;
         this.backgroundAnimation = backgroundAnimation;
         settingMenuController = new SettingMenuController(this, soundVolume,backgroundAnimation);
+        this.database = database;
     }
 
     /**
@@ -81,8 +92,8 @@ public class InformationMenuController implements InterfaceMenu{
         setupScene.setLabel(labelEmail,"Email :",Pos.CENTER_LEFT,20,120,20,300,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelPseudo,"Pseudonyme :",Pos.CENTER_LEFT,20,180,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelPassword,"Mot de passe :",Pos.CENTER_LEFT,20,240,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelToken,"Jetons : "+user.getNumberOfToken(),Pos.CENTER_LEFT,20,300,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelMoney,"Argents : "+user.getAmountOfMoney(),Pos.CENTER_LEFT,20,360,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelToken,"Jetons : "+user.getToken(),Pos.CENTER_LEFT,20,300,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelMoney,"Argents : "+user.getMoney(),Pos.CENTER_LEFT,20,360,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelError,"Erreur :",Pos.CENTER,140,400,20,300,new Font(15),Paint.valueOf("RED"),false,anchorPane);
 
         setupScene.setTextField(textEmail,"",Pos.CENTER_LEFT,90,120,20,230,new Font(15),true,anchorPane);
@@ -90,7 +101,7 @@ public class InformationMenuController implements InterfaceMenu{
         setupScene.setTextField(textPseudonym,"",Pos.CENTER_LEFT,150,180,20,140,new Font(15),true,anchorPane);
         textPseudonym.setText(user.getPseudo());
         setupScene.setTextField(textPassword,"",Pos.CENTER_LEFT,160,240,20,130,new Font(15),true,anchorPane);
-        textPassword.setText("password"); //recup password dans BD
+        getPassword(textEmail.getText());
 
         setupScene.setButton(returnMainMenuButton,"Quitter",Pos.CENTER,20,440,20,100,new Font(15),true,anchorPane);
         setupScene.setButton(changeEmailButton,"Modifier email",Pos.CENTER,330,120,20,150,new Font(15),true,anchorPane);
@@ -109,12 +120,22 @@ public class InformationMenuController implements InterfaceMenu{
         stage.show();
     }
 
+    private void getPassword(String email){
+        try {
+            ResultSet resultSet = database.select(tableUser, columnMailUser+" = \"" + email + "\"");
+            if(resultSet.next()) {
+                textPassword.setText(resultSet.getString(3));
+            }
+        }
+        catch (Exception e){}
+    }
+
     /**
      * Méthode qui affiche le menu principale
      */
     private void goToMainMenu(){
         settingMenuController.exitSettingMenu();
-      MainMenuController mainMenuController = new MainMenuController(stage,user,soundVolume,backgroundAnimation);
+      MainMenuController mainMenuController = new MainMenuController(stage,user, database,soundVolume,backgroundAnimation);
       mainMenuController.setting();
     }
 
@@ -124,7 +145,18 @@ public class InformationMenuController implements InterfaceMenu{
     private void changeEmail(){
         if(!textEmail.getText().isEmpty()){
             if(ControleSaisie.validEmail(textEmail.getText())) { //vérification email pas déjà pris
-                showStatusChanged("L'email a été modifié", Color.GREEN);
+                try {
+                    ResultSet resultSet = database.select(tableUser, columnMailUser+" = \"" + textEmail.getText() + "\"");
+                    if (resultSet.next()) {
+                        showStatusChanged("Cette email est déjà utilisé", Color.RED);
+                    }
+                    else {
+                        database.update(tableUser,"MailUser","\""+textEmail.getText()+"\"",columnMailUser+" = \""+user.getEmail()+"\"");
+                        user.setEmail(textEmail.getText());
+                        showStatusChanged("L'email a été modifié", Color.GREEN);
+                    }
+                }
+                catch (Exception e){}
             }
             else {
                 showStatusChanged("L'email ne correspond pas au format",Color.RED);
@@ -141,6 +173,8 @@ public class InformationMenuController implements InterfaceMenu{
     private void changePseudonym(){
         if(!textPseudonym.getText().isEmpty()){
             if(ControleSaisie.isUsername(textPseudonym.getText()) && textPseudonym.getText().length() > 5) {
+                database.update(tableUser,columnNameUser,"\""+textPseudonym.getText()+"\"",columnMailUser+" = \""+user.getEmail()+"\"");
+                user.setPseudo(textPseudonym.getText());
                 showStatusChanged("Le pseudonyme a été modifié", Color.GREEN);
             }
             else {
@@ -158,6 +192,7 @@ public class InformationMenuController implements InterfaceMenu{
     private void changePassword(){
         if(!textPassword.getText().isEmpty()){
             if(ControleSaisie.validPassword(textPassword.getText()) && textPassword.getText().length() > 5){
+                database.update(tableUser,columnPassword,"\""+textPassword.getText()+"\"",columnMailUser+" = \""+user.getEmail()+"\"");
                 showStatusChanged("Le mot de passe a été modifié", Color.GREEN);
             }
             else {

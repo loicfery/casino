@@ -63,7 +63,7 @@ public class BlackJack {
     public void gameBegin(){
         card_package.initCardPackage();
         card_package.mixCardPackage();
-        User croupier = new User("croupier", "null", "null");
+        User croupier = new User("croupier", "null", "null",0,0,new Database());
         UserHand croupierHand = new UserHand(croupier);
         UserHand userHand = new UserHand(user);
         listOfUserHand.add(croupierHand);

@@ -1,29 +1,23 @@
 package sample;
 
 import games.Database;
-import games.User;
 import javafx.application.Application;
 import javafx.stage.Stage;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class Main extends Application {
     public Main() {
     }
 
     public void start(Stage stage) throws  Exception{
+        String bd = "casino";
+        String userName = "root";
+        String password = "";
+        Database database = new Database(bd,userName,password); //si vous voulez tester avec la votre changer les valeurs
+
         stage.setResizable(false);
-        User user = new User("loic","loic@email.com","ADMIN");
-        user.addToken(50);
 
-        //MainMenuController mainMenuController = new MainMenuController(stage,user,0.1,true);
-        //mainMenuController.setting();
-
-        //ConnexionMenuController controller = new ConnexionMenuController(stage);
-        //controller.setting();
+        ConnexionMenuController controller = new ConnexionMenuController(stage,database);
+        controller.setting();
     }
 
     public static void main(String[] args) {

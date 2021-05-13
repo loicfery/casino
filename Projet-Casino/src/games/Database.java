@@ -66,7 +66,7 @@ public class Database {
     }
 
     public void insert(String nameOfTable, String value) {
-        String request = "INSERT INTO " + nameOfTable + " VALUES (" + value + ")";
+        String request = "INSERT INTO " + nameOfTable + " VALUES (" + value + ");";
         try {
             Statement statement = connection.createStatement();
             statement.execute(request);
@@ -76,7 +76,7 @@ public class Database {
     }
 
     public void update(String nameOfTable, String nameOfColumn, String newValue, String condition) {
-        String request = "UPADATE " + nameOfTable + " SET " + nameOfColumn + "=" + newValue + " WHERE " + condition;
+        String request = "UPDATE " + nameOfTable + " SET " + nameOfColumn + " = " + newValue + " WHERE " + condition + ";";
         try {
             Statement statement = connection.createStatement();
             statement.execute(request);
@@ -86,7 +86,7 @@ public class Database {
     }
 
     public void delete(String nameOfTable, String condition) {
-        String request = "DELETE FROM " + nameOfTable + " WHERE " + condition;
+        String request = "DELETE FROM " + nameOfTable + " WHERE " + condition + ";";
         try {
             Statement statement = connection.createStatement();
             statement.execute(request);
@@ -98,16 +98,16 @@ public class Database {
     public ResultSet select(String nameOfTable, String condition) {
         String request;
         if(condition.length() == 0){
-            request = "SELECT * FROM " + nameOfTable;
+            request = "SELECT * FROM " + nameOfTable + ";";
         }
         else {
-            request = "SELECT * FROM " + nameOfTable + "WHERE" + condition;
+            request = "SELECT * FROM " + nameOfTable + " WHERE " + condition+";";
         }
         try {
             Statement statement = connection.createStatement();
             return statement.executeQuery(request);
         } catch (SQLException e) {
-            shutdown("Anomalie lors de l'execution de la requête");
+            shutdown("Anomalie lors de l'execution de la requête : "+request);
         }
         return null;
     }
