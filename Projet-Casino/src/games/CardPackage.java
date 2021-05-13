@@ -8,7 +8,7 @@ public class CardPackage {
 
     public CardPackage() {}
 
-    public void initCardPackage(){ //Créer un packet trié (à supprimer si inutile)
+    public void initCardPackage(){
         listOfCard = new ArrayList<>();
 
         for(int i =0; i<12; i++){

@@ -53,6 +53,7 @@ public class ShopMenuController implements InterfaceMenu{
     private final Button rightShopTokenButton = new Button();
     private final Button leftShopMoneyButton = new Button();
     private final Button rightShopMoneyButton = new Button();
+    private final Button addMoneyButton = new Button();
 
     private final Label titleShopTokenLabel = new Label();
     private final Label titleShopMoneyLabel = new Label();
@@ -106,6 +107,7 @@ public class ShopMenuController implements InterfaceMenu{
         setupScene.setButton(leftShopMoneyButton,"<-",Pos.CENTER,500,750,20,50,new Font(15),true,anchorPane);
         setupScene.setButton(rightShopMoneyButton,"->",Pos.CENTER,650,750,20,50,new Font(15),true,anchorPane);
 
+        setupScene.setButton(addMoneyButton,"Ajouté de l'argent",Pos.CENTER,360,14,60,200,new Font(20),true,anchorPane);
         setupScene.setButton(historyShoppingButton,"Historique achats", Pos.CENTER,150,14,60,200,new Font(20),true,anchorPane);
         setupScene.setButton(returnMainMenuButton,"Quitter",Pos.CENTER,14.0,14.0,60,123.0,new Font(20.0),true,anchorPane);
 
@@ -119,6 +121,7 @@ public class ShopMenuController implements InterfaceMenu{
         rightShopMoneyButton.setOnMouseClicked((event) -> rightShopMoney());
         leftShopTokenButton.setOnMouseClicked((event) -> leftShopToken());
         rightShopTokenButton.setOnMouseClicked((event) -> rightShopToken());
+        addMoneyButton.setOnMouseClicked((event)-> goToBuyingMenu());
 
         getShopList();
 
@@ -159,7 +162,6 @@ public class ShopMenuController implements InterfaceMenu{
             listOfButtonShopToken.add(button);
 
             if((index % 4) == 0 && index != 0){
-                System.out.println("test : "+index);
                 positionY = Y;
             }
             else {
@@ -292,7 +294,6 @@ public class ShopMenuController implements InterfaceMenu{
         int token;
 
         if(lines[1].equals("$")){
-            System.out.println("$");
             try {
                 money = Integer.parseInt(lines[0]);
                 token = Integer.parseInt(lines[3]);
@@ -346,8 +347,15 @@ public class ShopMenuController implements InterfaceMenu{
     }
 
     private void goToHistoryShoppingMenu(){
+        settingMenuController.exitSettingMenu();
         HistoryShoppingMenuController historyShoppingMenuController = new HistoryShoppingMenuController(user,stage,database,soundVolume,backgroundAnimation);
         historyShoppingMenuController.setting();
+    }
+
+    private void goToBuyingMenu(){
+        settingMenuController.exitSettingMenu();
+        BuyingMoneyMenuController buyingMoneyMenuController = new BuyingMoneyMenuController(user,stage,database,soundVolume,backgroundAnimation);
+        buyingMoneyMenuController.setting();
     }
 
     /**
