@@ -331,19 +331,19 @@ public class SlotMachineMenuController implements InterfaceMenu{
         int gain = slotMachine.verifySlot();
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelProfit.setText("Gain : " +gain)));
         if(gain > 0){
+            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> soundPayout.play()));
             timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Le joueur "+user.getPseudo()+" a gagné "+gain+" jetons.")));
+            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> database.insert(tableHistoryPartyGame,"\""+user.getEmail()+"\","+gain+",\""+columnGameSlotMachine+"\"")));
+
         }
         else {
             timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Le joueur "+user.getPseudo()+" a gagné aucun jeton.")));
+            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> database.insert(tableHistoryPartyGame,"\""+user.getEmail()+"\","+-1+",\""+columnGameSlotMachine+"\"")));
+
         }
 
-        if(gain > 0){
-            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> soundPayout.play()));
-        }
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> slotMachine.reset()));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> database.insert(tableHistoryPartyGame,"\""+user.getEmail()+"\","+gain+",\""+columnGameSlotMachine+"\"")));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelToken.setText("Jetons : "+user.getToken())));
-
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> createSoundSlot()));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e ->  startingGameButton.setDisable(false)));
 

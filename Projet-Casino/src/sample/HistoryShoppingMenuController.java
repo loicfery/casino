@@ -124,6 +124,7 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         printInformation();
     }
 
+
     private void printInformation(){
         List<String> listOfHistory;
         int indexPrint = indexInformation + 15;
@@ -135,7 +136,7 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
             listOfHistory = listOfInformationToken;
         }
 
-        if((indexInformation + 15) > listOfHistory.size()){
+        if(indexPrint > listOfHistory.size()){
             indexPrint = listOfHistory.size();
             rightInformationButton.setVisible(false);
         }

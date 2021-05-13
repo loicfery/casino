@@ -32,6 +32,7 @@ public class MainMenuController implements InterfaceMenu{
 
     private final Button logoutButton = new Button();
     private final Button informationMenuButton = new Button();
+    private final Button historyGamePlayedButton = new Button();
 
     private final ImageView pictureBlackJackMenu = new ImageView();
     private final ImageView pictureSlotMachine = new ImageView();
@@ -71,6 +72,7 @@ public class MainMenuController implements InterfaceMenu{
 
         setupScene.setButton(logoutButton,"Déconnexion", Pos.CENTER,20,20,80,120,new Font(15),true,anchorPane);
         setupScene.setButton(informationMenuButton,"Informations",Pos.CENTER,170,20,80,120,new Font(15),true,anchorPane);
+        setupScene.setButton(historyGamePlayedButton,"Historique jeux",Pos.CENTER,470,20,80,150,new Font(15),true,anchorPane);
 
         setupScene.setCircle(circleSetting,30,750,40,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())), Paint.valueOf("GREEN"), StrokeType.INSIDE,1.0,true,anchorPane);
 
@@ -81,6 +83,7 @@ public class MainMenuController implements InterfaceMenu{
         pictureSlotMachine.setOnMouseClicked((event)-> goToSlotMachineMenu());
         pictureRoulette.setOnMouseClicked((event)-> goToRouletteMenu());
         circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
+        historyGamePlayedButton.setOnMouseClicked((event)-> goToHistoryGamePlayedMenu());
 
         root.getChildren().add(anchorPane);
         stage.show();
@@ -120,6 +123,12 @@ public class MainMenuController implements InterfaceMenu{
         settingMenuController.exitSettingMenu();
         RouletteMenuController rouletteMenuController = new RouletteMenuController(user,stage, database,soundVolume,backgroundAnimation);
         rouletteMenuController.setting();
+    }
+
+    private void goToHistoryGamePlayedMenu(){
+        settingMenuController.exitSettingMenu();
+        HistoryGamePlayedMenuController historyGamePlayedMenuController = new HistoryGamePlayedMenuController(user,stage,database,soundVolume,backgroundAnimation);
+        historyGamePlayedMenuController.setting();
     }
 
     public void setSoundVolume(double newSoundVolume){
