@@ -8,10 +8,10 @@ public class Main extends Application {
     public Main() {
     }
 
-    public void start(Stage stage) throws  Exception{
+    public void start(Stage stage){
         String bd = "casino";
         String userName = "root";
-        String password = "";
+        String password = "Poussin13!";
         Database database = new Database(bd,userName,password); //si vous voulez tester avec la votre changer les valeurs
 
         stage.setResizable(false);

@@ -10,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -44,6 +45,8 @@ public class ShopMenuController implements InterfaceMenu{
     private List<Button> listOfButtonShopMoney = new ArrayList<>();
     private List<Label> listOfLabelShopToken = new ArrayList<>();
     private List<Label> listOfLabelShopMoney = new ArrayList<>();
+    private List<Button> listOfButtonShopTokenDelete = new ArrayList<>();
+    private List<Button> listOfButtonShopMoneyDelete = new ArrayList<>();
 
     private final Circle circleSetting = new Circle();
 
@@ -63,20 +66,28 @@ public class ShopMenuController implements InterfaceMenu{
 
     private double soundVolume;
     private boolean backgroundAnimation;
-    private int XToken = 250;
-    private int XMoney = 650;
-    private int Y = 285;
+    private int positionOriginXToken = 240;
+    private int positionOriginXMoney = 640;
+    private int positionOriginY = 285;
     private int indexListToken = 0;
     private int indexListMoney = 0;
+    private boolean addTokenInformation = false;
+    private boolean addMoneyInformation = false;
+    private boolean ADMIN;
 
     /** Base de données **/
     private final String tableUser = "utilisateur";
-    private final String columnUserMail = "MailUser";
-    private final String columnUserMoney = "Money";
-    private final String tableExchangeToken = "lotsjetons";
-    private final String tableExchangeMoney = "lotechanges";
+    private final String tableExchangeToken = "echangejetons";
+    private final String tableExchangeMoney = "echangeargents";
     private final String tableHistoryExchangeMoney = "historiqueachat";
     private final String tableHistoryExchangeToken = "historiqueechange";
+
+    private final String columnUserMail = "MailUser";
+    private final String columnUserMoney = "Money";
+    private final String tableExchangeTokenColumnNumberTokenExchange = "PrixJeton";
+    private final String tableExchangeTokenColumnMoneyGain = "ArgentsGagnes";
+    private final String tableExchangeMoneyColumnNumberMoneyExchange = "PrixArgent";
+    private final String tableExchangeMoneyColumnTokenGain = "JetonsGagnes";
 
     public ShopMenuController(Stage stage,User user, Database database, double soundVolume, boolean backgroundAnimation){
         this.stage = stage;
@@ -85,6 +96,13 @@ public class ShopMenuController implements InterfaceMenu{
         this.soundVolume = soundVolume;
         this.backgroundAnimation = backgroundAnimation;
         settingMenuController = new SettingMenuController(this, soundVolume,backgroundAnimation);
+
+        if(user.getRank().equals("ADMIN")){
+            ADMIN = true;
+        }
+        else {
+            ADMIN = false;
+        }
     }
 
     public void setting(){
@@ -131,12 +149,12 @@ public class ShopMenuController implements InterfaceMenu{
 
     private void getShopList(){
         try {
-            ResultSet resultSet = database.select(tableExchangeToken, "");
+            ResultSet resultSet = database.select(tableExchangeMoney, "");
             while (resultSet.next()) {
                 listOfShopMoney.add(resultSet.getInt(1)+" $ ---> "+resultSet.getInt(2)+" jetons");
             }
 
-            resultSet = database.select(tableExchangeMoney,"");
+            resultSet = database.select(tableExchangeToken,"");
             while (resultSet.next()){
                 listOfShopToken.add(resultSet.getInt(1)+" jetons ---> "+resultSet.getInt(2)+" $");
             }
@@ -149,53 +167,81 @@ public class ShopMenuController implements InterfaceMenu{
     }
 
     private void setupShopList(){
-        int positionY = Y;
+        Button button;
+        Label label;
+        int positionY = positionOriginY;
+
         for(int index = 0; index < listOfShopToken.size(); index ++){
             int finalIndex = index;
-            Label label = new Label();
+            label = new Label();
             setupScene.setLabel(label,listOfShopToken.get(index),Pos.CENTER_LEFT,14,positionY,20,200,new Font(20),Paint.valueOf("BLACK"),false,anchorPane);
             listOfLabelShopToken.add(label);
 
-            Button button = new Button();
-            setupScene.setButton(button,"Echanger",Pos.CENTER,XToken,positionY,20,100,new Font(15),false,anchorPane);
+            button = new Button();
+            setupScene.setButton(button,"Echanger",Pos.CENTER, positionOriginXToken,positionY,20,100,new Font(15),false,anchorPane);
             button.setOnMouseClicked((event)-> exchange(listOfShopToken.get(finalIndex)));
             listOfButtonShopToken.add(button);
 
+            button = new Button();
+            setupScene.setButton(button, "X",Pos.CENTER,positionOriginXToken + 110,positionY,20,20,new Font(15),false,anchorPane);
+            button.setOnMouseClicked((event)-> deleteInformation(listOfLabelShopToken,listOfButtonShopToken,listOfButtonShopTokenDelete,listOfShopToken,finalIndex,"token"));
+            listOfButtonShopTokenDelete.add(button);
+
             if((index % 4) == 0 && index != 0){
-                positionY = Y;
+                positionY = positionOriginY;
             }
             else {
                 positionY += 80;
             }
         }
 
-        positionY = Y;
+        button = new Button();
+        setupScene.setButton(button,"+",Pos.CENTER,positionOriginXToken + 110,positionY,20,20,new Font(10),false,anchorPane);
+        Button finalAddTokenButton = button;
+        button.setOnMouseClicked((event)-> addTokenInformation(336,220,270,110, finalAddTokenButton));
+        listOfButtonShopToken.add(button);
+
+        positionY = positionOriginY;
         for(int index = 0; index < listOfShopMoney.size(); index ++){
             int finalIndex = index;
-            Label label = new Label();
+            label = new Label();
             setupScene.setLabel(label,listOfShopMoney.get(index),Pos.CENTER_LEFT,414,positionY,20,200,new Font(20),Paint.valueOf("BLACK"),false,anchorPane);
             listOfLabelShopMoney.add(label);
 
-            Button button = new Button();
-            setupScene.setButton(button,"Echanger",Pos.CENTER,XMoney,positionY,20,100,new Font(15),false,anchorPane);
+            button = new Button();
+            setupScene.setButton(button,"Echanger",Pos.CENTER, positionOriginXMoney,positionY,20,100,new Font(15),false,anchorPane);
             button.setOnMouseClicked((event) -> exchange(listOfShopMoney.get(finalIndex)));
             listOfButtonShopMoney.add(button);
 
+            button = new Button();
+            setupScene.setButton(button,"X",Pos.CENTER,positionOriginXMoney + 110,positionY,20,20,new Font(15),false,anchorPane);
+            button.setOnMouseClicked((event)-> deleteInformation(listOfLabelShopMoney,listOfButtonShopMoney,listOfButtonShopMoneyDelete,listOfShopMoney,finalIndex,"money"));
+            listOfButtonShopMoneyDelete.add(button);
+
             if((index % 4 ) == 0 && index != 0){
-                positionY = Y;
+                positionY = positionOriginY;
             }
             else {
                 positionY += 80;
             }
         }
+
+        button = new Button();
+        setupScene.setButton(button,"+",Pos.CENTER,positionOriginXMoney + 110,positionY,20,20,new Font(10),false,anchorPane);
+        Button finalButtonAddMoney = button;
+        button.setOnMouseClicked((event)-> addMoneyInformation(336,220,270,110, finalButtonAddMoney));
+        listOfButtonShopMoney.add(button);
     }
 
     private void printShopTokenInformation(){
         int indexMax = (indexListToken + 5);
 
-        if(indexMax > listOfButtonShopToken.size()){
-            indexMax = listOfButtonShopToken.size();
+        if(indexMax > listOfShopToken.size()){
+            indexMax = listOfShopToken.size();
             rightShopTokenButton.setVisible(false);
+            if(ADMIN){
+                listOfButtonShopToken.get(indexMax).setVisible(true);
+            }
         }
         else {
             rightShopTokenButton.setVisible(true);
@@ -204,6 +250,9 @@ public class ShopMenuController implements InterfaceMenu{
         for(int index = indexListToken; index < indexMax; index ++){
             listOfLabelShopToken.get(index).setVisible(true);
             listOfButtonShopToken.get(index).setVisible(true);
+            if(ADMIN) {
+                listOfButtonShopTokenDelete.get(index).setVisible(true);
+            }
         }
 
         if(indexListToken <= 0){
@@ -220,6 +269,9 @@ public class ShopMenuController implements InterfaceMenu{
         if(indexMax > (listOfShopMoney.size())){
             indexMax = listOfShopMoney.size();
             rightShopMoneyButton.setVisible(false);
+            if(ADMIN){
+                listOfButtonShopMoney.get(indexMax).setVisible(true);
+            }
         }
         else {
             rightShopMoneyButton.setVisible(true);
@@ -228,6 +280,9 @@ public class ShopMenuController implements InterfaceMenu{
         for(int index = indexListMoney; index < indexMax; index ++){
             listOfLabelShopMoney.get(index).setVisible(true);
             listOfButtonShopMoney.get(index).setVisible(true);
+            if(ADMIN) {
+                listOfButtonShopMoneyDelete.get(index).setVisible(true);
+            }
         }
 
         if(indexListMoney <= 0){
@@ -243,11 +298,13 @@ public class ShopMenuController implements InterfaceMenu{
 
         if(indexMax > listOfShopToken.size()){
             indexMax = listOfShopToken.size();
+            listOfButtonShopToken.get(indexMax).setVisible(false);
         }
 
         for(int index = indexListToken; index < indexMax; index ++){
             listOfLabelShopToken.get(index).setVisible(false);
             listOfButtonShopToken.get(index).setVisible(false);
+            listOfButtonShopTokenDelete.get(index).setVisible(false);
         }
     }
 
@@ -256,39 +313,46 @@ public class ShopMenuController implements InterfaceMenu{
 
         if(indexMax > listOfShopMoney.size()){
             indexMax = listOfShopMoney.size();
+            listOfButtonShopMoney.get(indexMax).setVisible(false);
         }
 
         for(int index = indexListMoney; index < indexMax; index ++){
             listOfLabelShopMoney.get(index).setVisible(false);
             listOfButtonShopMoney.get(index).setVisible(false);
+            listOfButtonShopMoneyDelete.get(index).setVisible(false);
         }
     }
 
     private void rightShopToken(){
+        cancelAddInformation();
         hideShopToken();
         indexListToken += 5;
         printShopTokenInformation();
     }
 
     private void leftShopToken(){
+        cancelAddInformation();
         hideShopToken();
         indexListToken -= 5;
         printShopTokenInformation();
     }
 
     private void rightShopMoney(){
+        cancelAddInformation();
         hideShopMoney();
         indexListMoney += 5;
         printShopMoneyInformation();
     }
 
     private void leftShopMoney(){
+        cancelAddInformation();
         hideShopMoney();
         indexListMoney -= 5;
         printShopMoneyInformation();
     }
 
     private void exchange(String line){
+        cancelAddInformation();
         String[] lines = line.split(" ");
         int money;
         int token;
@@ -301,7 +365,7 @@ public class ShopMenuController implements InterfaceMenu{
                 if(user.getMoney() >= money){
                     user.removeMoney(money);
                     user.addToken(token);
-                    database.insert(tableHistoryExchangeMoney,money+","+token);
+                    database.insert(tableHistoryExchangeMoney,"\""+user.getEmail()+"\","+money+","+token);
                     titleShopMoneyLabel.setText("Echange d'argent : "+user.getMoney());
                     titleShopTokenLabel.setText("Echange de jeton : "+user.getToken());
                     setMessage("Votre échange a bien été effectué",Color.GREEN);
@@ -320,7 +384,7 @@ public class ShopMenuController implements InterfaceMenu{
                 if(user.getToken() >= token){
                     user.addMoney(money);
                     user.removeToken(token);
-                    database.insert(tableHistoryExchangeToken,token+","+money);
+                    database.insert(tableHistoryExchangeToken,"\""+user.getEmail()+"\","+token+","+money);
                     titleShopTokenLabel.setText("Echange de jeton : "+user.getToken());
                     titleShopMoneyLabel.setText("Echange d'argent : "+user.getMoney());
                     setMessage("Votre échange a bien été effectué",Color.GREEN);
@@ -330,6 +394,192 @@ public class ShopMenuController implements InterfaceMenu{
                 }
             }
             catch (Exception e){ System.out.println("Problème dans exchange de shopMenuController token"); }
+        }
+    }
+
+    private void deleteInformation(List<Label> listOfLabel, List<Button> listOfButtonExchange, List<Button> listOfButtonDelete, List<String> listOfInformation, int indexList, String type){
+        cancelAddInformation();
+
+        double positionY = listOfLabel.get(indexList).getLayoutY();
+
+        listOfLabel.get(indexList).setVisible(false);
+        listOfLabel.remove(indexList);
+        listOfButtonDelete.get(indexList).setVisible(false);
+        listOfButtonDelete.remove(indexList);
+        listOfButtonExchange.get(indexList).setVisible(false);
+        listOfButtonExchange.remove(indexList);
+        String information = listOfInformation.remove(indexList);
+
+        for(int index = indexList; index < listOfInformation.size(); index ++){
+            int finalIndex = index;
+            listOfButtonDelete.get(index).setLayoutY(positionY);
+            listOfButtonDelete.get(index).setOnMouseClicked((event)-> deleteInformation(listOfLabel,listOfButtonExchange,listOfButtonDelete,listOfInformation,finalIndex,type));
+            listOfButtonExchange.get(index).setLayoutY(positionY);
+            listOfLabel.get(index).setLayoutY(positionY);
+
+            if(positionY % 4 == 0){
+                positionY = positionOriginY;
+            }
+            else {
+                positionY += 80;
+            }
+        }
+
+        listOfButtonExchange.get(listOfButtonExchange.size() - 1).setLayoutY(positionY);
+
+        if(type.equals("token")){
+            database.delete(tableExchangeToken,tableExchangeTokenColumnNumberTokenExchange+" = "+information.split(" ")[0]+" && "+tableExchangeTokenColumnMoneyGain+" = "+information.split(" ")[3]);
+            printShopTokenInformation();
+        }
+        else if(type.equals("money"))
+        {
+            database.delete(tableExchangeMoney,tableExchangeMoneyColumnNumberMoneyExchange+" = "+information.split(" ")[0]+" && "+tableExchangeMoneyColumnTokenGain+" = "+information.split(" ")[3]);
+            printShopMoneyInformation();
+        }
+    }
+
+    private void addTokenInformation(double xMoney, double xToken, double xLabel, double xButton, Button addInformationButton){
+        cancelAddInformation();
+        TextField textMoney = new TextField();
+        TextField textToken = new TextField();
+        Label label = new Label();
+        Button validButton = new Button();
+
+        xMoney = addInformationButton.getLayoutX() - xMoney;
+        xToken = addInformationButton.getLayoutX() - xToken;
+        xLabel = addInformationButton.getLayoutX() - xLabel;
+        xButton = addInformationButton.getLayoutX() - xButton;
+
+        addTokenInformation = true;
+
+        setupScene.setTextField(textMoney, "", Pos.CENTER, xMoney, addInformationButton.getLayoutY(), 20, 70, new Font(15), true, anchorPane);
+        setupScene.setTextField(textToken,"",Pos.CENTER,xToken,addInformationButton.getLayoutY(),20,70,new Font(15),true,anchorPane);
+        setupScene.setLabel(label, " ---> ", Pos.CENTER, xLabel, addInformationButton.getLayoutY(), 20, 50, new Font(15), Paint.valueOf("BLACK"), true, anchorPane);
+        setupScene.setButton(validButton,"Ajouter",Pos.CENTER,xButton,addInformationButton.getLayoutY(),20,100,new Font(15),true,anchorPane);
+        validButton.setOnMouseClicked((event) -> validAddTokenInformation(textMoney,textToken,addInformationButton,addInformationButton.getLayoutY()));
+    }
+
+    private void addMoneyInformation(double xMoney, double xToken, double xLabel, double xButton, Button addInformationButton){
+        cancelAddInformation();
+        TextField textMoney = new TextField();
+        TextField textToken = new TextField();
+        Label label = new Label();
+        Button validButton = new Button();
+
+        xMoney = addInformationButton.getLayoutX() - xMoney;
+        xToken = addInformationButton.getLayoutX() - xToken;
+        xLabel = addInformationButton.getLayoutX() - xLabel;
+        xButton = addInformationButton.getLayoutX() - xButton;
+
+        addMoneyInformation = true;
+
+        setupScene.setTextField(textMoney, "", Pos.CENTER, xMoney, addInformationButton.getLayoutY(), 20, 70, new Font(15), true, anchorPane);
+        setupScene.setTextField(textToken,"",Pos.CENTER,xToken,addInformationButton.getLayoutY(),20,70,new Font(15),true,anchorPane);
+        setupScene.setLabel(label, " ---> ", Pos.CENTER, xLabel, addInformationButton.getLayoutY(), 20, 50, new Font(15), Paint.valueOf("BLACK"), true, anchorPane);
+        setupScene.setButton(validButton,"Ajouter",Pos.CENTER,xButton,addInformationButton.getLayoutY(),20,100,new Font(15),true,anchorPane);
+        validButton.setOnMouseClicked((event)-> validAddMoneyInformation(textMoney,textToken,addInformationButton,addInformationButton.getLayoutY()));
+    }
+
+    private void validAddTokenInformation(TextField textMoney, TextField textToken, Button addInformationButton, double positionY){
+        if(!textToken.getText().isEmpty() && !textMoney.getText().isEmpty()) {
+            Button exchangeButton = new Button();
+            Button deleteInformationButton = new Button();
+            Label labelInformation = new Label();
+
+            for(int index = 0; index < 4; index ++) {
+                anchorPane.getChildren().get(anchorPane.getChildren().size() - 1).setVisible(false);
+                anchorPane.getChildren().remove(anchorPane.getChildren().size() - 1);
+            }
+
+            listOfButtonShopToken.remove(addInformationButton);
+
+            setupScene.setButton(exchangeButton, "Echanger", Pos.CENTER, positionOriginXToken, positionY, 20, 100, new Font(15), false, anchorPane);
+            exchangeButton.setOnMouseClicked((event) -> exchange(listOfShopToken.get(listOfButtonShopToken.size() - 1)));
+            listOfButtonShopToken.add(exchangeButton);
+
+            setupScene.setLabel(labelInformation, textToken.getText() + " jetons ---> " + textMoney.getText() + " $", Pos.CENTER, 14, positionY, 20, 200, new Font(20), Paint.valueOf("BLACK"), false, anchorPane);
+            listOfLabelShopToken.add(labelInformation);
+
+            setupScene.setButton(deleteInformationButton, "X", Pos.CENTER, positionOriginXToken + 110, positionY, 20, 20, new Font(15), false, anchorPane);
+            deleteInformationButton.setOnMouseClicked((event) -> deleteInformation(listOfLabelShopToken, listOfButtonShopToken, listOfButtonShopTokenDelete, listOfShopToken, listOfShopToken.size() - 1, "token"));
+            listOfButtonShopTokenDelete.add(deleteInformationButton);
+
+
+            listOfShopToken.add(textToken.getText() + " jetons ---> " + textMoney.getText()+" $");
+            database.insert(tableExchangeToken,textToken.getText()+","+textMoney.getText());
+            listOfButtonShopToken.add(addInformationButton);
+
+            if (positionY >= 685) {
+                positionY = positionOriginY;
+            } else {
+                positionY += 80;
+            }
+
+            addInformationButton.setLayoutY(positionY);
+
+            addTokenInformation = false;
+
+            printShopTokenInformation();
+        }
+    }
+
+    private void validAddMoneyInformation(TextField textMoney, TextField textToken,Button addInformationButton, double positionY){
+        if(!textMoney.getText().isEmpty() && !textToken.getText().isEmpty()) {
+            Button exchangeButton = new Button();
+            Button deleteInformationButton = new Button();
+            Label labelInformation = new Label();
+
+            for(int index = 0; index < 4; index ++) {
+                anchorPane.getChildren().get(anchorPane.getChildren().size() - 1).setVisible(false);
+                anchorPane.getChildren().remove(anchorPane.getChildren().size() - 1);
+            }
+
+            listOfButtonShopMoney.remove(addInformationButton);
+
+            setupScene.setButton(exchangeButton, "Echanger", Pos.CENTER, positionOriginXMoney, positionY, 20, 100, new Font(15), false, anchorPane);
+            exchangeButton.setOnMouseClicked((event) -> exchange(listOfShopMoney.get(listOfButtonShopMoney.size() - 1)));
+            listOfButtonShopMoney.add(exchangeButton);
+
+            setupScene.setLabel(labelInformation, textMoney.getText() + " $ ---> " + textToken.getText() + " jetons", Pos.CENTER, 414, positionY, 20, 200, new Font(20), Paint.valueOf("BLACK"), false, anchorPane);
+            listOfLabelShopMoney.add(labelInformation);
+
+            setupScene.setButton(deleteInformationButton, "X", Pos.CENTER, positionOriginXMoney + 110, positionY, 20, 20, new Font(15), false, anchorPane);
+            deleteInformationButton.setOnMouseClicked((event) -> deleteInformation(listOfLabelShopMoney, listOfButtonShopMoney, listOfButtonShopMoneyDelete, listOfShopMoney, listOfShopMoney.size() - 1, "money"));
+            listOfButtonShopMoneyDelete.add(deleteInformationButton);
+
+            listOfShopMoney.add(textMoney.getText() + " $ ---> " + textToken.getText()+" jetons");
+            database.insert(tableExchangeMoney,textMoney.getText()+","+textToken.getText());
+            listOfButtonShopMoney.add(addInformationButton);
+
+            if (positionY >= 685) {
+                positionY = positionOriginY;
+            } else {
+                positionY += 80;
+            }
+
+            addInformationButton.setLayoutY(positionY);
+
+            addMoneyInformation = false;
+
+            printShopMoneyInformation();
+        }
+
+    }
+
+    private void cancelAddInformation(){
+        if(addTokenInformation){
+            addTokenInformation = false;
+            for(int index = 0; index < 4; index ++) {
+                anchorPane.getChildren().get(anchorPane.getChildren().size() - 1).setVisible(false);
+                anchorPane.getChildren().remove(anchorPane.getChildren().size() - 1);
+            }
+        }
+        else if(addMoneyInformation){
+            addMoneyInformation = false;
+            for(int index = 0; index < 4; index ++) {
+                anchorPane.getChildren().get(anchorPane.getChildren().size() - 1).setVisible(false);
+                anchorPane.getChildren().remove(anchorPane.getChildren().size() - 1);
+            }
         }
     }
 
