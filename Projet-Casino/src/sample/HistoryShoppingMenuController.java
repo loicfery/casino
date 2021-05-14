@@ -34,6 +34,7 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
     private final User user;
     private final SettingMenuController settingMenuController;
     private final Database database;
+    private final DatabaseName databaseName = new DatabaseName();
 
     private final Circle circleSetting = new Circle();
 
@@ -53,12 +54,6 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
     private List<String> listOfInformationMoney = new ArrayList<>();
     private int indexInformation = 0;
     private boolean switchExchange = false;
-
-    /** Base de données **/
-    private final String columnUserMail = "MailUser";
-    private final String tableUser = "utilisateur";
-    private final String tableHistoryExchangeMoney = "historiqueachat";
-    private final String tableHistoryExchangeToken = "historiqueechange";
 
     public HistoryShoppingMenuController(User user, Stage stage, Database database, double soundVolume, boolean backgroundAnimation){
         this.user = user;
@@ -106,7 +101,7 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
 
     private void getAllInformation(){
         try {
-            ResultSet resultSet = database.select(tableHistoryExchangeToken, columnUserMail + " = \"" + user.getEmail() + "\"");
+            ResultSet resultSet = database.select(databaseName.getTableHistoryExchangeToken(), databaseName.getTableHistoryExchangeTokenColumnMailUser() + " = \"" + user.getEmail() + "\"");
             while (resultSet.next()){
                 listOfInformationToken.add("Data : "+resultSet.getInt(2)+" jetons ---> "+resultSet.getInt(3)+" $");
             }
@@ -114,7 +109,7 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         catch (Exception e){ System.out.println("Erreur 1 : getAllInformation dans HistoryShoppingMenuController"); }
 
         try{
-            ResultSet resultSet = database.select(tableHistoryExchangeMoney,columnUserMail+" = \""+user.getEmail()+"\"");
+            ResultSet resultSet = database.select(databaseName.getTableHistoryExchangeMoney(),databaseName.getTableHistoryExchangeTokenColumnMailUser()+" = \""+user.getEmail()+"\"");
             while(resultSet.next()){
                 listOfInformationMoney.add("Date : "+resultSet.getInt(2)+" $ ---> "+resultSet.getInt(3)+" jetons");
             }

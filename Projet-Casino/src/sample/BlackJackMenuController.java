@@ -51,6 +51,7 @@ public class BlackJackMenuController implements InterfaceMenu{
     private final SettingMenuController settingMenuController;
     private final RuleMenuController ruleMenuController;
     private final Database database;
+    private final DatabaseName databaseName = new DatabaseName();
 
     private final BlackJack blackJack;
 
@@ -102,10 +103,6 @@ public class BlackJackMenuController implements InterfaceMenu{
 
     private final Circle circleRule = new Circle();
     private final Circle circleSetting = new Circle();
-
-    /** Base de données **/
-    private final String tableHistoryPartyGame = "historiquepartiesjouees";
-    private final String columnGameBlackJack = "Black Jack";
 
     public BlackJackMenuController(User user,Stage stage, Database database, double soundVolume, boolean backgroundAnimation){
         this.stage = stage;
@@ -561,7 +558,7 @@ public class BlackJackMenuController implements InterfaceMenu{
             labelProfit.setText("Gain : -" + tokenLose);
             labelToken.setText("Jetons : " + user.getToken());
             newPartyButton.setVisible(true);
-            database.insert(tableHistoryPartyGame,"\""+user.getEmail()+"\",\""+columnGameBlackJack+"\","+tokenLose);
+            database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\",\""+databaseName.getGameBlackJack()+"\","+tokenLose);
         }
         else {
             surrender = true;
@@ -664,7 +661,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         }
 
         System.out.println("token gain : "+gain);
-        database.insert(tableHistoryPartyGame,"\""+user.getEmail()+"\","+gain+",\""+columnGameBlackJack+"\"");
+        database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\","+gain+",\""+databaseName.getGameBlackJack()+"\"");
         labelProfit.setText("Gain : " + gain);
         labelToken.setText("Jetons : " + user.getToken());
     }

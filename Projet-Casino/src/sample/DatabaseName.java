@@ -8,6 +8,7 @@ public class DatabaseName {
     private final String tableUserColumnPseudo = "";
     private final String tableUserColumnToken = "";
     private final String tableUserColumnMoney = "";
+    private final String tableUserPassword = "";
 
     private final String tableHistoryExchangeToken = "";
     private final String tableHistoryExchangeTokenColumnMailUser = "";
@@ -24,8 +25,19 @@ public class DatabaseName {
     private final String tableHistoryPartyGamedColumnNameGame = "";
     private final String tableHistoryPartyGamedColumnTokenGain = "";
 
+    private final String tableExchangeToken = "";
+    private final String tableExchangeTokenColumnPriceToken = "";
+    private final String tableExchangeTokenColumnMoneyGain = "";
+
+    private final String tableExchangeMoney = "";
+    private final String tableExchangeMoneyColumnPriceMoney = "";
+    private final String tableExchangeMoneyColumnTokenGain = "";
+
     private final String tableGame = "";
     private final String tableGameColumnNameGame = "";
+    private final String gameBlackJack = "";
+    private final String gameSlotMachine = "";
+    private final String gameRoulette = "";
 
     public String getTableUser() {
         return tableUser;
@@ -45,6 +57,10 @@ public class DatabaseName {
 
     public String getTableUserColumnMoney() {
         return tableUserColumnMoney;
+    }
+
+    public String getTableUserPassword(){
+        return tableUserPassword;
     }
 
     public String getTableHistoryExchangeToken() {
@@ -101,5 +117,41 @@ public class DatabaseName {
 
     public String getTableGameColumnNameGame() {
         return tableGameColumnNameGame;
+    }
+
+    public String getGameBlackJack(){
+        return gameBlackJack;
+    }
+
+    public String getGameSlotMachine(){
+        return gameSlotMachine;
+    }
+
+    public String getGameRoulette(){
+        return gameRoulette;
+    }
+
+    public String getTableExchangeToken(){
+        return tableExchangeToken;
+    }
+
+    public String getTableExchangeTokenColumnPriceToken(){
+        return tableExchangeTokenColumnPriceToken;
+    }
+
+    public String getTableExchangeTokenColumnMoneyGain(){
+        return tableExchangeTokenColumnMoneyGain;
+    }
+
+    public String getTableExchangeMoney(){
+        return tableExchangeMoney;
+    }
+
+    public String getTableExchangeMoneyColumnPriceMoney(){
+        return tableExchangeMoneyColumnPriceMoney;
+    }
+
+    public String getTableExchangeMoneyColumnTokenGain(){
+        return tableExchangeMoneyColumnTokenGain;
     }
 }

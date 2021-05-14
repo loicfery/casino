@@ -38,6 +38,7 @@ public class ShopMenuController implements InterfaceMenu{
     private final User user;
     private final SettingMenuController settingMenuController;
     private final Database database;
+    private final DatabaseName databaseName = new DatabaseName();
 
     private List<String> listOfShopToken = new ArrayList<>();
     private List<String> listOfShopMoney = new ArrayList<>();
@@ -74,20 +75,6 @@ public class ShopMenuController implements InterfaceMenu{
     private boolean addTokenInformation = false;
     private boolean addMoneyInformation = false;
     private boolean ADMIN;
-
-    /** Base de données **/
-    private final String tableUser = "utilisateur";
-    private final String tableExchangeToken = "echangejetons";
-    private final String tableExchangeMoney = "echangeargents";
-    private final String tableHistoryExchangeMoney = "historiqueachat";
-    private final String tableHistoryExchangeToken = "historiqueechange";
-
-    private final String columnUserMail = "MailUser";
-    private final String columnUserMoney = "Money";
-    private final String tableExchangeTokenColumnNumberTokenExchange = "PrixJeton";
-    private final String tableExchangeTokenColumnMoneyGain = "ArgentsGagnes";
-    private final String tableExchangeMoneyColumnNumberMoneyExchange = "PrixArgent";
-    private final String tableExchangeMoneyColumnTokenGain = "JetonsGagnes";
 
     public ShopMenuController(Stage stage,User user, Database database, double soundVolume, boolean backgroundAnimation){
         this.stage = stage;
@@ -149,12 +136,12 @@ public class ShopMenuController implements InterfaceMenu{
 
     private void getShopList(){
         try {
-            ResultSet resultSet = database.select(tableExchangeMoney, "");
+            ResultSet resultSet = database.select(databaseName.getTableExchangeMoney(), "");
             while (resultSet.next()) {
                 listOfShopMoney.add(resultSet.getInt(1)+" $ ---> "+resultSet.getInt(2)+" jetons");
             }
 
-            resultSet = database.select(tableExchangeToken,"");
+            resultSet = database.select(databaseName.getTableExchangeToken(),"");
             while (resultSet.next()){
                 listOfShopToken.add(resultSet.getInt(1)+" jetons ---> "+resultSet.getInt(2)+" $");
             }
@@ -365,7 +352,7 @@ public class ShopMenuController implements InterfaceMenu{
                 if(user.getMoney() >= money){
                     user.removeMoney(money);
                     user.addToken(token);
-                    database.insert(tableHistoryExchangeMoney,"\""+user.getEmail()+"\","+money+","+token);
+                    database.insert(databaseName.getTableHistoryExchangeMoney(),"\""+user.getEmail()+"\","+money+","+token);
                     titleShopMoneyLabel.setText("Echange d'argent : "+user.getMoney());
                     titleShopTokenLabel.setText("Echange de jeton : "+user.getToken());
                     setMessage("Votre échange a bien été effectué",Color.GREEN);
@@ -384,7 +371,7 @@ public class ShopMenuController implements InterfaceMenu{
                 if(user.getToken() >= token){
                     user.addMoney(money);
                     user.removeToken(token);
-                    database.insert(tableHistoryExchangeToken,"\""+user.getEmail()+"\","+token+","+money);
+                    database.insert(databaseName.getTableHistoryExchangeToken(),"\""+user.getEmail()+"\","+token+","+money);
                     titleShopTokenLabel.setText("Echange de jeton : "+user.getToken());
                     titleShopMoneyLabel.setText("Echange d'argent : "+user.getMoney());
                     setMessage("Votre échange a bien été effectué",Color.GREEN);
@@ -428,12 +415,12 @@ public class ShopMenuController implements InterfaceMenu{
         listOfButtonExchange.get(listOfButtonExchange.size() - 1).setLayoutY(positionY);
 
         if(type.equals("token")){
-            database.delete(tableExchangeToken,tableExchangeTokenColumnNumberTokenExchange+" = "+information.split(" ")[0]+" && "+tableExchangeTokenColumnMoneyGain+" = "+information.split(" ")[3]);
+            database.delete(databaseName.getTableExchangeToken(),databaseName.getTableExchangeTokenColumnPriceToken()+" = "+information.split(" ")[0]+" && "+databaseName.getTableExchangeTokenColumnMoneyGain()+" = "+information.split(" ")[3]);
             printShopTokenInformation();
         }
         else if(type.equals("money"))
         {
-            database.delete(tableExchangeMoney,tableExchangeMoneyColumnNumberMoneyExchange+" = "+information.split(" ")[0]+" && "+tableExchangeMoneyColumnTokenGain+" = "+information.split(" ")[3]);
+            database.delete(databaseName.getTableExchangeMoney(),databaseName.getTableExchangeMoneyColumnPriceMoney()+" = "+information.split(" ")[0]+" && "+databaseName.getTableExchangeMoneyColumnTokenGain()+" = "+information.split(" ")[3]);
             printShopMoneyInformation();
         }
     }
@@ -506,7 +493,7 @@ public class ShopMenuController implements InterfaceMenu{
 
 
             listOfShopToken.add(textToken.getText() + " jetons ---> " + textMoney.getText()+" $");
-            database.insert(tableExchangeToken,textToken.getText()+","+textMoney.getText());
+            database.insert(databaseName.getTableExchangeToken(),textToken.getText()+","+textMoney.getText());
             listOfButtonShopToken.add(addInformationButton);
 
             if (positionY >= 685) {
@@ -548,7 +535,7 @@ public class ShopMenuController implements InterfaceMenu{
             listOfButtonShopMoneyDelete.add(deleteInformationButton);
 
             listOfShopMoney.add(textMoney.getText() + " $ ---> " + textToken.getText()+" jetons");
-            database.insert(tableExchangeMoney,textMoney.getText()+","+textToken.getText());
+            database.insert(databaseName.getTableExchangeMoney(),textMoney.getText()+","+textToken.getText());
             listOfButtonShopMoney.add(addInformationButton);
 
             if (positionY >= 685) {

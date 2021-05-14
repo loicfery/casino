@@ -35,6 +35,7 @@ public class ConnexionMenuController implements InterfaceMenu{
     private User user;
     private final SettingMenuController settingMenuController;
     private final Database database;
+    private final DatabaseName databaseName = new DatabaseName();
 
     private double soundVolume;
     private boolean backgroundAnimation;
@@ -59,11 +60,6 @@ public class ConnexionMenuController implements InterfaceMenu{
     private final Button buttonLoginMenuReturn = new Button();
 
     private final Circle circleSetting = new Circle();
-
-    /** Base de données **/
-    private final String tableUser = "Utilisateurs";
-    private final String columnMailUser = "MailUser_Utilisateurs";
-    private final String columnPassword = "Password_Utilisateurs";
 
     public ConnexionMenuController(Stage stage, Database database){
         this.stage = stage;
@@ -118,7 +114,7 @@ public class ConnexionMenuController implements InterfaceMenu{
     private void goToMainMenu(){
         if (!textEmail.getText().isEmpty() && !textPassword.getText().isEmpty()) {
             try {
-                ResultSet resultSet = database.select(tableUser, columnMailUser+" = '" + textEmail.getText() + "' and "+ columnPassword +" = '" + textPassword.getText() + "'");
+                ResultSet resultSet = database.select(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser()+" = '" + textEmail.getText() + "' and "+ databaseName.getTableUserPassword() +" = '" + textPassword.getText() + "'");
                 if (resultSet.next()) {
                     labelTitle.setVisible(false);
                     labelEmail.setVisible(false);
@@ -181,7 +177,7 @@ public class ConnexionMenuController implements InterfaceMenu{
             labelError.setVisible(false);
             settingMenuController.exitSettingMenu();
 
-            database.insert(tableUser,"null, '"+textNewPseudo.getText()+"', '"+textEmail.getText()+"','"+textNewPassword.getText()+"',100,0");
+            database.insert(databaseName.getTableUser(),"null, '"+textNewPseudo.getText()+"', '"+textEmail.getText()+"','"+textNewPassword.getText()+"',100,0");
             setUser(new User(textNewPseudo.getText(),textNewEmail.getText(),"USER",0,100,database));
             switchMainMenu();
         } else {

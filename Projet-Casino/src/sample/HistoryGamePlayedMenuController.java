@@ -33,6 +33,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
     private final User user;
     private final SettingMenuController settingMenuController;
     private final Database database;
+    private final DatabaseName databaseName = new DatabaseName();
 
     private final Button returnShopMenuButton = new Button();
     private final Button gameBlackJackButton = new Button();
@@ -55,12 +56,6 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
     private final List<String> listOfGameRoulette = new ArrayList<>();
     private List<String> currentList = new ArrayList<>();
     private int indexList = 0;
-
-    /** base de données **/
-    private final String tableHistoryGamePlayed = "historiquepartiesjouees";
-    private final String columnGameBlackJack = "Black Jack";
-    private final String columnGameSlotMachine = "slot machine";
-    private final String columnGameRoulette = "Roulette";
 
     public HistoryGamePlayedMenuController(User user, Stage stage, Database database, double soundVolume, boolean backgroundAnimation){
         this.user = user;
@@ -112,14 +107,14 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
     }
 
     private void getAllInformation(){
-        completeList(listOfGameBlackJack,columnGameBlackJack,"Erreur black jack de getAllInformation dans HistoryGamePlayedMenuController");
-        completeList(listOfGameSlotMachine,columnGameSlotMachine,"Erreur machine à sous de getAllInformation dans HistoryGamePlayedMenuController");
-        completeList(listOfGameRoulette,columnGameRoulette,"\"Erreur roulette de getAllInformation dans HistoryGamePlayedMenuController\"");
+        completeList(listOfGameBlackJack,databaseName.getGameBlackJack(),"Erreur black jack de getAllInformation dans HistoryGamePlayedMenuController");
+        completeList(listOfGameSlotMachine,databaseName.getGameSlotMachine(),"Erreur machine à sous de getAllInformation dans HistoryGamePlayedMenuController");
+        completeList(listOfGameRoulette,databaseName.getGameRoulette(),"\"Erreur roulette de getAllInformation dans HistoryGamePlayedMenuController\"");
     }
 
     private void completeList(List<String> list, String game, String errorMessage){
         try {
-            ResultSet resultSet = database.select(tableHistoryGamePlayed, "NomJeux = \"" + game + "\" && MailUser = \""+user.getEmail()+"\"");
+            ResultSet resultSet = database.select(databaseName.getTableHistoryPartyGamed(), "NomJeux = \"" + game + "\" && MailUser = \""+user.getEmail()+"\"");
             while (resultSet.next()){
                 list.add("Date : "+resultSet.getString(3)+" --> "+resultSet.getInt(2)+" jetons");
             }

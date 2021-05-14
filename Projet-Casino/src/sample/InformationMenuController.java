@@ -36,6 +36,7 @@ public class InformationMenuController implements InterfaceMenu{
     private final User user;
     private final SettingMenuController settingMenuController;
     private final Database database;
+    private final DatabaseName databaseName = new DatabaseName();
 
     private double soundVolume;
     private boolean backgroundAnimation;
@@ -58,12 +59,6 @@ public class InformationMenuController implements InterfaceMenu{
     private final TextField textEmail = new TextField();
     private final TextField textPseudonym = new TextField();
     private final TextField textPassword = new TextField();
-
-    /** Base de données **/
-    private final String tableUser = "utilisateur";
-    private final String columnMailUser = "MailUser";
-    private final String columnNameUser = "NameUser";
-    private final String columnPassword = "Password";
 
     public InformationMenuController(User user, Stage stage, Database database, double soundVolume, boolean backgroundAnimation){
         this.user = user;
@@ -122,7 +117,7 @@ public class InformationMenuController implements InterfaceMenu{
 
     private void getPassword(String email){
         try {
-            ResultSet resultSet = database.select(tableUser, columnMailUser+" = \"" + email + "\"");
+            ResultSet resultSet = database.select(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser()+" = \"" + email + "\"");
             if(resultSet.next()) {
                 textPassword.setText(resultSet.getString(3));
             }
@@ -146,12 +141,12 @@ public class InformationMenuController implements InterfaceMenu{
         if(!textEmail.getText().isEmpty()){
             if(ControleSaisie.validEmail(textEmail.getText())) { //vérification email pas déjà pris
                 try {
-                    ResultSet resultSet = database.select(tableUser, columnMailUser+" = \"" + textEmail.getText() + "\"");
+                    ResultSet resultSet = database.select(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser()+" = \"" + textEmail.getText() + "\"");
                     if (resultSet.next()) {
                         showStatusChanged("Cette email est déjà utilisé", Color.RED);
                     }
                     else {
-                        database.update(tableUser,"MailUser","\""+textEmail.getText()+"\"",columnMailUser+" = \""+user.getEmail()+"\"");
+                        database.update(databaseName.getTableUser(),"MailUser","\""+textEmail.getText()+"\"",databaseName.getTableUserColumnMailUser()+" = \""+user.getEmail()+"\"");
                         user.setEmail(textEmail.getText());
                         showStatusChanged("L'email a été modifié", Color.GREEN);
                     }
@@ -173,7 +168,7 @@ public class InformationMenuController implements InterfaceMenu{
     private void changePseudonym(){
         if(!textPseudonym.getText().isEmpty()){
             if(ControleSaisie.isUsername(textPseudonym.getText()) && textPseudonym.getText().length() > 5) {
-                database.update(tableUser,columnNameUser,"\""+textPseudonym.getText()+"\"",columnMailUser+" = \""+user.getEmail()+"\"");
+                database.update(databaseName.getTableUser(),databaseName.getTableUserColumnPseudo(),"\""+textPseudonym.getText()+"\"",databaseName.getTableUserColumnMailUser()+" = \""+user.getEmail()+"\"");
                 user.setPseudo(textPseudonym.getText());
                 showStatusChanged("Le pseudonyme a été modifié", Color.GREEN);
             }
@@ -192,7 +187,7 @@ public class InformationMenuController implements InterfaceMenu{
     private void changePassword(){
         if(!textPassword.getText().isEmpty()){
             if(ControleSaisie.validPassword(textPassword.getText()) && textPassword.getText().length() > 5){
-                database.update(tableUser,columnPassword,"\""+textPassword.getText()+"\"",columnMailUser+" = \""+user.getEmail()+"\"");
+                database.update(databaseName.getTableUser(),databaseName.getTableUserPassword(),"\""+textPassword.getText()+"\"",databaseName.getTableUserColumnMailUser()+" = \""+user.getEmail()+"\"");
                 showStatusChanged("Le mot de passe a été modifié", Color.GREEN);
             }
             else {
