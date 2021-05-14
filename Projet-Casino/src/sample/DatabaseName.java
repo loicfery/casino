@@ -3,27 +3,27 @@ package sample;
 public class DatabaseName {
     //show tables from casino; pour recup les noms des tables (pas sûre de l'utiliser)
 
-    private final String tableUser = "";
-    private final String tableUserColumnMailUser = "";
-    private final String tableUserColumnPseudo = "";
-    private final String tableUserColumnToken = "";
-    private final String tableUserColumnMoney = "";
-    private final String tableUserPassword = "";
+    private final String tableUser = "Utilisateurs";
+    private final String tableUserColumnMailUser = "MailUser_Utilisateurs";
+    private final String tableUserColumnPseudo = "NameUser_Utilisateurs";
+    private final String tableUserColumnToken = "Token_HistoriquePartiesJouees";
+    private final String tableUserColumnMoney = "Money_Utilisateurs";
+    private final String tableUserPassword = "Password_Utilisateurs";
 
-    private final String tableHistoryExchangeToken = "";
-    private final String tableHistoryExchangeTokenColumnMailUser = "";
-    private final String tableHistoryExchangeTokenColumnPriceToken = "";
-    private final String tableHistoryExchangeTokenColumnTokenGain = "";
+    private final String tableHistoryExchangeToken = "HistoriqueAchatJetons";
+    private final String tableHistoryExchangeTokenColumnMailUser = "MailUser_HistoriqueAchatJetons";
+    private final String tableHistoryExchangeTokenColumnPriceToken = "PrixJeton_HistoriqueAchatJetons";
+    private final String tableHistoryExchangeTokenColumnMoneyGain = "ArgentGagne_HistoriqueAchatJetons";
 
-    private final String tableHistoryExchangeMoney = "";
-    private final String tableHistoryExchangeMoneyColumnMailUser = "";
-    private final String tableHistoryExchangeMoneyColumnPriceMoney = "";
-    private final String tableHistoryExchangeMoneyColumnMoneyGain = "";
+    private final String tableHistoryExchangeMoney = "HistoriqueEchangeArgent";
+    private final String tableHistoryExchangeMoneyColumnMailUser = "MailUser_HistoriqueEchangeArgent";
+    private final String tableHistoryExchangeMoneyColumnPriceMoney = "PrixArgent_HistoriqueEchangeArgent";
+    private final String tableHistoryExchangeMoneyColumnMoneyGain = "JetonGagne_HistoriqueEchangeArgent";
 
-    private final String tableHistoryPartyGamed = "";
-    private final String tableHistoryPartyGamedColumnMailUser = "";
-    private final String tableHistoryPartyGamedColumnNameGame = "";
-    private final String tableHistoryPartyGamedColumnTokenGain = "";
+    private final String tableHistoryPartyGamed = "HistoriquePartiesJouees";
+    private final String tableHistoryPartyGamedColumnMailUser = "MailUser_HistoriquePartiesJouees";
+    private final String tableHistoryPartyGamedColumnGameName = "NomJeux_HistoriquePartiesJouees";
+    private final String tableHistoryPartyGamedColumnTokenGain = "TokenGagne_HistoriquePartiesJouees";
 
     private final String tableExchangeToken = "";
     private final String tableExchangeTokenColumnPriceToken = "";
@@ -33,11 +33,11 @@ public class DatabaseName {
     private final String tableExchangeMoneyColumnPriceMoney = "";
     private final String tableExchangeMoneyColumnTokenGain = "";
 
-    private final String tableGame = "";
-    private final String tableGameColumnNameGame = "";
-    private final String gameBlackJack = "";
-    private final String gameSlotMachine = "";
-    private final String gameRoulette = "";
+    private final String tableGame = "Jeux";
+    private final String tableGameColumnNameGame = "NomJeux_Jeux";
+    private final String gameBlackJack = "BlackJack";
+    private final String gameSlotMachine = "SlotMachine";
+    private final String gameRoulette = "Roulette";
 
     public String getTableUser() {
         return tableUser;
@@ -75,8 +75,8 @@ public class DatabaseName {
         return tableHistoryExchangeTokenColumnPriceToken;
     }
 
-    public String getTableHistoryExchangeTokenColumnTokenGain() {
-        return tableHistoryExchangeTokenColumnTokenGain;
+    public String getTableHistoryExchangeTokenColumnMoneyGain() {
+        return tableHistoryExchangeTokenColumnMoneyGain;
     }
 
     public String getTableHistoryExchangeMoney() {
@@ -103,8 +103,8 @@ public class DatabaseName {
         return tableHistoryPartyGamedColumnMailUser;
     }
 
-    public String getTableHistoryPartyGamedColumnNameGame() {
-        return tableHistoryPartyGamedColumnNameGame;
+    public String getTableHistoryPartyGamedColumnGameName() {
+        return tableHistoryPartyGamedColumnGameName;
     }
 
     public String getTableHistoryPartyGamedColumnTokenGain() {
