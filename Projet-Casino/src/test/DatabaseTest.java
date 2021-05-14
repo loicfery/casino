@@ -1,11 +1,11 @@
 package test;
 
-import games.Database;
+/*import games.Database;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;*/
 
-class DatabaseTest {
+/*class DatabaseTest {
 
     @Test
     void authenticate() {
@@ -30,4 +30,4 @@ class DatabaseTest {
     @Test
     void select() {
     }
-}
+}*/

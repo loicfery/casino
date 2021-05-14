@@ -4,15 +4,22 @@ import games.Database;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
+
 public class Main extends Application {
     public Main() {
     }
 
-    public void start(Stage stage){
-        String bd = "casino";
-        String userName = "root";
-        String password = "";
+    public void start(Stage stage) throws  Exception{
+        String bd = "projetl3";
+        String userName = "hadja";
+        String password = "H@dja2020";
         Database database = new Database(bd,userName,password); //si vous voulez tester avec la votre changer les valeurs
+        try {
+            database.importSqlFile("bdcasino.sql");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         stage.setResizable(false);
 
