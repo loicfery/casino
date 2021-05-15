@@ -56,8 +56,8 @@ ALTER TABLE Joue ADD CONSTRAINT FK_Joue_IdUser_Utilisateurs FOREIGN KEY (IdUser_
 
 ALTER TABLE Joue ADD CONSTRAINT FK_Joue_IdJeux_Jeux FOREIGN KEY (IdJeux_Jeux) REFERENCES Jeux (IdJeux_Jeux);
 ALTER TABLE Complete ADD CONSTRAINT FK_Complete_IdUser_Utilisateurs FOREIGN KEY (IdUser_Utilisateurs) REFERENCES Utilisateurs (IdUser_Utilisateurs);
-ALTER TABLE Complete ADD CONSTRAINT FK_Complete_idUser_HistoriqueAchat FOREIGN KEY (idUser_HistoriqueAchat) REFERENCES HistoriqueAchat (idUser_HistoriqueAchat);
+ALTER TABLE Complete ADD CONSTRAINT FK_Complete_idUser_HistoriqueAchatJetons FOREIGN KEY (idUser_HistoriqueAchatJetons) REFERENCES HistoriqueAchatJetons (idUser_HistoriqueAchatJetons);
 ALTER TABLE Echange ADD CONSTRAINT FK_Echange_IdUser_Utilisateurs FOREIGN KEY (IdUser_Utilisateurs) REFERENCES Utilisateurs (IdUser_Utilisateurs);
-ALTER TABLE Echange ADD CONSTRAINT FK_Echange_idHistoEchange_HistoriqueEchange FOREIGN KEY (idHistoEchange_HistoriqueEchange) REFERENCES HistoriqueEchange (idHistoEchange_HistoriqueEchange);
+ALTER TABLE Echange ADD CONSTRAINT FK_Echange_idHistoEchange_HistoriqueEchangeArgents FOREIGN KEY (idHistoEchange_HistoriqueEchangeArgents) REFERENCES HistoriqueEchange (idHistoEchange_HistoriqueEchangeArgents);
 ALTER TABLE Consulte ADD CONSTRAINT FK_Consulte_IdUser_Utilisateurs FOREIGN KEY (IdUser_Utilisateurs) REFERENCES Utilisateurs (IdUser_Utilisateurs);
 ALTER TABLE Consulte ADD CONSTRAINT FK_Consulte_IdUser_HistoriquePartiesJouees FOREIGN KEY (IdUser_HistoriquePartiesJouees) REFERENCES HistoriquePartiesJouees (IdUser_HistoriquePartiesJouees);

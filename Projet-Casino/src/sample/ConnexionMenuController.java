@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -51,9 +52,9 @@ public class ConnexionMenuController implements InterfaceMenu{
     private final Label labelError = new Label();
 
     private final TextField textEmail = new TextField();
-    private final TextField textPassword = new TextField();
+    private final PasswordField textPassword = new PasswordField();
     private final TextField textNewEmail = new TextField();
-    private final TextField textNewPassword = new TextField();
+    private final PasswordField textNewPassword = new PasswordField();
     private final TextField textNewPseudo = new TextField();
 
     private final Button buttonLogin = new Button();
