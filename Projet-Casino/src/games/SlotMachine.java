@@ -7,6 +7,9 @@ import static javax.swing.Action.DEFAULT;
 
 public class SlotMachine {
     private String[] slot = {"LEMON","WATERMELON","CHERRY","WATERMELON","SEVEN","WATERMELON","LEMON","WATERMELON","CHERRY","LEMON"};
+
+
+
     //bobine de la machine
     private String results[] = new String[3]; //tableau des trois images tirées
     private Bet bet; //mise
@@ -18,6 +21,16 @@ public class SlotMachine {
         bet = new Bet();
         nbImage = new ArrayList<>();
     };
+
+    public SlotMachine(){
+        bet = new Bet();
+        nbImage = new ArrayList<>();
+    };
+
+    public void setResults(String[] results) {
+        this.results = results;
+    }
+
 
     public void userBet(User user){
         bet.addBet(1,user);
