@@ -52,6 +52,7 @@ public class BlackJackMenuController implements InterfaceMenu{
     private final RuleMenuController ruleMenuController;
     private final Database database;
     private final DatabaseName databaseName = new DatabaseName();
+    private final MessageInterface messageInterface = new MessageInterface();
 
     private final BlackJack blackJack;
 
@@ -305,8 +306,7 @@ public class BlackJackMenuController implements InterfaceMenu{
      **/
     private void validBet() {
         if (textBetUser.getText().isEmpty()) {
-            labelError.setText("Il faut entrer une mise");
-            labelError.setVisible(true);
+            messageInterface.setMessage(labelError,"Il faut entrer une mise",Color.RED);
         } else {
             try {
                 int valueOfBet = Integer.parseInt(textBetUser.getText());
@@ -314,18 +314,14 @@ public class BlackJackMenuController implements InterfaceMenu{
                 int BET_MIN = 2;
                 int BET_MAX = 100;
                 if (valueOfBet < BET_MIN || valueOfBet > BET_MAX) {
-                    labelError.setText("Vous ne pouvez miser qu'entre 2 et 100 jetons");
-                    labelError.setVisible(true);
+                    messageInterface.setMessage(labelError,"Vous ne pouvez miser qu'entre 2 et 100 jetons",Color.RED);
                 } else {
                     int newTokenUser = user.getToken() - valueOfBet;
                     if (newTokenUser < 0) {
-                        labelError.setText("Vous n'avez pas assez de jeton");
-                        labelError.setVisible(true);
+                        messageInterface.setMessage(labelError,"Vous n'avez pas assez de jeton",Color.RED);
                     }
                     else {
                         tokenSound.play();
-
-                        labelError.setVisible(false);
 
                         blackJack.addUserBet(user);
                         blackJack.userBet(valueOfBet,user);

@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.StrokeType;
@@ -36,6 +37,7 @@ public class ConnexionMenuController implements InterfaceMenu{
     private final SettingMenuController settingMenuController;
     private final Database database;
     private final DatabaseName databaseName = new DatabaseName();
+    private final MessageInterface messageInterface = new MessageInterface();
 
     private double soundVolume;
     private boolean backgroundAnimation;
@@ -123,20 +125,19 @@ public class ConnexionMenuController implements InterfaceMenu{
                     textPassword.setVisible(false);
                     buttonLogin.setVisible(false);
                     buttonNewAccount.setVisible(false);
-                    labelError.setVisible(false);
                     settingMenuController.exitSettingMenu();
 
                     user = new User(resultSet.getString(2), resultSet.getString(1), resultSet.getString(6), resultSet.getInt(5), resultSet.getInt(4), database);
                     switchMainMenu();
                 }
                 else {
-                    showError("L'email ou le mot de passe est incorrect");
+                    messageInterface.setMessage(labelError,"L'email ou le mot de passe est incorrect",Color.RED);
                 }
             }
             catch (Exception e){}
 
         } else {
-            showError("Un ou plusieurs champs sont vides");
+            messageInterface.setMessage(labelError,"Un ou plusieurs champs sont vides",Color.RED);
         }
 
     }
@@ -174,14 +175,13 @@ public class ConnexionMenuController implements InterfaceMenu{
             textNewPseudo.setVisible(false);
             buttonInscription.setVisible(false);
             buttonLoginMenuReturn.setVisible(false);
-            labelError.setVisible(false);
             settingMenuController.exitSettingMenu();
 
             database.insert(databaseName.getTableUser(),"null, '"+textNewPseudo.getText()+"', '"+textEmail.getText()+"','"+textNewPassword.getText()+"',100,0");
             setUser(new User(textNewPseudo.getText(),textNewEmail.getText(),"USER",0,100,database));
             switchMainMenu();
         } else {
-            showError("Un ou plusieurs champs sont vides");
+            messageInterface.setMessage(labelError,"Un ou plusieurs champs sont vides", Color.RED);
         }
 
     }
@@ -206,19 +206,6 @@ public class ConnexionMenuController implements InterfaceMenu{
         buttonInscription.setVisible(false);
         buttonLoginMenuReturn.setVisible(false);
         settingMenuController.exitSettingMenu();
-    }
-
-    /** Méthode pour changer le texte de l'erreur **/
-    private void showError(String message) {
-        Timeline timeline = new Timeline();
-        Duration timePoint = Duration.ZERO;
-
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelError.setText(message)));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelError.setVisible(true)));
-        timePoint = timePoint.add(Duration.seconds(3));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelError.setVisible(false)));
-
-        timeline.play();
     }
 
     private void setUser(User user){

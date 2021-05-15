@@ -28,6 +28,7 @@ public class BuyingMoneyMenuController {
     private final User user;
     private final Database database;
     private  Stage stageBuyingMoney;
+    private final MessageInterface messageInterface = new MessageInterface();
 
     private final Label titleLabel = new Label();
     private final Label userPseudoLabel = new Label();
@@ -86,30 +87,17 @@ public class BuyingMoneyMenuController {
                     user.addMoney(value);
                     userMoneyLabel.setText("Argent : "+user.getMoney());
                     textMoney.setText("");
-                    showMessage(value+" d'argent ont été ajouté",Color.GREEN);
+                    messageInterface.setMessage(errorLabel,value+" d'argent ont été ajouté",Color.GREEN);
                 }
                 else {
-                    showMessage("Il faut une valeur strictement positive",Color.RED);
+                    messageInterface.setMessage(errorLabel,"Il faut une valeur strictement positive",Color.RED);
                 }
             } catch (Exception e) {
                 System.out.println("Erreur type de addMoney dans BuyingMoneyMenuController");
             }
         }
         else {
-            showMessage("Le champ est vide",Color.RED);
+            messageInterface.setMessage(errorLabel,"Le champ est vide",Color.RED);
         }
-    }
-
-    private void showMessage(String message, Color color){
-        Timeline timeline = new Timeline();
-        Duration timePoint = Duration.ZERO;
-
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> errorLabel.setText(message)));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> errorLabel.setTextFill(color)));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> errorLabel.setVisible(true)));
-        timePoint = timePoint.add(Duration.seconds(3));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> errorLabel.setVisible(false)));
-
-        timeline.play();
     }
 }

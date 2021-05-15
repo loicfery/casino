@@ -2,8 +2,6 @@ package sample;
 
 import games.Database;
 import games.User;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -23,7 +21,6 @@ import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import javafx.util.Duration;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -39,6 +36,7 @@ public class ShopMenuController implements InterfaceMenu{
     private final SettingMenuController settingMenuController;
     private final Database database;
     private final DatabaseName databaseName = new DatabaseName();
+    private final MessageInterface messageInterface = new MessageInterface();
 
     private List<String> listOfShopToken = new ArrayList<>();
     private List<String> listOfShopMoney = new ArrayList<>();
@@ -355,10 +353,10 @@ public class ShopMenuController implements InterfaceMenu{
                     database.insert(databaseName.getTableHistoryExchangeMoney(),"\""+user.getEmail()+"\","+money+","+token);
                     titleShopMoneyLabel.setText("Echange d'argent : "+user.getMoney());
                     titleShopTokenLabel.setText("Echange de jeton : "+user.getToken());
-                    setMessage("Votre échange a bien été effectué",Color.GREEN);
+                    messageInterface.setMessage(errorLabel,"Votre échange a bien été effectué",Color.GREEN);
                 }
                 else {
-                    setMessage("Vous n'avez pas assez d'argent",Color.RED);
+                    messageInterface.setMessage(errorLabel,"Vous n'avez pas assez d'argent",Color.RED);
                 }
             }
             catch (Exception e){ System.out.println("Problème dans exchange de shopMenuController : argent"); }
@@ -374,10 +372,10 @@ public class ShopMenuController implements InterfaceMenu{
                     database.insert(databaseName.getTableHistoryExchangeToken(),"\""+user.getEmail()+"\","+token+","+money);
                     titleShopTokenLabel.setText("Echange de jeton : "+user.getToken());
                     titleShopMoneyLabel.setText("Echange d'argent : "+user.getMoney());
-                    setMessage("Votre échange a bien été effectué",Color.GREEN);
+                    messageInterface.setMessage(errorLabel,"Votre échange a bien été effectué",Color.GREEN);
                 }
                 else {
-                    setMessage("Vous n'avez pas assez de jeton",Color.RED);
+                    messageInterface.setMessage(errorLabel,"Vous n'avez pas assez de jeton",Color.RED);
                 }
             }
             catch (Exception e){ System.out.println("Problème dans exchange de shopMenuController token"); }
@@ -568,19 +566,6 @@ public class ShopMenuController implements InterfaceMenu{
                 anchorPane.getChildren().remove(anchorPane.getChildren().size() - 1);
             }
         }
-    }
-
-    private void setMessage(String message, Color color){
-        Timeline timeline = new Timeline();
-        Duration timePoint = Duration.ZERO;
-
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> errorLabel.setText(message)));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> errorLabel.setTextFill(color)));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> errorLabel.setVisible(true)));
-        timePoint = timePoint.add(Duration.seconds(3));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> errorLabel.setVisible(false)));
-
-        timeline.play();
     }
 
     private void goToHistoryShoppingMenu(){

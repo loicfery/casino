@@ -19,6 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -58,6 +59,7 @@ public class RouletteMenuController implements InterfaceMenu{
     private final LogMenuController logMenuController;
     private final RuleMenuController ruleMenuController;
     private final Database database;
+    private final MessageInterface messageInterface = new MessageInterface();
 
     private final List<Rectangle> listOfRectangleGameBoard = new ArrayList<>();
     private final List<Label> listOfLabelGameBoard = new ArrayList<>();
@@ -662,7 +664,6 @@ public class RouletteMenuController implements InterfaceMenu{
                     createToken();
                     startingGameButton.setVisible(false);
                     if(getTokenToRemove(mousePositionX,mousePositionY) == -1) {
-                        labelError.setVisible(false);
                         setPositionToken(mousePositionX, mousePositionY, listOfCircleToken.get(tokenUsed), listLabelToken.get(tokenUsed), true);
                         betToken(mousePositionX, mousePositionY, listOfCircleToken.get(tokenUsed), listLabelToken.get(tokenUsed));
                     }
@@ -670,8 +671,7 @@ public class RouletteMenuController implements InterfaceMenu{
                         labelInformationBetToken.setVisible(false);
                         rectangleInformationBet.setVisible(false);
                         textBetToken.setVisible(false);
-                        labelError.setText("Vous ne pouvez pas placer de jeton ici");
-                        labelError.setVisible(true);
+                        messageInterface.setMessage(labelError,"Vous ne pouvez pas placer de jeton ici", Color.RED);
                     }
                 }
             }
@@ -951,7 +951,6 @@ public class RouletteMenuController implements InterfaceMenu{
 
             try {
                 valueOfBet = Integer.parseInt(textBetToken.getText());
-                labelError.setVisible(false);
             }
             catch (Exception e) {
                 rectangleInformationBet.setVisible(false);
@@ -959,8 +958,7 @@ public class RouletteMenuController implements InterfaceMenu{
                 validBetTokenButton.setVisible(false);
                 textBetToken.setVisible(false);
                 startingGameButton.setVisible(true);
-                labelError.setText("Il faut miser une valeur entière");
-                labelError.setVisible(true);
+                messageInterface.setMessage(labelError,"Il faut miser une valeur entière",Color.RED);
                 return;
             }
 
@@ -1133,12 +1131,10 @@ public class RouletteMenuController implements InterfaceMenu{
     /** Méthode pour lancer la roulette et mettre fin aux mises **/
     private void startingGame() {
         if(tokenUsed == 0){
-            labelError.setText("Il faut placer un jeton au minimum");
-            labelError.setVisible(true);
+            messageInterface.setMessage(labelError,"Il faut placer un jeton au minimum",Color.RED);
         }
         else{
             startingGame = true;
-            labelError.setVisible(false);
             startingGameButton.setVisible(false);
 
             Timeline timeline = new Timeline();

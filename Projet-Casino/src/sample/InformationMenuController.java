@@ -37,6 +37,7 @@ public class InformationMenuController implements InterfaceMenu{
     private final SettingMenuController settingMenuController;
     private final Database database;
     private final DatabaseName databaseName = new DatabaseName();
+    private final MessageInterface messageInterface = new MessageInterface();
 
     private double soundVolume;
     private boolean backgroundAnimation;
@@ -143,22 +144,22 @@ public class InformationMenuController implements InterfaceMenu{
                 try {
                     ResultSet resultSet = database.select(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser()+" = \"" + textEmail.getText() + "\"");
                     if (resultSet.next()) {
-                        showStatusChanged("Cette email est déjà utilisé", Color.RED);
+                        messageInterface.setMessage(labelError,"Cette email est déjà utilisé", Color.RED);
                     }
                     else {
                         database.update(databaseName.getTableUser(),"MailUser","\""+textEmail.getText()+"\"",databaseName.getTableUserColumnMailUser()+" = \""+user.getEmail()+"\"");
                         user.setEmail(textEmail.getText());
-                        showStatusChanged("L'email a été modifié", Color.GREEN);
+                        messageInterface.setMessage(labelError,"L'email a été modifié", Color.GREEN);
                     }
                 }
                 catch (Exception e){}
             }
             else {
-                showStatusChanged("L'email ne correspond pas au format",Color.RED);
+                messageInterface.setMessage(labelError,"L'email ne correspond pas au format",Color.RED);
             }
         }
         else {
-            showStatusChanged("Le champ ne peux pas être vide",Color.RED);
+            messageInterface.setMessage(labelError,"Le champ ne peux pas être vide",Color.RED);
         }
     }
 
@@ -170,14 +171,14 @@ public class InformationMenuController implements InterfaceMenu{
             if(ControleSaisie.isUsername(textPseudonym.getText()) && textPseudonym.getText().length() > 5) {
                 database.update(databaseName.getTableUser(),databaseName.getTableUserColumnPseudo(),"\""+textPseudonym.getText()+"\"",databaseName.getTableUserColumnMailUser()+" = \""+user.getEmail()+"\"");
                 user.setPseudo(textPseudonym.getText());
-                showStatusChanged("Le pseudonyme a été modifié", Color.GREEN);
+                messageInterface.setMessage(labelError,"Le pseudonyme a été modifié", Color.GREEN);
             }
             else {
-                showStatusChanged("Le pseudonyme ne correspond pas au format",Color.RED);
+                messageInterface.setMessage(labelError,"Le pseudonyme ne correspond pas au format",Color.RED);
             }
         }
         else {
-            showStatusChanged("Le champ ne peux pas être vide",Color.RED);
+            messageInterface.setMessage(labelError,"Le champ ne peux pas être vide",Color.RED);
         }
     }
 
@@ -188,31 +189,15 @@ public class InformationMenuController implements InterfaceMenu{
         if(!textPassword.getText().isEmpty()){
             if(ControleSaisie.validPassword(textPassword.getText()) && textPassword.getText().length() > 5){
                 database.update(databaseName.getTableUser(),databaseName.getTableUserPassword(),"\""+textPassword.getText()+"\"",databaseName.getTableUserColumnMailUser()+" = \""+user.getEmail()+"\"");
-                showStatusChanged("Le mot de passe a été modifié", Color.GREEN);
+                messageInterface.setMessage(labelError,"Le mot de passe a été modifié", Color.GREEN);
             }
             else {
-                showStatusChanged("Le mot de passe ne correspond pas au format",Color.RED);
+                messageInterface.setMessage(labelError,"Le mot de passe ne correspond pas au format",Color.RED);
             }
         }
         else {
-            showStatusChanged("Le champ ne peux pas être vide",Color.RED);
+            messageInterface.setMessage(labelError,"Le champ ne peux pas être vide",Color.RED);
         }
-    }
-
-    /**
-     * Méthode qui affiche l'erreur quand il y en a une
-     */
-    private void showStatusChanged(String message, Color colorMessage) {
-        Timeline timeline = new Timeline();
-        Duration timePoint = Duration.ZERO;
-
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelError.setTextFill(colorMessage)));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelError.setText(message)));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint,e ->  labelError.setVisible(true)));
-        timePoint = timePoint.add(Duration.seconds(3));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelError.setVisible(false)));
-
-        timeline.play();
     }
 
     /**

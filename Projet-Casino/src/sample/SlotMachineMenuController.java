@@ -41,6 +41,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
     private final RuleMenuController ruleMenuController;
     private final Database database;
     private final DatabaseName databaseName = new DatabaseName();
+    private final MessageInterface messageInterface = new MessageInterface();
 
     private final List<Rectangle> listOfRectangleAnimate = new ArrayList<>();
     private final List<FillTransition> listOfFillTransition = new ArrayList<>();
@@ -198,7 +199,6 @@ public class SlotMachineMenuController implements InterfaceMenu{
         if(user.getToken() > 0) {
             logMenuController.resetLog();
             logMenuController.getLog("Le joueur "+user.getPseudo()+" démarre une nouvelle partie.");
-            labelError.setVisible(false);
             slotMachine.useSlotMachine();
             labelToken.setText("Jetons : "+user.getToken());
 
@@ -207,8 +207,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
             animationSlot(slotMachine.getNbImage().get(0) + 1, slotMachine.getNbImage().get(1) + 1, slotMachine.getNbImage().get(2) + 1);
         }
         else{
-            labelError.setText("Vous n'avez pas assez de jeton");
-            labelError.setVisible(true);
+            messageInterface.setMessage(labelError,"Vous n'avez pas assez de jeton",Color.RED);
         }
 
     }
