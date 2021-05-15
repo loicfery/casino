@@ -54,6 +54,7 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
     private List<String> listOfInformationMoney = new ArrayList<>();
     private int indexInformation = 0;
     private boolean switchExchange = false;
+    private boolean ADMIN = false;
 
     public HistoryShoppingMenuController(User user, Stage stage, Database database, double soundVolume, boolean backgroundAnimation){
         this.user = user;
@@ -62,6 +63,10 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         this.backgroundAnimation = backgroundAnimation;
         this.database = database;
         settingMenuController = new SettingMenuController(this, soundVolume,backgroundAnimation);
+
+        if(user.getRank().equals("ADMIN")){
+            ADMIN = true;
+        }
     }
 
     public void setting(){
@@ -101,7 +106,15 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
 
     private void getAllInformation(){
         try {
-            ResultSet resultSet = database.select(databaseName.getTableHistoryExchangeToken(), databaseName.getTableHistoryExchangeTokenColumnMailUser() + " = \"" + user.getEmail() + "\"");
+            ResultSet resultSet;
+
+            if(ADMIN){
+                resultSet = database.select(databaseName.getTableHistoryExchangeToken(), "");
+            }
+            else {
+                resultSet = database.select(databaseName.getTableHistoryExchangeToken(), databaseName.getTableHistoryExchangeTokenColumnMailUser() + " = \"" + user.getEmail() + "\"");
+            }
+
             while (resultSet.next()){
                 listOfInformationToken.add("Data : "+resultSet.getInt(2)+" jetons ---> "+resultSet.getInt(3)+" $");
             }

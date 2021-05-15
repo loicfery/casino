@@ -56,6 +56,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
     private final List<String> listOfGameRoulette = new ArrayList<>();
     private List<String> currentList = new ArrayList<>();
     private int indexList = 0;
+    private boolean ADMIN = false;
 
     public HistoryGamePlayedMenuController(User user, Stage stage, Database database, double soundVolume, boolean backgroundAnimation){
         this.user = user;
@@ -64,6 +65,10 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         this.backgroundAnimation = backgroundAnimation;
         this.database = database;
         settingMenuController = new SettingMenuController(this, soundVolume,backgroundAnimation);
+
+        if(user.getRank().equals("ADMIN")){
+            ADMIN = true;
+        }
     }
 
     public void setting(){
@@ -114,7 +119,15 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
 
     private void completeList(List<String> list, String game, String errorMessage){
         try {
-            ResultSet resultSet = database.select(databaseName.getTableHistoryPartyGamed(), "NomJeux = \"" + game + "\" && MailUser = \""+user.getEmail()+"\"");
+            ResultSet resultSet;
+
+            if(ADMIN){
+                resultSet = database.select(databaseName.getTableHistoryPartyGamed(), "NomJeux = \"" + game + "\"");
+            }
+            else {
+                 resultSet = database.select(databaseName.getTableHistoryPartyGamed(), "NomJeux = \"" + game + "\" && MailUser = \"" + user.getEmail() + "\"");
+            }
+
             while (resultSet.next()){
                 list.add("Date : "+resultSet.getString(3)+" --> "+resultSet.getInt(2)+" jetons");
             }
