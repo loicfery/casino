@@ -24,6 +24,8 @@ public class User {
         this.database = database;
     }
 
+    public User(){}
+
     public String getPseudo(){return pseudo;}
     public String getEmail(){return email;}
     public int getToken(){return numberOfToken;}

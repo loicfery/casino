@@ -1,12 +1,12 @@
 package test;
 
-/*import games.*;
+import games.*;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;*/
+import static org.junit.jupiter.api.Assertions.*;
 
-/*class BlackJackTest {
+class BlackJackTest {
 
     @org.junit.jupiter.api.Test
     void countValueOfUserHand() {
@@ -49,14 +49,14 @@ import static org.junit.jupiter.api.Assertions.*;*/
     @org.junit.jupiter.api.Test
     void giveCardToUser() {
         BlackJack blackJack = new BlackJack();
-        UserHand croupier = new UserHand();
-        UserHand joueur = new UserHand();
-        CardPackage cardPackage = new CardPackage();
-        cardPackage.initCardPackage();
-        int res = 2;
+        User user0 = new User();
+        User user1 = new User();
+        UserHand croupier = new UserHand(user0);
+        UserHand joueur = new UserHand(user1);
         blackJack.getListOfUserHand().add(0, croupier);
         blackJack.getListOfUserHand().add(1, joueur);
         blackJack.giveCardToUser();
+        int res = 2;
         assertEquals(blackJack.getListOfUserHand().get(1).getHand().size(), res, "Le joueur a 2 cartes");
         res = 1;
         assertEquals(blackJack.getListOfUserHand().get(0).getHand().size(), res, "Le joueur a 1 cartes");
@@ -64,26 +64,71 @@ import static org.junit.jupiter.api.Assertions.*;*/
 
     @org.junit.jupiter.api.Test
     void userBet() {
+        BlackJack blackJack = new BlackJack();
+        User user = new User();
+        blackJack.addUserBet(user);
+        int valueOfBet = 7;
+        blackJack.userBet(valueOfBet, user);
+        assertEquals(blackJack.getBet().getBet(user), 7, "Le joueur a augmenter sa mise de 7");
+        blackJack.userBet(valueOfBet, user);
+        assertEquals(blackJack.getBet().getBet(user), 14, "Le joueur a augmenter sa mise de 7");
     }
 
     @org.junit.jupiter.api.Test
     void addUserBet() {
+        BlackJack blackJack = new BlackJack();
+        User user = new User();
+        blackJack.addUserBet(user);
+        assertEquals(blackJack.getBet().getBet(user), 0, "Le joueur a été crée");
     }
 
     @org.junit.jupiter.api.Test
-    void gameBegin() {
+    void gameBegin() {  // TO DO
+        BlackJack blackJack = new BlackJack();
+        User user = new User();
+        UserHand userHand = new UserHand();
+        user.addToken(10);
+        int valueOfBet = 10;
+        blackJack.gameBegin();
+        assertEquals(blackJack.getListOfUserHand().get(1).getUser().getToken(), 0, "Le joueur a misé");
     }
 
     @org.junit.jupiter.api.Test
     void turnCroupier() {
+        BlackJack blackJack = new BlackJack();
+        User user = new User();
+        UserHand userHand = new UserHand(user);
+        blackJack.getListOfUserHand().add(userHand);
+        blackJack.turnCroupier();
+        assertFalse(blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(0)) <17);
+        assertTrue(blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(0)) >= 17);
+
     }
 
     @org.junit.jupiter.api.Test
-    void betDistribute() {
+    void betDistribute() { //TO DO
+        BlackJack blackJack = new BlackJack();
     }
 
     @org.junit.jupiter.api.Test
     void reset() {
+        BlackJack blackJack = new BlackJack();
+        User user0 = new User();
+        UserHand croupier = new UserHand(user0);
+        User user1 = new User();
+        UserHand joueur = new UserHand(user1);
+        User user2 = new User();
+        UserHand split = new UserHand(user2);
+        CardPackage cardPackage = new CardPackage();
+        cardPackage.initCardPackage();
+        blackJack.getListOfUserHand().add(0, croupier);
+        blackJack.getListOfUserHand().add(1, joueur);
+        blackJack.getListOfUserHand().add(2, split);
+        blackJack.reset();
+        assertTrue(blackJack.getListOfUserHand().isEmpty());
+        assertTrue(cardPackage.getCardPackage().isEmpty());
+        // A FINIR
+
     }
 
     @org.junit.jupiter.api.Test
@@ -121,4 +166,4 @@ import static org.junit.jupiter.api.Assertions.*;*/
     @org.junit.jupiter.api.Test
     void getInsuranceUser() {
     }
-}*/
+}
