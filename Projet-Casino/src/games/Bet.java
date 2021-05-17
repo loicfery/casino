@@ -13,6 +13,11 @@ public class Bet {
         this.listOfUser = new ArrayList<>();
     }
 
+    public Bet(List<User> listOfUser){
+        this.listOfUser = listOfUser;
+        this.listOfBetUser = new ArrayList<>();
+    }
+
     public void addBet(int valueOfBet, User user){
         for(int index = 0; index < listOfUser.size(); index ++){
             if(listOfUser.get(index) == user){
