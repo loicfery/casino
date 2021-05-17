@@ -119,7 +119,7 @@ public class ShopMenuController implements InterfaceMenu{
         setupScene.setCircle(circleSetting,30,750,40,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())), Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
 
         historyShoppingButton.setOnMouseClicked((event) -> goToHistoryShoppingMenu());
-        returnMainMenuButton.setOnMouseClicked((event)-> returnMainMenu());
+        returnMainMenuButton.setOnMouseClicked((event)-> goToMainMenu());
         leftShopMoneyButton.setOnMouseClicked((event) -> leftShopMoney());
         rightShopMoneyButton.setOnMouseClicked((event) -> rightShopMoney());
         leftShopTokenButton.setOnMouseClicked((event) -> leftShopToken());
@@ -132,6 +132,9 @@ public class ShopMenuController implements InterfaceMenu{
         stage.show();
     }
 
+    /**
+     * Méthode qui récupère dans la base de données les échanges de jetons et d'argents
+     **/
     private void getShopList(){
         try {
             ResultSet resultSet = database.select(databaseName.getTableExchangeMoney(), "");
@@ -151,6 +154,9 @@ public class ShopMenuController implements InterfaceMenu{
         catch (Exception e){}
     }
 
+    /**
+     * Méthode qui prépare l'affichage des échanges d'argents et de jetons
+     **/
     private void setupShopList(){
         Button button;
         Label label;
@@ -218,6 +224,9 @@ public class ShopMenuController implements InterfaceMenu{
         listOfButtonShopMoney.add(button);
     }
 
+    /**
+     * Méthode qui affiche les échanges de jetons
+     **/
     private void printShopTokenInformation(){
         int indexMax = (indexListToken + 5);
 
@@ -248,6 +257,9 @@ public class ShopMenuController implements InterfaceMenu{
         }
     }
 
+    /**
+     * Méthode qui affiche les échanges d'argents
+     **/
     private void printShopMoneyInformation(){
         int indexMax = (indexListMoney + 5);
 
@@ -278,6 +290,9 @@ public class ShopMenuController implements InterfaceMenu{
         }
     }
 
+    /**
+     * Méthode qui cache les échange de jetons quand ils ne sont pas affichés
+     **/
     private void hideShopToken(){
         int indexMax = (indexListToken + 5);
 
@@ -293,6 +308,9 @@ public class ShopMenuController implements InterfaceMenu{
         }
     }
 
+    /**
+     * Méthode qui cache les échange d'argent quand ils ne sont pas affichés
+     **/
     private void hideShopMoney(){
         int indexMax = (indexListMoney + 5);
 
@@ -308,6 +326,9 @@ public class ShopMenuController implements InterfaceMenu{
         }
     }
 
+    /**
+     * Méthode qui affiche les 5 échanges de jetons suivants
+     **/
     private void rightShopToken(){
         cancelAddInformation();
         hideShopToken();
@@ -315,6 +336,9 @@ public class ShopMenuController implements InterfaceMenu{
         printShopTokenInformation();
     }
 
+    /**
+     * Méthode qui affiche les 5 échanges de jetons précédents
+     **/
     private void leftShopToken(){
         cancelAddInformation();
         hideShopToken();
@@ -322,6 +346,9 @@ public class ShopMenuController implements InterfaceMenu{
         printShopTokenInformation();
     }
 
+    /**
+     * Méthode qui affiche les 5 échanges d'argents suivants
+     **/
     private void rightShopMoney(){
         cancelAddInformation();
         hideShopMoney();
@@ -329,6 +356,9 @@ public class ShopMenuController implements InterfaceMenu{
         printShopMoneyInformation();
     }
 
+    /**
+     * Méthode qui affiche les 5 échanges d'argents précédents
+     **/
     private void leftShopMoney(){
         cancelAddInformation();
         hideShopMoney();
@@ -336,6 +366,9 @@ public class ShopMenuController implements InterfaceMenu{
         printShopMoneyInformation();
     }
 
+    /**
+     * Méthode qui permet de valider l'échange si l'utilisateur possède le nombre suffisant de jeton / d'argent
+     **/
     private void exchange(String line){
         cancelAddInformation();
         String[] lines = line.split(" ");
@@ -382,6 +415,10 @@ public class ShopMenuController implements InterfaceMenu{
         }
     }
 
+    /**
+     * Méthode pour supprimer un échange
+     * Accessible seulement par un ADMIN
+     **/
     private void deleteInformation(List<Label> listOfLabel, List<Button> listOfButtonExchange, List<Button> listOfButtonDelete, List<String> listOfInformation, int indexList, String type){
         cancelAddInformation();
 
@@ -423,6 +460,10 @@ public class ShopMenuController implements InterfaceMenu{
         }
     }
 
+    /**
+     * Méthode pour ajouter un échange de jeton
+     * Accessible seulement par un ADMIN
+     **/
     private void addTokenInformation(double xMoney, double xToken, double xLabel, double xButton, Button addInformationButton){
         cancelAddInformation();
         TextField textMoney = new TextField();
@@ -444,6 +485,10 @@ public class ShopMenuController implements InterfaceMenu{
         validButton.setOnMouseClicked((event) -> validAddTokenInformation(textMoney,textToken,addInformationButton,addInformationButton.getLayoutY()));
     }
 
+    /**
+     * Méthode pour ajouter un échange d'argent
+     * Accessible seulement par un ADMIN
+     **/
     private void addMoneyInformation(double xMoney, double xToken, double xLabel, double xButton, Button addInformationButton){
         cancelAddInformation();
         TextField textMoney = new TextField();
@@ -465,6 +510,10 @@ public class ShopMenuController implements InterfaceMenu{
         validButton.setOnMouseClicked((event)-> validAddMoneyInformation(textMoney,textToken,addInformationButton,addInformationButton.getLayoutY()));
     }
 
+    /**
+     * Méthode pour valider l'ajout d'un échange de jeton
+     * Accessible seulement par un ADMIN
+     **/
     private void validAddTokenInformation(TextField textMoney, TextField textToken, Button addInformationButton, double positionY){
         if(!textToken.getText().isEmpty() && !textMoney.getText().isEmpty()) {
             Button exchangeButton = new Button();
@@ -508,6 +557,10 @@ public class ShopMenuController implements InterfaceMenu{
         }
     }
 
+    /**
+     * Méthode pour valider l'ajout d'un échange d'argent
+     * Accessible seulement par un ADMIN
+     **/
     private void validAddMoneyInformation(TextField textMoney, TextField textToken,Button addInformationButton, double positionY){
         if(!textMoney.getText().isEmpty() && !textToken.getText().isEmpty()) {
             Button exchangeButton = new Button();
@@ -551,6 +604,10 @@ public class ShopMenuController implements InterfaceMenu{
 
     }
 
+    /**
+     * Méthode pour annuler l'ajout d'un échange de jeton ou d'argent avant de valider
+     * Accessible seulement par un ADMIN
+     **/
     private void cancelAddInformation(){
         if(addTokenInformation){
             addTokenInformation = false;
@@ -568,12 +625,19 @@ public class ShopMenuController implements InterfaceMenu{
         }
     }
 
+    /**
+     * Méthode pour aller dans le menu d'historique des échanges
+     **/
     private void goToHistoryShoppingMenu(){
         settingMenuController.exitSettingMenu();
         HistoryShoppingMenuController historyShoppingMenuController = new HistoryShoppingMenuController(user,stage,database,soundVolume,backgroundAnimation);
         historyShoppingMenuController.setting();
     }
 
+    /**
+     * Méthode pour aller dans le menu d'achat d'argent
+     * Utilisable pour ajouter de l'argent pour simuler l'achat avec de l'argent réel
+     **/
     private void goToBuyingMenu(){
         settingMenuController.exitSettingMenu();
         BuyingMoneyMenuController buyingMoneyMenuController = new BuyingMoneyMenuController(user,stage,database,soundVolume,backgroundAnimation);
@@ -581,24 +645,33 @@ public class ShopMenuController implements InterfaceMenu{
     }
 
     /**
-     * Méthode pour quitter le jeu et retourner dans le menu principale
+     * Méthode pour quitter ce menu et retourner dans le menu principale
      **/
-    private void returnMainMenu(){
+    private void goToMainMenu(){
         settingMenuController.exitSettingMenu();
         MainMenuController mainMenuController = new MainMenuController(stage,user, database,soundVolume,backgroundAnimation);
         mainMenuController.setting();
     }
 
+    /**
+     * Méthode qui permet de modifier le volume sonore
+     **/
     public void setSoundVolume(double newSoundVolume){
         if(newSoundVolume >= 0 && newSoundVolume <= 1.0){
             this.soundVolume = newSoundVolume;
         }
     }
 
+    /**
+     * Méthode qui d'afficher ou non les animations en arrière plan
+     **/
     public void setBackgroundAnimation(boolean newBackgroundAnimation){
         backgroundAnimation = newBackgroundAnimation;
     }
 
+    /**
+     * Méthode qui permet d'accéder au menu des paramètres
+     **/
     private void goToMenuSetting(){
         settingMenuController.exitSettingMenu();
         settingMenuController.setting();

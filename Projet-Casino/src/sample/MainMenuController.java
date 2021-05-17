@@ -35,9 +35,9 @@ public class MainMenuController implements InterfaceMenu{
     private final Button historyGamePlayedButton = new Button();
 
     private final ImageView pictureBlackJackMenu = new ImageView();
-    private final ImageView pictureSlotMachine = new ImageView();
-    private final ImageView pictureRoulette = new ImageView();
-    private final ImageView pictureShop = new ImageView();
+    private final ImageView pictureSlotMachineMenu = new ImageView();
+    private final ImageView pictureRouletteMenu = new ImageView();
+    private final ImageView pictureShopMenu = new ImageView();
 
     private final Circle circleSetting = new Circle();
 
@@ -66,9 +66,9 @@ public class MainMenuController implements InterfaceMenu{
         stage.setScene(scene);
 
         setupScene.setImageView(pictureBlackJackMenu,20.0,170.0,300.0,370.0,new Image(getClass().getResource("image/blackjack.png").toExternalForm()),true,anchorPane);
-        setupScene.setImageView(pictureSlotMachine,410.0,490.0,290.0,370.0,new Image(getClass().getResource("image/slot_machine.jpg").toExternalForm()),true,anchorPane);
-        setupScene.setImageView(pictureRoulette,20.0,490.0,290.0,370.0,new Image(getClass().getResource("image/roulette2.jpg").toExternalForm()),true,anchorPane);
-        setupScene.setImageView(pictureShop,315,20,80,120,new Image(getClass().getResource("image/shop.jpg").toExternalForm()),true,anchorPane);
+        setupScene.setImageView(pictureSlotMachineMenu,410.0,490.0,290.0,370.0,new Image(getClass().getResource("image/slot_machine.jpg").toExternalForm()),true,anchorPane);
+        setupScene.setImageView(pictureRouletteMenu,20.0,490.0,290.0,370.0,new Image(getClass().getResource("image/roulette2.jpg").toExternalForm()),true,anchorPane);
+        setupScene.setImageView(pictureShopMenu,315,20,80,120,new Image(getClass().getResource("image/shop.jpg").toExternalForm()),true,anchorPane);
 
         setupScene.setButton(logoutButton,"Déconnexion", Pos.CENTER,20,20,80,120,new Font(15),true,anchorPane);
         setupScene.setButton(informationMenuButton,"Informations",Pos.CENTER,170,20,80,120,new Font(15),true,anchorPane);
@@ -78,10 +78,10 @@ public class MainMenuController implements InterfaceMenu{
 
         logoutButton.setOnMouseClicked((event)-> goToConnexionMenu());
         informationMenuButton.setOnMouseClicked((event)-> goToInformationMenu());
-        pictureShop.setOnMouseClicked((event)-> goToShopMenu());
+        pictureShopMenu.setOnMouseClicked((event)-> goToShopMenu());
         pictureBlackJackMenu.setOnMouseClicked((event)-> goToBlackJackMenu());
-        pictureSlotMachine.setOnMouseClicked((event)-> goToSlotMachineMenu());
-        pictureRoulette.setOnMouseClicked((event)-> goToRouletteMenu());
+        pictureSlotMachineMenu.setOnMouseClicked((event)-> goToSlotMachineMenu());
+        pictureRouletteMenu.setOnMouseClicked((event)-> goToRouletteMenu());
         circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
         historyGamePlayedButton.setOnMouseClicked((event)-> goToHistoryGamePlayedMenu());
 
