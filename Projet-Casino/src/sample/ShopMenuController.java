@@ -640,7 +640,7 @@ public class ShopMenuController implements InterfaceMenu{
      **/
     private void goToBuyingMenu(){
         settingMenuController.exitSettingMenu();
-        BuyingMoneyMenuController buyingMoneyMenuController = new BuyingMoneyMenuController(user,stage,database,soundVolume,backgroundAnimation);
+        BuyingMoneyMenuController buyingMoneyMenuController = new BuyingMoneyMenuController(user);
         buyingMoneyMenuController.setting();
     }
 
