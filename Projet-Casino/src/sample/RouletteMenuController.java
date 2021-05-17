@@ -1,6 +1,7 @@
 package sample;
 
 import games.Database;
+import games.Roulette;
 import games.User;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -30,7 +31,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +61,8 @@ public class RouletteMenuController implements InterfaceMenu{
     private final Database database;
     private final MessageInterface messageInterface = new MessageInterface();
 
+    private final Roulette roulette;
+
     private final List<Rectangle> listOfRectangleGameBoard = new ArrayList<>();
     private final List<Label> listOfLabelGameBoard = new ArrayList<>();
     private double soundVolume;
@@ -69,7 +71,7 @@ public class RouletteMenuController implements InterfaceMenu{
     private MediaPlayer tokenSound;
     private MediaPlayer rouletteSound;
 
-    private final ImageView roulette = new ImageView();
+    private final ImageView pictureRoulette = new ImageView();
 
     private final Label labelProfit = new Label();
     private final Label labelTokenUser = new Label();
@@ -103,6 +105,7 @@ public class RouletteMenuController implements InterfaceMenu{
         settingMenuController = new SettingMenuController(this,soundVolume,backgroundAnimation);
         ruleMenuController = new RuleMenuController(this);
         this.database = database;
+        roulette = new Roulette();
     }
 
     /** Méthode qui initialise l'interface de la roulette **/
@@ -121,9 +124,9 @@ public class RouletteMenuController implements InterfaceMenu{
         setCasePosition();
         setCasePositionRoulette();
 
-        setupScene.setImageView(roulette,638.0,350.0,425.0,471.0, new Image(getClass().getResource("image/roulette.jpg").toExternalForm()),true,anchorPane);
-        roulette.setPickOnBounds(true);
-        roulette.setPreserveRatio(true);
+        setupScene.setImageView(pictureRoulette,638.0,350.0,425.0,471.0, new Image(getClass().getResource("image/roulette.jpg").toExternalForm()),true,anchorPane);
+        pictureRoulette.setPickOnBounds(true);
+        pictureRoulette.setPreserveRatio(true);
 
         setupScene.setLabel(labelProfit,"Gain : 0",Pos.CENTER_LEFT,14.0,718.0,68.0,607.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelTokenUser,"Jetons : "+user.getToken(),Pos.CENTER_LEFT,14.0,640.0,68.0,613.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);

@@ -6,15 +6,16 @@ import java.util.List;
 public class BetRoulette {
     List<Cell> cells = new ArrayList<>();
     List<Bet> bets= new ArrayList<>();
-    Bet bet;
+    int valueOfBet;
     Multiply multiply;
 
-    public BetRoulette(List<Cell> cases, Bet bet){
-        this.cells=cases;
-        this.bet=bet;
+    public BetRoulette(List<Cell> cells, int valueOfBet){
+        this.cells = cells;
+        this.valueOfBet = valueOfBet;
+        multiply = chooseMultiply(cells);
     }
 
-    public Multiply ChooseMultiply(List<Cell> cells){
+    public Multiply chooseMultiply(List<Cell> cells){
         if(cells.size()==1)
             return Multiply.Plein;
         else if(cells.size()==2)
@@ -31,7 +32,7 @@ public class BetRoulette {
             return Multiply.Simple;
     }
 
-    public void addBet(List<Cell> cells, Bet bet){
-
-    }
+    public List<Cell> getCells(){return cells;}
+    public int getValueOfBet(){return valueOfBet;}
+    public Multiply getMultiply(){return multiply;}
 }

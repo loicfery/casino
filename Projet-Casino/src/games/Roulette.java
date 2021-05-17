@@ -1,8 +1,17 @@
 package games;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Roulette {
+
+    private List<BetRoulette> listOfBet = new ArrayList<>();
+
+    public void addBet(List<Cell> cells, int valueOfBet){
+        listOfBet.add(new BetRoulette(cells,valueOfBet));
+    }
+
 
     public int RandomNumber(){
         Random random = new Random();

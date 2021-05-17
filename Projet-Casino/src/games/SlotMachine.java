@@ -79,7 +79,6 @@ public class SlotMachine {
 
     public void reset(){
         bet.removeBet(bet.getBet(user), user);
-        nbImage = new ArrayList<Integer>();
-
+        nbImage = new ArrayList<>();
     }
 }
