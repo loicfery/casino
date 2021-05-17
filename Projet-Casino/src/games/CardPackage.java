@@ -13,7 +13,7 @@ public class CardPackage {
     public void initCardPackage(){
         listOfCard = new ArrayList<>();
 
-        for(int i =0; i<12; i++){
+        for(int i =0; i<13; i++){
             Card heart = new Card(i, "HEART");
             listOfCard.add(heart);
             Card tile = new Card(i, "SQUARE");
