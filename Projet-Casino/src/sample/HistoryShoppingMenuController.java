@@ -69,6 +69,9 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         }
     }
 
+    /**
+     * Méthode qui initialise l'interface
+     **/
     public void setting(){
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -94,7 +97,7 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         circleSetting.setOnMouseClicked((event) -> goToMenuSetting());
         leftInformationButton.setOnMouseClicked((event) -> leftInformation());
         rightInformationButton.setOnMouseClicked((event) -> rightInformation());
-        returnShopMenuButton.setOnMouseClicked((event)-> returnShopMenu());
+        returnShopMenuButton.setOnMouseClicked((event)-> goToShopMenu());
         exchangeTokenButton.setOnMouseClicked((event) -> switchExchange());
         exchangeMoneyButton.setOnMouseClicked((event) -> switchExchange());
 
@@ -104,6 +107,9 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         stage.show();
     }
 
+    /**
+     * Méthode qui récupère de la base de données tous les historiques d'échanges
+     **/
     private void getAllInformation(){
         try {
             ResultSet resultSet;
@@ -132,7 +138,9 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         printInformation();
     }
 
-
+    /**
+     * Méthode qui affiche les historiques d'échanges
+     **/
     private void printInformation(){
         List<String> listOfHistory;
         int indexPrint = indexInformation + 15;
@@ -155,6 +163,9 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         indexInformation += 15;
     }
 
+    /**
+     * Méthode qui affiche les 15 historiques suivantes
+     **/
     private void leftInformation(){
         textInformation.setText("");
         indexInformation -= 15;
@@ -174,6 +185,9 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         }
     }
 
+    /**
+     * Méthode qui affiche les 15 historiques précédentes
+     **/
     private void rightInformation(){
         textInformation.setText("");
         indexInformation += 15;
@@ -193,6 +207,9 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         }
     }
 
+    /**
+     * Méthode qui cache des historiques pour afficher les suivant
+     **/
     private void switchExchange(){
         if(switchExchange){
             exchangeMoneyButton.setVisible(true);
@@ -211,26 +228,41 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         printInformation();
     }
 
-    private void returnShopMenu(){
+    /**
+     * Méthode qui redirige dans le menu d'échange
+     **/
+    private void goToShopMenu(){
         settingMenuController.exitSettingMenu();
         ShopMenuController shopMenuController = new ShopMenuController(stage,user,database,soundVolume,backgroundAnimation);
         shopMenuController.setting();
     }
 
+    /**
+     * Méthode qui modifie le contenue du texte
+     **/
     private void setTextInformation(String information){
         textInformation.setText(textInformation.getText() + information + "\n");
     }
 
+    /**
+     * Méthode qui modifie le volume sonore
+     **/
     public void setSoundVolume(double newSoundVolume){
         if(newSoundVolume >= 0 && newSoundVolume <= 1.0){
             this.soundVolume = newSoundVolume;
         }
     }
 
+    /**
+     * Méthode qui affiche ou non les animations en arrière plan
+     **/
     public void setBackgroundAnimation(boolean newBackgroundAnimation){
         backgroundAnimation = newBackgroundAnimation;
     }
 
+    /**
+     * Méthode qui ouvre le menu des paramètres
+     **/
     private void goToMenuSetting(){
         settingMenuController.exitSettingMenu();
         settingMenuController.setting();
