@@ -16,7 +16,6 @@ public class BetRoulette {
     }
 
 
-
     public Multiply chooseMultiply(List<Cell> cells){
         if(cells.size()==1)
             return Multiply.Plein;
