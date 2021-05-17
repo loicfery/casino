@@ -6,7 +6,9 @@ import java.util.Collections;
 public class CardPackage {
     private ArrayList<Card> listOfCard;
 
-    public CardPackage() {}
+    public CardPackage() {
+        initCardPackage();
+    }
 
     public void initCardPackage(){
         listOfCard = new ArrayList<>();
