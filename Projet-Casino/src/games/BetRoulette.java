@@ -9,10 +9,7 @@ public class BetRoulette {
     Bet bet;
     Multiply multiply;
 
-    public BetRoulette(List<Cell> cases, Bet bet){
-        this.cells=cases;
-        this.bet=bet;
-    }
+    public BetRoulette(){}
 
     public Multiply ChooseMultiply(List<Cell> cells){
         if(cells.size()==1)
