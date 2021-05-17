@@ -13,6 +13,7 @@ public class Roulette {
     }
 
 
+
     public int RandomNumber(){
         Random random = new Random();
         int number;
