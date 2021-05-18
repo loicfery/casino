@@ -25,13 +25,15 @@ public class DatabaseName {
     private final String tableHistoryPartyGamedColumnGameName = "NomJeux_HistoriquePartiesJouees";
     private final String tableHistoryPartyGamedColumnTokenGain = "TokenGagne_HistoriquePartiesJouees";
 
-    private final String tableExchangeToken = "";
-    private final String tableExchangeTokenColumnPriceToken = "";
-    private final String tableExchangeTokenColumnMoneyGain = "";
+    //tempo
+    private final String tableExchangeToken = "EchangeArgents";
+    private final String tableExchangeTokenColumnPriceToken = "PrixArgent_EchangeArgents";
+    private final String tableExchangeTokenColumnMoneyGain = "JetonGagne_EchangeArgents";
 
-    private final String tableExchangeMoney = "";
-    private final String tableExchangeMoneyColumnPriceMoney = "";
-    private final String tableExchangeMoneyColumnTokenGain = "";
+    //tempo
+    private final String tableExchangeMoney = "EchangeJetons";
+    private final String tableExchangeMoneyColumnPriceMoney = "PrixJeton_EchangeJetons";
+    private final String tableExchangeMoneyColumnTokenGain = "ArgentGagne_EchangeJetons";
 
     private final String tableGame = "Jeux";
     private final String tableGameColumnNameGame = "NomJeux_Jeux";

@@ -131,10 +131,10 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
             ResultSet resultSet;
 
             if(ADMIN){
-                resultSet = database.select(databaseName.getTableHistoryPartyGamed(), "NomJeux = \"" + game + "\"");
+                resultSet = database.select(databaseName.getTableHistoryPartyGamed(), databaseName.getTableHistoryPartyGamedColumnGameName()+" = \"" + game + "\"");
             }
             else {
-                 resultSet = database.select(databaseName.getTableHistoryPartyGamed(), "NomJeux = \"" + game + "\" && MailUser = \"" + user.getEmail() + "\"");
+                 resultSet = database.select(databaseName.getTableHistoryPartyGamed(), databaseName.getTableHistoryPartyGamedColumnGameName()+" = \"" + game + "\" && MailUser = \"" + user.getEmail() + "\"");
             }
 
             while (resultSet.next()){
