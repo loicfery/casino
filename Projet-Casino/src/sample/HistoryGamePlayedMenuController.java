@@ -71,6 +71,9 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         }
     }
 
+    /**
+     * Méthode qui initialise l'interface
+     **/
     public void setting(){
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -111,21 +114,27 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         stage.show();
     }
 
+    /**
+     * Méthode qui récupère dans la base de données les historiques des parties jouées
+     **/
     private void getAllInformation(){
         completeList(listOfGameBlackJack,databaseName.getGameBlackJack(),"Erreur black jack de getAllInformation dans HistoryGamePlayedMenuController");
         completeList(listOfGameSlotMachine,databaseName.getGameSlotMachine(),"Erreur machine à sous de getAllInformation dans HistoryGamePlayedMenuController");
         completeList(listOfGameRoulette,databaseName.getGameRoulette(),"\"Erreur roulette de getAllInformation dans HistoryGamePlayedMenuController\"");
     }
 
+    /**
+     * Méthode qui prépare l'affichage des historiques des parties jouées
+     **/
     private void completeList(List<String> list, String game, String errorMessage){
         try {
             ResultSet resultSet;
 
             if(ADMIN){
-                resultSet = database.select(databaseName.getTableHistoryPartyGamed(), "NomJeux = \"" + game + "\"");
+                resultSet = database.select(databaseName.getTableHistoryPartyGamed(), databaseName.getTableHistoryPartyGamedColumnGameName()+" = \"" + game + "\"");
             }
             else {
-                 resultSet = database.select(databaseName.getTableHistoryPartyGamed(), "NomJeux = \"" + game + "\" && MailUser = \"" + user.getEmail() + "\"");
+                 resultSet = database.select(databaseName.getTableHistoryPartyGamed(), databaseName.getTableHistoryPartyGamedColumnGameName()+" = \"" + game + "\" && MailUser = \"" + user.getEmail() + "\"");
             }
 
             while (resultSet.next()){
@@ -139,6 +148,9 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         catch (Exception e){ System.out.println(errorMessage); }
     }
 
+    /**
+     * Méthode qui affiche l'historique du jeu choisit
+     **/
     private void printInformation(List<String> list){
         int indexMax = (indexList + 15);
 
@@ -156,6 +168,9 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         }
     }
 
+    /**
+     * Méthode qui affiche les 15 informations suivantes
+     **/
     private void leftInformation(){
         indexList -= 15;
         printInformation(currentList);
@@ -174,6 +189,9 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         }
     }
 
+    /**
+     * Méthode qui affiche les 15 informations précédentes
+     **/
     private void rightInformation(){
         indexList += 15;
         printInformation(currentList);
@@ -192,6 +210,9 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         }
     }
 
+    /**
+     * Méthode qui affiche l'historique pour le black jack
+     **/
     private void setGameBlackJack(){
         titleLabel.setText("Historique de jeux : Black Jack");
         currentList = listOfGameBlackJack;
@@ -199,6 +220,9 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         printInformation(currentList);
     }
 
+    /**
+     * Méthode qui affiche l'historique pour la machine à sous
+     **/
     private void setGameSlotMachine(){
         titleLabel.setText("Historique de jeux : Machine à sous");
         currentList = listOfGameSlotMachine;
@@ -206,6 +230,9 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         printInformation(currentList);
     }
 
+    /**
+     * Méthode qui affiche l'historique pour la roulette
+     **/
     private void setGameRoulette(){
         titleLabel.setText("Historique de jeux : Roulette");
         currentList = listOfGameRoulette;
@@ -214,7 +241,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
     }
 
     /**
-     * Méthode pour quitter le jeu et retourner dans le menu principale
+     * Méthode pour redirigé vers le menu principale
      **/
     private void goToMainMenu(){
         settingMenuController.exitSettingMenu();
@@ -222,16 +249,25 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         mainMenuController.setting();
     }
 
+    /**
+     * Méthode qui modifier le volume sonore
+     **/
     public void setSoundVolume(double newSoundVolume){
         if(newSoundVolume >= 0 && newSoundVolume <= 1.0){
             this.soundVolume = newSoundVolume;
         }
     }
 
+    /**
+     * Méthode qui affiche ou non les animations en arrière plan
+     **/
     public void setBackgroundAnimation(boolean newBackgroundAnimation){
         backgroundAnimation = newBackgroundAnimation;
     }
 
+    /**
+     * Méthode qui affiche le menu des paramètres
+     **/
     private void goToMenuSetting(){
         settingMenuController.exitSettingMenu();
         settingMenuController.setting();

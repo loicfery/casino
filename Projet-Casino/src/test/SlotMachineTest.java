@@ -9,6 +9,12 @@ class SlotMachineTest {
 
     @Test
     void userBet() {
+        User user = new User();
+        SlotMachine slotMachine = new SlotMachine(user);
+        slotMachine.userBet(user);
+        assertEquals(slotMachine.getBet().getBet(user), 1, "Le joueur a augmenter sa mise de 1");
+        slotMachine.userBet(user);
+        assertEquals(slotMachine.getBet().getBet(user), 2, "Le joueur a augmenter sa mise de 1");
     }
 
     @Test

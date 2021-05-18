@@ -6,15 +6,24 @@ import java.util.Random;
 import static javax.swing.Action.DEFAULT;
 
 public class SlotMachine {
+
     private String[] slot = {"LEMON","WATERMELON","CHERRY","WATERMELON","SEVEN","WATERMELON","LEMON","WATERMELON","CHERRY","LEMON"};
+    /**
+     * tableau des trois images tirées
+     * **/
+    private String results[] = new String[3];
 
 
 
-    //bobine de la machine
-    private String results[] = new String[3]; //tableau des trois images tirées
-    private Bet bet; //mise
+    /**
+     * mise
+     * **/
+    private Bet bet;
     private User user;
-    private ArrayList<Integer> nbImage; //Les différentes images de la machine, tenter de faire un enum {7, CERISE, ROND...} (image au choix)
+    /**
+     * Les différentes images de la machine
+     * **/
+    private ArrayList<Integer> nbImage;
 
     public SlotMachine(User user){
         this.user = user;
@@ -31,11 +40,16 @@ public class SlotMachine {
         this.results = results;
     }
 
-
+    /**
+     * Mise du joueur, un seul jeton à la fois
+     * **/
     public void userBet(User user){
         bet.addBet(1,user);
-    }; //Mise du joueur, un seul jeton à la fois
+    }
 
+    /**
+     * utilisation de la machine à sous
+     * **/
     public void useSlotMachine(){
         //a completer
         user.removeToken(1);
@@ -47,8 +61,11 @@ public class SlotMachine {
             nbImage.add(nb);
         }
         giveTokenBet(user);
-    }; //utilisation de la machine à sous
+    }
 
+    /**
+     * vérification des resultats
+     * **/
     public int verifySlot(){
         if(results[0].equals(results[1]) && results[0].equals(results[2])) {
             switch (results[0]){
@@ -65,13 +82,16 @@ public class SlotMachine {
             }
         }
         else{return 0;}
-    }; // vérification des resultats
+    }
 
+    /**
+     * gain de l'utilisateur
+     * 160 pour 3 SEVEN, 25 pour 3 CHERRY, 8 pour 3 LEMON, 4 pour 3 WATERMELON, 0 sinon
+     * **/
     public void giveTokenBet(User user){
         int gain = verifySlot();
         user.addToken(gain);
-    }; //gain de l'utilisateur, 160 pour 3 SEVEN, 25 pour 3 CHERRY, 8 pour 3 LEMON, 4 pour 3 WATERMELON, 0 sinon
-
+    }
 
     public ArrayList<Integer> getNbImage() {
         return nbImage;
@@ -80,5 +100,9 @@ public class SlotMachine {
     public void reset(){
         bet.removeBet(bet.getBet(user), user);
         nbImage = new ArrayList<>();
+    }
+
+    public Bet getBet() {
+        return bet;
     }
 }

@@ -13,6 +13,7 @@ public class BlackJack {
 
     public BlackJack(){
         listOfUserHand = new ArrayList<>();
+        bet = new Bet();
     }
 
     public BlackJack(User user) {
@@ -38,28 +39,43 @@ public class BlackJack {
         }
         return somme;
     }
-    //Vérifie si le joueur à fait un blackJack (si la valeur de ses cartes est 21)
+
+    /**
+     * Vérifie si le joueur à fait un blackJack (si la valeur de ses cartes est 21)
+     **/
     public boolean verifyBlackJack(UserHand userHand){
         if(countValueOfUserHand(userHand) == 21){
             return true;
         }
         return false;
     }
-    //Distribue les 2 premières cartes à tout les joueurs
+
+    /**
+     * Distribue les 2 premières cartes à tout les joueurs
+     **/
     public void giveCardToUser(){
         listOfUserHand.get(1).addCard(card_package);
         listOfUserHand.get(0).addCard(card_package);
         listOfUserHand.get(1).addCard(card_package);
     }
-    //Augmente la mise du joueur user
+
+    /**
+     * Augmente la mise du joueur user
+     **/
     public void userBet(int valueOfBet, User user){
         bet.addBet(valueOfBet,user);
     }
+
+    /**
+     * Créer une mise pour user
+     **/
     public void addUserBet(User user){
-        //Créer une mise pour user
         bet.addUser(user);
     }
-    //Méthode créant une partie de blackJack
+
+    /**
+     * Méthode créant une partie de blackJack
+     **/
     public void gameBegin(){
         card_package.initCardPackage();
         card_package.mixCardPackage();
@@ -71,13 +87,20 @@ public class BlackJack {
         giveCardToUser();
         listOfUserHand.get(1).getUser().removeToken(bet.getBet(listOfUserHand.get(1).getUser()));
     }
-    //Pioche du croupier jusqu'à avoir 17 ou +
+
+    /**
+     * Pioche du croupier jusqu'à avoir 17 ou +
+     **/
     public void turnCroupier() {
         while (countValueOfUserHand(listOfUserHand.get(0)) < 17) {
             listOfUserHand.get(0).addCard(card_package);
         }
     }
-    public void betDistribute() { //Distribution des gains au joueur
+
+    /**
+     * Distribution des gains au joueur
+     **/
+    public void betDistribute() {
         int tokenGain = 0;
         if (verifyBlackJack(listOfUserHand.get(0))) {
             if (insuranceUser > 0) {
@@ -138,64 +161,92 @@ public class BlackJack {
         user.addToken(tokenGain);
     }
 
-        public void reset(){ //Suprimme les mains et les bets pour redémarrer une partie
-            bet.removeBet(bet.getBet(listOfUserHand.get(1).getUser()), listOfUserHand.get(1).getUser());
-            if(listOfUserHand.size() > 2) {
-                bet.removeBet(bet.getBet(listOfUserHand.get(2).getUser()), listOfUserHand.get(1).getUser());
-            }
-            bet.removeUser(listOfUserHand.get(1).getUser());
-            if(listOfUserHand.size() > 2) {
-                bet.removeUser(listOfUserHand.get(2).getUser());
-            }
-            for(int i = 0; i < listOfUserHand.size(); i++){
-                listOfUserHand.remove(i);
-            }
-            card_package = new CardPackage();
+    /**
+     * Suprimme les mains et les bets pour redémarrer une partie
+     */
+    public void reset(){
+        bet.removeBet(bet.getBet(listOfUserHand.get(1).getUser()), listOfUserHand.get(1).getUser());
+        if(listOfUserHand.size() > 2) {
+            bet.removeBet(bet.getBet(listOfUserHand.get(2).getUser()), listOfUserHand.get(1).getUser());
         }
-        public void actionSplit(){ //Appelle l'action pour split la main en deux mains
-            action = new ActionSplit();
-            action.action(listOfUserHand, card_package, bet);
+        bet.removeUser(listOfUserHand.get(1).getUser());
+        if(listOfUserHand.size() > 2) {
+            bet.removeUser(listOfUserHand.get(2).getUser());
         }
-        public void actionDouble(){ //Appelle l'action qui double la mise
-            action = new ActionDouble();
-            action.action(listOfUserHand, card_package, bet);
-            listOfUserHand.get(1).getUser().removeToken(bet.getBet(listOfUserHand.get(1).getUser())/2);
+        for(int i = 0; i < listOfUserHand.size(); i++){
+            listOfUserHand.remove(i);
+        }
+        card_package = new CardPackage();
+    }
+
+    /**
+     * Appelle l'action pour split la main en deux mains
+     */
+    public void actionSplit(){
+        action = new ActionSplit();
+        action.action(listOfUserHand, card_package, bet);
+    }
+
+    /**
+     * Appelle l'action qui double la mise
+     * **/
+    public void actionDouble(){
+        action = new ActionDouble();
+        action.action(listOfUserHand, card_package, bet);
+        listOfUserHand.get(1).getUser().removeToken(bet.getBet(listOfUserHand.get(1).getUser())/2);
+        turnCroupier();
+    }
+
+    /**
+     * Appelle l'action qui fait piocher le joueur
+     * **/
+    public void actionHit(){
+        action = new ActionHit(currentHand);
+        action.action(listOfUserHand, card_package, bet);
+        if(countValueOfUserHand(listOfUserHand.get(currentHand)) >= 21 && currentHand == 1){
+            currentHand = 2;
+        }
+    }
+
+    /**
+     * Appelle l'action qui créé une assurance
+     * **/
+    public void actionInsurance(){
+        insuranceUser = bet.getBet(listOfUserHand.get(1).getUser()) / 2;
+        listOfUserHand.get(1).getUser().removeToken(insuranceUser);
+    }
+
+    /**
+     * Appelle l'action qui passe le tour du joueur
+     * **/
+    public void actionStand(){
+        action = new ActionStand();
+        action.action(listOfUserHand, card_package, bet);
+        if(currentHand == 1){
+            currentHand = 2;
+        }
+        else {
             turnCroupier();
         }
-        public void actionHit(){ //Appelle l'action qui fait piocher le joueur
-            action = new ActionHit(currentHand);
-            action.action(listOfUserHand, card_package, bet);
-            if(countValueOfUserHand(listOfUserHand.get(currentHand)) >= 21 && currentHand == 1){
-                currentHand = 2;
-            }
+    }
+
+    /**
+     * Appelle l'action qui fait abandonner le joueur
+     * **/
+    public void actionSurrender(){
+        action = new ActionSurrender();
+        action.action(listOfUserHand, card_package, bet);
+        if(currentHand == 1){
+            currentHand = 2;
         }
-        public void actionInsurance(){ //Appelle l'action qui créé une assurance
-            insuranceUser = bet.getBet(listOfUserHand.get(1).getUser()) / 2; //enlever classe ActionInsurance ?
-            listOfUserHand.get(1).getUser().removeToken(insuranceUser);
+        else {
+            turnCroupier();
         }
-        public void actionStand(){ // Appelle l'action qui passe le tour du joueur
-            action = new ActionStand();
-            action.action(listOfUserHand, card_package, bet);
-            if(currentHand == 1){
-                currentHand = 2;
-            }
-            else {
-                turnCroupier();
-            }
-        }
-        public void actionSurrender(){ //Appelle l'action qui fait abandonner le joueur
-            action = new ActionSurrender();
-            action.action(listOfUserHand, card_package, bet);
-            if(currentHand == 1){
-                currentHand = 2;
-            }
-            else {
-                turnCroupier();
-            }
-        }
-        public List<UserHand> getListOfUserHand(){
-            return listOfUserHand;
-        }
-        public Bet getBet(){return bet;}
-        public int getInsuranceUser(){return insuranceUser;}
+    }
+
+    public List<UserHand> getListOfUserHand(){
+        return listOfUserHand;
+    }
+    public Bet getBet(){return bet;}
+    public int getInsuranceUser(){return insuranceUser;}
 }

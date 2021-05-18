@@ -16,8 +16,8 @@ public class UserHand  {
         this.user = user;
     }
 
-    public void addCard(CardPackage card_package){
-        hand.add(card_package.drawCard());
+    public void addCard(CardPackage cardPackage){
+        hand.add(cardPackage.drawCard());
     }
 
     public void removeCard(Card card){

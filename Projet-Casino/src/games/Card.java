@@ -8,7 +8,6 @@ public class Card {
     public Card(int number, String rank) {
         this.number = number;
         this.rank = rank;
-
     }
 
     public int getNumber() {

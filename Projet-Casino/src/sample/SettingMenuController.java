@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 public class SettingMenuController {
 
     private final InterfaceMenu interfaceMenu;
-    private Stage stageSetting;
+    private Stage stage;
     private final SetupScene setupScene = new SetupScene();
 
     private double soundVolume;
@@ -35,14 +35,17 @@ public class SettingMenuController {
         this.backgroundAnimation = backgroundAnimation;
     }
 
+    /**
+     * Méthode qui initialise l'interface
+     **/
     public void setting(){
         AnchorPane anchorPane = new AnchorPane();
         BorderPane root = new BorderPane();
-        stageSetting = new Stage();
-        stageSetting.setResizable(false);
+        stage = new Stage();
+        stage.setResizable(false);
         Scene sceneSetting = new Scene(root, 500, 500);
         //scene.getStylesheets().add(getClass().getResource("interfaceMenuSetting.css").toExternalForm());
-        stageSetting.setScene(sceneSetting);
+        stage.setScene(sceneSetting);
 
         setupScene.setLabel(titleLabel,"Paramètres", Pos.CENTER,150,15,30,200,new Font(30), Paint.valueOf("BLACK"),true, anchorPane);
 
@@ -65,12 +68,15 @@ public class SettingMenuController {
         });
 
         root.getChildren().add(anchorPane);
-        stageSetting.show();
+        stage.show();
     }
 
+    /**
+     * Méthode pour quitter le menu des paramètres
+     **/
     public void exitSettingMenu(){
-        if(stageSetting != null) {
-            stageSetting.close();
+        if(stage != null) {
+            stage.close();
         }
     }
 }

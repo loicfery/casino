@@ -1,10 +1,6 @@
 package sample;
 
-import games.Bet;
-import games.Database;
 import games.User;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,18 +12,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-
 
 public class BuyingMoneyMenuController {
 
     private final BorderPane root = new BorderPane();
-    private final Stage stage;
     private final AnchorPane anchorPane = new AnchorPane();
     private final SetupScene setupScene = new SetupScene();
     private final User user;
-    private final Database database;
-    private  Stage stageBuyingMoney;
+    private  Stage stage;
     private final MessageInterface messageInterface = new MessageInterface();
 
     private final Label titleLabel = new Label();
@@ -39,28 +31,19 @@ public class BuyingMoneyMenuController {
 
     private final Button validButton = new Button();
 
-    private double soundVolume;
-    private boolean backgroundAnimation;
-
-    /** Base de données **/
-    private final String tableUser = "utilisateur";
-    private final String columnMMoney = "Money";
-    private final String columnMailUser = "MailUser";
-
-    public BuyingMoneyMenuController(User user,Stage stage,Database database, double soundVolume, boolean backgroundAnimation){
+    public BuyingMoneyMenuController(User user){
         this.user = user;
-        this.database = database;
-        this.soundVolume = soundVolume;
-        this.stage = stage;
-        this.backgroundAnimation = backgroundAnimation;
     }
 
+    /**
+     * Méthode qui initialise l'interface
+     **/
     public void setting(){
-        stageBuyingMoney = new Stage();
-        //stageBuyingMoney.setResizable(false);
+        stage = new Stage();
+        stage.setResizable(false);
         Scene scene = new Scene(root, 400, 400);
         //scene.getStylesheets().add(getClass().getResource("shopMenu.css").toExternalForm());
-        stageBuyingMoney.setScene(scene);
+        stage.setScene(scene);
 
         setupScene.setLabel(titleLabel,"Ajouter de l'argent", Pos.CENTER,0,20,20,400,new Font(30), Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(userPseudoLabel,"Pseudo : "+user.getPseudo(),Pos.CENTER,20,150,20,150,new Font(15),Paint.valueOf("BLACK"),true,anchorPane);
@@ -74,9 +57,12 @@ public class BuyingMoneyMenuController {
         validButton.setOnMouseClicked((event)-> addMoney());
 
         root.getChildren().add(anchorPane);
-        stageBuyingMoney.show();
+        stage.show();
     }
 
+    /**
+     * Méthode qui ajoute de l'argent à l'utilisateur
+     **/
     private void addMoney(){
         if(!textMoney.getText().isEmpty()) {
             int value = 0;

@@ -19,7 +19,7 @@ import java.io.FileReader;
 public class RuleMenuController {
 
     private final SetupScene setupScene = new SetupScene();
-    private Stage stageRule;
+    private Stage stage;
     private InterfaceMenu interfaceMenu;
 
     private final Label labelTitle = new Label();
@@ -31,22 +31,25 @@ public class RuleMenuController {
         this.interfaceMenu = interfaceMenu;
     }
 
+    /**
+     * Méthode qui initialise l'interface
+     **/
     public void setting(){
-        stageRule = new Stage();
-        stageRule.setResizable(false);
+        stage = new Stage();
+        stage.setResizable(false);
         BorderPane rootLog = new BorderPane();
         AnchorPane anchorPaneLog = new AnchorPane();
         setRule();
         Scene sceneLog = new Scene(rootLog, widthMax, heightMax);
         //scene.getStylesheets().add(getClass().getResource("interfaceMenuSetting.css").toExternalForm());
-        stageRule.setScene(sceneLog);
+        stage.setScene(sceneLog);
 
         setupScene.setLabel(labelTitle,labelTitle.getText(), Pos.CENTER,0,25,20,widthMax,new Font(30), Paint.valueOf("BLACK"),true,anchorPaneLog);
         setupScene.setTextArea(textRule,0,100,(heightMax - 100),widthMax,false,true,anchorPaneLog);
 
 
         rootLog.getChildren().add(anchorPaneLog);
-        stageRule.show();
+        stage.show();
     }
 
     /**
@@ -90,9 +93,12 @@ public class RuleMenuController {
         }
     }
 
+    /**
+     * Méthode pour fermer le menu des règles
+     **/
     public void exitRuleMenu(){
-        if(stageRule != null){
-            stageRule.close();
+        if(stage != null){
+            stage.close();
         }
     }
 }
