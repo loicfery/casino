@@ -31,9 +31,7 @@ public class Roulette {
     public int FinalGain(int number){
         int finalGain=0;
         for(int i=0;i<listOfBet.size();i++){
-            for(int j=0;j<listOfBet.get(i).cells.size();j++){
-                finalGain+=Gain(listOfBet.get(i).cells,number);
-            }
+            finalGain+=Gain(listOfBet.get(i).cells,number);
         }
         return finalGain;
     }
