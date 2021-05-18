@@ -144,7 +144,20 @@ class BlackJackTest {
     }
 
     @org.junit.jupiter.api.Test
-    void actionInsurance() {
+    void actionInsurance() { //En attente de base de donnée
+        BlackJack blackJack = new BlackJack();
+        User croupier = new User();
+        User user = new User();
+        UserHand userHand0 = new UserHand(croupier);
+        UserHand userHand = new UserHand(user);
+        blackJack.addUserBet(user);
+        blackJack.getListOfUserHand().add(0, userHand0);
+        blackJack.getListOfUserHand().add(1, userHand);
+        int mise = 10;
+        blackJack.userBet(mise, user);
+        blackJack.actionInsurance();
+        assertEquals(blackJack.getInsuranceUser(), 5);
+        // assert pour vérifer que le token a changé (BDD)
     }
 
     @org.junit.jupiter.api.Test
@@ -157,13 +170,40 @@ class BlackJackTest {
 
     @org.junit.jupiter.api.Test
     void getListOfUserHand() {
+        BlackJack blackJack = new BlackJack();
+        User user = new User();
+        User user1 = new User();
+        UserHand userHand = new UserHand(user);
+        UserHand userHand1 = new UserHand(user1);
+        blackJack.getListOfUserHand().add(userHand);
+        blackJack.getListOfUserHand().add(userHand1);
+        assertEquals(blackJack.getListOfUserHand().size(), 2);
     }
 
     @org.junit.jupiter.api.Test
     void getBet() {
+        BlackJack blackJack = new BlackJack();
+        User user = new User();
+        blackJack.addUserBet(user);
+        int valueOfBet = 7;
+        blackJack.userBet(valueOfBet, user);
+        assertEquals(blackJack.getBet().getBet(user), 7);
     }
 
     @org.junit.jupiter.api.Test
-    void getInsuranceUser() {
+    void getInsuranceUser() { //En attente de base de donnée
+        BlackJack blackJack = new BlackJack();
+        User croupier = new User();
+        User user = new User();
+        UserHand userHand0 = new UserHand(croupier);
+        UserHand userHand = new UserHand(user);
+        blackJack.addUserBet(user);
+        blackJack.getListOfUserHand().add(0, userHand0);
+        blackJack.getListOfUserHand().add(1, userHand);
+        int mise = 10;
+        blackJack.userBet(mise, user);
+        blackJack.actionInsurance();
+        assertEquals(blackJack.getInsuranceUser(), 5);
+
     }
 }

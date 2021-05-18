@@ -13,6 +13,7 @@ public class BlackJack {
 
     public BlackJack(){
         listOfUserHand = new ArrayList<>();
+        bet = new Bet();
     }
 
     public BlackJack(User user) {
