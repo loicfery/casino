@@ -16,7 +16,6 @@ public class BetRoulette {
     }
 
 
-
     public Multiply chooseMultiply(List<Cell> cells){
         if(cells.size()==1)
             return Multiply.Plein;
@@ -33,6 +32,24 @@ public class BetRoulette {
         else
             return Multiply.Simple;
     }
+
+    public int valueOfMultiply(Multiply multiply){
+        if(multiply==Multiply.Plein)
+            return 35;
+        else if(multiply==Multiply.Cheval)
+            return 17;
+        else if(multiply==Multiply.Transversal)
+            return 11;
+        else if(multiply==Multiply.Carre)
+            return 8;
+        else if(multiply==Multiply.Douzaine)
+            return 5;
+        else if(multiply==Multiply.Colonne)
+            return 2;
+        else
+            return 1;
+    }
+
 
     public List<Cell> getCells(){return cells;}
     public int getValueOfBet(){return valueOfBet;}
