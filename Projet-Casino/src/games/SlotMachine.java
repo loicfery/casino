@@ -12,6 +12,9 @@ public class SlotMachine {
      * tableau des trois images tirées
      * **/
     private String results[] = new String[3];
+
+
+
     /**
      * mise
      * **/
@@ -97,5 +100,9 @@ public class SlotMachine {
     public void reset(){
         bet.removeBet(bet.getBet(user), user);
         nbImage = new ArrayList<>();
+    }
+
+    public Bet getBet() {
+        return bet;
     }
 }
