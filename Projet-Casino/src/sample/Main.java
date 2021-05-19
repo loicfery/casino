@@ -17,8 +17,6 @@ public class Main extends Application {
         String password = "Poussin13!";
         Database database = new Database(bd,userName,password); //si vous voulez tester avec la votre changer les valeurs
 
-        User user = new User("loic","loic@email.com","ADMIN",100,100,new Database());
-
         /*try {
             database.importSqlFile("bdcasino.sql");
         } catch (FileNotFoundException e) {
@@ -29,9 +27,6 @@ public class Main extends Application {
 
         ConnexionMenuController controller = new ConnexionMenuController(stage,database);
         controller.setting();
-
-        //RouletteMenuController rouletteMenuController = new RouletteMenuController(user,stage,new Database(),0.1,true);
-        //rouletteMenuController.setting();
     }
 
     public static void main(String[] args) {
