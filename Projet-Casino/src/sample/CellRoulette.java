@@ -1,21 +1,31 @@
 package sample;
 
-public class Case {
+import games.ColorRoulette;
+
+public class CellRoulette {
 
     private int originX;
     private int originY;
     private int endX;
     private int endY;
-    private String colorCase;
+    private ColorRoulette colorRouletteCase;
     private String valueCase;
 
-    public Case(int originX, int originY, int endX, int endY, String colorCase, String valueCase){
+    public CellRoulette(int originX, int originY, int endX, int endY, ColorRoulette colorRouletteCase, String valueCase){
         this.originX = originX;
         this.originY = originY;
         this.endX = endX;
         this.endY = endY;
-        this.colorCase = colorCase;
+        this.colorRouletteCase = colorRouletteCase;
         this.valueCase = valueCase;
+    }
+
+    @Override
+    public String toString() {
+        return "Cell{" +
+                "color=" + colorRouletteCase +
+                ", number=" + valueCase +
+                '}';
     }
 
     public int getOriginX() {
@@ -34,8 +44,8 @@ public class Case {
         return endY;
     }
 
-    public String getColorCase() {
-        return colorCase;
+    public ColorRoulette getColorCase() {
+        return colorRouletteCase;
     }
 
     public String getValueCase() {

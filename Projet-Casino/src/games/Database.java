@@ -94,6 +94,7 @@ public class Database {
             statement.execute(request);
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println(request);
         }
     }
 

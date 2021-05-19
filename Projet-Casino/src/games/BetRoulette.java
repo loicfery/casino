@@ -1,57 +1,62 @@
 package games;
 
+import sample.CellRoulette;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class BetRoulette {
-    List<Cell> cells = new ArrayList<>();
+
+    List<CellRoulette> cells = new ArrayList<>();
     List<Bet> bets= new ArrayList<>();
     int valueOfBet;
-    Multiply multiply;
+    double multiply;
 
-    public BetRoulette(List<Cell> cells, int valueOfBet){
+    public BetRoulette(List<CellRoulette> cells, int valueOfBet){
         this.cells = cells;
         this.valueOfBet = valueOfBet;
         multiply = chooseMultiply(cells);
     }
 
 
-    public Multiply chooseMultiply(List<Cell> cells){
-        if(cells.size()==1)
-            return Multiply.Plein;
-        else if(cells.size()==2)
-            return Multiply.Cheval;
-        else if(cells.size()==3)
-            return Multiply.Transversal;
-        else if(cells.size()==4)
-            return Multiply.Carre;
-        else if(cells.size()==6)
-            return Multiply.Douzaine;
-        else if(cells.size()==12)
-            return Multiply.Colonne;
-        else
-            return Multiply.Simple;
+    public double chooseMultiply(List<CellRoulette> cells){
+        switch (cells.size()) {
+            case 1:
+                return 36;
+            case 2:
+                return 17;
+            case 3:
+                return 11;
+            case 4:
+                return 8;
+            case 6:
+                return 5;
+            case 12:
+                return 2;
+            case 18:
+                return 1;
+            case 24:
+                return 0.5;
+            default:
+                return 0;
+        }
     }
 
-    public int valueOfMultiply(Multiply multiply){
-        if(multiply==Multiply.Plein)
-            return 35;
-        else if(multiply==Multiply.Cheval)
-            return 17;
-        else if(multiply==Multiply.Transversal)
-            return 11;
-        else if(multiply==Multiply.Carre)
-            return 8;
-        else if(multiply==Multiply.Douzaine)
-            return 5;
-        else if(multiply==Multiply.Colonne)
-            return 2;
-        else
-            return 1;
+    public boolean containCell(String cell){
+        for(CellRoulette cellRoulette : cells){
+            if(cellRoulette.getValueCase().equals(cell)){
+                return true;
+            }
+        }
+        return false;
     }
 
-
-    public List<Cell> getCells(){return cells;}
+    public List<CellRoulette> getCells(){return cells;}
     public int getValueOfBet(){return valueOfBet;}
-    public Multiply getMultiply(){return multiply;}
+    public double getMultiply(){return multiply;}
+
+    public void setCells(List<CellRoulette> cells){
+        this.cells = cells;
+    }
+    public void setValueOfBet(int valueOfBet){ this.valueOfBet = valueOfBet; }
 }

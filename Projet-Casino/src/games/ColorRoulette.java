@@ -1,6 +1,6 @@
 package games;
 
-public enum Color {
+public enum ColorRoulette {
     Red,
     Black,
     Green

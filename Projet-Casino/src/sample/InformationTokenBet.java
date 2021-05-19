@@ -3,6 +3,7 @@ package sample;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Circle;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InformationTokenBet {
@@ -10,19 +11,19 @@ public class InformationTokenBet {
     private Circle circleToken;
     private Label labelToken;
     private String valueOfBet = "0";
-    private List<Case> listOfCaseToken;
-    private List<Case> listOfCaseBet;
+    private List<CellRoulette> listOfCellToken;
+    private List<CellRoulette> listOfCellBet = new ArrayList<>();
 
-    public InformationTokenBet(Circle circleToken, Label labelToken, List<Case> listOfCaseToken){
+    public InformationTokenBet(Circle circleToken, Label labelToken, List<CellRoulette> listOfCellToken){
         this.circleToken = circleToken;
         this.labelToken = labelToken;
-        this.listOfCaseToken = listOfCaseToken;
+        this.listOfCellToken = listOfCellToken;
     }
 
-    public String getCases(){
+    public String getCasesToString(){
         String cases = " ";
-        for(int index = 0; index < listOfCaseToken.size(); index ++){
-            cases = cases + listOfCaseToken.get(index).getValueCase() + ";";
+        for(int index = 0; index < listOfCellToken.size(); index ++){
+            cases = cases + listOfCellToken.get(index).getValueCase() + ";";
         }
         if(cases.length() > 0) {
             return cases.substring(0,cases.length() - 1);
@@ -33,24 +34,22 @@ public class InformationTokenBet {
     public Circle getCircleToken() {
         return circleToken;
     }
-
     public Label getLabelToken() {
         return labelToken;
     }
-
     public String getValueOfBet() {
         return valueOfBet;
     }
-
-    public List<Case> getListOfCaseToken() {
-        return listOfCaseToken;
+    public List<CellRoulette> getListOfCellToken() {
+        return listOfCellToken;
     }
+    public List<CellRoulette> getListOfCellBet(){return listOfCellBet;}
 
     public void setValueOfBet(String valueOfBet){
         this.valueOfBet = valueOfBet;
     }
 
-    public void setListOfCaseBet(List<Case> listOfCaseBet){
-        this.listOfCaseBet = listOfCaseBet;
+    public void setListOfCellBetInterface(List<CellRoulette> listOfCellRouletteBet){
+        this.listOfCellBet = listOfCellRouletteBet;
     }
 }

@@ -110,7 +110,7 @@ public class ShopMenuController implements InterfaceMenu{
         setupScene.setButton(leftShopMoneyButton,"<-",Pos.CENTER,500,750,20,50,new Font(15),true,anchorPane);
         setupScene.setButton(rightShopMoneyButton,"->",Pos.CENTER,650,750,20,50,new Font(15),true,anchorPane);
 
-        setupScene.setButton(addMoneyButton,"Ajouté de l'argent",Pos.CENTER,360,14,60,200,new Font(20),true,anchorPane);
+        setupScene.setButton(addMoneyButton,"Ajouter de l'argent",Pos.CENTER,360,14,60,200,new Font(20),true,anchorPane);
         setupScene.setButton(historyShoppingButton,"Historique achats", Pos.CENTER,150,14,60,200,new Font(20),true,anchorPane);
         setupScene.setButton(returnMainMenuButton,"Quitter",Pos.CENTER,14.0,14.0,60,123.0,new Font(20.0),true,anchorPane);
 

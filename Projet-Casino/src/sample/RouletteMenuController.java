@@ -3,6 +3,7 @@ package sample;
 import games.Database;
 import games.Roulette;
 import games.User;
+import games.ColorRoulette;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -21,8 +22,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
@@ -44,11 +45,12 @@ public class RouletteMenuController implements InterfaceMenu{
     private int tokenUsed = 0;
     private int indexTokenRemove = 0;
     private boolean startingGame = false;
-    private final List<Circle> listOfCircleToken = new ArrayList<>();
-    private final List<Label> listLabelToken = new ArrayList<>();
-    private final List<Case> listOfCaseBet = new ArrayList<>();
-    private final List<InformationTokenBet> listOfTokenUsed = new ArrayList<>();
-    private final List<Case> listOfCaseRoulette = new ArrayList<>();
+    private List<Circle> listOfCircleToken = new ArrayList<>();
+    private List<Label> listLabelToken = new ArrayList<>();
+    private final List<CellRoulette> listOfCellBet = new ArrayList<>();
+    private List<InformationTokenBet> listOfTokenUsed = new ArrayList<>();
+    private final List<CellRoulette> listOfCellRoulette = new ArrayList<>();
+    private List<CellRoulette> oldListOfCellsBet = new ArrayList<>();
 
     private final BorderPane root = new BorderPane();
     private final Stage stage;
@@ -59,6 +61,7 @@ public class RouletteMenuController implements InterfaceMenu{
     private final LogMenuController logMenuController;
     private final RuleMenuController ruleMenuController;
     private final Database database;
+    private final DatabaseName databaseName = new DatabaseName();
     private final MessageInterface messageInterface = new MessageInterface();
 
     private final Roulette roulette;
@@ -67,6 +70,7 @@ public class RouletteMenuController implements InterfaceMenu{
     private final List<Label> listOfLabelGameBoard = new ArrayList<>();
     private double soundVolume;
     private boolean backgroundAnimation;
+    private boolean modify = false;
 
     private MediaPlayer tokenSound;
     private MediaPlayer rouletteSound;
@@ -85,6 +89,7 @@ public class RouletteMenuController implements InterfaceMenu{
     private final Button validBetTokenButton = new Button();
     private final Button startingGameButton = new Button();
     private final Button returnMainMenuButton = new Button();
+    private final Button newGameButton = new Button();
 
     private final TextField textBetToken = new TextField();
 
@@ -105,7 +110,7 @@ public class RouletteMenuController implements InterfaceMenu{
         settingMenuController = new SettingMenuController(this,soundVolume,backgroundAnimation);
         ruleMenuController = new RuleMenuController(this);
         this.database = database;
-        roulette = new Roulette();
+        roulette = new Roulette(user);
     }
 
     /** Méthode qui initialise l'interface de la roulette **/
@@ -121,8 +126,8 @@ public class RouletteMenuController implements InterfaceMenu{
         stage.setScene(scene);
 
         setupGameBoard();
-        setCasePosition();
-        setCasePositionRoulette();
+        setCellBetPosition();
+        setCellRoulettePosition();
 
         setupScene.setImageView(pictureRoulette,638.0,350.0,425.0,471.0, new Image(getClass().getResource("image/roulette.jpg").toExternalForm()),true,anchorPane);
         pictureRoulette.setPickOnBounds(true);
@@ -136,10 +141,11 @@ public class RouletteMenuController implements InterfaceMenu{
         setupScene.setButton(modifyBetTokenButton,"Miser",Pos.CENTER,295.0,696.0,68.0,216.0,new Font(20.0),false,anchorPane);
         setupScene.setButton(validBetTokenButton,"Miser",Pos.CENTER,295.0,696.0,68.0,216.0,new Font(20.0),false,anchorPane);
         setupScene.setTextField(textBetToken,"Mise",Pos.CENTER,234.0,597.0,80.0,338.0,new Font(20.0),false,anchorPane);
-        setupScene.setButton(startingGameButton,"Starting",Pos.CENTER,25.0,416.0,102.0,251.0,new Font(20.0),true,anchorPane);
+        setupScene.setButton(startingGameButton,"Lancer",Pos.CENTER,25.0,416.0,102.0,251.0,new Font(20.0),true,anchorPane);
         setupScene.setLabel(labelError,"Erreur",Pos.CENTER,197.0,600.0,60.0,387.0,new Font(20.0),Paint.valueOf("RED"),false,anchorPane);
         setupScene.setCircle(circleBallRoulette,7.0,950,475,Paint.valueOf("BLACK"),Paint.valueOf("BLACK"),StrokeType.INSIDE,0.0,false,anchorPane);
         setupScene.setButton(returnMainMenuButton,"Quitter",Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
+        setupScene.setButton(newGameButton,"Nouvelle partie",Pos.CENTER,25,416,102,251,new Font(20),false,anchorPane);
 
         setupScene.setCircle(circleSetting,18,970,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("GREEN"),StrokeType.INSIDE,1.0,true,anchorPane);
 
@@ -160,6 +166,7 @@ public class RouletteMenuController implements InterfaceMenu{
         circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
         labelLog.setOnMouseClicked((event) -> goToLogMenu());
         labelRule.setOnMouseClicked((event)-> goToRuleMenu());
+        newGameButton.setOnMouseClicked((event)-> newGame());
 
         root.getChildren().add(anchorPane);
         stage.show();
@@ -562,97 +569,97 @@ public class RouletteMenuController implements InterfaceMenu{
     }
 
     /** Méthode de création de la liste des cases pour parier **/
-    private void setCasePosition(){
-        listOfCaseBet.add(new Case(320,78,384,223,"green","0"));
-        listOfCaseBet.add(new Case(383,174,434,222,"red","1"));
-        listOfCaseBet.add(new Case(383,126,434,174,"black","2"));
-        listOfCaseBet.add(new Case(383,78,434,126,"red","3"));
-        listOfCaseBet.add(new Case(434,174,485,222,"black","4"));
-        listOfCaseBet.add(new Case(434,126,485,174,"red","5"));
-        listOfCaseBet.add(new Case(434,78,485,126,"black","6"));
-        listOfCaseBet.add(new Case(485,174,536,222,"red","7"));
-        listOfCaseBet.add(new Case(485,126,536,174,"black","8"));
-        listOfCaseBet.add(new Case(485,78,536,126,"red","9"));
-        listOfCaseBet.add(new Case(536,174,587,222,"black","10"));
-        listOfCaseBet.add(new Case(536,126,587,174,"black","11"));
-        listOfCaseBet.add(new Case(536,78,587,126,"red","12"));
-        listOfCaseBet.add(new Case(587,174,638,222,"black","13"));
-        listOfCaseBet.add(new Case(587,126,638,174,"red","14"));
-        listOfCaseBet.add(new Case(587,78,638,126,"black","15"));
-        listOfCaseBet.add(new Case(638,174,689,222,"red","16"));
-        listOfCaseBet.add(new Case(638,126,689,174,"black","17"));
-        listOfCaseBet.add(new Case(638,78,689,126,"red","18"));
-        listOfCaseBet.add(new Case(689,174,740,222,"red","19"));
-        listOfCaseBet.add(new Case(689,126,740,174,"black","20"));
-        listOfCaseBet.add(new Case(689,78,740,126,"red","21"));
-        listOfCaseBet.add(new Case(740,174,791,222,"black","22"));
-        listOfCaseBet.add(new Case(740,126,791,174,"red","23"));
-        listOfCaseBet.add(new Case(740,78,791,126,"black","24"));
-        listOfCaseBet.add(new Case(791,174,842,222,"red","25"));
-        listOfCaseBet.add(new Case(791,126,842,174,"black","26"));
-        listOfCaseBet.add(new Case(791,78,842,126,"red","27"));
-        listOfCaseBet.add(new Case(842,174,893,222,"black","28"));
-        listOfCaseBet.add(new Case(842,126,893,174,"black","29"));
-        listOfCaseBet.add(new Case(842,78,893,126,"red","30"));
-        listOfCaseBet.add(new Case(893,174,944,222,"black","31"));
-        listOfCaseBet.add(new Case(893,126,944,174,"red","32"));
-        listOfCaseBet.add(new Case(893,78,944,126,"black","33"));
-        listOfCaseBet.add(new Case(944,174,995,222,"red","34"));
-        listOfCaseBet.add(new Case(944,126,995,174,"black","35"));
-        listOfCaseBet.add(new Case(944,78,995,126,"red","36"));
-        listOfCaseBet.add(new Case(995,174,1046,222,"green","1st"));
-        listOfCaseBet.add(new Case(995,126,1046,174,"green","2nd"));
-        listOfCaseBet.add(new Case(995,78,1046,126,"green","3rd"));
-        listOfCaseBet.add(new Case(383,222,587,270,"green","1-12"));
-        listOfCaseBet.add(new Case(383,270,483,318,"green","1-18"));
-        listOfCaseBet.add(new Case(484,270,584,318,"green","even"));
-        listOfCaseBet.add(new Case(587,222,791,270,"green","13-24"));
-        listOfCaseBet.add(new Case(587,270,687,718,"green","red"));
-        listOfCaseBet.add(new Case(688,270,788,718,"green","black"));
-        listOfCaseBet.add(new Case(791,222,995,270,"green","25-36"));
-        listOfCaseBet.add(new Case(791,270,891,318,"green","odd"));
-        listOfCaseBet.add(new Case(892,270,992,318,"green","19-36"));
+    private void setCellBetPosition(){
+        listOfCellBet.add(new CellRoulette(320,78,384,223, ColorRoulette.Green,"0"));
+        listOfCellBet.add(new CellRoulette(383,174,434,222, ColorRoulette.Red,"1"));
+        listOfCellBet.add(new CellRoulette(383,126,434,174, ColorRoulette.Black,"2"));
+        listOfCellBet.add(new CellRoulette(383,78,434,126, ColorRoulette.Red,"3"));
+        listOfCellBet.add(new CellRoulette(434,174,485,222, ColorRoulette.Black,"4"));
+        listOfCellBet.add(new CellRoulette(434,126,485,174, ColorRoulette.Red,"5"));
+        listOfCellBet.add(new CellRoulette(434,78,485,126, ColorRoulette.Black,"6"));
+        listOfCellBet.add(new CellRoulette(485,174,536,222, ColorRoulette.Red,"7"));
+        listOfCellBet.add(new CellRoulette(485,126,536,174, ColorRoulette.Black,"8"));
+        listOfCellBet.add(new CellRoulette(485,78,536,126, ColorRoulette.Red,"9"));
+        listOfCellBet.add(new CellRoulette(536,174,587,222, ColorRoulette.Black,"10"));
+        listOfCellBet.add(new CellRoulette(536,126,587,174, ColorRoulette.Black,"11"));
+        listOfCellBet.add(new CellRoulette(536,78,587,126, ColorRoulette.Red,"12"));
+        listOfCellBet.add(new CellRoulette(587,174,638,222, ColorRoulette.Black,"13"));
+        listOfCellBet.add(new CellRoulette(587,126,638,174, ColorRoulette.Red,"14"));
+        listOfCellBet.add(new CellRoulette(587,78,638,126, ColorRoulette.Black,"15"));
+        listOfCellBet.add(new CellRoulette(638,174,689,222, ColorRoulette.Red,"16"));
+        listOfCellBet.add(new CellRoulette(638,126,689,174, ColorRoulette.Black,"17"));
+        listOfCellBet.add(new CellRoulette(638,78,689,126, ColorRoulette.Red,"18"));
+        listOfCellBet.add(new CellRoulette(689,174,740,222, ColorRoulette.Red,"19"));
+        listOfCellBet.add(new CellRoulette(689,126,740,174, ColorRoulette.Black,"20"));
+        listOfCellBet.add(new CellRoulette(689,78,740,126, ColorRoulette.Red,"21"));
+        listOfCellBet.add(new CellRoulette(740,174,791,222, ColorRoulette.Black,"22"));
+        listOfCellBet.add(new CellRoulette(740,126,791,174, ColorRoulette.Red,"23"));
+        listOfCellBet.add(new CellRoulette(740,78,791,126, ColorRoulette.Black,"24"));
+        listOfCellBet.add(new CellRoulette(791,174,842,222, ColorRoulette.Red,"25"));
+        listOfCellBet.add(new CellRoulette(791,126,842,174, ColorRoulette.Black,"26"));
+        listOfCellBet.add(new CellRoulette(791,78,842,126, ColorRoulette.Red,"27"));
+        listOfCellBet.add(new CellRoulette(842,174,893,222, ColorRoulette.Black,"28"));
+        listOfCellBet.add(new CellRoulette(842,126,893,174, ColorRoulette.Black,"29"));
+        listOfCellBet.add(new CellRoulette(842,78,893,126, ColorRoulette.Red,"30"));
+        listOfCellBet.add(new CellRoulette(893,174,944,222, ColorRoulette.Black,"31"));
+        listOfCellBet.add(new CellRoulette(893,126,944,174, ColorRoulette.Red,"32"));
+        listOfCellBet.add(new CellRoulette(893,78,944,126, ColorRoulette.Black,"33"));
+        listOfCellBet.add(new CellRoulette(944,174,995,222, ColorRoulette.Red,"34"));
+        listOfCellBet.add(new CellRoulette(944,126,995,174, ColorRoulette.Black,"35"));
+        listOfCellBet.add(new CellRoulette(944,78,995,126, ColorRoulette.Red,"36"));
+        listOfCellBet.add(new CellRoulette(995,174,1046,222, ColorRoulette.Green,"1st"));
+        listOfCellBet.add(new CellRoulette(995,126,1046,174, ColorRoulette.Green,"2nd"));
+        listOfCellBet.add(new CellRoulette(995,78,1046,126, ColorRoulette.Green,"3rd"));
+        listOfCellBet.add(new CellRoulette(383,222,587,270, ColorRoulette.Green,"1-12"));
+        listOfCellBet.add(new CellRoulette(383,270,483,318, ColorRoulette.Green,"1-18"));
+        listOfCellBet.add(new CellRoulette(484,270,584,318, ColorRoulette.Green,"even"));
+        listOfCellBet.add(new CellRoulette(587,222,791,270, ColorRoulette.Green,"13-24"));
+        listOfCellBet.add(new CellRoulette(587,270,687,718, ColorRoulette.Green,"red"));
+        listOfCellBet.add(new CellRoulette(688,270,788,718, ColorRoulette.Green,"black"));
+        listOfCellBet.add(new CellRoulette(791,222,995,270, ColorRoulette.Green,"25-36"));
+        listOfCellBet.add(new CellRoulette(791,270,891,318, ColorRoulette.Green,"odd"));
+        listOfCellBet.add(new CellRoulette(892,270,992,318, ColorRoulette.Green,"19-36"));
     }
 
     /** Méthode de création de la liste des position des cases de la roulette **/
-    private void setCasePositionRoulette(){
-        listOfCaseRoulette.add(new Case(950,475,0,0,"red","21"));
-        listOfCaseRoulette.add(new Case(963,493,0,0,"black","2"));
-        listOfCaseRoulette.add(new Case(972,513,0,0,"red","25"));
-        listOfCaseRoulette.add(new Case(979,535,0,0,"black","17"));
-        listOfCaseRoulette.add(new Case(982,557,0,0,"red","34"));
-        listOfCaseRoulette.add(new Case(982,579,0,0,"black","6"));
-        listOfCaseRoulette.add(new Case(976,600,0,0,"red","27"));
-        listOfCaseRoulette.add(new Case(967,620,0,0,"black","13"));
-        listOfCaseRoulette.add(new Case(957,641,0,0,"red","36"));
-        listOfCaseRoulette.add(new Case(942,658,0,0,"black","11"));
-        listOfCaseRoulette.add(new Case(925,670,0,0,"red","30"));
-        listOfCaseRoulette.add(new Case(906,680,0,0,"black","8"));
-        listOfCaseRoulette.add(new Case(885,691,0,0,"red","23"));
-        listOfCaseRoulette.add(new Case(861,694,0,0,"black","10"));
-        listOfCaseRoulette.add(new Case(841,693,0,0,"red","5"));
-        listOfCaseRoulette.add(new Case(816,694,0,0,"black","24"));
-        listOfCaseRoulette.add(new Case(794,686,0,0,"red","16"));
-        listOfCaseRoulette.add(new Case(775,674,0,0,"black","33"));
-        listOfCaseRoulette.add(new Case(757,660,0,0,"red","1"));
-        listOfCaseRoulette.add(new Case(742,645,0,0,"black","20"));
-        listOfCaseRoulette.add(new Case(729,624,0,0,"red","14"));
-        listOfCaseRoulette.add(new Case(718,603,0,0,"black","31"));
-        listOfCaseRoulette.add(new Case(714,580,0,0,"red","9"));
-        listOfCaseRoulette.add(new Case(716,556,0,0,"black","22"));
-        listOfCaseRoulette.add(new Case(715,533,0,0,"red","18"));
-        listOfCaseRoulette.add(new Case(722,512,0,0,"black","29"));
-        listOfCaseRoulette.add(new Case(734,492,0,0,"red","7"));
-        listOfCaseRoulette.add(new Case(745,469,0,0,"black","28"));
-        listOfCaseRoulette.add(new Case(765,454,0,0,"red","12"));
-        listOfCaseRoulette.add(new Case(786,443,0,0,"black","35"));
-        listOfCaseRoulette.add(new Case(807,433,0,0,"red","3"));
-        listOfCaseRoulette.add(new Case(829,426,0,0,"black","26"));
-        listOfCaseRoulette.add(new Case(850,425,0,0,"green","0"));
-        listOfCaseRoulette.add(new Case(845,428,0,0,"red","32"));
-        listOfCaseRoulette.add(new Case(898,433,0,0,"black","15"));
-        listOfCaseRoulette.add(new Case(920,441,0,0,"red","19"));
-        listOfCaseRoulette.add(new Case(938,455,0,0,"black","4"));
+    private void setCellRoulettePosition(){
+        listOfCellRoulette.add(new CellRoulette(950,475,0,0, ColorRoulette.Red,"21"));
+        listOfCellRoulette.add(new CellRoulette(963,493,0,0, ColorRoulette.Black,"2"));
+        listOfCellRoulette.add(new CellRoulette(972,513,0,0, ColorRoulette.Red,"25"));
+        listOfCellRoulette.add(new CellRoulette(979,535,0,0, ColorRoulette.Black,"17"));
+        listOfCellRoulette.add(new CellRoulette(982,557,0,0, ColorRoulette.Red,"34"));
+        listOfCellRoulette.add(new CellRoulette(982,579,0,0, ColorRoulette.Black,"6"));
+        listOfCellRoulette.add(new CellRoulette(976,600,0,0, ColorRoulette.Red,"27"));
+        listOfCellRoulette.add(new CellRoulette(967,620,0,0, ColorRoulette.Black,"13"));
+        listOfCellRoulette.add(new CellRoulette(957,641,0,0, ColorRoulette.Red,"36"));
+        listOfCellRoulette.add(new CellRoulette(942,658,0,0, ColorRoulette.Black,"11"));
+        listOfCellRoulette.add(new CellRoulette(925,670,0,0, ColorRoulette.Red,"30"));
+        listOfCellRoulette.add(new CellRoulette(906,680,0,0, ColorRoulette.Black,"8"));
+        listOfCellRoulette.add(new CellRoulette(885,691,0,0, ColorRoulette.Red,"23"));
+        listOfCellRoulette.add(new CellRoulette(861,694,0,0, ColorRoulette.Black,"10"));
+        listOfCellRoulette.add(new CellRoulette(841,693,0,0, ColorRoulette.Red,"5"));
+        listOfCellRoulette.add(new CellRoulette(816,694,0,0, ColorRoulette.Black,"24"));
+        listOfCellRoulette.add(new CellRoulette(794,686,0,0, ColorRoulette.Red,"16"));
+        listOfCellRoulette.add(new CellRoulette(775,674,0,0, ColorRoulette.Black,"33"));
+        listOfCellRoulette.add(new CellRoulette(757,660,0,0, ColorRoulette.Red,"1"));
+        listOfCellRoulette.add(new CellRoulette(742,645,0,0, ColorRoulette.Black,"20"));
+        listOfCellRoulette.add(new CellRoulette(729,624,0,0, ColorRoulette.Red,"14"));
+        listOfCellRoulette.add(new CellRoulette(718,603,0,0, ColorRoulette.Black,"31"));
+        listOfCellRoulette.add(new CellRoulette(714,580,0,0, ColorRoulette.Red,"9"));
+        listOfCellRoulette.add(new CellRoulette(716,556,0,0, ColorRoulette.Black,"22"));
+        listOfCellRoulette.add(new CellRoulette(715,533,0,0, ColorRoulette.Red,"18"));
+        listOfCellRoulette.add(new CellRoulette(722,512,0,0, ColorRoulette.Black,"29"));
+        listOfCellRoulette.add(new CellRoulette(734,492,0,0, ColorRoulette.Red,"7"));
+        listOfCellRoulette.add(new CellRoulette(745,469,0,0, ColorRoulette.Black,"28"));
+        listOfCellRoulette.add(new CellRoulette(765,454,0,0, ColorRoulette.Red,"12"));
+        listOfCellRoulette.add(new CellRoulette(786,443,0,0, ColorRoulette.Black,"35"));
+        listOfCellRoulette.add(new CellRoulette(807,433,0,0, ColorRoulette.Red,"3"));
+        listOfCellRoulette.add(new CellRoulette(829,426,0,0, ColorRoulette.Black,"26"));
+        listOfCellRoulette.add(new CellRoulette(850,425,0,0, ColorRoulette.Green,"0"));
+        listOfCellRoulette.add(new CellRoulette(845,428,0,0, ColorRoulette.Red,"32"));
+        listOfCellRoulette.add(new CellRoulette(898,433,0,0, ColorRoulette.Black,"15"));
+        listOfCellRoulette.add(new CellRoulette(920,441,0,0, ColorRoulette.Red,"19"));
+        listOfCellRoulette.add(new CellRoulette(938,455,0,0, ColorRoulette.Black,"4"));
     }
 
     /** Méthode d'action pour poser un jeton ou modifier sa position ou sa valeur **/
@@ -667,8 +674,15 @@ public class RouletteMenuController implements InterfaceMenu{
                     createToken();
                     startingGameButton.setVisible(false);
                     if(getTokenToRemove(mousePositionX,mousePositionY) == -1) {
-                        setPositionToken(mousePositionX, mousePositionY, listOfCircleToken.get(tokenUsed), listLabelToken.get(tokenUsed), true);
-                        betToken(mousePositionX, mousePositionY, listOfCircleToken.get(tokenUsed), listLabelToken.get(tokenUsed));
+                        int index;
+                        if(!modify){
+                            index = tokenUsed;
+                        }
+                        else {
+                            index = indexTokenRemove;
+                        }
+                        setPositionToken(mousePositionX, mousePositionY, listOfCircleToken.get(index), listLabelToken.get(index), true);
+                        betToken(mousePositionX, mousePositionY, listOfCircleToken.get(index), listLabelToken.get(index));
                     }
                     else {
                         labelInformationBetToken.setVisible(false);
@@ -685,8 +699,11 @@ public class RouletteMenuController implements InterfaceMenu{
                     if (tokenUsed > 0) {
                         tokenUsed--;
                     }
-
-                    labelInformationBetToken.setText("Mise d'un jeton  \n" + "Cases sélectionnées : \n" + listOfTokenUsed.get(indexTokenRemove).getCases() + "\n Cases misées : \n" + getCasesBet(listOfTokenUsed.get(indexTokenRemove).getListOfCaseToken(), listOfTokenUsed.get(indexTokenRemove).getCircleToken())); //recup combinaison avec methode
+                    modify = true;
+                    String cellsBet = getCellsBetString(listOfTokenUsed.get(indexTokenRemove).getListOfCellToken(), listOfTokenUsed.get(indexTokenRemove).getCircleToken());
+                    oldListOfCellsBet = listOfTokenUsed.get(indexTokenRemove).getListOfCellBet();
+                    listOfTokenUsed.get(indexTokenRemove).setListOfCellBetInterface(getCellsBet(cellsBet));
+                    labelInformationBetToken.setText("Mise d'un jeton  \n" + "Cases sélectionnées : \n" + listOfTokenUsed.get(indexTokenRemove).getCasesToString() + "\n Cases misées : \n" + cellsBet); //recup combinaison avec methode
                     textBetToken.setText(listOfTokenUsed.get(indexTokenRemove).getValueOfBet());
                     textBetToken.setVisible(true);
                     rectangleInformationBet.setVisible(false);
@@ -698,12 +715,12 @@ public class RouletteMenuController implements InterfaceMenu{
     }
 
     /** Méthode qui returne les cases de la combinaison à partir de la position du jeton **/
-    private String getCasesBet(List<Case> listOfCaseToken, Circle circleToken){
-        if(listOfCaseToken.size() == 0){
+    private String getCellsBetString(List<CellRoulette> listOfCellRouletteToken, Circle circleToken){
+        if(listOfCellRouletteToken.size() == 0){
             return "aucune case sélectionnée";
         }
-        if(listOfCaseToken.size() == 1){
-            switch(listOfCaseToken.get(0).getValueCase()){
+        if(listOfCellRouletteToken.size() == 1){
+            switch(listOfCellRouletteToken.get(0).getValueCase()){
                 case "1st" : return "1;4;7;10;13;16;19;22;25;28;31;34";
                 case "2nd" : return "2;5;8;11;14;17;20;23;26;29;32;35";
                 case "3rd" : return "3;6;9;12;15;18;21;24;27;30;33;36";
@@ -719,16 +736,16 @@ public class RouletteMenuController implements InterfaceMenu{
                 default:
                     if(( circleToken.getLayoutY() - circleToken.getRadius()) <= ORIGIN_Y_1){
                         String listCase = "";
-                        for(Case cases : getCombinationCase(listOfCaseToken.get(0))){
+                        for(CellRoulette cases : getCombinationCase(listOfCellRouletteToken.get(0))){
                             listCase = listCase + cases.getValueCase() + ";";
                         }
                         return listCase.substring(0,listCase.length() - 1);
                     }
-                    return listOfCaseToken.get(0).getValueCase();
+                    return listOfCellRouletteToken.get(0).getValueCase();
             }
         }
-        if(listOfCaseToken.size() == 2){
-            switch (listOfCaseToken.get(0).getValueCase()){
+        if(listOfCellRouletteToken.size() == 2){
+            switch (listOfCellRouletteToken.get(0).getValueCase()){
                 case "1" :
                 case "4" :
                 case "7" :
@@ -743,19 +760,19 @@ public class RouletteMenuController implements InterfaceMenu{
                 case "34" :
                     if((circleToken.getLayoutY() + circleToken.getRadius()) >= END_Y_1){
                         String listCase = "";
-                        for(Case cases : getCombinationCase(listOfCaseToken.get(0))){
+                        for(CellRoulette cases : getCombinationCase(listOfCellRouletteToken.get(0))){
                             listCase = listCase + cases.getValueCase() + ";";
                         }
                         return listCase.substring(0,listCase.length() - 1);
                     }
                     else {
-                        if(listOfCaseToken.get(1).getValueCase().equals("1st")){
+                        if(listOfCellRouletteToken.get(1).getValueCase().equals("1st")){
                             return "1;4;7;10;13;16;19;22;25;28;31;34";
                         }
                         break;
                     }
                 case "1-12" :
-                    switch (listOfCaseToken.get(1).getValueCase()){
+                    switch (listOfCellRouletteToken.get(1).getValueCase()){
                         case "1-18" :
                         case "even" :
                             validBetTokenButton.setVisible(false);
@@ -766,7 +783,7 @@ public class RouletteMenuController implements InterfaceMenu{
                             return "de 1 à 24";
                     }
                 case "13-24" :
-                    switch (listOfCaseToken.get(1).getValueCase()){
+                    switch (listOfCellRouletteToken.get(1).getValueCase()){
                         case "red" :
                         case "black" :
                             validBetTokenButton.setVisible(false);
@@ -777,7 +794,7 @@ public class RouletteMenuController implements InterfaceMenu{
                             return "de 13 à 36";
                     }
                 case "25-35" :
-                    switch (listOfCaseToken.get(1).getValueCase()){
+                    switch (listOfCellRouletteToken.get(1).getValueCase()){
                         case "odd" :
                         case "19-36" :
                             validBetTokenButton.setVisible(false);
@@ -786,45 +803,54 @@ public class RouletteMenuController implements InterfaceMenu{
                             return "Vous ne pouvez pas miser \nsur ces deux cases en même temps";
                     }
                 case "1st" :
-                    if(listOfCaseToken.get(1).getValueCase().equals("2nd")){
+                    if(listOfCellRouletteToken.get(1).getValueCase().equals("2nd")){
                         return "1;4;7;10;13;16;19;22;25;28;31;34 \n" + "2;5;8;11;14;17;20;23;26;29;32;35";
                     }
                     break;
                 case "2nd" :
-                    if(listOfCaseToken.get(1).getValueCase().equals("3rd")){
+                    if(listOfCellRouletteToken.get(1).getValueCase().equals("3rd")){
                         return "2;5;8;11;14;17;20;23;26;29;32;35 \n" + "3;6;9;12;15;18;21;24;27;30;33;36";
                     }
                     break;
                 case "36" :
-                    if(listOfCaseToken.get(1).getValueCase().equals("3rd")) {
+                    if(listOfCellRouletteToken.get(1).getValueCase().equals("3rd")) {
                         return "3;6;9;12;15;18;21;24;27;30;33;36";
                     }
                     break;
                 case "35" :
-                    if(listOfCaseToken.get(1).getValueCase().equals("2nd")) {
+                    if(listOfCellRouletteToken.get(1).getValueCase().equals("2nd")) {
                         return "2;5;8;11;14;17;20;23;26;29;32;35";
                     }
                     break;
             }
-            return listOfCaseToken.get(0).getValueCase() + ";" + listOfCaseToken.get(1).getValueCase();
+            return listOfCellRouletteToken.get(0).getValueCase() + ";" + listOfCellRouletteToken.get(1).getValueCase();
         }
-        if(listOfCaseToken.size() == 3){
+        if(listOfCellRouletteToken.size() == 3){
             validBetTokenButton.setVisible(false);
             modifyBetTokenButton.setVisible(false);
             textBetToken.setVisible(false);
             return "Cette combinaison de case est impossible";
         }
 
-        if(listOfCaseToken.size() == 4){
-            if(listOfCaseToken.get(2).getValueCase().equals("2nd") && listOfCaseToken.get(3).getValueCase().equals("3rd")){
+        if(listOfCellRouletteToken.size() == 4){
+            if(listOfCellRouletteToken.get(2).getValueCase().equals("2nd") && listOfCellRouletteToken.get(3).getValueCase().equals("3rd")){
                 return "2;5;8;11;14;17;20;23;26;29;32;35 \n" + "3;6;9;12;15;18;21;24;27;30;33;36";
             }
-            if(listOfCaseToken.get(2).getValueCase().equals("1st") && listOfCaseToken.get(3).getValueCase().equals("2nd")){
+            if(listOfCellRouletteToken.get(2).getValueCase().equals("1st") && listOfCellRouletteToken.get(3).getValueCase().equals("2nd")){
                 return "1;4;7;10;13;16;19;22;25;28;31;34 \n" + "2;5;8;11;14;17;20;23;26;29;32;35";
             }
-            return listOfCaseToken.get(0).getValueCase()+";"+listOfCaseToken.get(1).getValueCase()+";"+listOfCaseToken.get(2).getValueCase()+";"+listOfCaseToken.get(3).getValueCase();
+            return listOfCellRouletteToken.get(0).getValueCase()+";"+ listOfCellRouletteToken.get(1).getValueCase()+";"+ listOfCellRouletteToken.get(2).getValueCase()+";"+ listOfCellRouletteToken.get(3).getValueCase();
         }
         return "aucune case sélectionnée";
+    }
+
+    private List<CellRoulette> getCellsBet(String cellsBet){
+        List<CellRoulette> listOfCellsBet = new ArrayList<>();
+        String[] tabCellsBet = cellsBet.split(";");
+        for(String cell : tabCellsBet){
+            listOfCellsBet.add(new CellRoulette(0,0,0,0,ColorRoulette.Green,cell));
+        }
+        return listOfCellsBet;
     }
 
     /** Méthode qui retourne l'indice du jeton à modifier **/
@@ -867,13 +893,13 @@ public class RouletteMenuController implements InterfaceMenu{
 
     /** Méthode qui récupère toutes les informations du jeton posé **/
     private void betToken(int positionXToken, int positionYToken, Circle circleToken, Label labelToken){
-        List<Case> listOfCaseToken = new ArrayList<>();
-        for(int index = 0; index < listOfCaseBet.size(); index ++){
-            if(tokenInTheCase(listOfCaseBet.get(index),positionXToken,positionYToken)){
-                listOfCaseToken.add(listOfCaseBet.get(index));
+        List<CellRoulette> listOfCellRouletteToken = new ArrayList<>();
+        for(int index = 0; index < listOfCellBet.size(); index ++){
+            if(tokenInTheCase(listOfCellBet.get(index),positionXToken,positionYToken)){
+                listOfCellRouletteToken.add(listOfCellBet.get(index));
             }
         }
-        InformationTokenBet informationTokenBet = new InformationTokenBet(circleToken,labelToken,listOfCaseToken);
+        InformationTokenBet informationTokenBet = new InformationTokenBet(circleToken,labelToken, listOfCellRouletteToken);
         if(listOfTokenUsed.size() >= (tokenUsed + 1)){
             if(listOfTokenUsed.size() == 0){
                 listOfTokenUsed.add(informationTokenBet);
@@ -887,15 +913,19 @@ public class RouletteMenuController implements InterfaceMenu{
         }
         rectangleInformationBet.setVisible(true);
         labelInformationBetToken.setVisible(true);
-        validBetTokenButton.setVisible(true);
+        if(!modify) {
+            validBetTokenButton.setVisible(true);
+        }
         textBetToken.setText("0");
         textBetToken.setVisible(true);
 
-        labelInformationBetToken.setText("Mise d'un jeton  \n"+ "Cases sélectionnées : \n" + informationTokenBet.getCases() + "\n Cases misées : \n"+getCasesBet(informationTokenBet.getListOfCaseToken(),circleToken)); //recup combinaison avec methode
+        String cellsBet = getCellsBetString(informationTokenBet.getListOfCellToken(),circleToken);
+        listOfTokenUsed.get(tokenUsed).setListOfCellBetInterface(getCellsBet(cellsBet));
+        labelInformationBetToken.setText("Mise d'un jeton  \n"+ "Cases sélectionnées : \n" + informationTokenBet.getCasesToString() + "\n Cases misées : \n"+ cellsBet); //recup combinaison avec methode
     }
 
     /** Méthode qui vérifie si un jeton est passé sur une case **/
-    private boolean tokenInTheCase(Case cases, int positionXToken, int positionYToken){
+    private boolean tokenInTheCase(CellRoulette cases, int positionXToken, int positionYToken){
         int RADIUS_TOKEN = 16;
         for(int x = (positionXToken - RADIUS_TOKEN); x <= (positionXToken + RADIUS_TOKEN); x++){
             for(int y = (positionYToken - RADIUS_TOKEN); y <= (positionYToken + RADIUS_TOKEN); y++){
@@ -917,6 +947,8 @@ public class RouletteMenuController implements InterfaceMenu{
                 if (valueOfBet <= 0) {
                     if (indexTokenRemove >= 0) {
                         setPositionToken(ORIGIN_X_TOKEN, ORIGIN_Y_TOKEN, listOfCircleToken.get(indexTokenRemove), listLabelToken.get(indexTokenRemove), false);
+                        roulette.deleteBet(listOfTokenUsed.get(indexTokenRemove).getListOfCellBet());
+                        labelTokenUser.setText("Jetons : "+user.getToken());
                         listOfTokenUsed.remove(indexTokenRemove);
                         listLabelToken.get(indexTokenRemove).setText("0");
                         Label labelToken = listLabelToken.get(indexTokenRemove);
@@ -929,6 +961,10 @@ public class RouletteMenuController implements InterfaceMenu{
                 } else {
                     listOfTokenUsed.get(indexTokenRemove).setValueOfBet(textBetToken.getText());
                     listLabelToken.get(indexTokenRemove).setText(textBetToken.getText());
+
+                    roulette.modifyBet(oldListOfCellsBet,listOfTokenUsed.get(indexTokenRemove).getListOfCellBet(),valueOfBet);
+                    labelTokenUser.setText("Jetons : "+user.getToken());
+
                     tokenUsed++;
                 }
             } catch (Exception e) {
@@ -945,6 +981,7 @@ public class RouletteMenuController implements InterfaceMenu{
         rectangleInformationBet.setVisible(false);
         labelInformationBetToken.setVisible(false);
         startingGameButton.setVisible(true);
+        modify = false;
     }
 
     /** Méthode pour valider un nouveau jeton posé  **/
@@ -961,7 +998,7 @@ public class RouletteMenuController implements InterfaceMenu{
                 validBetTokenButton.setVisible(false);
                 textBetToken.setVisible(false);
                 startingGameButton.setVisible(true);
-                messageInterface.setMessage(labelError,"Il faut miser une valeur entière",Color.RED);
+                messageInterface.setMessage(labelError,"Il faut miser une valeur entière", Color.RED);
                 return;
             }
 
@@ -977,9 +1014,10 @@ public class RouletteMenuController implements InterfaceMenu{
                 tokenUsed++;
                 tokenSound.play();
                 createSoundToken();
+                roulette.addBet(listOfTokenUsed.get(tokenUsed - 1).getListOfCellBet(),valueOfBet);
+                labelTokenUser.setText("Jetons : "+user.getToken());
             }
 
-            System.out.println();
             validBetTokenButton.setVisible(false);
             textBetToken.setVisible(false);
             rectangleInformationBet.setVisible(false);
@@ -993,148 +1031,148 @@ public class RouletteMenuController implements InterfaceMenu{
     }
 
     /** Méthode qui retourne la case qui possède une certaine valeur **/
-    private Case getCase(String valueOfCase){
-        for (Case aCase : listOfCaseBet) {
-            if (aCase.getValueCase().equals(valueOfCase)) {
-                return aCase;
+    private CellRoulette getCase(String valueOfCase){
+        for (CellRoulette aCellRoulette : listOfCellBet) {
+            if (aCellRoulette.getValueCase().equals(valueOfCase)) {
+                return aCellRoulette;
             }
         }
         return null;
     }
 
     /** Méthode qui retourne les autres cases d'une combinaisons d'après une case **/
-    private List<Case> getCombinationCase(Case cases){
-        List<Case> listOfCase = new ArrayList<>();
+    private List<CellRoulette> getCombinationCase(CellRoulette cases){
+        List<CellRoulette> listOfCellRoulette = new ArrayList<>();
 
         switch (cases.getValueCase()){
             case "1" :
-                listOfCase.add(cases);
-                listOfCase.add(getCase("2"));
-                listOfCase.add(getCase("3"));
+                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCase("2"));
+                listOfCellRoulette.add(getCase("3"));
                 break;
             case "3" :
-                listOfCase.add(getCase("1"));
-                listOfCase.add(getCase("2"));
-                listOfCase.add(cases);
+                listOfCellRoulette.add(getCase("1"));
+                listOfCellRoulette.add(getCase("2"));
+                listOfCellRoulette.add(cases);
                 break;
             case "4" :
-                listOfCase.add(cases);
-                listOfCase.add(getCase("5"));
-                listOfCase.add(getCase("6"));
+                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCase("5"));
+                listOfCellRoulette.add(getCase("6"));
                 break;
             case "6" :
-                listOfCase.add(getCase("4"));
-                listOfCase.add(getCase("5"));
-                listOfCase.add(cases);
+                listOfCellRoulette.add(getCase("4"));
+                listOfCellRoulette.add(getCase("5"));
+                listOfCellRoulette.add(cases);
                 break;
             case "7" :
-                listOfCase.add(cases);
-                listOfCase.add(getCase("8"));
-                listOfCase.add(getCase("9"));
+                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCase("8"));
+                listOfCellRoulette.add(getCase("9"));
                 break;
             case "9" :
-                listOfCase.add(getCase("7"));
-                listOfCase.add(getCase("8"));
-                listOfCase.add(cases);
+                listOfCellRoulette.add(getCase("7"));
+                listOfCellRoulette.add(getCase("8"));
+                listOfCellRoulette.add(cases);
                 break;
             case "10" :
-                listOfCase.add(cases);
-                listOfCase.add(getCase("11"));
-                listOfCase.add(getCase("12"));
+                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCase("11"));
+                listOfCellRoulette.add(getCase("12"));
                 break;
             case "12" :
-                listOfCase.add(getCase("10"));
-                listOfCase.add(getCase("11"));
-                listOfCase.add(cases);
+                listOfCellRoulette.add(getCase("10"));
+                listOfCellRoulette.add(getCase("11"));
+                listOfCellRoulette.add(cases);
                 break;
             case "13" :
-                listOfCase.add(cases);
-                listOfCase.add(getCase("14"));
-                listOfCase.add(getCase("15"));
+                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCase("14"));
+                listOfCellRoulette.add(getCase("15"));
                 break;
             case "15" :
-                listOfCase.add(getCase("13"));
-                listOfCase.add(getCase("14"));
-                listOfCase.add(cases);
+                listOfCellRoulette.add(getCase("13"));
+                listOfCellRoulette.add(getCase("14"));
+                listOfCellRoulette.add(cases);
                 break;
             case "16" :
-                listOfCase.add(cases);
-                listOfCase.add(getCase("17"));
-                listOfCase.add(getCase("18"));
+                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCase("17"));
+                listOfCellRoulette.add(getCase("18"));
                 break;
             case "18" :
-                listOfCase.add(getCase("16"));
-                listOfCase.add(getCase("17"));
-                listOfCase.add(cases);
+                listOfCellRoulette.add(getCase("16"));
+                listOfCellRoulette.add(getCase("17"));
+                listOfCellRoulette.add(cases);
                 break;
             case "19" :
-                listOfCase.add(cases);
-                listOfCase.add(getCase("20"));
-                listOfCase.add(getCase("21"));
+                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCase("20"));
+                listOfCellRoulette.add(getCase("21"));
                 break;
             case "21" :
-                listOfCase.add(getCase("19"));
-                listOfCase.add(getCase("20"));
-                listOfCase.add(cases);
+                listOfCellRoulette.add(getCase("19"));
+                listOfCellRoulette.add(getCase("20"));
+                listOfCellRoulette.add(cases);
                 break;
             case "22" :
-                listOfCase.add(cases);
-                listOfCase.add(getCase("23"));
-                listOfCase.add(getCase("24"));
+                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCase("23"));
+                listOfCellRoulette.add(getCase("24"));
                 break;
             case "24" :
-                listOfCase.add(getCase("22"));
-                listOfCase.add(getCase("23"));
-                listOfCase.add(cases);
+                listOfCellRoulette.add(getCase("22"));
+                listOfCellRoulette.add(getCase("23"));
+                listOfCellRoulette.add(cases);
                 break;
             case "25" :
-                listOfCase.add(cases);
-                listOfCase.add(getCase("26"));
-                listOfCase.add(getCase("27"));
+                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCase("26"));
+                listOfCellRoulette.add(getCase("27"));
                 break;
             case "27" :
-                listOfCase.add(getCase("25"));
-                listOfCase.add(getCase("26"));
-                listOfCase.add(cases);
+                listOfCellRoulette.add(getCase("25"));
+                listOfCellRoulette.add(getCase("26"));
+                listOfCellRoulette.add(cases);
                 break;
             case "28" :
-                listOfCase.add(cases);
-                listOfCase.add(getCase("29"));
-                listOfCase.add(getCase("30"));
+                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCase("29"));
+                listOfCellRoulette.add(getCase("30"));
                 break;
             case "30" :
-                listOfCase.add(getCase("28"));
-                listOfCase.add(getCase("29"));
-                listOfCase.add(cases);
+                listOfCellRoulette.add(getCase("28"));
+                listOfCellRoulette.add(getCase("29"));
+                listOfCellRoulette.add(cases);
                 break;
             case "31" :
-                listOfCase.add(cases);
-                listOfCase.add(getCase("32"));
-                listOfCase.add(getCase("33"));
+                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCase("32"));
+                listOfCellRoulette.add(getCase("33"));
                 break;
             case "33" :
-                listOfCase.add(getCase("31"));
-                listOfCase.add(getCase("32"));
-                listOfCase.add(cases);
+                listOfCellRoulette.add(getCase("31"));
+                listOfCellRoulette.add(getCase("32"));
+                listOfCellRoulette.add(cases);
                 break;
             case "34" :
-                listOfCase.add(cases);
-                listOfCase.add(getCase("35"));
-                listOfCase.add(getCase("36"));
+                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCase("35"));
+                listOfCellRoulette.add(getCase("36"));
                 break;
             case "36" :
-                listOfCase.add(getCase("34"));
-                listOfCase.add(getCase("35"));
-                listOfCase.add(cases);
+                listOfCellRoulette.add(getCase("34"));
+                listOfCellRoulette.add(getCase("35"));
+                listOfCellRoulette.add(cases);
                 break;
         }
-        return listOfCase;
+        return listOfCellRoulette;
     }
 
     /** Méthode pour lancer la roulette et mettre fin aux mises **/
     private void startingGame() {
         if(tokenUsed == 0){
-            messageInterface.setMessage(labelError,"Il faut placer un jeton au minimum",Color.RED);
+            messageInterface.setMessage(labelError,"Il faut placer un jeton au minimum", Color.RED);
         }
         else{
             startingGame = true;
@@ -1143,31 +1181,78 @@ public class RouletteMenuController implements InterfaceMenu{
             Timeline timeline = new Timeline();
             Duration timePoint = Duration.ZERO;
             int indexList = 0;
-            int caseChoose = 0;
+            int cellChoose = roulette.RandomNumber();
 
             timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> circleBallRoulette.setVisible(true)));
 
             for(int index = 0; index < 111; index ++){ //3 tours
                 int finalIndexList = indexList;
-                timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> setPositionBallRoulette(listOfCaseRoulette.get(finalIndexList).getOriginX(),listOfCaseRoulette.get(finalIndexList).getOriginY())));
+                timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> setPositionBallRoulette(listOfCellRoulette.get(finalIndexList).getOriginX(), listOfCellRoulette.get(finalIndexList).getOriginY())));
                 timePoint = timePoint.add(Duration.seconds(0.05));
-                indexList = (indexList + 1) % listOfCaseRoulette.size();
+                indexList = (indexList + 1) % listOfCellRoulette.size();
             }
 
-            for(int index = 0; index < listOfCaseRoulette.size(); index++){
+            for(int index = 0; index < listOfCellRoulette.size(); index++){
                 int finalIndexList = index;
-                timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> setPositionBallRoulette(listOfCaseRoulette.get(finalIndexList).getOriginX(),listOfCaseRoulette.get(finalIndexList).getOriginY())));
+                timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> setPositionBallRoulette(listOfCellRoulette.get(finalIndexList).getOriginX(), listOfCellRoulette.get(finalIndexList).getOriginY())));
                 timePoint = timePoint.add(Duration.seconds(0.05));
-                if(Integer.parseInt(listOfCaseRoulette.get(index).getValueCase()) == caseChoose){
+                if(Integer.parseInt(listOfCellRoulette.get(index).getValueCase()) == cellChoose){
                     break;
                 }
             }
 
             timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> createSoundRoulette()));
+            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> calculateGain(cellChoose)));
 
             rouletteSound.play();
             timeline.play();
         }
+    }
+
+    private void calculateGain(int cellValueChoose){
+        int gain = roulette.finalGain(cellValueChoose);
+        int tokenGain;
+        if(gain <= 0 ){
+            tokenGain = - roulette.getBetTotal();
+        }
+        else {
+            if(roulette.getListOfBet().size() == 1){
+                tokenGain = gain;
+            }
+            else {
+                tokenGain = gain - roulette.getBetTotal();
+            }
+        }
+        labelProfit.setText("Gain : " + tokenGain);
+        labelTokenUser.setText("Jetons : "+user.getToken());
+        newGameButton.setVisible(true);
+        database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\","+tokenGain+",\""+databaseName.getGameRoulette()+"\"");
+    }
+
+    private void newGame(){
+        roulette.resetBetList();
+        reset();
+    }
+
+    private void reset(){
+        for(Circle circle : listOfCircleToken){
+            anchorPane.getChildren().remove(circle);
+        }
+
+        for(Label label : listLabelToken){
+            anchorPane.getChildren().remove(label);
+        }
+
+        listOfCircleToken = new ArrayList<>();
+        listLabelToken = new ArrayList<>();
+        listOfTokenUsed = new ArrayList<>();
+        oldListOfCellsBet = new ArrayList<>();
+
+        newGameButton.setVisible(false);
+        startingGameButton.setVisible(true);
+        startingGame = false;
+        tokenUsed = 0;
+        indexTokenRemove = 0;
     }
 
     private void setPositionBallRoulette(double layoutX, double layoutY){
