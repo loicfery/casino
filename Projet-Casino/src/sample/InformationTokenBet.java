@@ -23,7 +23,7 @@ public class InformationTokenBet {
     public String getCasesToString(){
         String cases = " ";
         for(int index = 0; index < listOfCellToken.size(); index ++){
-            cases = cases + listOfCellToken.get(index).getValueCase() + ";";
+            cases = cases + listOfCellToken.get(index).getValueCell() + ";";
         }
         if(cases.length() > 0) {
             return cases.substring(0,cases.length() - 1);

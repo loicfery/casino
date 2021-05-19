@@ -720,7 +720,7 @@ public class RouletteMenuController implements InterfaceMenu{
             return "aucune case sélectionnée";
         }
         if(listOfCellRouletteToken.size() == 1){
-            switch(listOfCellRouletteToken.get(0).getValueCase()){
+            switch(listOfCellRouletteToken.get(0).getValueCell()){
                 case "1st" : return "1;4;7;10;13;16;19;22;25;28;31;34";
                 case "2nd" : return "2;5;8;11;14;17;20;23;26;29;32;35";
                 case "3rd" : return "3;6;9;12;15;18;21;24;27;30;33;36";
@@ -736,16 +736,16 @@ public class RouletteMenuController implements InterfaceMenu{
                 default:
                     if(( circleToken.getLayoutY() - circleToken.getRadius()) <= ORIGIN_Y_1){
                         String listCase = "";
-                        for(CellRoulette cases : getCombinationCase(listOfCellRouletteToken.get(0))){
-                            listCase = listCase + cases.getValueCase() + ";";
+                        for(CellRoulette cases : getCombinationCell(listOfCellRouletteToken.get(0))){
+                            listCase = listCase + cases.getValueCell() + ";";
                         }
                         return listCase.substring(0,listCase.length() - 1);
                     }
-                    return listOfCellRouletteToken.get(0).getValueCase();
+                    return listOfCellRouletteToken.get(0).getValueCell();
             }
         }
         if(listOfCellRouletteToken.size() == 2){
-            switch (listOfCellRouletteToken.get(0).getValueCase()){
+            switch (listOfCellRouletteToken.get(0).getValueCell()){
                 case "1" :
                 case "4" :
                 case "7" :
@@ -760,19 +760,19 @@ public class RouletteMenuController implements InterfaceMenu{
                 case "34" :
                     if((circleToken.getLayoutY() + circleToken.getRadius()) >= END_Y_1){
                         String listCase = "";
-                        for(CellRoulette cases : getCombinationCase(listOfCellRouletteToken.get(0))){
-                            listCase = listCase + cases.getValueCase() + ";";
+                        for(CellRoulette cases : getCombinationCell(listOfCellRouletteToken.get(0))){
+                            listCase = listCase + cases.getValueCell() + ";";
                         }
                         return listCase.substring(0,listCase.length() - 1);
                     }
                     else {
-                        if(listOfCellRouletteToken.get(1).getValueCase().equals("1st")){
+                        if(listOfCellRouletteToken.get(1).getValueCell().equals("1st")){
                             return "1;4;7;10;13;16;19;22;25;28;31;34";
                         }
                         break;
                     }
                 case "1-12" :
-                    switch (listOfCellRouletteToken.get(1).getValueCase()){
+                    switch (listOfCellRouletteToken.get(1).getValueCell()){
                         case "1-18" :
                         case "even" :
                             validBetTokenButton.setVisible(false);
@@ -783,7 +783,7 @@ public class RouletteMenuController implements InterfaceMenu{
                             return "de 1 à 24";
                     }
                 case "13-24" :
-                    switch (listOfCellRouletteToken.get(1).getValueCase()){
+                    switch (listOfCellRouletteToken.get(1).getValueCell()){
                         case "red" :
                         case "black" :
                             validBetTokenButton.setVisible(false);
@@ -794,7 +794,7 @@ public class RouletteMenuController implements InterfaceMenu{
                             return "de 13 à 36";
                     }
                 case "25-35" :
-                    switch (listOfCellRouletteToken.get(1).getValueCase()){
+                    switch (listOfCellRouletteToken.get(1).getValueCell()){
                         case "odd" :
                         case "19-36" :
                             validBetTokenButton.setVisible(false);
@@ -803,27 +803,27 @@ public class RouletteMenuController implements InterfaceMenu{
                             return "Vous ne pouvez pas miser \nsur ces deux cases en même temps";
                     }
                 case "1st" :
-                    if(listOfCellRouletteToken.get(1).getValueCase().equals("2nd")){
+                    if(listOfCellRouletteToken.get(1).getValueCell().equals("2nd")){
                         return "1;4;7;10;13;16;19;22;25;28;31;34 \n" + "2;5;8;11;14;17;20;23;26;29;32;35";
                     }
                     break;
                 case "2nd" :
-                    if(listOfCellRouletteToken.get(1).getValueCase().equals("3rd")){
+                    if(listOfCellRouletteToken.get(1).getValueCell().equals("3rd")){
                         return "2;5;8;11;14;17;20;23;26;29;32;35 \n" + "3;6;9;12;15;18;21;24;27;30;33;36";
                     }
                     break;
                 case "36" :
-                    if(listOfCellRouletteToken.get(1).getValueCase().equals("3rd")) {
+                    if(listOfCellRouletteToken.get(1).getValueCell().equals("3rd")) {
                         return "3;6;9;12;15;18;21;24;27;30;33;36";
                     }
                     break;
                 case "35" :
-                    if(listOfCellRouletteToken.get(1).getValueCase().equals("2nd")) {
+                    if(listOfCellRouletteToken.get(1).getValueCell().equals("2nd")) {
                         return "2;5;8;11;14;17;20;23;26;29;32;35";
                     }
                     break;
             }
-            return listOfCellRouletteToken.get(0).getValueCase() + ";" + listOfCellRouletteToken.get(1).getValueCase();
+            return listOfCellRouletteToken.get(0).getValueCell() + ";" + listOfCellRouletteToken.get(1).getValueCell();
         }
         if(listOfCellRouletteToken.size() == 3){
             validBetTokenButton.setVisible(false);
@@ -833,13 +833,13 @@ public class RouletteMenuController implements InterfaceMenu{
         }
 
         if(listOfCellRouletteToken.size() == 4){
-            if(listOfCellRouletteToken.get(2).getValueCase().equals("2nd") && listOfCellRouletteToken.get(3).getValueCase().equals("3rd")){
+            if(listOfCellRouletteToken.get(2).getValueCell().equals("2nd") && listOfCellRouletteToken.get(3).getValueCell().equals("3rd")){
                 return "2;5;8;11;14;17;20;23;26;29;32;35 \n" + "3;6;9;12;15;18;21;24;27;30;33;36";
             }
-            if(listOfCellRouletteToken.get(2).getValueCase().equals("1st") && listOfCellRouletteToken.get(3).getValueCase().equals("2nd")){
+            if(listOfCellRouletteToken.get(2).getValueCell().equals("1st") && listOfCellRouletteToken.get(3).getValueCell().equals("2nd")){
                 return "1;4;7;10;13;16;19;22;25;28;31;34 \n" + "2;5;8;11;14;17;20;23;26;29;32;35";
             }
-            return listOfCellRouletteToken.get(0).getValueCase()+";"+ listOfCellRouletteToken.get(1).getValueCase()+";"+ listOfCellRouletteToken.get(2).getValueCase()+";"+ listOfCellRouletteToken.get(3).getValueCase();
+            return listOfCellRouletteToken.get(0).getValueCell()+";"+ listOfCellRouletteToken.get(1).getValueCell()+";"+ listOfCellRouletteToken.get(2).getValueCell()+";"+ listOfCellRouletteToken.get(3).getValueCell();
         }
         return "aucune case sélectionnée";
     }
@@ -895,7 +895,7 @@ public class RouletteMenuController implements InterfaceMenu{
     private void betToken(int positionXToken, int positionYToken, Circle circleToken, Label labelToken){
         List<CellRoulette> listOfCellRouletteToken = new ArrayList<>();
         for(int index = 0; index < listOfCellBet.size(); index ++){
-            if(tokenInTheCase(listOfCellBet.get(index),positionXToken,positionYToken)){
+            if(tokenInTheCell(listOfCellBet.get(index),positionXToken,positionYToken)){
                 listOfCellRouletteToken.add(listOfCellBet.get(index));
             }
         }
@@ -925,12 +925,12 @@ public class RouletteMenuController implements InterfaceMenu{
     }
 
     /** Méthode qui vérifie si un jeton est passé sur une case **/
-    private boolean tokenInTheCase(CellRoulette cases, int positionXToken, int positionYToken){
+    private boolean tokenInTheCell(CellRoulette cells, int positionXToken, int positionYToken){
         int RADIUS_TOKEN = 16;
         for(int x = (positionXToken - RADIUS_TOKEN); x <= (positionXToken + RADIUS_TOKEN); x++){
             for(int y = (positionYToken - RADIUS_TOKEN); y <= (positionYToken + RADIUS_TOKEN); y++){
                 if((Math.pow(Math.abs(x - positionXToken),2) + Math.pow(Math.abs(y - positionYToken),2))  == Math.pow(RADIUS_TOKEN,2)){
-                    if(x >= cases.getOriginX() && x <= cases.getEndX() && y >= cases.getOriginY() && y <= cases.getEndY()) {
+                    if(x >= cells.getOriginX() && x <= cells.getEndX() && y >= cells.getOriginY() && y <= cells.getEndY()) {
                         return true;
                     }
                 }
@@ -1031,9 +1031,9 @@ public class RouletteMenuController implements InterfaceMenu{
     }
 
     /** Méthode qui retourne la case qui possède une certaine valeur **/
-    private CellRoulette getCase(String valueOfCase){
+    private CellRoulette getCell(String valueOfCell){
         for (CellRoulette aCellRoulette : listOfCellBet) {
-            if (aCellRoulette.getValueCase().equals(valueOfCase)) {
+            if (aCellRoulette.getValueCell().equals(valueOfCell)) {
                 return aCellRoulette;
             }
         }
@@ -1041,129 +1041,129 @@ public class RouletteMenuController implements InterfaceMenu{
     }
 
     /** Méthode qui retourne les autres cases d'une combinaisons d'après une case **/
-    private List<CellRoulette> getCombinationCase(CellRoulette cases){
+    private List<CellRoulette> getCombinationCell(CellRoulette cells){
         List<CellRoulette> listOfCellRoulette = new ArrayList<>();
 
-        switch (cases.getValueCase()){
+        switch (cells.getValueCell()){
             case "1" :
-                listOfCellRoulette.add(cases);
-                listOfCellRoulette.add(getCase("2"));
-                listOfCellRoulette.add(getCase("3"));
+                listOfCellRoulette.add(cells);
+                listOfCellRoulette.add(getCell("2"));
+                listOfCellRoulette.add(getCell("3"));
                 break;
             case "3" :
-                listOfCellRoulette.add(getCase("1"));
-                listOfCellRoulette.add(getCase("2"));
-                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCell("1"));
+                listOfCellRoulette.add(getCell("2"));
+                listOfCellRoulette.add(cells);
                 break;
             case "4" :
-                listOfCellRoulette.add(cases);
-                listOfCellRoulette.add(getCase("5"));
-                listOfCellRoulette.add(getCase("6"));
+                listOfCellRoulette.add(cells);
+                listOfCellRoulette.add(getCell("5"));
+                listOfCellRoulette.add(getCell("6"));
                 break;
             case "6" :
-                listOfCellRoulette.add(getCase("4"));
-                listOfCellRoulette.add(getCase("5"));
-                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCell("4"));
+                listOfCellRoulette.add(getCell("5"));
+                listOfCellRoulette.add(cells);
                 break;
             case "7" :
-                listOfCellRoulette.add(cases);
-                listOfCellRoulette.add(getCase("8"));
-                listOfCellRoulette.add(getCase("9"));
+                listOfCellRoulette.add(cells);
+                listOfCellRoulette.add(getCell("8"));
+                listOfCellRoulette.add(getCell("9"));
                 break;
             case "9" :
-                listOfCellRoulette.add(getCase("7"));
-                listOfCellRoulette.add(getCase("8"));
-                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCell("7"));
+                listOfCellRoulette.add(getCell("8"));
+                listOfCellRoulette.add(cells);
                 break;
             case "10" :
-                listOfCellRoulette.add(cases);
-                listOfCellRoulette.add(getCase("11"));
-                listOfCellRoulette.add(getCase("12"));
+                listOfCellRoulette.add(cells);
+                listOfCellRoulette.add(getCell("11"));
+                listOfCellRoulette.add(getCell("12"));
                 break;
             case "12" :
-                listOfCellRoulette.add(getCase("10"));
-                listOfCellRoulette.add(getCase("11"));
-                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCell("10"));
+                listOfCellRoulette.add(getCell("11"));
+                listOfCellRoulette.add(cells);
                 break;
             case "13" :
-                listOfCellRoulette.add(cases);
-                listOfCellRoulette.add(getCase("14"));
-                listOfCellRoulette.add(getCase("15"));
+                listOfCellRoulette.add(cells);
+                listOfCellRoulette.add(getCell("14"));
+                listOfCellRoulette.add(getCell("15"));
                 break;
             case "15" :
-                listOfCellRoulette.add(getCase("13"));
-                listOfCellRoulette.add(getCase("14"));
-                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCell("13"));
+                listOfCellRoulette.add(getCell("14"));
+                listOfCellRoulette.add(cells);
                 break;
             case "16" :
-                listOfCellRoulette.add(cases);
-                listOfCellRoulette.add(getCase("17"));
-                listOfCellRoulette.add(getCase("18"));
+                listOfCellRoulette.add(cells);
+                listOfCellRoulette.add(getCell("17"));
+                listOfCellRoulette.add(getCell("18"));
                 break;
             case "18" :
-                listOfCellRoulette.add(getCase("16"));
-                listOfCellRoulette.add(getCase("17"));
-                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCell("16"));
+                listOfCellRoulette.add(getCell("17"));
+                listOfCellRoulette.add(cells);
                 break;
             case "19" :
-                listOfCellRoulette.add(cases);
-                listOfCellRoulette.add(getCase("20"));
-                listOfCellRoulette.add(getCase("21"));
+                listOfCellRoulette.add(cells);
+                listOfCellRoulette.add(getCell("20"));
+                listOfCellRoulette.add(getCell("21"));
                 break;
             case "21" :
-                listOfCellRoulette.add(getCase("19"));
-                listOfCellRoulette.add(getCase("20"));
-                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCell("19"));
+                listOfCellRoulette.add(getCell("20"));
+                listOfCellRoulette.add(cells);
                 break;
             case "22" :
-                listOfCellRoulette.add(cases);
-                listOfCellRoulette.add(getCase("23"));
-                listOfCellRoulette.add(getCase("24"));
+                listOfCellRoulette.add(cells);
+                listOfCellRoulette.add(getCell("23"));
+                listOfCellRoulette.add(getCell("24"));
                 break;
             case "24" :
-                listOfCellRoulette.add(getCase("22"));
-                listOfCellRoulette.add(getCase("23"));
-                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCell("22"));
+                listOfCellRoulette.add(getCell("23"));
+                listOfCellRoulette.add(cells);
                 break;
             case "25" :
-                listOfCellRoulette.add(cases);
-                listOfCellRoulette.add(getCase("26"));
-                listOfCellRoulette.add(getCase("27"));
+                listOfCellRoulette.add(cells);
+                listOfCellRoulette.add(getCell("26"));
+                listOfCellRoulette.add(getCell("27"));
                 break;
             case "27" :
-                listOfCellRoulette.add(getCase("25"));
-                listOfCellRoulette.add(getCase("26"));
-                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCell("25"));
+                listOfCellRoulette.add(getCell("26"));
+                listOfCellRoulette.add(cells);
                 break;
             case "28" :
-                listOfCellRoulette.add(cases);
-                listOfCellRoulette.add(getCase("29"));
-                listOfCellRoulette.add(getCase("30"));
+                listOfCellRoulette.add(cells);
+                listOfCellRoulette.add(getCell("29"));
+                listOfCellRoulette.add(getCell("30"));
                 break;
             case "30" :
-                listOfCellRoulette.add(getCase("28"));
-                listOfCellRoulette.add(getCase("29"));
-                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCell("28"));
+                listOfCellRoulette.add(getCell("29"));
+                listOfCellRoulette.add(cells);
                 break;
             case "31" :
-                listOfCellRoulette.add(cases);
-                listOfCellRoulette.add(getCase("32"));
-                listOfCellRoulette.add(getCase("33"));
+                listOfCellRoulette.add(cells);
+                listOfCellRoulette.add(getCell("32"));
+                listOfCellRoulette.add(getCell("33"));
                 break;
             case "33" :
-                listOfCellRoulette.add(getCase("31"));
-                listOfCellRoulette.add(getCase("32"));
-                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCell("31"));
+                listOfCellRoulette.add(getCell("32"));
+                listOfCellRoulette.add(cells);
                 break;
             case "34" :
-                listOfCellRoulette.add(cases);
-                listOfCellRoulette.add(getCase("35"));
-                listOfCellRoulette.add(getCase("36"));
+                listOfCellRoulette.add(cells);
+                listOfCellRoulette.add(getCell("35"));
+                listOfCellRoulette.add(getCell("36"));
                 break;
             case "36" :
-                listOfCellRoulette.add(getCase("34"));
-                listOfCellRoulette.add(getCase("35"));
-                listOfCellRoulette.add(cases);
+                listOfCellRoulette.add(getCell("34"));
+                listOfCellRoulette.add(getCell("35"));
+                listOfCellRoulette.add(cells);
                 break;
         }
         return listOfCellRoulette;
@@ -1196,7 +1196,7 @@ public class RouletteMenuController implements InterfaceMenu{
                 int finalIndexList = index;
                 timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> setPositionBallRoulette(listOfCellRoulette.get(finalIndexList).getOriginX(), listOfCellRoulette.get(finalIndexList).getOriginY())));
                 timePoint = timePoint.add(Duration.seconds(0.05));
-                if(Integer.parseInt(listOfCellRoulette.get(index).getValueCase()) == cellChoose){
+                if(Integer.parseInt(listOfCellRoulette.get(index).getValueCell()) == cellChoose){
                     break;
                 }
             }

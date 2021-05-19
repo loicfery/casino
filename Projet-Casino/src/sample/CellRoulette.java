@@ -8,22 +8,22 @@ public class CellRoulette {
     private int originY;
     private int endX;
     private int endY;
-    private ColorRoulette colorRouletteCase;
+    private ColorRoulette colorRouletteCell;
     private String valueCase;
 
-    public CellRoulette(int originX, int originY, int endX, int endY, ColorRoulette colorRouletteCase, String valueCase){
+    public CellRoulette(int originX, int originY, int endX, int endY, ColorRoulette colorRouletteCell, String valueCase){
         this.originX = originX;
         this.originY = originY;
         this.endX = endX;
         this.endY = endY;
-        this.colorRouletteCase = colorRouletteCase;
+        this.colorRouletteCell = colorRouletteCell;
         this.valueCase = valueCase;
     }
 
     @Override
     public String toString() {
         return "Cell{" +
-                "color=" + colorRouletteCase +
+                "color=" + colorRouletteCell +
                 ", number=" + valueCase +
                 '}';
     }
@@ -44,11 +44,11 @@ public class CellRoulette {
         return endY;
     }
 
-    public ColorRoulette getColorCase() {
-        return colorRouletteCase;
+    public ColorRoulette getColorCell() {
+        return colorRouletteCell;
     }
 
-    public String getValueCase() {
+    public String getValueCell() {
         return valueCase;
     }
 }

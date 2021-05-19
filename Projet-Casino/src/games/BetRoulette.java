@@ -7,8 +7,7 @@ import java.util.List;
 
 public class BetRoulette {
 
-    List<CellRoulette> cells = new ArrayList<>();
-    List<Bet> bets= new ArrayList<>();
+    List<CellRoulette> cells;
     int valueOfBet;
     double multiply;
 
@@ -44,7 +43,7 @@ public class BetRoulette {
 
     public boolean containCell(String cell){
         for(CellRoulette cellRoulette : cells){
-            if(cellRoulette.getValueCase().equals(cell)){
+            if(cellRoulette.getValueCell().equals(cell)){
                 return true;
             }
         }

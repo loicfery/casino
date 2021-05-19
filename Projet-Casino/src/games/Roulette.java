@@ -25,7 +25,7 @@ public class Roulette {
         for(int firstIndex = 0; firstIndex < listOfBet.size(); firstIndex ++){
             if(listOfBet.get(firstIndex).getCells().size() == oldCells.size()) {
                 for (int secondIndex = 0; secondIndex < oldCells.size(); secondIndex++) {
-                    if (!oldCells.get(secondIndex).getValueCase().equals(listOfBet.get(firstIndex).getCells().get(secondIndex).getValueCase())) {
+                    if (!oldCells.get(secondIndex).getValueCell().equals(listOfBet.get(firstIndex).getCells().get(secondIndex).getValueCell())) {
                         modifyBet = false;
                     }
                 }
@@ -44,7 +44,7 @@ public class Roulette {
         boolean deleteBet = true;
         for(BetRoulette bet : listOfBet) {
             for (int index = 0; index < cells.size(); index ++) {
-                if(!cells.get(index).getValueCase().equals(bet.getCells().get(index).getValueCase())){
+                if(!cells.get(index).getValueCell().equals(bet.getCells().get(index).getValueCell())){
                     deleteBet = false;
                 }
             }
@@ -64,7 +64,7 @@ public class Roulette {
 
     public double gain(List<CellRoulette> listOfCells, String cellValue){
         for(CellRoulette cell : listOfCells) {
-            if(cell.getValueCase().equals(cellValue)) {
+            if(cell.getValueCell().equals(cellValue)) {
                 for (BetRoulette betRoulette : listOfBet) {
                     if (betRoulette.containCell(cellValue)) {
                         double multiple = betRoulette.getMultiply();
