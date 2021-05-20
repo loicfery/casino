@@ -59,8 +59,6 @@ public class Database {
             try {
                 Statement statement = connection.createStatement();
                 statement.execute(query.replace("[\\t\\n\\r]", " "));
-
-                verifyGame();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
                 break;

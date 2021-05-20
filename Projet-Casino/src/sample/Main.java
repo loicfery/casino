@@ -19,6 +19,7 @@ public class Main extends Application {
 
         try {
             database.importSqlFile("bdcasino.sql");
+            database.verifyGame();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
