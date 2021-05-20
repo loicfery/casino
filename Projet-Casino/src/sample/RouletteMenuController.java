@@ -133,24 +133,25 @@ public class RouletteMenuController implements InterfaceMenu{
         setupScene.setLabel(labelProfit,"Gain : 0",Pos.CENTER_LEFT,14.0,718.0,68.0,607.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelTokenUser,"Jetons : "+user.getToken(),Pos.CENTER_LEFT,14.0,640.0,68.0,613.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelUserName,"Joueur : "+user.getPseudo(),Pos.CENTER_LEFT,14.0,563.0,68.0,613.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setRectangle(rectangleInformationBet,212,368,202,387,5.0,5.0,Paint.valueOf("WHITE"),Paint.valueOf("WHITE"),1.0,StrokeType.INSIDE,false,anchorPane);
         setupScene.setLabel(labelInformationBetToken,"Information",Pos.CENTER,212.0,368.0,202.0,387.0,new Font(18),Paint.valueOf("BLACK"),false,anchorPane);
+        setupScene.setLabel(labelError,"Erreur",Pos.CENTER,197.0,600.0,60.0,387.0,new Font(20.0),Paint.valueOf("RED"),false,anchorPane);
+        setupScene.setLabel(labelLog,"Log",Pos.CENTER,1000.0,15.0,23.0,50.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelRule,"?",Pos.CENTER,1055.0,15.0,23,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
+
+        setupScene.setRectangle(rectangleInformationBet,212,368,202,387,5.0,5.0,Paint.valueOf("WHITE"),Paint.valueOf("WHITE"),1.0,StrokeType.INSIDE,false,anchorPane);
+        setupScene.setRectangle(rectangleLog,1000.0,15.0,30.0,50.0,10.0,10.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),1.0,StrokeType.INSIDE,true,anchorPane);
+
         setupScene.setButton(modifyBetTokenButton,"Miser",Pos.CENTER,295.0,696.0,68.0,216.0,new Font(20.0),false,anchorPane);
         setupScene.setButton(validBetTokenButton,"Miser",Pos.CENTER,295.0,696.0,68.0,216.0,new Font(20.0),false,anchorPane);
-        setupScene.setTextField(textBetToken,"Mise",Pos.CENTER,234.0,597.0,80.0,338.0,new Font(20.0),false,anchorPane);
         setupScene.setButton(startingGameButton,"Lancer",Pos.CENTER,25.0,416.0,102.0,251.0,new Font(20.0),true,anchorPane);
-        setupScene.setLabel(labelError,"Erreur",Pos.CENTER,197.0,600.0,60.0,387.0,new Font(20.0),Paint.valueOf("RED"),false,anchorPane);
-        setupScene.setCircle(circleBallRoulette,7.0,950,475,Paint.valueOf("BLACK"),Paint.valueOf("BLACK"),StrokeType.INSIDE,0.0,false,anchorPane);
         setupScene.setButton(returnMainMenuButton,"Quitter",Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
         setupScene.setButton(newGameButton,"Nouvelle partie",Pos.CENTER,25,416,102,251,new Font(20),false,anchorPane);
 
-        setupScene.setCircle(circleSetting,18,970,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("GREEN"),StrokeType.INSIDE,1.0,true,anchorPane);
-
-        setupScene.setRectangle(rectangleLog,1000.0,15.0,30.0,50.0,10.0,10.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),1.0,StrokeType.INSIDE,true,anchorPane);
-        setupScene.setLabel(labelLog,"Log",Pos.CENTER,1000.0,15.0,23.0,50.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setTextField(textBetToken,"Mise",Pos.CENTER,234.0,597.0,80.0,338.0,new Font(20.0),false,anchorPane);
 
         setupScene.setCircle(circleRule,16.0,1070.0,30.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,true,anchorPane);
-        setupScene.setLabel(labelRule,"?",Pos.CENTER,1055.0,15.0,23,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setCircle(circleBallRoulette,7.0,950,475,Paint.valueOf("BLACK"),Paint.valueOf("BLACK"),StrokeType.INSIDE,0.0,false,anchorPane);
+        setupScene.setCircle(circleSetting,18,970,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("GREEN"),StrokeType.INSIDE,1.0,true,anchorPane);
 
         createSoundToken();
         createSoundRoulette();
@@ -159,7 +160,7 @@ public class RouletteMenuController implements InterfaceMenu{
         validBetTokenButton.setOnMouseClicked((event)-> validBetToken());
         modifyBetTokenButton.setOnMouseClicked((event)-> modifyBetToken());
         startingGameButton.setOnMouseClicked((event)-> startingGame());
-        returnMainMenuButton.setOnMouseClicked((event)-> returnMainMenu());
+        returnMainMenuButton.setOnMouseClicked((event)-> goToMainMenu());
         circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
         labelLog.setOnMouseClicked((event) -> goToLogMenu());
         labelRule.setOnMouseClicked((event)-> goToRuleMenu());
@@ -653,7 +654,7 @@ public class RouletteMenuController implements InterfaceMenu{
         listOfCellRoulette.add(new CellRoulette(807,433,0,0, ColorRoulette.Red,"3"));
         listOfCellRoulette.add(new CellRoulette(829,426,0,0, ColorRoulette.Black,"26"));
         listOfCellRoulette.add(new CellRoulette(850,425,0,0, ColorRoulette.Green,"0"));
-        listOfCellRoulette.add(new CellRoulette(845,428,0,0, ColorRoulette.Red,"32"));
+        listOfCellRoulette.add(new CellRoulette(875,428,0,0, ColorRoulette.Red,"32"));
         listOfCellRoulette.add(new CellRoulette(898,433,0,0, ColorRoulette.Black,"15"));
         listOfCellRoulette.add(new CellRoulette(920,441,0,0, ColorRoulette.Red,"19"));
         listOfCellRoulette.add(new CellRoulette(938,455,0,0, ColorRoulette.Black,"4"));
@@ -1271,9 +1272,11 @@ public class RouletteMenuController implements InterfaceMenu{
     /**
      * Méthode pour quitter le jeu et retourner dans le menu principale
      **/
-    private void returnMainMenu(){
+    private void goToMainMenu(){
         settingMenuController.exitSettingMenu();
         logMenuController.exitLogMenu();
+        tokenSound.stop();
+        rouletteSound.stop();
         MainMenuController mainMenuController = new MainMenuController(stage,user, database,soundVolume,backgroundAnimation);
         mainMenuController.setting();
     }
