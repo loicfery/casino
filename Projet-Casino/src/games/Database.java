@@ -30,7 +30,7 @@ public class Database {
 
     public void authenticate(String url) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");// c'est le paquege de mysqlconnector;;;c'est la classe driver qu'on utilise
             connection = DriverManager.getConnection(url);
             System.out.println("Connected !");
         } catch (SQLException | ClassNotFoundException e) {
