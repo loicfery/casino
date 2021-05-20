@@ -1,6 +1,7 @@
 package sample;
 
 import games.Database;
+import games.DatabaseName;
 import games.SlotMachine;
 import games.User;
 import javafx.animation.*;

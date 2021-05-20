@@ -1,4 +1,4 @@
-package sample;
+package games;
 
 public class DatabaseName {
     //show tables from casino; pour recup les noms des tables (pas sûre de l'utiliser)
