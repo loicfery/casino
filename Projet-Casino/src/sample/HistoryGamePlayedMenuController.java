@@ -159,7 +159,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
                 }
             }
             else {
-                 resultSet = database.select(databaseName.getTableHistoryPartyGamed(), databaseName.getTableHistoryPartyGamedColumnGameName()+" = \"" + game + "\" && MailUser = \"" + user.getEmail() + "\"");
+                 resultSet = database.select(databaseName.getTableHistoryPartyGamed(), databaseName.getTableHistoryPartyGamedColumnGameName()+" = \"" + game + "\" && "+ databaseName.getTableHistoryPartyGamedColumnGameName() + " = \"" + user.getEmail() + "\"");
             }
 
             while (resultSet.next()){
