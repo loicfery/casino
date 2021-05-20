@@ -699,13 +699,12 @@ public class BlackJackMenuController implements InterfaceMenu{
         logMenuController.exitLogMenu();
         newPartyButton.setVisible(false);
         reset();
-        //BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage, database,soundVolume,backgroundAnimation);
-        //blackJackMenuController.setting();
-
     }
 
     private void reset(){
         resetCards();
+        cardSound.stop();
+        tokenSound.stop();
         split = false;
         stand = false;
         surrender = false;
@@ -800,6 +799,8 @@ public class BlackJackMenuController implements InterfaceMenu{
     private void goToLogMenu(){
         logMenuController.exitLogMenu();
         logMenuController.setting();
+        cardSound.stop();
+        tokenSound.stop();
     }
 
     private void createCardSound(){

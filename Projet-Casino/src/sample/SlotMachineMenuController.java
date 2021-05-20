@@ -127,7 +127,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
         createSoundSlot();
 
         startingGameButton.setOnMouseClicked((event)-> startingGame());
-        returnMainMenuButton.setOnMouseClicked((event)-> returnMainMenu());
+        returnMainMenuButton.setOnMouseClicked((event)-> goToMainMenu());
         circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
         labelLog.setOnMouseClicked((event) -> goToLogMenu());
         labelRule.setOnMouseClicked((event)-> goToRuleMenu());
@@ -214,7 +214,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
     }
 
     /** Méthode pour retourner dans le menu principal **/
-    private void returnMainMenu(){
+    private void goToMainMenu(){
         settingMenuController.exitSettingMenu();
         logMenuController.exitLogMenu();
         ruleMenuController.exitRuleMenu();
