@@ -14,11 +14,12 @@ public class Main extends Application {
     public void start(Stage stage) throws  Exception{
         String bd = "projet";
         String userName = "root";
-        String password = "Poussin13!";
+        String password = "Dewodi25.";
         Database database = new Database(bd,userName,password); //si vous voulez tester avec la votre changer les valeurs
 
         try {
             database.importSqlFile("bdcasino.sql");
+            database.verifyGame();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
