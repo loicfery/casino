@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS Users (
     MailUser_Users VARCHAR(50),
     Password_Users VARCHAR(20),
     Money_Users FLOAT,
-    Token_HistoryPartygamed BIGINT,
+    Token_HistoryPartyGamed BIGINT,
     PRIMARY KEY (IdUser_Users,MailUser_Users)) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS HistoryExchangeTokens(
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS HistoryExchangeMoney(
     MailUser_HistoryExchangeMoney VARCHAR(50),
     MoneyPrice_HistoryExchangeMoney BIGINT,
     TokenGain_HistoryExchangeMoney BIGINT,
-    PRIMARY KEY (idHistoryExchangeMoney_HistoryExchangeMoney)) ENGINE=InnoDB;
+    PRIMARY KEY (IdHistoryExchangeMoney_HistoryExchangeMoney)) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS HistoryPartyGamed(
     IdUser_HistoryPartyGamed BIGINT AUTO_INCREMENT,
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS Consulte (IdUser_Users  BIGINT,
     CONSTRAINT FK_Consulte_IdUser_HistoryPartyGamed FOREIGN KEY (IdUser_HistoryPartyGamed) REFERENCES HistoryPartyGamed (IdUser_HistoryPartyGamed);
 
     CREATE TABLE IF NOT EXISTS ExchangeMoney(id_ExchangeMoney BIGINT,
-    PRIMARY KEY (id_ExchangeMoney BINGINT NOT NULL) ENGINE=InnoDB,
+    PRIMARY KEY (Id_ExchangeMoney BIGINT NOT NULL) ENGINE=InnoDB,
     MoneyPrice_ExchangeMoney BIGINT NOT NULL,
     TokenGame_ExchangeMoney FLOAT );
 

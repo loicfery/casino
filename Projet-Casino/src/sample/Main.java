@@ -17,11 +17,11 @@ public class Main extends Application {
         String password = "Bananaslayer2!";
         Database database = new Database(bd,userName,password); //si vous voulez tester avec la votre changer les valeurs
 
-        /*try {
+        try {
             database.importSqlFile("bdcasino.sql");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }*/
+        }
 
         stage.setResizable(false);
 
