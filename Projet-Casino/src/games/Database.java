@@ -60,14 +60,33 @@ public class Database {
                 Statement statement = connection.createStatement();
                 statement.execute(query.replace("[\\t\\n\\r]", " "));
 
-                ResultSet resultSet = select(databaseName.getTableGame(),"");
-                while(resultSet.next()){
-
-                }
+                verifyGame();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
                 break;
             }
+        }
+    }
+
+    public void verifyGame(){
+        try {
+            ResultSet resultSet = select(databaseName.getTableGame(), databaseName.getTableGameColumnNameGame() + " = \"" + databaseName.getGameBlackJack()+"\"");
+            if (!resultSet.next()) {
+                insert(databaseName.getTableGame(), "\""+databaseName.getGameBlackJack()+"\"", databaseName.getTableGameColumnNameGame());
+            }
+
+            resultSet = select(databaseName.getTableGame(), databaseName.getTableGameColumnNameGame() + " = \"" + databaseName.getGameSlotMachine()+"\"");
+            if (!resultSet.next()) {
+                insert(databaseName.getTableGame(), "\""+databaseName.getGameSlotMachine()+"\"", databaseName.getTableGameColumnNameGame());
+            }
+
+            resultSet = select(databaseName.getTableGame(), databaseName.getTableGameColumnNameGame() + " = \"" + databaseName.getGameRoulette()+"\"");
+            if (!resultSet.next()) {
+                insert(databaseName.getTableGame(), "\""+databaseName.getGameRoulette()+"\"", databaseName.getTableGameColumnNameGame());
+            }
+        }
+        catch (SQLException sqlException){
+            sqlException.printStackTrace();
         }
     }
 
