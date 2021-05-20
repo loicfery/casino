@@ -162,7 +162,7 @@ class BlackJackTest {
         blackJack.userBet(mise, user);
         blackJack.actionInsurance();
         assertEquals(blackJack.getInsuranceUser(), 5);
-        // assert pour vérifer que le token a changé (BDD)
+
     }
 
     @org.junit.jupiter.api.Test
