@@ -126,6 +126,7 @@ public class ShopMenuController implements InterfaceMenu{
         leftShopTokenButton.setOnMouseClicked((event) -> leftShopToken());
         rightShopTokenButton.setOnMouseClicked((event) -> rightShopToken());
         addMoneyButton.setOnMouseClicked((event)-> goToBuyingMenu());
+        circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
 
         getShopList();
 

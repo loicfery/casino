@@ -37,8 +37,6 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
     private final Database database;
     private final DatabaseName databaseName = new DatabaseName();
 
-    private final Circle circleSetting = new Circle();
-
     private final Label labelTitle = new Label();
 
     private final TextArea textInformation = new TextArea();
@@ -93,9 +91,6 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         setupScene.setButton(exchangeTokenButton,"Echange de jeton",Pos.CENTER,175,700,60,200,new Font(20),false,anchorPane);
         setupScene.setButton(exchangeMoneyButton,"Echange d'argent",Pos.CENTER,175,700,60,200,new Font(20),true,anchorPane);
 
-        setupScene.setCircle(circleSetting,30,750,40,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())), Paint.valueOf("BLACK"), StrokeType.INSIDE,1.0,true,anchorPane);
-
-        circleSetting.setOnMouseClicked((event) -> goToMenuSetting());
         leftInformationButton.setOnMouseClicked((event) -> leftInformation());
         rightInformationButton.setOnMouseClicked((event) -> rightInformation());
         returnShopMenuButton.setOnMouseClicked((event)-> goToShopMenu());
@@ -259,13 +254,5 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
      **/
     public void setBackgroundAnimation(boolean newBackgroundAnimation){
         backgroundAnimation = newBackgroundAnimation;
-    }
-
-    /**
-     * Méthode qui ouvre le menu des paramètres
-     **/
-    private void goToMenuSetting(){
-        settingMenuController.exitSettingMenu();
-        settingMenuController.setting();
     }
 }
