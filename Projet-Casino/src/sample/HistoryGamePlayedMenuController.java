@@ -1,14 +1,17 @@
 package sample;
 
 import games.Database;
+import games.DatabaseName;
 import games.User;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -48,12 +51,14 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
 
     private final TextArea textHistory = new TextArea();
 
+    private final TextField textSearchUser = new TextField();
+
     private double soundVolume;
     private boolean backgroundAnimation;
 
-    private final List<String> listOfGameBlackJack = new ArrayList<>();
-    private final List<String> listOfGameSlotMachine = new ArrayList<>();
-    private final List<String> listOfGameRoulette = new ArrayList<>();
+    private List<String> listOfGameBlackJack = new ArrayList<>();
+    private List<String> listOfGameSlotMachine = new ArrayList<>();
+    private List<String> listOfGameRoulette = new ArrayList<>();
     private List<String> currentList = new ArrayList<>();
     private int indexList = 0;
     private boolean ADMIN = false;
@@ -89,6 +94,8 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
 
         setupScene.setTextArea(textHistory,200,150,530,380,false,true,anchorPane);
 
+        setupScene.setTextField(textSearchUser,"",Pos.CENTER,20,450,20,150,new Font(15),false,anchorPane);
+
         setupScene.setButton(gameBlackJackButton,"Black Jack",Pos.CENTER,20,150,20,150,new Font(15),true,anchorPane);
         setupScene.setButton(gameSlotMachineButton,"Machine à sous",Pos.CENTER,20,250,20,150,new Font(15),true,anchorPane);
         setupScene.setButton(gameRouletteButton,"Roulette",Pos.CENTER,20,350,20,150,new Font(15),true,anchorPane);
@@ -106,9 +113,22 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         gameBlackJackButton.setOnMouseClicked((event)-> setGameBlackJack());
         gameSlotMachineButton.setOnMouseClicked((event)-> setGameSlotMachine());
 
-        getAllInformation();
+        /*textSearchUser.onActionProperty(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+            listOfGameBlackJack = new ArrayList<>();
+            listOfGameRoulette = new ArrayList<>();
+            listOfGameSlotMachine = new ArrayList<>();
+            getAllInformation(databaseName.getTableHistoryPartyGamedColumnMailUser()+" like \"%"+textSearchUser.getText()+"%\"");
+            }
+        });*/
+
+        getAllInformation("");
         currentList = listOfGameBlackJack;
         printInformation(currentList);
+
+        if(ADMIN){
+            textSearchUser.setVisible(true);
+        }
 
         root.getChildren().add(anchorPane);
         stage.show();
@@ -117,21 +137,26 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
     /**
      * Méthode qui récupère dans la base de données les historiques des parties jouées
      **/
-    private void getAllInformation(){
-        completeList(listOfGameBlackJack,databaseName.getGameBlackJack(),"Erreur black jack de getAllInformation dans HistoryGamePlayedMenuController");
-        completeList(listOfGameSlotMachine,databaseName.getGameSlotMachine(),"Erreur machine à sous de getAllInformation dans HistoryGamePlayedMenuController");
-        completeList(listOfGameRoulette,databaseName.getGameRoulette(),"\"Erreur roulette de getAllInformation dans HistoryGamePlayedMenuController\"");
+    private void getAllInformation(String condition){
+        completeList(listOfGameBlackJack,databaseName.getGameBlackJack(),"Erreur black jack de getAllInformation dans HistoryGamePlayedMenuController",condition);
+        completeList(listOfGameSlotMachine,databaseName.getGameSlotMachine(),"Erreur machine à sous de getAllInformation dans HistoryGamePlayedMenuController",condition);
+        completeList(listOfGameRoulette,databaseName.getGameRoulette(),"\"Erreur roulette de getAllInformation dans HistoryGamePlayedMenuController\"",condition);
     }
 
     /**
      * Méthode qui prépare l'affichage des historiques des parties jouées
      **/
-    private void completeList(List<String> list, String game, String errorMessage){
+    private void completeList(List<String> list, String game, String errorMessage, String condition){
         try {
             ResultSet resultSet;
 
             if(ADMIN){
-                resultSet = database.select(databaseName.getTableHistoryPartyGamed(), databaseName.getTableHistoryPartyGamedColumnGameName()+" = \"" + game + "\"");
+                if(condition.length() == 0) {
+                    resultSet = database.select(databaseName.getTableHistoryPartyGamed(), databaseName.getTableHistoryPartyGamedColumnGameName() + " = \"" + game + "\"");
+                }
+                else {
+                    resultSet = database.select(databaseName.getTableHistoryPartyGamed(), databaseName.getTableHistoryPartyGamedColumnGameName() + " = \"" + game + "\" && "+condition);
+                }
             }
             else {
                  resultSet = database.select(databaseName.getTableHistoryPartyGamed(), databaseName.getTableHistoryPartyGamedColumnGameName()+" = \"" + game + "\" && MailUser = \"" + user.getEmail() + "\"");
@@ -152,7 +177,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
      * Méthode qui affiche l'historique du jeu choisit
      **/
     private void printInformation(List<String> list){
-        int indexMax = (indexList + 15);
+        int indexMax = (indexList + 7);
 
         if(indexMax > list.size()){
             indexMax = list.size();
@@ -172,10 +197,10 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
      * Méthode qui affiche les 15 informations suivantes
      **/
     private void leftInformation(){
-        indexList -= 15;
+        indexList -= 7;
         printInformation(currentList);
 
-        if(indexList <= 15){
+        if(indexList <= 7){
             leftInformationButton.setVisible(false);
         }
         else {
@@ -193,16 +218,16 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
      * Méthode qui affiche les 15 informations précédentes
      **/
     private void rightInformation(){
-        indexList += 15;
+        indexList += 7;
         printInformation(currentList);
 
-        if(indexList <= 15){
+        if(indexList <= 7){
             leftInformationButton.setVisible(false);
         }
         else {
             leftInformationButton.setVisible(true);
         }
-        if((indexList + 15) >= currentList.size()){
+        if((indexList + 7) >= currentList.size()){
             rightInformationButton.setVisible(false);
         }
         else {

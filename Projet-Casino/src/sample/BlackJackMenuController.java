@@ -1,9 +1,6 @@
 package sample;
 
-import games.BlackJack;
-import games.Card;
-import games.Database;
-import games.User;
+import games.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;

@@ -1,6 +1,7 @@
 package sample;
 
 import games.Database;
+import games.DatabaseName;
 import games.User;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -101,9 +102,14 @@ public class ConnexionMenuController implements InterfaceMenu{
         setupScene.setCircle(circleSetting,18,475,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
 
         buttonLogin.setOnMouseClicked((event)-> goToMainMenu());
+        textEmail.setOnAction((event)-> goToMainMenu());
+        textPassword.setOnAction((event)-> goToMainMenu());
         buttonNewAccount.setOnMouseClicked((event)-> goToNewAccountMenu());
         buttonLoginMenuReturn.setOnMouseClicked((event)-> goToLoginMenu());
         buttonInscription.setOnMouseClicked((event)-> newAccountGoToMainMenu());
+        textNewEmail.setOnAction((event)-> newAccountGoToMainMenu());
+        textNewPassword.setOnAction((event)-> newAccountGoToMainMenu());
+        textNewUserName.setOnAction((event)-> newAccountGoToMainMenu());
         circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
 
         root.getChildren().add(anchorPane);

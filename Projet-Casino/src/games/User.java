@@ -1,7 +1,5 @@
 package games;
 
-import sample.DatabaseName;
-
 public class User {
 
     private String pseudo;

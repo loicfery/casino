@@ -1,6 +1,7 @@
 package sample;
 
 import games.Database;
+import games.DatabaseName;
 import games.User;
 import javafx.application.Platform;
 import javafx.event.EventHandler;

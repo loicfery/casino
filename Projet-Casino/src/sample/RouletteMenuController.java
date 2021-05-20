@@ -1,9 +1,6 @@
 package sample;
 
-import games.Database;
-import games.Roulette;
-import games.User;
-import games.ColorRoulette;
+import games.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
