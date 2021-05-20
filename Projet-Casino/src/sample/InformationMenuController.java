@@ -186,7 +186,7 @@ public class InformationMenuController implements InterfaceMenu{
     private void changePassword(){
         if(!textPassword.getText().isEmpty()){
             if(ControleSaisie.validPassword(textPassword.getText()) && textPassword.getText().length() > 5){
-                database.update(databaseName.getTableUser(),databaseName.getTableUserPassword(),"\""+textPassword.getText()+"\"",databaseName.getTableUserColumnMailUser()+" = \""+user.getEmail()+"\"");
+                database.update(databaseName.getTableUser(),databaseName.getTableUserColumnPassword(),"\""+textPassword.getText()+"\"",databaseName.getTableUserColumnMailUser()+" = \""+user.getEmail()+"\"");
                 messageInterface.setMessage(labelError,"Le mot de passe a été modifié", Color.GREEN);
             }
             else {

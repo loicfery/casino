@@ -8,7 +8,8 @@ public class DatabaseName {
     private final String tableUserColumnUserName = "NameUser_Users";
     private final String tableUserColumnToken = "Token_HistoryPartyGamed";
     private final String tableUserColumnMoney = "Money_Users";
-    private final String tableUserPassword = "Password_Users";
+    private final String tableUserColumnPassword = "Password_Users";
+    private final String tableUserColumnRank = "Rank_Users";
 
     private final String tableHistoryExchangeToken = "HistoryExchangeTokens";
     private final String tableHistoryExchangeTokenColumnMailUser = "MailUser_HistoryExchangeTokens";
@@ -61,9 +62,11 @@ public class DatabaseName {
         return tableUserColumnMoney;
     }
 
-    public String getTableUserPassword(){
-        return tableUserPassword;
+    public String getTableUserColumnPassword(){
+        return tableUserColumnPassword;
     }
+
+    public String getTableUserColumnRank(){return tableUserColumnRank;}
 
     public String getTableHistoryExchangeToken() {
         return tableHistoryExchangeToken;

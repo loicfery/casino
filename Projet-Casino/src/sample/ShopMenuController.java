@@ -384,7 +384,7 @@ public class ShopMenuController implements InterfaceMenu{
                 if(user.getMoney() >= money){
                     user.removeMoney(money);
                     user.addToken(token);
-                    database.insert(databaseName.getTableHistoryExchangeMoney(),"\""+user.getEmail()+"\","+money+","+token);
+                    database.insert(databaseName.getTableHistoryExchangeMoney(),"\""+user.getEmail()+"\","+money+","+token,databaseName.getTableHistoryExchangeMoneyColumnMailUser()+","+databaseName.getTableHistoryExchangeMoneyColumnPriceMoney()+","+databaseName.getTableHistoryExchangeMoneyColumnMoneyGain());
                     titleShopMoneyLabel.setText("Echange d'argent : "+user.getMoney());
                     titleShopTokenLabel.setText("Echange de jeton : "+user.getToken());
                     messageInterface.setMessage(errorLabel,"Votre échange a bien été effectué",Color.GREEN);
@@ -403,7 +403,7 @@ public class ShopMenuController implements InterfaceMenu{
                 if(user.getToken() >= token){
                     user.addMoney(money);
                     user.removeToken(token);
-                    database.insert(databaseName.getTableHistoryExchangeToken(),"\""+user.getEmail()+"\","+token+","+money);
+                    database.insert(databaseName.getTableHistoryExchangeToken(),"\""+user.getEmail()+"\","+token+","+money,databaseName.getTableHistoryExchangeTokenColumnMailUser()+","+databaseName.getTableHistoryExchangeTokenColumnPriceToken()+","+databaseName.getTableHistoryExchangeTokenColumnMoneyGain());
                     titleShopTokenLabel.setText("Echange de jeton : "+user.getToken());
                     titleShopMoneyLabel.setText("Echange d'argent : "+user.getMoney());
                     messageInterface.setMessage(errorLabel,"Votre échange a bien été effectué",Color.GREEN);
@@ -541,7 +541,7 @@ public class ShopMenuController implements InterfaceMenu{
 
 
             listOfShopToken.add(textToken.getText() + " jetons ---> " + textMoney.getText()+" $");
-            database.insert(databaseName.getTableExchangeToken(),textToken.getText()+","+textMoney.getText());
+            database.insert(databaseName.getTableExchangeToken(),textToken.getText()+","+textMoney.getText(),databaseName.getTableExchangeTokenColumnPriceToken()+","+databaseName.getTableExchangeTokenColumnMoneyGain());
             listOfButtonShopToken.add(addInformationButton);
 
             if (positionY >= 685) {
@@ -587,7 +587,7 @@ public class ShopMenuController implements InterfaceMenu{
             listOfButtonShopMoneyDelete.add(deleteInformationButton);
 
             listOfShopMoney.add(textMoney.getText() + " $ ---> " + textToken.getText()+" jetons");
-            database.insert(databaseName.getTableExchangeMoney(),textMoney.getText()+","+textToken.getText());
+            database.insert(databaseName.getTableExchangeMoney(),textMoney.getText()+","+textToken.getText(),databaseName.getTableExchangeMoneyColumnPriceMoney()+","+databaseName.getTableExchangeMoneyColumnTokenGain());
             listOfButtonShopMoney.add(addInformationButton);
 
             if (positionY >= 685) {

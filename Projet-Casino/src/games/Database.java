@@ -65,8 +65,14 @@ public class Database {
         }
     }
 
-    public void insert(String nameOfTable, String value) {
-        String request = "INSERT INTO " + nameOfTable + " VALUES (" + value + ");";
+    public void insert(String nameOfTable, String value, String column) {
+        String request;
+        if(column.length() == 0) {
+            request = "INSERT INTO " + nameOfTable + " VALUES (" + value + ");";
+        }
+        else {
+            request = "INSERT INTO " + nameOfTable + " ( "+ column + ") VALUES (" + value + ");";
+        }
         try {
             Statement statement = connection.createStatement();
             statement.execute(request);

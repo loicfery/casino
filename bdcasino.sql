@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS Users (
     NameUser_Users VARCHAR(50),
     MailUser_Users VARCHAR(50),
     Password_Users VARCHAR(20),
+    Rank_Users VARCHAR(20),
     Money_Users FLOAT,
     Token_HistoryPartyGamed BIGINT,
     PRIMARY KEY (Id_Users,MailUser_Users)) ENGINE=InnoDB;

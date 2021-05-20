@@ -330,12 +330,12 @@ public class SlotMachineMenuController implements InterfaceMenu{
         if(gain > 0){
             timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> soundPayout.play()));
             timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Le joueur "+user.getPseudo()+" a gagné "+gain+" jetons.")));
-            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> database.insert(databaseName.getTableHistoryPartyGamed(),"'"+user.getEmail()+"',"+gain+",'"+databaseName.getGameSlotMachine()+"'")));
+            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\",\""+databaseName.getGameSlotMachine()+"\","+gain,databaseName.getTableHistoryPartyGamedColumnMailUser()+","+databaseName.getTableHistoryPartyGamedColumnGameName()+","+databaseName.getTableHistoryPartyGamedColumnTokenGain())));
 
         }
         else {
             timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Le joueur "+user.getPseudo()+" a gagné aucun jeton.")));
-            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> database.insert(databaseName.getTableHistoryPartyGamed(),"'"+user.getEmail()+"',-1, '"+databaseName.getGameSlotMachine()+"'")));
+            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\",\""+databaseName.getGameSlotMachine()+"\",-1",databaseName.getTableHistoryPartyGamedColumnMailUser()+","+databaseName.getTableHistoryPartyGamedColumnGameName()+","+databaseName.getTableHistoryPartyGamedColumnTokenGain())));
 
         }
 

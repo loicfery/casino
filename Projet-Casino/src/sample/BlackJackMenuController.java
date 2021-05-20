@@ -537,7 +537,7 @@ public class BlackJackMenuController implements InterfaceMenu{
             labelProfit.setText("Gain : -" + tokenLose);
             labelToken.setText("Jetons : " + user.getToken());
             newPartyButton.setVisible(true);
-            database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\",\""+databaseName.getGameBlackJack()+"\","+tokenLose);
+            database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\",\""+databaseName.getGameBlackJack()+"\","+tokenLose,databaseName.getTableHistoryPartyGamedColumnMailUser()+","+databaseName.getTableHistoryPartyGamedColumnGameName()+","+databaseName.getTableHistoryPartyGamedColumnTokenGain());
         }
         else {
             surrender = true;
@@ -639,7 +639,7 @@ public class BlackJackMenuController implements InterfaceMenu{
             logMenuController.getLog("Le joueur "+user.getPseudo()+" ne perd et ne gagne aucun jeton.");
         }
 
-        database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\","+gain+",\""+databaseName.getGameBlackJack()+"\"");
+        database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\",\""+databaseName.getGameBlackJack()+"\""+gain,databaseName.getTableHistoryPartyGamedColumnMailUser()+","+databaseName.getTableHistoryPartyGamedColumnGameName()+","+databaseName.getTableHistoryPartyGamedColumnTokenGain());
         labelProfit.setText("Gain : " + gain);
         labelToken.setText("Jetons : " + user.getToken());
     }
