@@ -167,7 +167,7 @@ public class InformationMenuController implements InterfaceMenu{
     private void changeUserName(){
         if(!textUserName.getText().isEmpty()){
             if(ControleSaisie.isUsername(textUserName.getText()) && textUserName.getText().length() > 5) {
-                database.update(databaseName.getTableUser(),databaseName.getTableUserColumnPseudo(),"\""+ textUserName.getText()+"\"",databaseName.getTableUserColumnMailUser()+" = \""+user.getEmail()+"\"");
+                database.update(databaseName.getTableUser(),databaseName.getTableUserColumnUserName(),"\""+ textUserName.getText()+"\"",databaseName.getTableUserColumnMailUser()+" = \""+user.getEmail()+"\"");
                 user.setPseudo(textUserName.getText());
                 messageInterface.setMessage(labelError,"Le pseudonyme a été modifié", Color.GREEN);
             }
