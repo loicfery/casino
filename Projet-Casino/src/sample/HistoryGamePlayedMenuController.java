@@ -113,14 +113,14 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         gameBlackJackButton.setOnMouseClicked((event)-> setGameBlackJack());
         gameSlotMachineButton.setOnMouseClicked((event)-> setGameSlotMachine());
 
-        textSearchUser.addEventHandler(new EventHandler<ActionEvent>() {
+        /*textSearchUser.onActionProperty(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
             listOfGameBlackJack = new ArrayList<>();
             listOfGameRoulette = new ArrayList<>();
             listOfGameSlotMachine = new ArrayList<>();
             getAllInformation(databaseName.getTableHistoryPartyGamedColumnMailUser()+" like \"%"+textSearchUser.getText()+"%\"");
             }
-        });
+        });*/
 
         getAllInformation("");
         currentList = listOfGameBlackJack;

@@ -12,16 +12,16 @@ public class Main extends Application {
     }
 
     public void start(Stage stage) throws  Exception{
-        String bd = "casino";
+        String bd = "projet";
         String userName = "root";
         String password = "Poussin13!";
         Database database = new Database(bd,userName,password); //si vous voulez tester avec la votre changer les valeurs
 
-        /*try {
+        try {
             database.importSqlFile("bdcasino.sql");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }*/
+        }
 
         stage.setResizable(false);
 
