@@ -4,7 +4,8 @@ import games.Database;
 import games.DatabaseName;
 import games.User;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -44,6 +45,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
     private final Button gameRouletteButton = new Button();
     private final Button rightInformationButton = new Button();
     private final Button leftInformationButton = new Button();
+    private final Button searchUserButton = new Button();
 
     private final Circle circleSetting = new Circle();
 
@@ -62,6 +64,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
     private List<String> currentList = new ArrayList<>();
     private int indexList = 0;
     private boolean ADMIN = false;
+    private String currentGame;
 
     public HistoryGamePlayedMenuController(User user, Stage stage, Database database, double soundVolume, boolean backgroundAnimation){
         this.user = user;
@@ -94,7 +97,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
 
         setupScene.setTextArea(textHistory,200,150,530,380,false,true,anchorPane);
 
-        setupScene.setTextField(textSearchUser,"",Pos.CENTER,20,450,20,150,new Font(15),false,anchorPane);
+        setupScene.setTextField(textSearchUser,"",Pos.CENTER,20,500,20,150,new Font(15),false,anchorPane);
 
         setupScene.setButton(gameBlackJackButton,"Black Jack",Pos.CENTER,20,150,20,150,new Font(15),true,anchorPane);
         setupScene.setButton(gameSlotMachineButton,"Machine à sous",Pos.CENTER,20,250,20,150,new Font(15),true,anchorPane);
@@ -102,6 +105,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         setupScene.setButton(returnShopMenuButton,"Quitter", Pos.CENTER,25,720,60,123.0,new Font(20.0),true,anchorPane);
         setupScene.setButton(leftInformationButton,"<-",Pos.CENTER,300,720,20,50,new Font(15),false,anchorPane);
         setupScene.setButton(rightInformationButton,"->",Pos.CENTER,450,720,20,50,new Font(15),false,anchorPane);
+        setupScene.setButton(searchUserButton,"Chercher",Pos.CENTER,20,550,20,150,new Font(15),false,anchorPane);
 
         setupScene.setCircle(circleSetting,30,750,40,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())), Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
 
@@ -112,26 +116,44 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         gameRouletteButton.setOnMouseClicked((event)-> setGameRoulette());
         gameBlackJackButton.setOnMouseClicked((event)-> setGameBlackJack());
         gameSlotMachineButton.setOnMouseClicked((event)-> setGameSlotMachine());
-
-        /*textSearchUser.onActionProperty(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-            listOfGameBlackJack = new ArrayList<>();
-            listOfGameRoulette = new ArrayList<>();
-            listOfGameSlotMachine = new ArrayList<>();
-            getAllInformation(databaseName.getTableHistoryPartyGamedColumnMailUser()+" like \"%"+textSearchUser.getText()+"%\"");
-            }
-        });*/
+        searchUserButton.setOnMouseClicked((event)-> searchUser());
 
         getAllInformation("");
         currentList = listOfGameBlackJack;
+        currentGame = "blackJack";
         printInformation(currentList);
 
         if(ADMIN){
             textSearchUser.setVisible(true);
+            searchUserButton.setVisible(true);
         }
 
         root.getChildren().add(anchorPane);
         stage.show();
+    }
+
+    private void searchUser(){
+        if(!textSearchUser.getText().isEmpty()) {
+            listOfGameBlackJack = new ArrayList<>();
+            listOfGameRoulette = new ArrayList<>();
+            listOfGameSlotMachine = new ArrayList<>();
+            indexList = 0;
+            getAllInformation(databaseName.getTableHistoryPartyGamedColumnMailUser() + " like \"%" + textSearchUser.getText() + "%\"");
+        }
+        else {
+            getAllInformation("");
+        }
+        switch(currentGame){
+            case "blackJack" :
+                currentList = listOfGameBlackJack;
+                break;
+            case "slotMachine" :
+                currentList = listOfGameSlotMachine;
+                break;
+            case "roulette" :
+                currentList = listOfGameRoulette;
+        }
+        printInformation(currentList);
     }
 
     /**
@@ -159,11 +181,12 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
                 }
             }
             else {
-                 resultSet = database.select(databaseName.getTableHistoryPartyGamed(), databaseName.getTableHistoryPartyGamedColumnGameName()+" = \"" + game + "\" && "+ databaseName.getTableHistoryPartyGamedColumnGameName() + " = \"" + user.getEmail() + "\"");
+                resultSet = database.select(databaseName.getTableHistoryPartyGamed(), databaseName.getTableHistoryPartyGamedColumnGameName()+" = \"" + game + "\" && "+ databaseName.getTableHistoryPartyGamedColumnGameName() + " = \"" + user.getEmail() + "\"");
             }
 
             while (resultSet.next()){
-                list.add("Date : "+resultSet.getString(3)+" --> "+resultSet.getInt(2)+" jetons");
+                list.add(resultSet.getString(2)+" : ");
+                list.add("Date : "+resultSet.getString(3)+" --> "+resultSet.getInt(4)+" jetons");
             }
 
             if(list.size() == 0){
@@ -177,7 +200,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
      * Méthode qui affiche l'historique du jeu choisit
      **/
     private void printInformation(List<String> list){
-        int indexMax = (indexList + 7);
+        int indexMax = (indexList + 16);
 
         if(indexMax > list.size()){
             indexMax = list.size();
@@ -197,10 +220,10 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
      * Méthode qui affiche les 15 informations suivantes
      **/
     private void leftInformation(){
-        indexList -= 7;
+        indexList -= 16;
         printInformation(currentList);
 
-        if(indexList <= 7){
+        if(indexList <= 16){
             leftInformationButton.setVisible(false);
         }
         else {
@@ -218,16 +241,16 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
      * Méthode qui affiche les 15 informations précédentes
      **/
     private void rightInformation(){
-        indexList += 7;
+        indexList += 16;
         printInformation(currentList);
 
-        if(indexList <= 7){
+        if(indexList <= 16){
             leftInformationButton.setVisible(false);
         }
         else {
             leftInformationButton.setVisible(true);
         }
-        if((indexList + 7) >= currentList.size()){
+        if((indexList + 16) >= currentList.size()){
             rightInformationButton.setVisible(false);
         }
         else {
@@ -242,6 +265,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         titleLabel.setText("Historique de jeux : Black Jack");
         currentList = listOfGameBlackJack;
         indexList = 0;
+        currentGame = "blackJack";
         printInformation(currentList);
     }
 
@@ -252,6 +276,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         titleLabel.setText("Historique de jeux : Machine à sous");
         currentList = listOfGameSlotMachine;
         indexList = 0;
+        currentGame = "slotMachine";
         printInformation(currentList);
     }
 
@@ -262,6 +287,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         titleLabel.setText("Historique de jeux : Roulette");
         currentList = listOfGameRoulette;
         indexList = 0;
+        currentGame = "roulette";
         printInformation(currentList);
     }
 

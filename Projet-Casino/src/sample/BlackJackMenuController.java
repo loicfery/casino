@@ -639,7 +639,7 @@ public class BlackJackMenuController implements InterfaceMenu{
             logMenuController.getLog("Le joueur "+user.getPseudo()+" ne perd et ne gagne aucun jeton.");
         }
 
-        database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\",\""+databaseName.getGameBlackJack()+"\""+gain,databaseName.getTableHistoryPartyGamedColumnMailUser()+","+databaseName.getTableHistoryPartyGamedColumnGameName()+","+databaseName.getTableHistoryPartyGamedColumnTokenGain());
+        database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\",\""+databaseName.getGameBlackJack()+"\","+gain,databaseName.getTableHistoryPartyGamedColumnMailUser()+","+databaseName.getTableHistoryPartyGamedColumnGameName()+","+databaseName.getTableHistoryPartyGamedColumnTokenGain());
         labelProfit.setText("Gain : " + gain);
         labelToken.setText("Jetons : " + user.getToken());
     }

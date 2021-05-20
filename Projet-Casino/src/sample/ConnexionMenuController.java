@@ -131,7 +131,7 @@ public class ConnexionMenuController implements InterfaceMenu{
                     buttonNewAccount.setVisible(false);
                     settingMenuController.exitSettingMenu();
 
-                    user = new User(resultSet.getString(2), resultSet.getString(3), resultSet.getString(5), resultSet.getInt(6), resultSet.getInt(7), database);
+                    user = new User(resultSet.getString(2), resultSet.getString(3), resultSet.getString(5), resultSet.getInt(7), resultSet.getInt(6), database);
                     switchMainMenu();
                 }
                 else {

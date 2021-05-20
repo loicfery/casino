@@ -14,7 +14,7 @@ public class Main extends Application {
     public void start(Stage stage){
         String bd = "projet";
         String userName = "root";
-        String password = "Dewodi25.";
+        String password = "Poussin13!";
         Database database = new Database(bd,userName,password);
 
         try {
