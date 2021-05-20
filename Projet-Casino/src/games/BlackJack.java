@@ -8,7 +8,7 @@ public class BlackJack {
     private Bet bet; //Mise
     private ActionBlackJack action; //Action du joueur
     private User user;
-    private int insuranceUser;
+    private int insuranceUser = 0;
     private int currentHand = 1;
 
     public BlackJack(){
@@ -21,7 +21,6 @@ public class BlackJack {
         card_package = new CardPackage();
         listOfUserHand = new ArrayList<>();
         bet = new Bet();
-        insuranceUser = 0;
     }
     public int countValueOfUserHand(UserHand userHand){ //Calcule la valeur total des cartes dans la main d'un joueur
         int somme=0;
@@ -165,18 +164,11 @@ public class BlackJack {
      * Suprimme les mains et les bets pour redémarrer une partie
      */
     public void reset(){
-        bet.removeBet(bet.getBet(listOfUserHand.get(1).getUser()), listOfUserHand.get(1).getUser());
-        if(listOfUserHand.size() > 2) {
-            bet.removeBet(bet.getBet(listOfUserHand.get(2).getUser()), listOfUserHand.get(1).getUser());
-        }
-        bet.removeUser(listOfUserHand.get(1).getUser());
-        if(listOfUserHand.size() > 2) {
-            bet.removeUser(listOfUserHand.get(2).getUser());
-        }
-        for(int i = 0; i < listOfUserHand.size(); i++){
-            listOfUserHand.remove(i);
-        }
-        card_package = new CardPackage();
+       bet = new Bet();
+       listOfUserHand = new ArrayList<>();
+       card_package = new CardPackage();
+       currentHand = 1;
+       insuranceUser = 0;
     }
 
     /**
