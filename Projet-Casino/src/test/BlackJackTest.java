@@ -3,6 +3,7 @@ package test;
 import games.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -113,6 +114,8 @@ class BlackJackTest {
     @org.junit.jupiter.api.Test
     void reset() {
         BlackJack blackJack = new BlackJack();
+        List<User> listOfUser = new ArrayList<>();
+        Bet bet = new Bet(listOfUser);
         User user0 = new User();
         UserHand croupier = new UserHand(user0);
         User user1 = new User();
@@ -124,10 +127,12 @@ class BlackJackTest {
         blackJack.getListOfUserHand().add(0, croupier);
         blackJack.getListOfUserHand().add(1, joueur);
         blackJack.getListOfUserHand().add(2, split);
+        bet.addUser(user1);
         blackJack.reset();
         assertTrue(blackJack.getListOfUserHand().isEmpty());
-        assertTrue(cardPackage.getCardPackage().isEmpty());
-        // A FINIR
+        assertEquals(cardPackage.getCardPackage().size(), 52);
+        assertEquals(blackJack.getInsuranceUser(), 0);
+
 
     }
 
