@@ -129,7 +129,7 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         catch (Exception e){ System.out.println("Erreur 1 : getAllInformation dans HistoryShoppingMenuController"); }
 
         try{
-            ResultSet resultSet = database.select(databaseName.getTableHistoryExchangeMoney(),databaseName.getTableHistoryExchangeTokenColumnMailUser()+" = \""+user.getEmail()+"\"");
+            ResultSet resultSet = database.select(databaseName.getTableHistoryExchangeMoney(),databaseName.getTableHistoryExchangeMoneyColumnMailUser()+" = \""+user.getEmail()+"\"");
             while(resultSet.next()){
                 listOfInformationMoney.add("Date : "+resultSet.getInt(2)+" $ ---> "+resultSet.getInt(3)+" jetons");
             }
