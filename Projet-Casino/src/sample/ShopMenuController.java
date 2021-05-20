@@ -141,12 +141,12 @@ public class ShopMenuController implements InterfaceMenu{
         try {
             ResultSet resultSet = database.select(databaseName.getTableExchangeMoney(), "");
             while (resultSet.next()) {
-                listOfShopMoney.add(resultSet.getInt(1)+" $ ---> "+resultSet.getInt(2)+" jetons");
+                listOfShopMoney.add(resultSet.getInt(2)+" $ ---> "+resultSet.getInt(3)+" jetons");
             }
 
             resultSet = database.select(databaseName.getTableExchangeToken(),"");
             while (resultSet.next()){
-                listOfShopToken.add(resultSet.getInt(1)+" jetons ---> "+resultSet.getInt(2)+" $");
+                listOfShopToken.add(resultSet.getInt(2)+" jetons ---> "+resultSet.getInt(3)+" $");
             }
 
             setupShopList();
@@ -398,9 +398,8 @@ public class ShopMenuController implements InterfaceMenu{
         }
         if(lines[1].equals("jetons")){
             try{
-                money = Integer.parseInt(lines[0]);
-                token = Integer.parseInt(lines[3]);
-
+                money = Integer.parseInt(lines[3]);
+                token = Integer.parseInt(lines[0]);
                 if(user.getToken() >= token){
                     user.addMoney(money);
                     user.removeToken(token);
@@ -529,8 +528,10 @@ public class ShopMenuController implements InterfaceMenu{
 
             listOfButtonShopToken.remove(addInformationButton);
 
+            listOfShopToken.add(textToken.getText() + " jetons ---> " + textMoney.getText()+" $");
+
             setupScene.setButton(exchangeButton, "Echanger", Pos.CENTER, positionOriginXToken, positionY, 20, 100, new Font(15), false, anchorPane);
-            exchangeButton.setOnMouseClicked((event) -> exchange(listOfShopToken.get(listOfButtonShopToken.size() - 1)));
+            exchangeButton.setOnMouseClicked((event) -> exchange(listOfShopToken.get(listOfButtonShopToken.size() - 2)));
             listOfButtonShopToken.add(exchangeButton);
 
             setupScene.setLabel(labelInformation, textToken.getText() + " jetons ---> " + textMoney.getText() + " $", Pos.CENTER, 14, positionY, 20, 200, new Font(20), Paint.valueOf("BLACK"), false, anchorPane);
@@ -540,8 +541,6 @@ public class ShopMenuController implements InterfaceMenu{
             deleteInformationButton.setOnMouseClicked((event) -> deleteInformation(listOfLabelShopToken, listOfButtonShopToken, listOfButtonShopTokenDelete, listOfShopToken, listOfShopToken.size() - 1, "token"));
             listOfButtonShopTokenDelete.add(deleteInformationButton);
 
-
-            listOfShopToken.add(textToken.getText() + " jetons ---> " + textMoney.getText()+" $");
             database.insert(databaseName.getTableExchangeToken(),textToken.getText()+","+textMoney.getText(),databaseName.getTableExchangeTokenColumnPriceToken()+","+databaseName.getTableExchangeTokenColumnMoneyGain());
             listOfButtonShopToken.add(addInformationButton);
 
@@ -571,10 +570,12 @@ public class ShopMenuController implements InterfaceMenu{
 
             for(int index = 0; index < 4; index ++) {
                 anchorPane.getChildren().get(anchorPane.getChildren().size() - 1).setVisible(false);
-                anchorPane.getChildren().remove(anchorPane.getChildren().size() - 1);
+                anchorPane.getChildren().remove(anchorPane.getChildren().size() - 2);
             }
 
             listOfButtonShopMoney.remove(addInformationButton);
+
+            listOfShopMoney.add(textMoney.getText() + " $ ---> " + textToken.getText()+" jetons");
 
             setupScene.setButton(exchangeButton, "Echanger", Pos.CENTER, positionOriginXMoney, positionY, 20, 100, new Font(15), false, anchorPane);
             exchangeButton.setOnMouseClicked((event) -> exchange(listOfShopMoney.get(listOfButtonShopMoney.size() - 1)));
@@ -587,7 +588,6 @@ public class ShopMenuController implements InterfaceMenu{
             deleteInformationButton.setOnMouseClicked((event) -> deleteInformation(listOfLabelShopMoney, listOfButtonShopMoney, listOfButtonShopMoneyDelete, listOfShopMoney, listOfShopMoney.size() - 1, "money"));
             listOfButtonShopMoneyDelete.add(deleteInformationButton);
 
-            listOfShopMoney.add(textMoney.getText() + " $ ---> " + textToken.getText()+" jetons");
             database.insert(databaseName.getTableExchangeMoney(),textMoney.getText()+","+textToken.getText(),databaseName.getTableExchangeMoneyColumnPriceMoney()+","+databaseName.getTableExchangeMoneyColumnTokenGain());
             listOfButtonShopMoney.add(addInformationButton);
 
