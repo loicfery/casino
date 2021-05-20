@@ -181,7 +181,7 @@ public class ConnexionMenuController implements InterfaceMenu{
             buttonLoginMenuReturn.setVisible(false);
             settingMenuController.exitSettingMenu();
 
-            database.insert(databaseName.getTableUser(),"\""+ textNewUserName.getText()+"\", \""+textEmail.getText()+"\",\""+textNewPassword.getText()+"\",\"USER\",100,0",databaseName.getTableUserColumnUserName()+","+databaseName.getTableUserColumnMailUser()+","+databaseName.getTableUserColumnPassword()+","+databaseName.getTableUserColumnRank()+","+databaseName.getTableUserColumnMoney()+","+databaseName.getTableUserColumnToken());
+            database.insert(databaseName.getTableUser(),"\""+ textNewUserName.getText()+"\", \""+textNewEmail.getText()+"\",\""+textNewPassword.getText()+"\",\"USER\",100,0",databaseName.getTableUserColumnUserName()+","+databaseName.getTableUserColumnMailUser()+","+databaseName.getTableUserColumnPassword()+","+databaseName.getTableUserColumnRank()+","+databaseName.getTableUserColumnMoney()+","+databaseName.getTableUserColumnToken());
             setUser(new User(textNewUserName.getText(),textNewEmail.getText(),"USER",0,100,database));
             switchMainMenu();
         } else {

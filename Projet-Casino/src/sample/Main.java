@@ -15,7 +15,7 @@ public class Main extends Application {
         String bd = "projet";
         String userName = "root";
         String password = "Poussin13!";
-        Database database = new Database(bd,userName,password); //si vous voulez tester avec la votre changer les valeurs
+        Database database = new Database(bd,userName,password);
 
         try {
             database.importSqlFile("bdcasino.sql");
