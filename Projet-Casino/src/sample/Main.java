@@ -11,10 +11,10 @@ public class Main extends Application {
     public Main() {
     }
 
-    public void start(Stage stage) throws  Exception{
+    public void start(Stage stage) throws Exception{
         String bd = "projet";
         String userName = "root";
-        String password = "Poussin13!";
+        String password = "Bananaslayer2!";
         Database database = new Database(bd,userName,password); //si vous voulez tester avec la votre changer les valeurs
 
         try {
