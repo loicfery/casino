@@ -2,8 +2,6 @@ package sample;
 
 import games.Database;
 import games.User;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -22,7 +20,6 @@ import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import javafx.util.Duration;
 
 import java.sql.ResultSet;
 
@@ -43,7 +40,7 @@ public class InformationMenuController implements InterfaceMenu{
     private boolean backgroundAnimation;
 
     private final Label labelTitle = new Label();
-    private final Label labelPseudo = new Label();
+    private final Label labelUserName = new Label();
     private final Label labelEmail = new Label();
     private final Label labelToken = new Label();
     private final Label labelMoney = new Label();
@@ -54,11 +51,11 @@ public class InformationMenuController implements InterfaceMenu{
 
     private final Button returnMainMenuButton = new Button();
     private final Button changeEmailButton = new Button();
-    private final Button changePseudonymButton = new Button();
+    private final Button changeUserNameButton = new Button();
     private final Button changePasswordButton = new Button();
 
     private final TextField textEmail = new TextField();
-    private final TextField textPseudonym = new TextField();
+    private final TextField textUserName = new TextField();
     private final TextField textPassword = new TextField();
 
     public InformationMenuController(User user, Stage stage, Database database, double soundVolume, boolean backgroundAnimation){
@@ -86,7 +83,7 @@ public class InformationMenuController implements InterfaceMenu{
 
         setupScene.setLabel(labelTitle,"Informations", Pos.CENTER,0,20,20,500,new Font(30), Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelEmail,"Email :",Pos.CENTER_LEFT,20,120,20,300,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelPseudo,"Pseudonyme :",Pos.CENTER_LEFT,20,180,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelUserName,"Pseudonyme :",Pos.CENTER_LEFT,20,180,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelPassword,"Mot de passe :",Pos.CENTER_LEFT,20,240,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelToken,"Jetons : "+user.getToken(),Pos.CENTER_LEFT,20,300,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelMoney,"Argents : "+user.getMoney(),Pos.CENTER_LEFT,20,360,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
@@ -94,21 +91,21 @@ public class InformationMenuController implements InterfaceMenu{
 
         setupScene.setTextField(textEmail,"",Pos.CENTER_LEFT,90,120,20,230,new Font(15),true,anchorPane);
         textEmail.setText(user.getEmail());
-        setupScene.setTextField(textPseudonym,"",Pos.CENTER_LEFT,150,180,20,140,new Font(15),true,anchorPane);
-        textPseudonym.setText(user.getPseudo());
+        setupScene.setTextField(textUserName,"",Pos.CENTER_LEFT,150,180,20,140,new Font(15),true,anchorPane);
+        textUserName.setText(user.getPseudo());
         setupScene.setTextField(textPassword,"",Pos.CENTER_LEFT,160,240,20,130,new Font(15),true,anchorPane);
         getPassword(textEmail.getText());
 
         setupScene.setButton(returnMainMenuButton,"Quitter",Pos.CENTER,20,440,20,100,new Font(15),true,anchorPane);
         setupScene.setButton(changeEmailButton,"Modifier email",Pos.CENTER,330,120,20,150,new Font(15),true,anchorPane);
-        setupScene.setButton(changePseudonymButton,"Modifier pseudonyme",Pos.CENTER,300,180,20,180,new Font(15),true,anchorPane);
+        setupScene.setButton(changeUserNameButton,"Modifier pseudonyme",Pos.CENTER,300,180,20,180,new Font(15),true,anchorPane);
         setupScene.setButton(changePasswordButton,"Modifier mot de passe",Pos.CENTER,300,240,20,180,new Font(15),true,anchorPane);
 
         setupScene.setCircle(circleSetting,18,475,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
 
         circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
         returnMainMenuButton.setOnMouseClicked((event)-> goToMainMenu());
-        changePseudonymButton.setOnMouseClicked((event)-> changePseudonym());
+        changeUserNameButton.setOnMouseClicked((event)-> changeUserName());
         changeEmailButton.setOnMouseClicked((event)-> changeEmail());
         changePasswordButton.setOnMouseClicked((event) -> changePassword());
 
@@ -166,11 +163,11 @@ public class InformationMenuController implements InterfaceMenu{
     /**
      * Méthode qui modifie le pseudonyme de l'utilisateur
      */
-    private void changePseudonym(){
-        if(!textPseudonym.getText().isEmpty()){
-            if(ControleSaisie.isUsername(textPseudonym.getText()) && textPseudonym.getText().length() > 5) {
-                database.update(databaseName.getTableUser(),databaseName.getTableUserColumnPseudo(),"\""+textPseudonym.getText()+"\"",databaseName.getTableUserColumnMailUser()+" = \""+user.getEmail()+"\"");
-                user.setPseudo(textPseudonym.getText());
+    private void changeUserName(){
+        if(!textUserName.getText().isEmpty()){
+            if(ControleSaisie.isUsername(textUserName.getText()) && textUserName.getText().length() > 5) {
+                database.update(databaseName.getTableUser(),databaseName.getTableUserColumnPseudo(),"\""+ textUserName.getText()+"\"",databaseName.getTableUserColumnMailUser()+" = \""+user.getEmail()+"\"");
+                user.setPseudo(textUserName.getText());
                 messageInterface.setMessage(labelError,"Le pseudonyme a été modifié", Color.GREEN);
             }
             else {

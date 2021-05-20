@@ -2,8 +2,6 @@ package sample;
 
 import games.Database;
 import games.User;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -23,7 +21,6 @@ import javafx.scene.text.Font;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.stage.WindowEvent;
-import javafx.util.Duration;
 
 import java.sql.ResultSet;
 
@@ -48,14 +45,14 @@ public class ConnexionMenuController implements InterfaceMenu{
     private final Label labelPassword = new Label();
     private final Label labelNewMail = new Label();
     private final Label labelNewPassword = new Label();
-    private final Label labelNewPseudo = new Label();
+    private final Label labelNewUserName = new Label();
     private final Label labelError = new Label();
 
     private final TextField textEmail = new TextField();
     private final PasswordField textPassword = new PasswordField();
     private final TextField textNewEmail = new TextField();
     private final PasswordField textNewPassword = new PasswordField();
-    private final TextField textNewPseudo = new TextField();
+    private final TextField textNewUserName = new TextField();
 
     private final Button buttonLogin = new Button();
     private final Button buttonNewAccount = new Button();
@@ -95,10 +92,10 @@ public class ConnexionMenuController implements InterfaceMenu{
         setupScene.setButton(buttonInscription,"S'inscrire",Pos.CENTER,10,440,20,480,new Font(25),false,anchorPane);
         setupScene.setLabel(labelNewMail,"Email :",Pos.CENTER,100,150,20,150,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
         setupScene.setLabel(labelNewPassword,"Mot de passe :",Pos.CENTER,30,200,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
-        setupScene.setLabel(labelNewPseudo,"Pseudonyme :",Pos.CENTER,30,250,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
+        setupScene.setLabel(labelNewUserName,"Pseudonyme :",Pos.CENTER,30,250,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
         setupScene.setTextField(textNewEmail,"",Pos.CENTER,250,150,20,200,new Font(15),false,anchorPane);
         setupScene.setTextField(textNewPassword,"",Pos.CENTER,250,200,20,200,new Font(15),false,anchorPane);
-        setupScene.setTextField(textNewPseudo,"",Pos.CENTER,250,250,20,200,new Font(15),false,anchorPane);
+        setupScene.setTextField(textNewUserName,"",Pos.CENTER,250,250,20,200,new Font(15),false,anchorPane);
         setupScene.setLabel(labelError,"Erreur : ",Pos.CENTER,50,330,20,400,new Font(15),Paint.valueOf("RED"),false,anchorPane);
 
         setupScene.setCircle(circleSetting,18,475,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
@@ -157,29 +154,29 @@ public class ConnexionMenuController implements InterfaceMenu{
 
         labelNewMail.setVisible(true);
         labelNewPassword.setVisible(true);
-        labelNewPseudo.setVisible(true);
+        labelNewUserName.setVisible(true);
         textNewEmail.setVisible(true);
         textNewPassword.setVisible(true);
-        textNewPseudo.setVisible(true);
+        textNewUserName.setVisible(true);
         buttonInscription.setVisible(true);
         buttonLoginMenuReturn.setVisible(true);
     }
 
     /** Méthode pour créer un nouveau compte **/
     private void newAccountGoToMainMenu(){
-        if (!textNewEmail.getText().isEmpty() && !textNewPassword.getText().isEmpty() && !textNewPseudo.getText().isEmpty()) {
+        if (!textNewEmail.getText().isEmpty() && !textNewPassword.getText().isEmpty() && !textNewUserName.getText().isEmpty()) {
             labelNewMail.setVisible(false);
             labelNewPassword.setVisible(false);
-            labelNewPseudo.setVisible(false);
+            labelNewUserName.setVisible(false);
             textNewEmail.setVisible(false);
             textNewPassword.setVisible(false);
-            textNewPseudo.setVisible(false);
+            textNewUserName.setVisible(false);
             buttonInscription.setVisible(false);
             buttonLoginMenuReturn.setVisible(false);
             settingMenuController.exitSettingMenu();
 
-            database.insert(databaseName.getTableUser(),"null, '"+textNewPseudo.getText()+"', '"+textEmail.getText()+"','"+textNewPassword.getText()+"',100,0");
-            setUser(new User(textNewPseudo.getText(),textNewEmail.getText(),"USER",0,100,database));
+            database.insert(databaseName.getTableUser(),"null, '"+ textNewUserName.getText()+"', '"+textEmail.getText()+"','"+textNewPassword.getText()+"',100,0");
+            setUser(new User(textNewUserName.getText(),textNewEmail.getText(),"USER",0,100,database));
             switchMainMenu();
         } else {
             messageInterface.setMessage(labelError,"Un ou plusieurs champs sont vides", Color.RED);
@@ -200,10 +197,10 @@ public class ConnexionMenuController implements InterfaceMenu{
 
         labelNewMail.setVisible(false);
         labelNewPassword.setVisible(false);
-        labelNewPseudo.setVisible(false);
+        labelNewUserName.setVisible(false);
         textNewEmail.setVisible(false);
         textNewPassword.setVisible(false);
-        textNewPseudo.setVisible(false);
+        textNewUserName.setVisible(false);
         buttonInscription.setVisible(false);
         buttonLoginMenuReturn.setVisible(false);
         settingMenuController.exitSettingMenu();

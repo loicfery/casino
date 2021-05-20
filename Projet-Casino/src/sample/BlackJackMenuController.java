@@ -66,13 +66,13 @@ public class BlackJackMenuController implements InterfaceMenu{
     private boolean stand = false;
     private boolean surrender = false;
     private int indexCurrentHand = 1;
-    private final int valueTokenUserBegin;
+    private int valueTokenUserBegin;
 
     private final List<Shape> token1 = new ArrayList<>();
     private final List<Shape> token2 = new ArrayList<>();
-    private final List<ImageView> croupierHand = new ArrayList<>();
-    private final List<ImageView> userFirstHand = new ArrayList<>();
-    private final List<ImageView> userSecondHand = new ArrayList<>();
+    private  List<ImageView> croupierHand = new ArrayList<>();
+    private  List<ImageView> userFirstHand = new ArrayList<>();
+    private  List<ImageView> userSecondHand = new ArrayList<>();
 
     private final Rectangle zoneBetUser1 = new Rectangle();
     private final Rectangle zoneBetUser2 = new Rectangle();
@@ -80,7 +80,7 @@ public class BlackJackMenuController implements InterfaceMenu{
 
     private final Label labelToken = new Label();
     private final Label labelProfit = new Label();
-    private final Label labelPseudo = new Label();
+    private final Label labelUserName = new Label();
     private final Label labelError = new Label();
     private final Label labelToken1 = new Label();
     private final Label labelToken2 = new Label();
@@ -134,7 +134,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         setupScene.setRectangle(zoneBetUser2,550,600.0,174.0,147.0,5.0,5.0,Paint.valueOf("#158000"),Paint.valueOf("BLACK"),5.0,StrokeType.INSIDE,false,anchorPane);
         setupScene.setLabel(labelToken,"Jetons : "+user.getToken(), Pos.CENTER_LEFT,30.0,660.0,55.0,163.0,new Font(30.0), Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelProfit,"Gain : 0", Pos.CENTER_LEFT, 30.0,720.0,55.0,163.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelPseudo,"Joueur : "+user.getPseudo(), Pos.CENTER_LEFT,30.0,600.0,55.0,308.0,new Font(30.0),Color.BLACK,true,anchorPane);
+        setupScene.setLabel(labelUserName,"Joueur : "+user.getPseudo(), Pos.CENTER_LEFT,30.0,600.0,55.0,308.0,new Font(30.0),Color.BLACK,true,anchorPane);
         setupScene.setLabel(labelError,"Erreur :", Pos.CENTER,100.0,455.0,36.0,700.0,new Font(25.0),Color.RED,false,anchorPane);
         setupScene.setTextField(textBetUser,"Votre mise", Pos.CENTER,280.0,380.0,79.0,252.0,new Font(30.0),true,anchorPane);
         setupScene.setButton(returnMainMenuButton,"Quitter",Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
@@ -170,7 +170,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         tokenSound = new MediaPlayer(new Media(getClass().getResource("sound/tokenSound.mp3").toExternalForm()));
         tokenSound.setVolume(soundVolume);
 
-        returnMainMenuButton.setOnMouseClicked((event) -> returnMainMenu());
+        returnMainMenuButton.setOnMouseClicked((event) -> goToMainMenu());
         validBetButton.setOnMouseClicked((event)->  validBet());
         actionSplitButton.setOnMouseClicked((event)-> actionSplit());
         actionStandButton.setOnMouseClicked((event)-> actionStand());
@@ -293,7 +293,7 @@ public class BlackJackMenuController implements InterfaceMenu{
     }
 
     /**
-     * Méthode pour modifier la visibilité du second jetons (en cas de split)
+     * Méthode pour modifier la visibilité d'un jetons
      **/
     private void setTokenVisible(List<Shape> token) {
         for (Shape shape : token) {
@@ -340,7 +340,6 @@ public class BlackJackMenuController implements InterfaceMenu{
                         Timeline timeline = new Timeline();
                         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2),e -> startingGame()));
                         timeline.play();
-
                     }
                 }
             } catch (Exception e) {
@@ -411,24 +410,11 @@ public class BlackJackMenuController implements InterfaceMenu{
     /**
      * Méthode pour quitter le jeu et retourner dans le menu principale
      **/
-    private void returnMainMenu(){
+    private void goToMainMenu(){
         settingMenuController.exitSettingMenu();
         logMenuController.exitLogMenu();
         MainMenuController mainMenuController = new MainMenuController(stage,user, database,soundVolume,backgroundAnimation);
         mainMenuController.setting();
-    }
-
-    /** Méthode qui modifie la visibilité des cartes tirés **/
-    private void setVisibleCards(boolean visible){
-        for (ImageView imageView : userFirstHand) {
-            imageView.setVisible(visible);
-        }
-        for (ImageView imageView : userSecondHand) {
-            imageView.setVisible(visible);
-        }
-        for (ImageView imageView : croupierHand) {
-            imageView.setVisible(visible);
-        }
     }
 
     /** Méthode qui affiche les boutons d'actions **/
@@ -656,7 +642,6 @@ public class BlackJackMenuController implements InterfaceMenu{
             logMenuController.getLog("Le joueur "+user.getPseudo()+" ne perd et ne gagne aucun jeton.");
         }
 
-        System.out.println("token gain : "+gain);
         database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\","+gain+",\""+databaseName.getGameBlackJack()+"\"");
         labelProfit.setText("Gain : " + gain);
         labelToken.setText("Jetons : " + user.getToken());
@@ -715,9 +700,49 @@ public class BlackJackMenuController implements InterfaceMenu{
     private void newGame(){
         blackJack.reset();
         logMenuController.exitLogMenu();
-       BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage, database,soundVolume,backgroundAnimation);
-       blackJackMenuController.setting();
+        newPartyButton.setVisible(false);
+        reset();
+        //BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage, database,soundVolume,backgroundAnimation);
+        //blackJackMenuController.setting();
 
+    }
+
+    private void reset(){
+        resetCards();
+        split = false;
+        stand = false;
+        surrender = false;
+        indexCurrentHand = 1;
+        valueTokenUserBegin = user.getToken();
+        croupierHand = new ArrayList<>();
+        userFirstHand = new ArrayList<>();
+        userSecondHand = new ArrayList<>();
+        setTokenVisible(token1);
+        setTokenVisible(token2);
+        zoneBetUser2.setVisible(false);
+        labelValueUserFirstHand.setVisible(false);
+        labelValueUserSecondHand.setVisible(false);
+        labelValueCroupierHand.setVisible(false);
+        textBetUser.setText("");
+        textBetUser.setVisible(true);
+        validBetButton.setVisible(true);
+    }
+
+
+    /** Méthode qui modifie la visibilité des cartes tirés **/
+    private void resetCards(){
+        for (ImageView imageView : userFirstHand) {
+            imageView.setVisible(false);
+            anchorPane.getChildren().remove(imageView);
+        }
+        for (ImageView imageView : userSecondHand) {
+            imageView.setVisible(false);
+            anchorPane.getChildren().remove(imageView);
+        }
+        for (ImageView imageView : croupierHand) {
+            imageView.setVisible(false);
+            anchorPane.getChildren().remove(imageView);
+        }
     }
 
     private void animationCardBegin(){
