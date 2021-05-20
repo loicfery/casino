@@ -118,7 +118,7 @@ public class InformationMenuController implements InterfaceMenu{
         try {
             ResultSet resultSet = database.select(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser()+" = \"" + email + "\"");
             if(resultSet.next()) {
-                textPassword.setText(resultSet.getString(3));
+                textPassword.setText(resultSet.getString(4));
             }
         }
         catch (Exception e){}

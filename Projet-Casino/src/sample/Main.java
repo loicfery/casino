@@ -11,7 +11,7 @@ public class Main extends Application {
     public Main() {
     }
 
-    public void start(Stage stage) throws Exception{
+    public void start(Stage stage){
         String bd = "projet";
         String userName = "root";
         String password = "Poussin13!";
