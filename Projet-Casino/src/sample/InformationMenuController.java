@@ -167,7 +167,7 @@ public class InformationMenuController implements InterfaceMenu{
     private void changeUserName(){
         if(!textUserName.getText().isEmpty()){
             if(ControleSaisie.isUsername(textUserName.getText()) && textUserName.getText().length() > 5) {
-                database.update(databaseName.getTableUser(),databaseName.getTableUserColumnPseudo(),"\""+ textUserName.getText()+"\"",databaseName.getTableUserColumnMailUser()+" = \""+user.getEmail()+"\"");
+                database.update(databaseName.getTableUser(),databaseName.getTableUserColumnUserName(),"\""+ textUserName.getText()+"\"",databaseName.getTableUserColumnMailUser()+" = \""+user.getEmail()+"\"");
                 user.setPseudo(textUserName.getText());
                 messageInterface.setMessage(labelError,"Le pseudonyme a été modifié", Color.GREEN);
             }
@@ -186,7 +186,7 @@ public class InformationMenuController implements InterfaceMenu{
     private void changePassword(){
         if(!textPassword.getText().isEmpty()){
             if(ControleSaisie.validPassword(textPassword.getText()) && textPassword.getText().length() > 5){
-                database.update(databaseName.getTableUser(),databaseName.getTableUserPassword(),"\""+textPassword.getText()+"\"",databaseName.getTableUserColumnMailUser()+" = \""+user.getEmail()+"\"");
+                database.update(databaseName.getTableUser(),databaseName.getTableUserColumnPassword(),"\""+textPassword.getText()+"\"",databaseName.getTableUserColumnMailUser()+" = \""+user.getEmail()+"\"");
                 messageInterface.setMessage(labelError,"Le mot de passe a été modifié", Color.GREEN);
             }
             else {

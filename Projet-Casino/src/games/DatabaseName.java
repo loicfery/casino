@@ -3,40 +3,41 @@ package games;
 public class DatabaseName {
     //show tables from casino; pour recup les noms des tables (pas sûre de l'utiliser)
 
-    private final String tableUser = "Utilisateurs";
-    private final String tableUserColumnMailUser = "MailUser_Utilisateurs";
-    private final String tableUserColumnPseudo = "NameUser_Utilisateurs";
-    private final String tableUserColumnToken = "Token_HistoriquePartiesJouees";
-    private final String tableUserColumnMoney = "Money_Utilisateurs";
-    private final String tableUserPassword = "Password_Utilisateurs";
+    private final String tableUser = "Users";
+    private final String tableUserColumnMailUser = "MailUser_Users";
+    private final String tableUserColumnUserName = "NameUser_Users";
+    private final String tableUserColumnToken = "Token_HistoryPartyGamed";
+    private final String tableUserColumnMoney = "Money_Users";
+    private final String tableUserColumnPassword = "Password_Users";
+    private final String tableUserColumnRank = "Rank_Users";
 
-    private final String tableHistoryExchangeToken = "HistoriqueAchatJetons";
-    private final String tableHistoryExchangeTokenColumnMailUser = "MailUser_HistoriqueAchatJetons";
-    private final String tableHistoryExchangeTokenColumnPriceToken = "PrixJeton_HistoriqueAchatJetons";
-    private final String tableHistoryExchangeTokenColumnMoneyGain = "ArgentGagne_HistoriqueAchatJetons";
+    private final String tableHistoryExchangeToken = "HistoryExchangeTokens";
+    private final String tableHistoryExchangeTokenColumnMailUser = "MailUser_HistoryExchangeTokens";
+    private final String tableHistoryExchangeTokenColumnPriceToken = "TokenPrice_HistoryExchangeTokens";
+    private final String tableHistoryExchangeTokenColumnMoneyGain = "MoneyGame_HistoryExchangeTokens";
 
-    private final String tableHistoryExchangeMoney = "HistoriqueEchangeArgent";
-    private final String tableHistoryExchangeMoneyColumnMailUser = "MailUser_HistoriqueEchangeArgent";
-    private final String tableHistoryExchangeMoneyColumnPriceMoney = "PrixArgent_HistoriqueEchangeArgent";
-    private final String tableHistoryExchangeMoneyColumnMoneyGain = "JetonGagne_HistoriqueEchangeArgent";
+    private final String tableHistoryExchangeMoney = "HistoryExchangeMoney";
+    private final String tableHistoryExchangeMoneyColumnMailUser = "MailUser_HistoryExchangeMoney";
+    private final String tableHistoryExchangeMoneyColumnPriceMoney = "MoneyPrice_HistoryExchangeMoney";
+    private final String tableHistoryExchangeMoneyColumnMoneyGain = "TokenGain_HistoryExchangeMoney";
 
-    private final String tableHistoryPartyGamed = "HistoriquePartiesJouees";
-    private final String tableHistoryPartyGamedColumnMailUser = "MailUser_HistoriquePartiesJouees";
-    private final String tableHistoryPartyGamedColumnGameName = "NomJeux_HistoriquePartiesJouees";
-    private final String tableHistoryPartyGamedColumnTokenGain = "TokenGagne_HistoriquePartiesJouees";
-
-    //tempo
-    private final String tableExchangeToken = "EchangeArgents";
-    private final String tableExchangeTokenColumnPriceToken = "PrixArgent_EchangeArgents";
-    private final String tableExchangeTokenColumnMoneyGain = "JetonGagne_EchangeArgents";
+    private final String tableHistoryPartyGamed = "HistoryPartyGamed";
+    private final String tableHistoryPartyGamedColumnMailUser = "MailUser_HistoryPartyGamed";
+    private final String tableHistoryPartyGamedColumnGameName = "GameName_HistoryPartyGamed";
+    private final String tableHistoryPartyGamedColumnTokenGain = "TokenGain_HistoryPartyGamed";
 
     //tempo
-    private final String tableExchangeMoney = "EchangeJetons";
-    private final String tableExchangeMoneyColumnPriceMoney = "PrixJeton_EchangeJetons";
-    private final String tableExchangeMoneyColumnTokenGain = "ArgentGagne_EchangeJetons";
+    private final String tableExchangeToken = "ExchangeMoney";
+    private final String tableExchangeTokenColumnPriceToken = "MoneyPrice_ExchangeMoney";
+    private final String tableExchangeTokenColumnMoneyGain = "TokenGame_ExchangeMoney";
 
-    private final String tableGame = "Jeux";
-    private final String tableGameColumnNameGame = "NomJeux_Jeux";
+    //tempo
+    private final String tableExchangeMoney = "ExchangeToken";
+    private final String tableExchangeMoneyColumnPriceMoney = "TokenPrice_ExchangeToken";
+    private final String tableExchangeMoneyColumnTokenGain = "MoneyGain_ExchangeToken";
+
+    private final String tableGame = "Game";
+    private final String tableGameColumnNameGame = "GameName_Game";
     private final String gameBlackJack = "BlackJack";
     private final String gameSlotMachine = "SlotMachine";
     private final String gameRoulette = "Roulette";
@@ -49,8 +50,8 @@ public class DatabaseName {
         return tableUserColumnMailUser;
     }
 
-    public String getTableUserColumnPseudo() {
-        return tableUserColumnPseudo;
+    public String getTableUserColumnUserName() {
+        return tableUserColumnUserName;
     }
 
     public String getTableUserColumnToken() {
@@ -61,9 +62,11 @@ public class DatabaseName {
         return tableUserColumnMoney;
     }
 
-    public String getTableUserPassword(){
-        return tableUserPassword;
+    public String getTableUserColumnPassword(){
+        return tableUserColumnPassword;
     }
+
+    public String getTableUserColumnRank(){return tableUserColumnRank;}
 
     public String getTableHistoryExchangeToken() {
         return tableHistoryExchangeToken;

@@ -120,7 +120,7 @@ public class ConnexionMenuController implements InterfaceMenu{
     private void goToMainMenu(){
         if (!textEmail.getText().isEmpty() && !textPassword.getText().isEmpty()) {
             try {
-                ResultSet resultSet = database.select(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser()+" = '" + textEmail.getText() + "' and "+ databaseName.getTableUserPassword() +" = '" + textPassword.getText() + "'");
+                ResultSet resultSet = database.select(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser()+" = '" + textEmail.getText() + "' and "+ databaseName.getTableUserColumnPassword() +" = '" + textPassword.getText() + "'");
                 if (resultSet.next()) {
                     labelTitle.setVisible(false);
                     labelEmail.setVisible(false);
@@ -131,7 +131,7 @@ public class ConnexionMenuController implements InterfaceMenu{
                     buttonNewAccount.setVisible(false);
                     settingMenuController.exitSettingMenu();
 
-                    user = new User(resultSet.getString(2), resultSet.getString(1), resultSet.getString(6), resultSet.getInt(5), resultSet.getInt(4), database);
+                    user = new User(resultSet.getString(2), resultSet.getString(3), resultSet.getString(5), resultSet.getInt(6), resultSet.getInt(7), database);
                     switchMainMenu();
                 }
                 else {
@@ -181,7 +181,7 @@ public class ConnexionMenuController implements InterfaceMenu{
             buttonLoginMenuReturn.setVisible(false);
             settingMenuController.exitSettingMenu();
 
-            database.insert(databaseName.getTableUser(),"null, '"+ textNewUserName.getText()+"', '"+textEmail.getText()+"','"+textNewPassword.getText()+"',100,0");
+            database.insert(databaseName.getTableUser(),"\""+ textNewUserName.getText()+"\", \""+textEmail.getText()+"\",\""+textNewPassword.getText()+"\",\"USER\",100,0",databaseName.getTableUserColumnUserName()+","+databaseName.getTableUserColumnMailUser()+","+databaseName.getTableUserColumnPassword()+","+databaseName.getTableUserColumnMoney()+","+databaseName.getTableUserColumnToken());
             setUser(new User(textNewUserName.getText(),textNewEmail.getText(),"USER",0,100,database));
             switchMainMenu();
         } else {

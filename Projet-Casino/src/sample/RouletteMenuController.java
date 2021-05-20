@@ -1223,7 +1223,7 @@ public class RouletteMenuController implements InterfaceMenu{
         labelProfit.setText("Gain : " + tokenGain);
         labelTokenUser.setText("Jetons : "+user.getToken());
         newGameButton.setVisible(true);
-        database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\","+tokenGain+",\""+databaseName.getGameRoulette()+"\"");
+        database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\",\""+databaseName.getGameRoulette()+"\""+tokenGain,databaseName.getTableHistoryPartyGamedColumnMailUser()+","+databaseName.getTableHistoryPartyGamedColumnGameName()+","+databaseName.getTableHistoryPartyGamedColumnTokenGain());
     }
 
     private void newGame(){
