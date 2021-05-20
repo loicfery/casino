@@ -8,6 +8,7 @@ public class Database {
     private String bd;
     private Connection connection;
     private ResultSet result;
+    private final DatabaseName databaseName = new DatabaseName();
 
     public Database(String bd, String userName, String passWord) {
         this.bd = bd;
@@ -58,6 +59,11 @@ public class Database {
             try {
                 Statement statement = connection.createStatement();
                 statement.execute(query.replace("[\\t\\n\\r]", " "));
+
+                ResultSet resultSet = select(databaseName.getTableGame(),"");
+                while(resultSet.next()){
+
+                }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
                 break;
