@@ -59,25 +59,10 @@ class BetRouletteTest {
 
     @Test
     void containCell() {
-    }
-
-    @Test
-    void getCells() {
-    }
-
-    @Test
-    void getValueOfBet() {
-    }
-
-    @Test
-    void getMultiply() {
-    }
-
-    @Test
-    void setCells() {
-    }
-
-    @Test
-    void setValueOfBet() {
+        List<CellRoulette> list = new ArrayList<>();
+        BetRoulette betroulette=new BetRoulette(list,5);
+        list.add(new CellRoulette(1,2,3,4,ColorRoulette.Red,"2"));
+        assertTrue(betroulette.containCell("2"));
+        assertFalse(betroulette.containCell("5"));
     }
 }
