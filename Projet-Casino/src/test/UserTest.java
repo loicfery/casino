@@ -13,6 +13,7 @@ class UserTest {
         String pseudo =  "TEST";
         Database database = new Database();
         User user = new User(pseudo, "test", "test", 0, 0, database);
+
         assertEquals(user.getUserName(), pseudo);
     }
 
@@ -21,6 +22,7 @@ class UserTest {
         String email =  "TEST";
         Database database = new Database();
         User user = new User("test", email, "test", 0, 0, database);
+
         assertEquals(user.getEmail(), email);
     }
 
@@ -29,6 +31,7 @@ class UserTest {
         int token =  10;
         Database database = new Database();
         User user = new User("test", "test", "test", token, 0, database);
+
         assertEquals(user.getToken(), token);
     }
 
@@ -37,6 +40,7 @@ class UserTest {
         int money =  10;
         Database database = new Database();
         User user = new User("test", "test", "test", 0, money, database);
+
         assertEquals(user.getMoney(), money);
     }
 
@@ -45,6 +49,7 @@ class UserTest {
         String rank =  "TEST";
         Database database = new Database();
         User user = new User("test", "test", rank, 0, 0, database);
+
         assertEquals(user.getRank(), rank);
     }
 
@@ -69,6 +74,7 @@ class UserTest {
         User user = new User();
         String pseudo = "TEST";
         user.setUserName(pseudo);
+
         assertEquals(user.getUserName(), pseudo);
     }
 
@@ -77,6 +83,7 @@ class UserTest {
         User user =  new User();
         String email = "TEST";
         user.setEmail(email);
+
         assertEquals(user.getEmail(), email);
     }
 }

@@ -14,6 +14,7 @@ class CardPackageTest {
     void initCardPackage() {
         CardPackage cardPackage = new CardPackage();
         cardPackage.initCardPackage();
+
         assertEquals(cardPackage.getCardPackage().size(), 52, "Un paquet de carte est créer");
     }
 
@@ -24,6 +25,7 @@ class CardPackageTest {
         cardPackage.initCardPackage();
         cardPackageMix.initCardPackage();
         cardPackageMix.mixCardPackage();
+
         assertNotSame(cardPackage, cardPackageMix);
     }
 
@@ -32,15 +34,19 @@ class CardPackageTest {
         CardPackage cardPackage = new CardPackage();
         cardPackage.initCardPackage();
         cardPackage.removeCard(5);
+
         assertEquals(cardPackage.getCardPackage().size(), 51);
     }
 
     @Test
     void drawCard() {
         CardPackage cardPackage = new CardPackage();
+
         cardPackage.initCardPackage();
         Card card = cardPackage.drawCard();
+
         assertEquals(cardPackage.getCardPackage().size(), 51);
+
         for(int i =0; i<cardPackage.getCardPackage().size();i++){
             assertNotSame(cardPackage.getCardPackage().get(i), card);
         }
@@ -49,7 +55,9 @@ class CardPackageTest {
     @Test
     void getCardPackage() {
         CardPackage cardPackage = new CardPackage();
+
         cardPackage.initCardPackage();
+
         assertEquals(cardPackage.getCardPackage().size(), 52);
     }
 }
