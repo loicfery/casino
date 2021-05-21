@@ -8,12 +8,11 @@ import static javax.swing.Action.DEFAULT;
 public class SlotMachine {
 
     private String[] slot = {"LEMON","WATERMELON","CHERRY","WATERMELON","SEVEN","WATERMELON","LEMON","WATERMELON","CHERRY","LEMON"};
+
     /**
      * tableau des trois images tirées
      * **/
     private String results[] = new String[3];
-
-
 
     /**
      * mise
@@ -104,5 +103,9 @@ public class SlotMachine {
 
     public Bet getBet() {
         return bet;
+    }
+
+    public String[] getResults() {
+        return results;
     }
 }

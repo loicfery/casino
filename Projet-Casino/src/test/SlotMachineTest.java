@@ -3,6 +3,8 @@ package test;
 import games.*;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SlotMachineTest {
@@ -14,15 +16,19 @@ class SlotMachineTest {
 
         slotMachine.userBet(user);
 
-        assertEquals(slotMachine.getBet().getBet(user), 1, "Le joueur a augmenter sa mise de 1");
+        assertEquals(slotMachine.getBet().getBet(user), 1, "Le joueur a augmenté sa mise de 1");
 
         slotMachine.userBet(user);
 
-        assertEquals(slotMachine.getBet().getBet(user), 2, "Le joueur a augmenter sa mise de 1");
+        assertEquals(slotMachine.getBet().getBet(user), 2, "Le joueur a augmenté sa mise de 1");
     }
 
     @Test
     void useSlotMachine() {
+        User user = new User();
+        SlotMachine slotMachine = new SlotMachine(user);
+        slotMachine.useSlotMachine();
+
     }
 
     @Test
@@ -67,9 +73,20 @@ class SlotMachineTest {
 
     @Test
     void getNbImage() {
+        User user = new User();
+        SlotMachine slotMachine = new SlotMachine(user);
+        ArrayList<Integer> nbIm = new ArrayList<>();
+        assertEquals(slotMachine.getNbImage(), nbIm);
     }
 
     @Test
     void reset() {
+        User user = new User();
+        SlotMachine slotMachine = new SlotMachine(user);
+        slotMachine.userBet(user);
+        assertEquals(slotMachine.getBet().getBet(user), 1, "Le joueur a augmenter sa mise de 1");
+        slotMachine.reset();
+        assertEquals(slotMachine.getBet().getBet(user) , 0, "la mise est remise à 0");
+
     }
 }
