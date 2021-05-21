@@ -1,37 +1,40 @@
 CREATE TABLE IF NOT EXISTS Users (
     Id_Users BIGINT AUTO_INCREMENT,
-    NameUser_Users VARCHAR(50),
+    NameUser_Users VARCHAR(50) NOT NULL,
     MailUser_Users VARCHAR(50),
-    Password_Users VARCHAR(20),
-    Rank_Users VARCHAR(20),
-    Money_Users FLOAT,
-    Token_HistoryPartyGamed BIGINT,
+    Password_Users VARCHAR(20) NOT NULL,
+    Rank_Users VARCHAR(20) NOT NULL,
+    Money_Users FLOAT NOT NULL,
+    Token_HistoryPartyGamed BIGINT NOT NULL,
     PRIMARY KEY (Id_Users,MailUser_Users)) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS HistoryExchangeTokens(
     Id_HistoryExchangeTokens BIGINT AUTO_INCREMENT,
-    MailUser_HistoryExchangeTokens VARCHAR(50),
-    TokenPrice_HistoryExchangeTokens FLOAT,
-    MoneyGame_HistoryExchangeTokens BIGINT,
+    MailUser_HistoryExchangeTokens VARCHAR(50) NOT NULL,
+    TokenPrice_HistoryExchangeTokens FLOAT NOT NULL,
+    MoneyGame_HistoryExchangeTokens BIGINT NOT NULL,
+    Date_HistoryExchangeTokens DATE NOT NULL,
     PRIMARY KEY (Id_HistoryExchangeTokens)) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS Game (
     Id_Game BIGINT AUTO_INCREMENT,
-    GameName_Game VARCHAR(40),
+    GameName_Game VARCHAR(40) NOT NULL,
     PRIMARY KEY (Id_Game)) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS HistoryExchangeMoney(
     Id_HistoryExchangeMoney BIGINT AUTO_INCREMENT,
-    MailUser_HistoryExchangeMoney VARCHAR(50),
-    MoneyPrice_HistoryExchangeMoney BIGINT,
-    TokenGain_HistoryExchangeMoney BIGINT,
+    MailUser_HistoryExchangeMoney VARCHAR(50) NOT NULL,
+    MoneyPrice_HistoryExchangeMoney BIGINT NOT NULL,
+    TokenGain_HistoryExchangeMoney BIGINT NOT NULL,
+    Date_HistoryExchangeMoney DATE NOT NULL,
     PRIMARY KEY (Id_HistoryExchangeMoney)) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS HistoryPartyGamed(
     Id_HistoryPartyGamed BIGINT AUTO_INCREMENT,
-    MailUser_HistoryPartyGamed VARCHAR(50),
-    GameName_HistoryPartyGamed VARCHAR(50),
-    TokenGain_HistoryPartyGamed FLOAT,
+    MailUser_HistoryPartyGamed VARCHAR(50) NOT NULL,
+    GameName_HistoryPartyGamed VARCHAR(50) NOT NULL,
+    TokenGain_HistoryPartyGamed FLOAT NOT NULL,
+    Date_HistoryPartyGamed DATE NOT NULL,
     PRIMARY KEY (Id_HistoryPartyGamed)) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS ActionPlay (
