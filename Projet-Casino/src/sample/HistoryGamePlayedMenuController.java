@@ -25,7 +25,9 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class HistoryGamePlayedMenuController implements InterfaceMenu{
@@ -186,7 +188,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
 
             while (resultSet.next()){
                 list.add(resultSet.getString(2)+" : ");
-                list.add("Date : "+resultSet.getString(3)+" --> "+resultSet.getInt(4)+" jetons");
+                list.add(resultSet.getString(5)+" : "+resultSet.getString(3)+" --> "+resultSet.getInt(4)+" jetons");
             }
 
             if(list.size() == 0){

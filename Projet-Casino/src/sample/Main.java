@@ -1,7 +1,6 @@
 package sample;
 
 import games.Database;
-import games.User;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

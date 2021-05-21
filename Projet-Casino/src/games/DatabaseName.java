@@ -15,16 +15,19 @@ public class DatabaseName {
     private final String tableHistoryExchangeTokenColumnMailUser = "MailUser_HistoryExchangeTokens";
     private final String tableHistoryExchangeTokenColumnPriceToken = "TokenPrice_HistoryExchangeTokens";
     private final String tableHistoryExchangeTokenColumnMoneyGain = "MoneyGame_HistoryExchangeTokens";
+    private final String tableHistoryExchangeTokenColumnDate = "Date_HistoryExchangeTokens";
 
     private final String tableHistoryExchangeMoney = "HistoryExchangeMoney";
     private final String tableHistoryExchangeMoneyColumnMailUser = "MailUser_HistoryExchangeMoney";
     private final String tableHistoryExchangeMoneyColumnPriceMoney = "MoneyPrice_HistoryExchangeMoney";
     private final String tableHistoryExchangeMoneyColumnMoneyGain = "TokenGain_HistoryExchangeMoney";
+    private final String tableHistoryExchangeMoneyColumnDate = "Date_HistoryExchangeMoney";
 
     private final String tableHistoryPartyGamed = "HistoryPartyGamed";
     private final String tableHistoryPartyGamedColumnMailUser = "MailUser_HistoryPartyGamed";
     private final String tableHistoryPartyGamedColumnGameName = "GameName_HistoryPartyGamed";
     private final String tableHistoryPartyGamedColumnTokenGain = "TokenGain_HistoryPartyGamed";
+    private final String tableHistoryPartyGamedColumnDate = "Date_HistoryPartyGamed";
 
     //tempo
     private final String tableExchangeToken = "ExchangeMoney";
@@ -159,4 +162,10 @@ public class DatabaseName {
     public String getTableExchangeMoneyColumnTokenGain(){
         return tableExchangeMoneyColumnTokenGain;
     }
+
+    public String getTableHistoryExchangeTokenColumnDate(){return tableHistoryExchangeTokenColumnDate;}
+
+    public String getTableHistoryExchangeMoneyColumnDate(){return tableHistoryExchangeMoneyColumnDate;}
+
+    public String getTableHistoryPartyGamedColumnDate(){return tableHistoryPartyGamedColumnDate;}
 }

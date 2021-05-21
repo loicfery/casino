@@ -163,13 +163,13 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
                 if(ADMIN){
                     listOfInformationToken.add(resultSetToken.getString(2)+" : ");
                 }
-                listOfInformationToken.add("Data : "+resultSetToken.getInt(3)+" jetons ---> "+resultSetToken.getInt(4)+" $");
+                listOfInformationToken.add(resultSetToken.getString(5)+" : "+resultSetToken.getInt(3)+" jetons ---> "+resultSetToken.getInt(4)+" $");
             }
             while(resultSetMoney.next()){
                 if(ADMIN){
                     listOfInformationMoney.add(resultSetMoney.getString(2)+" : ");
                 }
-                listOfInformationMoney.add("Date : "+resultSetMoney.getInt(3)+" $ ---> "+resultSetMoney.getInt(4)+" jetons");
+                listOfInformationMoney.add(resultSetMoney.getString(5)+" : "+resultSetMoney.getInt(3)+" $ ---> "+resultSetMoney.getInt(4)+" jetons");
             }
         }
         catch (Exception e){ System.out.println("Erreur : getAllInformation dans HistoryShoppingMenuController"); }

@@ -24,7 +24,9 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ShopMenuController implements InterfaceMenu{
@@ -385,7 +387,7 @@ public class ShopMenuController implements InterfaceMenu{
                 if(user.getMoney() >= money){
                     user.removeMoney(money);
                     user.addToken(token);
-                    database.insert(databaseName.getTableHistoryExchangeMoney(),"\""+user.getEmail()+"\","+money+","+token,databaseName.getTableHistoryExchangeMoneyColumnMailUser()+","+databaseName.getTableHistoryExchangeMoneyColumnPriceMoney()+","+databaseName.getTableHistoryExchangeMoneyColumnMoneyGain());
+                    database.insert(databaseName.getTableHistoryExchangeMoney(),"\""+user.getEmail()+"\","+money+","+token+",\""+getCurrentDate()+"\"",databaseName.getTableHistoryExchangeMoneyColumnMailUser()+","+databaseName.getTableHistoryExchangeMoneyColumnPriceMoney()+","+databaseName.getTableHistoryExchangeMoneyColumnMoneyGain()+","+databaseName.getTableHistoryExchangeMoneyColumnDate());
                     titleShopMoneyLabel.setText("Echange d'argent : "+user.getMoney());
                     titleShopTokenLabel.setText("Echange de jeton : "+user.getToken());
                     messageInterface.setMessage(errorLabel,"Votre échange a bien été effectué",Color.GREEN);
@@ -403,7 +405,7 @@ public class ShopMenuController implements InterfaceMenu{
                 if(user.getToken() >= token){
                     user.addMoney(money);
                     user.removeToken(token);
-                    database.insert(databaseName.getTableHistoryExchangeToken(),"\""+user.getEmail()+"\","+token+","+money,databaseName.getTableHistoryExchangeTokenColumnMailUser()+","+databaseName.getTableHistoryExchangeTokenColumnPriceToken()+","+databaseName.getTableHistoryExchangeTokenColumnMoneyGain());
+                    database.insert(databaseName.getTableHistoryExchangeToken(),"\""+user.getEmail()+"\","+token+","+money+",\""+getCurrentDate()+"\"",databaseName.getTableHistoryExchangeTokenColumnMailUser()+","+databaseName.getTableHistoryExchangeTokenColumnPriceToken()+","+databaseName.getTableHistoryExchangeTokenColumnMoneyGain()+","+databaseName.getTableHistoryExchangeTokenColumnDate());
                     titleShopTokenLabel.setText("Echange de jeton : "+user.getToken());
                     titleShopMoneyLabel.setText("Echange d'argent : "+user.getMoney());
                     messageInterface.setMessage(errorLabel,"Votre échange a bien été effectué",Color.GREEN);
@@ -677,5 +679,11 @@ public class ShopMenuController implements InterfaceMenu{
     private void goToMenuSetting(){
         settingMenuController.exitSettingMenu();
         settingMenuController.setting();
+    }
+
+    private String getCurrentDate(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        return simpleDateFormat.format(date);
     }
 }

@@ -29,7 +29,9 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class RouletteMenuController implements InterfaceMenu{
@@ -1224,7 +1226,7 @@ public class RouletteMenuController implements InterfaceMenu{
         labelProfit.setText("Gain : " + tokenGain);
         labelTokenUser.setText("Jetons : "+user.getToken());
         newGameButton.setVisible(true);
-        database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\",\""+databaseName.getGameRoulette()+"\","+tokenGain,databaseName.getTableHistoryPartyGamedColumnMailUser()+","+databaseName.getTableHistoryPartyGamedColumnGameName()+","+databaseName.getTableHistoryPartyGamedColumnTokenGain());
+        database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\",\""+databaseName.getGameRoulette()+"\","+tokenGain+",\""+getCurrentDate()+"\"",databaseName.getTableHistoryPartyGamedColumnMailUser()+","+databaseName.getTableHistoryPartyGamedColumnGameName()+","+databaseName.getTableHistoryPartyGamedColumnTokenGain()+","+databaseName.getTableHistoryPartyGamedColumnDate());
     }
 
     private void newGame(){
@@ -1317,6 +1319,12 @@ public class RouletteMenuController implements InterfaceMenu{
     private void goToRuleMenu(){
         ruleMenuController.exitRuleMenu();
         ruleMenuController.setting();
+    }
+
+    private String getCurrentDate(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        return simpleDateFormat.format(date);
     }
 
 }
