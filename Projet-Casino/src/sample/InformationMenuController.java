@@ -93,7 +93,7 @@ public class InformationMenuController implements InterfaceMenu{
         setupScene.setTextField(textEmail,"",Pos.CENTER_LEFT,90,120,20,230,new Font(15),true,anchorPane);
         textEmail.setText(user.getEmail());
         setupScene.setTextField(textUserName,"",Pos.CENTER_LEFT,150,180,20,140,new Font(15),true,anchorPane);
-        textUserName.setText(user.getPseudo());
+        textUserName.setText(user.getUserName());
         setupScene.setTextField(textPassword,"",Pos.CENTER_LEFT,160,240,20,130,new Font(15),true,anchorPane);
         getPassword(textEmail.getText());
 
@@ -138,22 +138,26 @@ public class InformationMenuController implements InterfaceMenu{
      */
     private void changeEmail(){
         if(!textEmail.getText().isEmpty()){
-            if(ControleSaisie.validEmail(textEmail.getText())) { //vérification email pas déjà pris
-                try {
-                    ResultSet resultSet = database.select(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser()+" = \"" + textEmail.getText() + "\"");
-                    if (resultSet.next()) {
-                        messageInterface.setMessage(labelError,"Cette email est déjà utilisé", Color.RED);
+            if(!textEmail.getText().equals(user.getEmail())) {
+                if (ControleSaisie.validEmail(textEmail.getText())) {
+                    try {
+                        ResultSet resultSet = database.select(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser() + " = \"" + textEmail.getText() + "\"");
+                        if (resultSet.next()) {
+                            messageInterface.setMessage(labelError, "Cette email est déjà utilisé", Color.RED);
+                        } else {
+                            modifyHistory(textEmail.getText());
+                            database.update(databaseName.getTableUser(), "MailUser", "\"" + textEmail.getText() + "\"", databaseName.getTableUserColumnMailUser() + " = \"" + user.getEmail() + "\"");
+                            user.setEmail(textEmail.getText());
+                            messageInterface.setMessage(labelError, "L'email a été modifié", Color.GREEN);
+                        }
+                    } catch (Exception e) {
                     }
-                    else {
-                        database.update(databaseName.getTableUser(),"MailUser","\""+textEmail.getText()+"\"",databaseName.getTableUserColumnMailUser()+" = \""+user.getEmail()+"\"");
-                        user.setEmail(textEmail.getText());
-                        messageInterface.setMessage(labelError,"L'email a été modifié", Color.GREEN);
-                    }
+                } else {
+                    messageInterface.setMessage(labelError, "L'email ne correspond pas au format", Color.RED);
                 }
-                catch (Exception e){}
             }
             else {
-                messageInterface.setMessage(labelError,"L'email ne correspond pas au format",Color.RED);
+                messageInterface.setMessage(labelError,"L'email est le même",Color.RED);
             }
         }
         else {
@@ -161,18 +165,28 @@ public class InformationMenuController implements InterfaceMenu{
         }
     }
 
+    private void modifyHistory(String newMail){
+        database.update(databaseName.getTableHistoryPartyGamed(),databaseName.getTableHistoryPartyGamedColumnMailUser(),newMail,databaseName.getTableHistoryPartyGamedColumnMailUser()+" = \""+user.getEmail()+"\"");
+        database.update(databaseName.getTableHistoryExchangeMoney(),databaseName.getTableHistoryExchangeMoneyColumnMailUser(),newMail,databaseName.getTableHistoryExchangeMoneyColumnMailUser()+" = \""+user.getEmail()+"\"");
+        database.update(databaseName.getTableHistoryExchangeToken(),databaseName.getTableHistoryExchangeTokenColumnMailUser(),newMail,databaseName.getTableHistoryExchangeTokenColumnMailUser()+" = \""+user.getEmail()+"\"");
+    }
+
     /**
      * Méthode qui modifie le pseudonyme de l'utilisateur
      */
     private void changeUserName(){
         if(!textUserName.getText().isEmpty()){
-            if(ControleSaisie.isUsername(textUserName.getText()) && textUserName.getText().length() > 5) {
-                database.update(databaseName.getTableUser(),databaseName.getTableUserColumnUserName(),"\""+ textUserName.getText()+"\"",databaseName.getTableUserColumnMailUser()+" = \""+user.getEmail()+"\"");
-                user.setPseudo(textUserName.getText());
-                messageInterface.setMessage(labelError,"Le pseudonyme a été modifié", Color.GREEN);
+            if(!textUserName.getText().equals(user.getUserName())) {
+                if (ControleSaisie.isUsername(textUserName.getText()) && textUserName.getText().length() > 5) {
+                    database.update(databaseName.getTableUser(), databaseName.getTableUserColumnUserName(), "\"" + textUserName.getText() + "\"", databaseName.getTableUserColumnMailUser() + " = \"" + user.getEmail() + "\"");
+                    user.setUserName(textUserName.getText());
+                    messageInterface.setMessage(labelError, "Le pseudonyme a été modifié", Color.GREEN);
+                } else {
+                    messageInterface.setMessage(labelError, "Le pseudonyme ne correspond pas au format", Color.RED);
+                }
             }
             else {
-                messageInterface.setMessage(labelError,"Le pseudonyme ne correspond pas au format",Color.RED);
+                messageInterface.setMessage(labelError,"Le pseudonyme est le même",Color.RED);
             }
         }
         else {
@@ -184,18 +198,26 @@ public class InformationMenuController implements InterfaceMenu{
      * Méthode qui modifie le mot de passe de l'utilisateur
      */
     private void changePassword(){
-        if(!textPassword.getText().isEmpty()){
-            if(ControleSaisie.validPassword(textPassword.getText()) && textPassword.getText().length() > 5){
-                database.update(databaseName.getTableUser(),databaseName.getTableUserColumnPassword(),"\""+textPassword.getText()+"\"",databaseName.getTableUserColumnMailUser()+" = \""+user.getEmail()+"\"");
-                messageInterface.setMessage(labelError,"Le mot de passe a été modifié", Color.GREEN);
+        try {
+            if (!textPassword.getText().isEmpty()) {
+                ResultSet resultSet = database.select(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser() + " = \"" + user.getEmail() + "\"");
+                if (!resultSet.getString(4).equals(textPassword.getText())) {
+                    if (ControleSaisie.validPassword(textPassword.getText()) && textPassword.getText().length() > 5) {
+                        database.update(databaseName.getTableUser(), databaseName.getTableUserColumnPassword(), "\"" + textPassword.getText() + "\"", databaseName.getTableUserColumnMailUser() + " = \"" + user.getEmail() + "\"");
+                        messageInterface.setMessage(labelError, "Le mot de passe a été modifié", Color.GREEN);
+                    } else {
+                        messageInterface.setMessage(labelError, "Le mot de passe ne correspond pas au format", Color.RED);
+                    }
+                }
+                else {
+                    messageInterface.setMessage(labelError, "Le mot de passe est le même", Color.RED);
+                }
             }
             else {
-                messageInterface.setMessage(labelError,"Le mot de passe ne correspond pas au format",Color.RED);
+                messageInterface.setMessage(labelError, "Le champ ne peux pas être vide", Color.RED);
             }
         }
-        else {
-            messageInterface.setMessage(labelError,"Le champ ne peux pas être vide",Color.RED);
-        }
+        catch (Exception e){ System.out.println("Erreur : changePassword dans InformationMenuController"); }
     }
 
     /**

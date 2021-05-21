@@ -2,7 +2,7 @@ package games;
 
 public class User {
 
-    private String pseudo;
+    private String userName;
     private String email;
     private int numberOfToken;
     private int amountOfMoney;
@@ -10,8 +10,8 @@ public class User {
     private Database database;
     private DatabaseName databaseName = new DatabaseName();
 
-    public User(String pseudo, String email, String rank, int numberOfToken, int amountOfMoney, Database database) {
-        this.pseudo = pseudo;
+    public User(String userName, String email, String rank, int numberOfToken, int amountOfMoney, Database database) {
+        this.userName = userName;
         this.email = email;
         this.rank = rank;
         this.numberOfToken = numberOfToken;
@@ -21,7 +21,7 @@ public class User {
 
     public User(){}
 
-    public String getPseudo(){return pseudo;}
+    public String getUserName(){return userName;}
     public String getEmail(){return email;}
     public int getToken(){return numberOfToken;}
     public int getMoney(){return amountOfMoney;}
@@ -52,7 +52,7 @@ public class User {
         database.update(databaseName.getTableUser(),databaseName.getTableUserColumnMoney(),this.amountOfMoney+"",databaseName.getTableUserColumnMailUser()+" = \""+email+"\"");
     }
 
-    public void setPseudo(String newPseudo){ pseudo = newPseudo; }
+    public void setUserName(String newPseudo){ userName = newPseudo; }
 
     public void setEmail(String newEmail){ email = newEmail; }
 }

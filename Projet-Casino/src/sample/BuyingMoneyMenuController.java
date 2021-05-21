@@ -46,7 +46,7 @@ public class BuyingMoneyMenuController {
         stage.setScene(scene);
 
         setupScene.setLabel(titleLabel,"Ajouter de l'argent", Pos.CENTER,0,20,20,400,new Font(30), Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(userNameLabel,"Pseudo : "+user.getPseudo(),Pos.CENTER,20,150,20,150,new Font(15),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(userNameLabel,"Pseudo : "+user.getUserName(),Pos.CENTER,20,150,20,150,new Font(15),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(userMoneyLabel,"Argent : "+user.getMoney(),Pos.CENTER,200,150,20,150,new Font(15),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(errorLabel,"",Pos.CENTER_LEFT,100,300,20,300,new Font(15),Paint.valueOf("RED"),false,anchorPane);
 

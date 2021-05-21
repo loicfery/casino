@@ -133,7 +133,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         setupScene.setRectangle(zoneBetUser2,550,600.0,174.0,147.0,5.0,5.0,Paint.valueOf("#158000"),Paint.valueOf("BLACK"),5.0,StrokeType.INSIDE,false,anchorPane);
         setupScene.setLabel(labelToken,"Jetons : "+user.getToken(), Pos.CENTER_LEFT,30.0,660.0,55.0,163.0,new Font(30.0), Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelProfit,"Gain : 0", Pos.CENTER_LEFT, 30.0,720.0,55.0,163.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelUserName,"Joueur : "+user.getPseudo(), Pos.CENTER_LEFT,30.0,600.0,55.0,308.0,new Font(30.0),Color.BLACK,true,anchorPane);
+        setupScene.setLabel(labelUserName,"Joueur : "+user.getUserName(), Pos.CENTER_LEFT,30.0,600.0,55.0,308.0,new Font(30.0),Color.BLACK,true,anchorPane);
         setupScene.setLabel(labelError,"Erreur :", Pos.CENTER,100.0,455.0,36.0,700.0,new Font(25.0),Color.RED,false,anchorPane);
         setupScene.setTextField(textBetUser,"Votre mise", Pos.CENTER,280.0,380.0,79.0,252.0,new Font(30.0),true,anchorPane);
         setupScene.setButton(returnMainMenuButton,"Quitter",Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
@@ -162,7 +162,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         setupScene.setLabel(labelRule,"?",Pos.CENTER,754.0,15.0,23,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
 
         logMenuController.getLog("Log de la partie\n");
-        logMenuController.getLog("Le joueur "+user.getPseudo()+" démarre une nouvelle partie.");
+        logMenuController.getLog("Le joueur "+user.getUserName()+" démarre une nouvelle partie.");
 
         createCardSound();
 
@@ -332,7 +332,7 @@ public class BlackJackMenuController implements InterfaceMenu{
                         labelToken1.setText(blackJack.getBet().getBet(user)+"");
                         labelToken.setText("Jetons : " + (user.getToken() - valueOfBet));
 
-                        logMenuController.getLog("Le joueur "+user.getPseudo()+" mise "+valueOfBet+" jetons");
+                        logMenuController.getLog("Le joueur "+user.getUserName()+" mise "+valueOfBet+" jetons");
 
                         setTokenVisible(token1);
 
@@ -442,7 +442,7 @@ public class BlackJackMenuController implements InterfaceMenu{
     /** Méthode pour l'action split (2 carte de même numéro) **/
     private void actionSplit() {
         int valueToken = blackJack.getBet().getBet(user);
-        logMenuController.getLog("Le joueur "+user.getPseudo()+" a choisit l'action \"Partager\".");
+        logMenuController.getLog("Le joueur "+user.getUserName()+" a choisit l'action \"Partager\".");
         actionDoubleButton.setVisible(false);
         actionSplitButton.setVisible(false);
         split = true;
@@ -476,12 +476,12 @@ public class BlackJackMenuController implements InterfaceMenu{
         logMenuController.getLog("La mise de la main n°1 est de "+blackJack.getBet().getBet(blackJack.getListOfUserHand().get(1).getUser())+" jetons.");
         logMenuController.getLog("La main n°2 contient la carte "+blackJack.getListOfUserHand().get(2).getHand().get(0).getNumber()+" de "+blackJack.getListOfUserHand().get(2).getHand().get(0).getRank()+".");
         logMenuController.getLog("La mise de la main n°2 est de "+blackJack.getBet().getBet(blackJack.getListOfUserHand().get(2).getUser())+" jetons.");
-        logMenuController.getLog("C'est au tour de la main n°1 du joueur "+user.getPseudo());
+        logMenuController.getLog("C'est au tour de la main n°1 du joueur "+user.getUserName());
     }
 
     /** Méthode pour l'action tirer une carte **/
     private void actionHit(){
-        logMenuController.getLog("Le joueur "+user.getPseudo()+" a choisit l'action \"Tirer une carte\".");
+        logMenuController.getLog("Le joueur "+user.getUserName()+" a choisit l'action \"Tirer une carte\".");
 
         blackJack.actionHit();
         drawCard();
@@ -491,7 +491,7 @@ public class BlackJackMenuController implements InterfaceMenu{
 
     /** Méthode pour l'action prendre une assurance **/
     private void actionInsurance(){
-        logMenuController.getLog("Le joueur "+user.getPseudo()+" a choisit l'action \"Assurance\".");
+        logMenuController.getLog("Le joueur "+user.getUserName()+" a choisit l'action \"Assurance\".");
         blackJack.actionInsurance();
         logMenuController.getLog("Le prix de l'assurance est de "+blackJack.getInsuranceUser()+" jetons.");
         actionInsuranceButton.setVisible(false);
@@ -503,7 +503,7 @@ public class BlackJackMenuController implements InterfaceMenu{
 
         stand = true;
         blackJack.actionDouble();
-        logMenuController.getLog("Le joueur "+user.getPseudo()+" a choisit l'action \"Doubler\".");
+        logMenuController.getLog("Le joueur "+user.getUserName()+" a choisit l'action \"Doubler\".");
         logMenuController.getLog("La mise est maintenant de "+blackJack.getBet().getBet(user));
         drawCard();
         labelToken1.setText(blackJack.getBet().getBet(user)+"");
@@ -513,13 +513,13 @@ public class BlackJackMenuController implements InterfaceMenu{
 
     /** Méthode pour l'action rester **/
     private void actionStand(){
-        logMenuController.getLog("Le joueur "+user.getPseudo()+" a choisit l'action \"Rester\".");
+        logMenuController.getLog("Le joueur "+user.getUserName()+" a choisit l'action \"Rester\".");
 
         if(!split) {
             stand = true;
         }
         else {
-            logMenuController.getLog("C'est au tour de la main n°2 du joueur "+user.getPseudo());
+            logMenuController.getLog("C'est au tour de la main n°2 du joueur "+user.getUserName());
         }
         blackJack.actionStand();
         checkSplit();
@@ -527,7 +527,7 @@ public class BlackJackMenuController implements InterfaceMenu{
 
     /** Méthode pour l'action abandonner **/
     private void actionSurrender(){
-        logMenuController.getLog("Le joueur "+user.getPseudo()+" a choisit l'action \"Abandonner\".");
+        logMenuController.getLog("Le joueur "+user.getUserName()+" a choisit l'action \"Abandonner\".");
         blackJack.actionSurrender();
 
         if(!split) {
@@ -535,7 +535,7 @@ public class BlackJackMenuController implements InterfaceMenu{
             hideAction();
             int tokenLose = (blackJack.getBet().getBet(user)) / 2;
 
-            logMenuController.getLog("Le joueur "+user.getPseudo()+" a perdu "+tokenLose+" jetons.");
+            logMenuController.getLog("Le joueur "+user.getUserName()+" a perdu "+tokenLose+" jetons.");
             labelProfit.setText("Gain : -" + tokenLose);
             labelToken.setText("Jetons : " + user.getToken());
             newPartyButton.setVisible(true);
@@ -543,7 +543,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         }
         else {
             surrender = true;
-            logMenuController.getLog("C'est au tour de la main n°2 du joueur "+user.getPseudo());
+            logMenuController.getLog("C'est au tour de la main n°2 du joueur "+user.getUserName());
             split = false;
             indexCurrentHand = 2;
         }
@@ -562,10 +562,10 @@ public class BlackJackMenuController implements InterfaceMenu{
         timeline.play();
 
         if(userSecondHand.size() > 0) {
-            logMenuController.getLog("Le joueur " + user.getPseudo() + " pioche la carte " + newCard.getNumber() + " de " + newCard.getRank() + " dans sa main n°" + indexCurrentHand);
+            logMenuController.getLog("Le joueur " + user.getUserName() + " pioche la carte " + newCard.getNumber() + " de " + newCard.getRank() + " dans sa main n°" + indexCurrentHand);
         }
         else {
-            logMenuController.getLog("Le joueur "+user.getPseudo()+" pioche la carte "+newCard.getNumber()+" de "+newCard.getRank());
+            logMenuController.getLog("Le joueur "+user.getUserName()+" pioche la carte "+newCard.getNumber()+" de "+newCard.getRank());
         }
 
         if(indexCurrentHand == 1){
@@ -587,10 +587,10 @@ public class BlackJackMenuController implements InterfaceMenu{
     private void verification(){
         if(blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(indexCurrentHand)) > 21){
             if(userSecondHand.size() > 0) {
-                logMenuController.getLog("La main n°" + indexCurrentHand + " du joueur " + user.getPseudo() + " a dépassé 21.");
+                logMenuController.getLog("La main n°" + indexCurrentHand + " du joueur " + user.getUserName() + " a dépassé 21.");
             }
             else {
-                logMenuController.getLog("La main du joueur "+user.getPseudo()+" a dépassé 21.");
+                logMenuController.getLog("La main du joueur "+user.getUserName()+" a dépassé 21.");
             }
             if(!split && !surrender) {
                 if(blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)) <= 21){
@@ -611,7 +611,7 @@ public class BlackJackMenuController implements InterfaceMenu{
 
         if(blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(indexCurrentHand)) == 21){
             if(!split) {
-                logMenuController.getLog("Le joueur "+user.getPseudo()+" a fait un Black Jack");
+                logMenuController.getLog("Le joueur "+user.getUserName()+" a fait un Black Jack");
             }
             checkSplit();
         }
@@ -630,15 +630,15 @@ public class BlackJackMenuController implements InterfaceMenu{
 
         if(gain < 0){
             logMenuController.getLog("Le croupier a gagné.");
-            logMenuController.getLog("Le joueur "+user.getPseudo()+" a perdu "+(gain+"").substring(1)+" jetons.");
+            logMenuController.getLog("Le joueur "+user.getUserName()+" a perdu "+(gain+"").substring(1)+" jetons.");
         }
         if(gain > 0){
-            logMenuController.getLog("Le joueur "+user.getPseudo()+" a gagné.");
-            logMenuController.getLog("Le joueur "+user.getPseudo()+" a gagné "+gain+" jetons.");
+            logMenuController.getLog("Le joueur "+user.getUserName()+" a gagné.");
+            logMenuController.getLog("Le joueur "+user.getUserName()+" a gagné "+gain+" jetons.");
         }
         if(gain == 0){
             logMenuController.getLog("Egalité, personne ne gagne.");
-            logMenuController.getLog("Le joueur "+user.getPseudo()+" ne perd et ne gagne aucun jeton.");
+            logMenuController.getLog("Le joueur "+user.getUserName()+" ne perd et ne gagne aucun jeton.");
         }
 
         database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\",\""+databaseName.getGameBlackJack()+"\","+gain+",\""+getCurrentDate()+"\"",databaseName.getTableHistoryPartyGamedColumnMailUser()+","+databaseName.getTableHistoryPartyGamedColumnGameName()+","+databaseName.getTableHistoryPartyGamedColumnTokenGain()+","+databaseName.getTableHistoryPartyGamedColumnDate());
@@ -752,7 +752,7 @@ public class BlackJackMenuController implements InterfaceMenu{
 
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e ->  cardSound.play()));
 
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Le joueur "+user.getPseudo()+" pioche la carte "+blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber()+" de "+blackJack.getListOfUserHand().get(1).getHand().get(0).getRank())));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Le joueur "+user.getUserName()+" pioche la carte "+blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber()+" de "+blackJack.getListOfUserHand().get(1).getHand().get(0).getRank())));
         timeline.getKeyFrames().add(new KeyFrame(timePoint,e -> userFirstHand.add(chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(0).getRank()))));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> setupCard(userFirstHand.get(0), currentPositionXUserFirstHand, ORIGIN_Y_USER)));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelValueUserFirstHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)))));
@@ -768,7 +768,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e ->  currentPositionXCroupier += 25));
         timePoint = timePoint.add(pause);
 
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Le joueur "+user.getPseudo()+" pioche la carte "+blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber()+" de "+blackJack.getListOfUserHand().get(1).getHand().get(1).getRank()+"\n")));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Le joueur "+user.getUserName()+" pioche la carte "+blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber()+" de "+blackJack.getListOfUserHand().get(1).getHand().get(1).getRank()+"\n")));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> userFirstHand.add(chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(1).getRank()))));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> setupCard(userFirstHand.get(1), currentPositionXUserFirstHand, ORIGIN_Y_USER)));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelValueUserFirstHand.setText("valeur de la main : "+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)))));

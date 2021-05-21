@@ -13,7 +13,7 @@ class UserTest {
         String pseudo =  "TEST";
         Database database = new Database();
         User user = new User(pseudo, "test", "test", 0, 0, database);
-        assertEquals(user.getPseudo(), pseudo);
+        assertEquals(user.getUserName(), pseudo);
     }
 
     @Test
@@ -68,8 +68,8 @@ class UserTest {
     void setPseudo() {
         User user = new User();
         String pseudo = "TEST";
-        user.setPseudo(pseudo);
-        assertEquals(user.getPseudo(), pseudo);
+        user.setUserName(pseudo);
+        assertEquals(user.getUserName(), pseudo);
     }
 
     @Test

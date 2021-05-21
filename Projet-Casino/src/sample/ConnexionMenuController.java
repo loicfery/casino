@@ -166,6 +166,9 @@ public class ConnexionMenuController implements InterfaceMenu{
         textNewUserName.setVisible(true);
         buttonInscription.setVisible(true);
         buttonLoginMenuReturn.setVisible(true);
+        textNewEmail.setText("");
+        textNewPassword.setText("");
+        textNewUserName.setText("");
     }
 
     /** Méthode pour créer un nouveau compte **/
