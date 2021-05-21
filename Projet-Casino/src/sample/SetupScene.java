@@ -157,4 +157,16 @@ public class SetupScene {
         checkBox.setVisible(visible);
         anchorPane.getChildren().add(checkBox);
     }
+
+    public void setRadioButton(RadioButton radioButton, double layoutX, double layoutY, double prefHeight, double prefWidth, String text, Font font,Paint textColor, boolean visible, AnchorPane anchorPane){
+        radioButton.setLayoutX(layoutX);
+        radioButton.setLayoutY(layoutY);
+        radioButton.setVisible(visible);
+        radioButton.setText(text);
+        radioButton.setFont(font);
+        radioButton.setTextFill(textColor);
+        radioButton.setPrefWidth(prefHeight);
+        radioButton.setPrefHeight(prefWidth);
+        anchorPane.getChildren().add(radioButton);
+    }
 }

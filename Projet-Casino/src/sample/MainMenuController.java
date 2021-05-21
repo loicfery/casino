@@ -22,13 +22,14 @@ import javafx.stage.WindowEvent;;
 
 public class MainMenuController implements InterfaceMenu{
 
-    private final BorderPane root = new BorderPane();
+    private BorderPane root;
     private final Stage stage;
-    private final AnchorPane anchorPane = new AnchorPane();
+    private AnchorPane anchorPane;
     private final SetupScene setupScene = new SetupScene();
     private final User user;
-    private final SettingMenuController settingMenuController;
+    private SettingMenuController settingMenuController;
     private final Database database;
+    private Language language;
 
     private final Button logoutButton = new Button();
     private final Button informationMenuButton = new Button();
@@ -45,13 +46,14 @@ public class MainMenuController implements InterfaceMenu{
     private boolean backgroundAnimation;
 
 
-    public MainMenuController(Stage stage,User user, Database database, double soundVolume, boolean backgroundAnimation){
+    public MainMenuController(Stage stage,User user, Database database,Language language, double soundVolume, boolean backgroundAnimation){
         this.stage = stage;
         this.user = user;
         this.soundVolume = soundVolume;
         this.backgroundAnimation = backgroundAnimation;
-        settingMenuController = new SettingMenuController(this, soundVolume,backgroundAnimation);
+        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
         this.database = database;
+        this.language = language;
     }
 
     public void setting(){
@@ -61,18 +63,20 @@ public class MainMenuController implements InterfaceMenu{
                 Platform.exit();
             }
         });
+        root = new BorderPane();
         Scene scene = new Scene(root, 800, 800);
         scene.getStylesheets().add(getClass().getResource("mainMenu.css").toExternalForm());
         stage.setScene(scene);
+        anchorPane = new AnchorPane();
 
         setupScene.setImageView(pictureBlackJackMenu,20.0,170.0,300.0,370.0,new Image(getClass().getResource("image/blackjack.png").toExternalForm()),true,anchorPane);
         setupScene.setImageView(pictureSlotMachineMenu,410.0,490.0,290.0,370.0,new Image(getClass().getResource("image/slot_machine.jpg").toExternalForm()),true,anchorPane);
         setupScene.setImageView(pictureRouletteMenu,20.0,490.0,290.0,370.0,new Image(getClass().getResource("image/roulette2.jpg").toExternalForm()),true,anchorPane);
         setupScene.setImageView(pictureShopMenu,315,20,80,120,new Image(getClass().getResource("image/shop.jpg").toExternalForm()),true,anchorPane);
 
-        setupScene.setButton(logoutButton,"Déconnexion", Pos.CENTER,20,20,80,120,new Font(15),true,anchorPane);
-        setupScene.setButton(informationMenuButton,"Informations",Pos.CENTER,170,20,80,120,new Font(15),true,anchorPane);
-        setupScene.setButton(historyGamePlayedButton,"Historique jeux",Pos.CENTER,470,20,80,150,new Font(15),true,anchorPane);
+        setupScene.setButton(logoutButton,language.getMainMenuControllerLogoutButton(), Pos.CENTER,20,20,80,120,new Font(15),true,anchorPane);
+        setupScene.setButton(informationMenuButton,language.getInformation(),Pos.CENTER,170,20,80,120,new Font(15),true,anchorPane);
+        setupScene.setButton(historyGamePlayedButton,language.getMainMenuControllerHistoryGamePlayedButton(),Pos.CENTER,470,20,80,150,new Font(15),true,anchorPane);
 
         setupScene.setCircle(circleSetting,30,750,40,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())), Paint.valueOf("GREEN"), StrokeType.INSIDE,1.0,true,anchorPane);
 
@@ -91,43 +95,43 @@ public class MainMenuController implements InterfaceMenu{
 
     private void goToConnexionMenu(){
         settingMenuController.exitSettingMenu();
-        ConnexionMenuController controller = new ConnexionMenuController(stage,database);
+        ConnexionMenuController controller = new ConnexionMenuController(stage,database,language);
         controller.setting();
     }
 
     private void goToInformationMenu(){
         settingMenuController.exitSettingMenu();
-        InformationMenuController informationMenuController = new InformationMenuController(user,stage, database,soundVolume,backgroundAnimation);
+        InformationMenuController informationMenuController = new InformationMenuController(user,stage, database,language,soundVolume,backgroundAnimation);
         informationMenuController.setting();
     }
 
     private void goToShopMenu() {
         settingMenuController.exitSettingMenu();
-        ShopMenuController shopMenuController = new ShopMenuController(stage,user,database,soundVolume,backgroundAnimation);
+        ShopMenuController shopMenuController = new ShopMenuController(stage,user,database,language,soundVolume,backgroundAnimation);
         shopMenuController.setting();
     }
 
     private void goToBlackJackMenu(){
         settingMenuController.exitSettingMenu();
-        BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage, database,soundVolume,backgroundAnimation);
+        BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage, database,language,soundVolume,backgroundAnimation);
         blackJackMenuController.setting();
     }
 
     private void goToSlotMachineMenu(){
         settingMenuController.exitSettingMenu();
-        SlotMachineMenuController slotMachineMenuController = new SlotMachineMenuController(user,stage,database,soundVolume,backgroundAnimation);
+        SlotMachineMenuController slotMachineMenuController = new SlotMachineMenuController(user,stage,database,language,soundVolume,backgroundAnimation);
         slotMachineMenuController.setting();
     }
 
     private void goToRouletteMenu(){
         settingMenuController.exitSettingMenu();
-        RouletteMenuController rouletteMenuController = new RouletteMenuController(user,stage, database,soundVolume,backgroundAnimation);
+        RouletteMenuController rouletteMenuController = new RouletteMenuController(user,stage, database,language,soundVolume,backgroundAnimation);
         rouletteMenuController.setting();
     }
 
     private void goToHistoryGamePlayedMenu(){
         settingMenuController.exitSettingMenu();
-        HistoryGamePlayedMenuController historyGamePlayedMenuController = new HistoryGamePlayedMenuController(user,stage,database,soundVolume,backgroundAnimation);
+        HistoryGamePlayedMenuController historyGamePlayedMenuController = new HistoryGamePlayedMenuController(user,stage,database,language,soundVolume,backgroundAnimation);
         historyGamePlayedMenuController.setting();
     }
 
@@ -143,6 +147,15 @@ public class MainMenuController implements InterfaceMenu{
 
     private void goToMenuSetting(){
         settingMenuController.exitSettingMenu();
+        settingMenuController.setting();
+    }
+
+    public void setLanguage(Language language){ this.language = language; }
+
+    public void refresh(){
+        setting();
+        settingMenuController.exitSettingMenu();
+        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
         settingMenuController.setting();
     }
 }

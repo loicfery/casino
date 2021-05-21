@@ -4,8 +4,6 @@ import games.Database;
 import games.DatabaseName;
 import games.User;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -25,21 +23,20 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class HistoryGamePlayedMenuController implements InterfaceMenu{
 
-    private final BorderPane root = new BorderPane();
+    private BorderPane root;
     private final Stage stage;
-    private final AnchorPane anchorPane = new AnchorPane();
+    private AnchorPane anchorPane;
     private final SetupScene setupScene = new SetupScene();
     private final User user;
-    private final SettingMenuController settingMenuController;
+    private SettingMenuController settingMenuController;
     private final Database database;
     private final DatabaseName databaseName = new DatabaseName();
+    private Language language;
 
     private final Button returnShopMenuButton = new Button();
     private final Button gameBlackJackButton = new Button();
@@ -68,13 +65,14 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
     private boolean ADMIN = false;
     private String currentGame;
 
-    public HistoryGamePlayedMenuController(User user, Stage stage, Database database, double soundVolume, boolean backgroundAnimation){
+    public HistoryGamePlayedMenuController(User user, Stage stage, Database database, Language language, double soundVolume, boolean backgroundAnimation){
         this.user = user;
         this.stage = stage;
         this.soundVolume = soundVolume;
         this.backgroundAnimation = backgroundAnimation;
         this.database = database;
-        settingMenuController = new SettingMenuController(this, soundVolume,backgroundAnimation);
+        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
+        this.language = language;
 
         if(user.getRank().equals("ADMIN")){
             ADMIN = true;
@@ -91,9 +89,11 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
                 Platform.exit();
             }
         });
+        root = new BorderPane();
         Scene scene = new Scene(root, 600, 800);
         scene.getStylesheets().add(getClass().getResource("historyShoppingMenu.css").toExternalForm());
         stage.setScene(scene);
+        anchorPane = new AnchorPane();
 
         setupScene.setLabel(titleLabel,"Historique de jeux : Black Jack",Pos.CENTER,0,20,20,600,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
 
@@ -101,13 +101,13 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
 
         setupScene.setTextField(textSearchUser,"",Pos.CENTER,20,500,20,150,new Font(15),false,anchorPane);
 
-        setupScene.setButton(gameBlackJackButton,"Black Jack",Pos.CENTER,20,150,20,150,new Font(15),true,anchorPane);
-        setupScene.setButton(gameSlotMachineButton,"Machine à sous",Pos.CENTER,20,250,20,150,new Font(15),true,anchorPane);
-        setupScene.setButton(gameRouletteButton,"Roulette",Pos.CENTER,20,350,20,150,new Font(15),true,anchorPane);
-        setupScene.setButton(returnShopMenuButton,"Quitter", Pos.CENTER,25,720,60,123.0,new Font(20.0),true,anchorPane);
+        setupScene.setButton(gameBlackJackButton,language.getGameBlackJackButton(),Pos.CENTER,20,150,20,150,new Font(15),true,anchorPane);
+        setupScene.setButton(gameSlotMachineButton,language.getGameSlotMachineButton(),Pos.CENTER,20,250,20,150,new Font(15),true,anchorPane);
+        setupScene.setButton(gameRouletteButton,language.getGameRouletteButton(),Pos.CENTER,20,350,20,150,new Font(15),true,anchorPane);
+        setupScene.setButton(returnShopMenuButton,language.getQuitButton(), Pos.CENTER,25,720,60,123.0,new Font(20.0),true,anchorPane);
         setupScene.setButton(leftInformationButton,"<-",Pos.CENTER,300,720,20,50,new Font(15),false,anchorPane);
         setupScene.setButton(rightInformationButton,"->",Pos.CENTER,450,720,20,50,new Font(15),false,anchorPane);
-        setupScene.setButton(searchUserButton,"Chercher",Pos.CENTER,20,550,20,150,new Font(15),false,anchorPane);
+        setupScene.setButton(searchUserButton,language.getHistorySearchUserButton(),Pos.CENTER,20,550,20,150,new Font(15),false,anchorPane);
 
         setupScene.setCircle(circleSetting,30,750,40,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())), Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
 
@@ -187,12 +187,12 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
             }
 
             while (resultSet.next()){
-                list.add(resultSet.getString(2)+" : ");
-                list.add(resultSet.getString(5)+" : "+resultSet.getString(3)+" --> "+resultSet.getInt(4)+" jetons");
+                list.add(resultSet.getString(2) + " : ");
+                list.add(resultSet.getString(5) + " : " + resultSet.getString(3) + " --> " + resultSet.getInt(4) + " " + language.getToken());
             }
 
             if(list.size() == 0){
-                list.add("Il n'y a aucune partie enregistrée");
+                list.add(language.getHistoryGamePlayedNoGameRegister());
             }
         }
         catch (Exception e){ System.out.println(errorMessage); }
@@ -264,7 +264,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
      * Méthode qui affiche l'historique pour le black jack
      **/
     private void setGameBlackJack(){
-        titleLabel.setText("Historique de jeux : Black Jack");
+        titleLabel.setText(language.getHistoryGamePlayedTitleLabelBlackJack());
         currentList = listOfGameBlackJack;
         indexList = 0;
         currentGame = "blackJack";
@@ -275,7 +275,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
      * Méthode qui affiche l'historique pour la machine à sous
      **/
     private void setGameSlotMachine(){
-        titleLabel.setText("Historique de jeux : Machine à sous");
+        titleLabel.setText(language.getHistoryGamePlayedTitleLabelSlotMachine());
         currentList = listOfGameSlotMachine;
         indexList = 0;
         currentGame = "slotMachine";
@@ -286,7 +286,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
      * Méthode qui affiche l'historique pour la roulette
      **/
     private void setGameRoulette(){
-        titleLabel.setText("Historique de jeux : Roulette");
+        titleLabel.setText(language.getHistoryGamePlayedTitleLabelRoulette());
         currentList = listOfGameRoulette;
         indexList = 0;
         currentGame = "roulette";
@@ -298,7 +298,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
      **/
     private void goToMainMenu(){
         settingMenuController.exitSettingMenu();
-        MainMenuController mainMenuController = new MainMenuController(stage,user, database,soundVolume,backgroundAnimation);
+        MainMenuController mainMenuController = new MainMenuController(stage,user, database,language,soundVolume,backgroundAnimation);
         mainMenuController.setting();
     }
 
@@ -323,6 +323,15 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
      **/
     private void goToMenuSetting(){
         settingMenuController.exitSettingMenu();
+        settingMenuController.setting();
+    }
+
+    public void setLanguage(Language language){ this.language = language; }
+
+    public void refresh(){
+        setting();
+        settingMenuController.exitSettingMenu();
+        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
         settingMenuController.setting();
     }
 }

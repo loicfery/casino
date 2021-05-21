@@ -28,15 +28,17 @@ import java.sql.ResultSet;
 
 public class ConnexionMenuController implements InterfaceMenu{
 
-    private final BorderPane root = new BorderPane();
+    private BorderPane root;
     private final Stage stage;
-    private final AnchorPane anchorPane = new AnchorPane();
+    private AnchorPane anchorPane;
     private final SetupScene setupScene = new SetupScene();
     private User user;
-    private final SettingMenuController settingMenuController;
+    private
+    SettingMenuController settingMenuController;
     private final Database database;
     private final DatabaseName databaseName = new DatabaseName();
     private final MessageInterface messageInterface = new MessageInterface();
+    private Language language;
 
     private double soundVolume;
     private boolean backgroundAnimation;
@@ -62,12 +64,13 @@ public class ConnexionMenuController implements InterfaceMenu{
 
     private final Circle circleSetting = new Circle();
 
-    public ConnexionMenuController(Stage stage, Database database){
+    public ConnexionMenuController(Stage stage, Database database, Language language){
         this.stage = stage;
         this.soundVolume = 0.5;
         this.backgroundAnimation = true;
-        settingMenuController = new SettingMenuController(this, soundVolume,backgroundAnimation);
+        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
         this.database = database;
+        this.language = language;
     }
 
     /** Méthode qui initialise l'interface de connexion **/
@@ -78,26 +81,28 @@ public class ConnexionMenuController implements InterfaceMenu{
                 Platform.exit();
             }
         });
+        root = new BorderPane();
         Scene scene = new Scene(root, 500, 500);
         scene.getStylesheets().add(getClass().getResource("connexionMenu.css").toExternalForm());
         stage.setScene(scene);
+        anchorPane = new AnchorPane();
 
-        setupScene.setLabel(labelTitle,"Bienvenue au casino", Pos.CENTER,100,50,20,300,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelEmail,"Email",Pos.CENTER,60,200,20,150,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelPassword,"Mot de passe",Pos.CENTER,260,200,20,200,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelTitle,language.getConnexionMenuControllerLabelTitle1(), Pos.CENTER,0,50,20,500,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelEmail,language.getConnexionMenuControllerLabelEmail(),Pos.CENTER,60,200,20,150,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelPassword,language.getConnexionMenuControllerLabelPassword(),Pos.CENTER,260,200,20,200,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setTextField(textEmail,"",Pos.CENTER,40,250,10,200,new Font(15),true,anchorPane);
         setupScene.setTextField(textPassword,"",Pos.CENTER,270,250,10,200,new Font(15),true,anchorPane);
-        setupScene.setButton(buttonLogin,"Connexion",Pos.CENTER,10,380,20,480,new Font(25),true,anchorPane);
-        setupScene.setButton(buttonNewAccount,"Nouveau Compte",Pos.CENTER,10,440,20,480,new Font(25),true,anchorPane);
-        setupScene.setButton(buttonLoginMenuReturn,"Se connecter",Pos.CENTER,10,380,20,480,new Font(25),false,anchorPane);
-        setupScene.setButton(buttonInscription,"S'inscrire",Pos.CENTER,10,440,20,480,new Font(25),false,anchorPane);
-        setupScene.setLabel(labelNewMail,"Email :",Pos.CENTER,100,150,20,150,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
-        setupScene.setLabel(labelNewPassword,"Mot de passe :",Pos.CENTER,30,200,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
-        setupScene.setLabel(labelNewUserName,"Pseudonyme :",Pos.CENTER,30,250,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
+        setupScene.setButton(buttonLogin,language.getConnexionMenuControllerButtonLogin(),Pos.CENTER,10,380,20,480,new Font(25),true,anchorPane);
+        setupScene.setButton(buttonNewAccount,language.getConnexionMenuControllerButtonNewAccount(),Pos.CENTER,10,440,20,480,new Font(25),true,anchorPane);
+        setupScene.setButton(buttonLoginMenuReturn,language.getConnexionMenuControllerButtonLoginMenuReturn(),Pos.CENTER,10,380,20,480,new Font(25),false,anchorPane);
+        setupScene.setButton(buttonInscription,language.getConnexionMenuControllerButtonInscription(),Pos.CENTER,10,440,20,480,new Font(25),false,anchorPane);
+        setupScene.setLabel(labelNewMail,language.getLabelMail(),Pos.CENTER,100,150,20,150,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
+        setupScene.setLabel(labelNewPassword,language.getConnexionMenuControllerLabelNewPassword(),Pos.CENTER,30,200,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
+        setupScene.setLabel(labelNewUserName,language.getConnexionMenuControllerLabelNewUserName(),Pos.CENTER,30,250,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
         setupScene.setTextField(textNewEmail,"",Pos.CENTER,250,150,20,200,new Font(15),false,anchorPane);
         setupScene.setTextField(textNewPassword,"",Pos.CENTER,250,200,20,200,new Font(15),false,anchorPane);
         setupScene.setTextField(textNewUserName,"",Pos.CENTER,250,250,20,200,new Font(15),false,anchorPane);
-        setupScene.setLabel(labelError,"Erreur : ",Pos.CENTER,50,330,20,400,new Font(15),Paint.valueOf("RED"),false,anchorPane);
+        setupScene.setLabel(labelError,"",Pos.CENTER,50,330,20,400,new Font(15),Paint.valueOf("RED"),false,anchorPane);
 
         setupScene.setCircle(circleSetting,18,475,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
 
@@ -135,13 +140,13 @@ public class ConnexionMenuController implements InterfaceMenu{
                     switchMainMenu();
                 }
                 else {
-                    messageInterface.setMessage(labelError,"L'email ou le mot de passe est incorrect",Color.RED);
+                    messageInterface.setMessage(labelError,language.getConnexionMenuControllerLabelErrorConnexion(),Color.RED);
                 }
             }
             catch (Exception e){}
 
         } else {
-            messageInterface.setMessage(labelError,"Un ou plusieurs champs sont vides",Color.RED);
+            messageInterface.setMessage(labelError,language.getLabelErrorEmptyField(),Color.RED);
         }
 
     }
@@ -156,7 +161,7 @@ public class ConnexionMenuController implements InterfaceMenu{
         buttonNewAccount.setVisible(false);
         settingMenuController.exitSettingMenu();
 
-        labelTitle.setText("Nouveau Compte");
+        labelTitle.setText(language.getConnexionMenuControllerLabelTitle2());
 
         labelNewMail.setVisible(true);
         labelNewPassword.setVisible(true);
@@ -174,21 +179,31 @@ public class ConnexionMenuController implements InterfaceMenu{
     /** Méthode pour créer un nouveau compte **/
     private void newAccountGoToMainMenu(){
         if (!textNewEmail.getText().isEmpty() && !textNewPassword.getText().isEmpty() && !textNewUserName.getText().isEmpty()) {
-            labelNewMail.setVisible(false);
-            labelNewPassword.setVisible(false);
-            labelNewUserName.setVisible(false);
-            textNewEmail.setVisible(false);
-            textNewPassword.setVisible(false);
-            textNewUserName.setVisible(false);
-            buttonInscription.setVisible(false);
-            buttonLoginMenuReturn.setVisible(false);
-            settingMenuController.exitSettingMenu();
+            try {
+                ResultSet resultSet = database.select(databaseName.getTableUser(),databaseName.getTableUserColumnMailUser()+" = \""+textNewEmail.getText()+"\"");
 
-            database.insert(databaseName.getTableUser(),"\""+ textNewUserName.getText()+"\", \""+textNewEmail.getText()+"\",\""+textNewPassword.getText()+"\",\"USER\",100,0",databaseName.getTableUserColumnUserName()+","+databaseName.getTableUserColumnMailUser()+","+databaseName.getTableUserColumnPassword()+","+databaseName.getTableUserColumnRank()+","+databaseName.getTableUserColumnMoney()+","+databaseName.getTableUserColumnToken());
-            setUser(new User(textNewUserName.getText(),textNewEmail.getText(),"USER",0,100,database));
-            switchMainMenu();
+                if(!resultSet.next()) {
+                    labelNewMail.setVisible(false);
+                    labelNewPassword.setVisible(false);
+                    labelNewUserName.setVisible(false);
+                    textNewEmail.setVisible(false);
+                    textNewPassword.setVisible(false);
+                    textNewUserName.setVisible(false);
+                    buttonInscription.setVisible(false);
+                    buttonLoginMenuReturn.setVisible(false);
+                    settingMenuController.exitSettingMenu();
+
+                    database.insert(databaseName.getTableUser(), "\"" + textNewUserName.getText() + "\", \"" + textNewEmail.getText() + "\",\"" + textNewPassword.getText() + "\",\"USER\",100,0", databaseName.getTableUserColumnUserName() + "," + databaseName.getTableUserColumnMailUser() + "," + databaseName.getTableUserColumnPassword() + "," + databaseName.getTableUserColumnRank() + "," + databaseName.getTableUserColumnMoney() + "," + databaseName.getTableUserColumnToken());
+                    setUser(new User(textNewUserName.getText(), textNewEmail.getText(), "USER", 0, 100, database));
+                    switchMainMenu();
+                }
+                else {
+                    messageInterface.setMessage(labelError,language.getLabelErrorMailAlreadyUsed(), Color.RED);
+                }
+            }
+            catch (Exception e){}
         } else {
-            messageInterface.setMessage(labelError,"Un ou plusieurs champs sont vides", Color.RED);
+            messageInterface.setMessage(labelError,language.getLabelErrorEmptyField(), Color.RED);
         }
 
     }
@@ -202,7 +217,7 @@ public class ConnexionMenuController implements InterfaceMenu{
         buttonLogin.setVisible(true);
         buttonNewAccount.setVisible(true);
 
-        labelTitle.setText("Bienvenue au casino");
+        labelTitle.setText(language.getConnexionMenuControllerLabelTitle1());
 
         labelNewMail.setVisible(false);
         labelNewPassword.setVisible(false);
@@ -221,7 +236,7 @@ public class ConnexionMenuController implements InterfaceMenu{
 
     /** Méthode pour charger le menu principal **/
     private void switchMainMenu(){
-        MainMenuController mainMenuController = new MainMenuController(stage,user, database, soundVolume,backgroundAnimation);
+        MainMenuController mainMenuController = new MainMenuController(stage,user, database,language, soundVolume,backgroundAnimation);
         mainMenuController.setting();
     }
 
@@ -237,6 +252,15 @@ public class ConnexionMenuController implements InterfaceMenu{
 
     private void goToMenuSetting(){
         settingMenuController.exitSettingMenu();
+        settingMenuController.setting();
+    }
+
+    public void setLanguage(Language language){ this.language = language; }
+
+    public void refresh(){
+        setting();
+        settingMenuController.exitSettingMenu();
+        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
         settingMenuController.setting();
     }
 }
