@@ -50,7 +50,6 @@ public interface Language {
     String getShopMenuControllerHistoryShoppingButton();
     String getShopMenuControllerExchangeButton();
     String getShopMenuControllerLabelErrorExchangeValid();
-    String getShopMenuControllerAddExchangeButton();
 
     /** HistoryShoppingMenuController **/
     String getHistoryShoppingMenuControllerLabelTitle1();
@@ -89,6 +88,12 @@ public interface Language {
     String getRuleFileNameSlotMachine();
     String getLabelTitleSlotMachine();
 
+    /** BuyingMoneyMenuController **/
+    String getBuyingMoneyMenuControllerTitleLabel();
+    String getBuyingMoneyMenuControllerLabelErrorWrongValue();
+    String getBuyingMoneyMenuControllerLabelErrorFieldEmpty();
+    String getBuyingMoneyMenuControllerLabelErrorMoneyAdd();
+
     /** **/
     String getLabelToken();
     String getLabelMoney();
@@ -115,4 +120,5 @@ public interface Language {
     String getGameBlackJackButton();
     String getGameSlotMachineButton();
     String getGameRouletteButton();
+    String getAddButton();
 }

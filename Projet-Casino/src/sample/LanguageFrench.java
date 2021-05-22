@@ -156,10 +156,6 @@ public class LanguageFrench implements Language{
         return "Votre échange a bien été effectué";
     }
 
-    public String getShopMenuControllerAddExchangeButton(){
-        return "Ajouter";
-    }
-
     /** HistoryShoppingMenuController **/
     public String getHistoryShoppingMenuControllerLabelTitle1(){
         return "Historique des échanges : Jeton";
@@ -222,6 +218,17 @@ public class LanguageFrench implements Language{
     public String getRuleFileNameSlotMachine(){ return "rule_slotMachine_french.txt"; }
 
     public String getLabelTitleSlotMachine(){ return "Règles des machines à sous"; }
+
+    /** BuyingMoneyMenuController **/
+    public String getBuyingMoneyMenuControllerTitleLabel(){
+        return "Ajouter de l'argent";
+    }
+
+    public String getBuyingMoneyMenuControllerLabelErrorWrongValue(){ return "Il faut une valeur strictement positive"; }
+
+    public String getBuyingMoneyMenuControllerLabelErrorFieldEmpty(){ return "Le champ est vide"; }
+
+    public String getBuyingMoneyMenuControllerLabelErrorMoneyAdd(){ return "d'argent ont été ajouté"; }
 
     /** **/
     public String getLabelToken(){
@@ -311,4 +318,8 @@ public class LanguageFrench implements Language{
     public String getGameSlotMachineButton(){return "Machine à sous"; }
 
     public String getGameRouletteButton(){ return "Roulette"; }
+
+    public String getAddButton(){
+        return "Ajouter";
+    }
 }

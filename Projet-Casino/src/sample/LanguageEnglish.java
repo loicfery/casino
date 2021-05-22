@@ -156,10 +156,6 @@ public class LanguageEnglish implements Language{
         return "Your exchange has been completed";
     }
 
-    public String getShopMenuControllerAddExchangeButton(){
-        return "Add";
-    }
-
     /** HistoryShoppingMenuController **/
     public String getHistoryShoppingMenuControllerLabelTitle1(){
         return "History of exchanges : Token";
@@ -222,6 +218,17 @@ public class LanguageEnglish implements Language{
     public String getRuleFileNameSlotMachine(){ return "rule_slotMachine_english.txt"; }
 
     public String getLabelTitleSlotMachine(){ return "Slot machine rules"; }
+
+    /** BuyingMoneyMenuController **/
+    public String getBuyingMoneyMenuControllerTitleLabel(){
+        return "Add money";
+    }
+
+    public String getBuyingMoneyMenuControllerLabelErrorWrongValue(){ return "A strictly positive value is required"; }
+
+    public String getBuyingMoneyMenuControllerLabelErrorFieldEmpty(){ return "The field is empty"; }
+
+    public String getBuyingMoneyMenuControllerLabelErrorMoneyAdd(){ return "of money have been added"; }
 
     /** **/
     public String getLabelToken(){
@@ -314,4 +321,7 @@ public class LanguageEnglish implements Language{
 
     public String getGameRouletteButton(){ return "Roulette"; }
 
+    public String getAddButton(){
+        return "Add";
+    }
 }

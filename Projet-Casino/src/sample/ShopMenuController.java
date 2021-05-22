@@ -488,7 +488,7 @@ public class ShopMenuController implements InterfaceMenu{
         setupScene.setTextField(textMoney, "", Pos.CENTER, xMoney, addInformationButton.getLayoutY(), 20, 70, new Font(15), true, anchorPane);
         setupScene.setTextField(textToken,"",Pos.CENTER,xToken,addInformationButton.getLayoutY(),20,70,new Font(15),true,anchorPane);
         setupScene.setLabel(label, " ---> ", Pos.CENTER, xLabel, addInformationButton.getLayoutY(), 20, 50, new Font(15), Paint.valueOf("BLACK"), true, anchorPane);
-        setupScene.setButton(validButton,language.getShopMenuControllerAddExchangeButton(),Pos.CENTER,xButton,addInformationButton.getLayoutY(),20,100,new Font(15),true,anchorPane);
+        setupScene.setButton(validButton,language.getAddButton(),Pos.CENTER,xButton,addInformationButton.getLayoutY(),20,100,new Font(15),true,anchorPane);
         validButton.setOnMouseClicked((event) -> validAddTokenInformation(textMoney,textToken,addInformationButton,addInformationButton.getLayoutY()));
     }
 
@@ -513,7 +513,7 @@ public class ShopMenuController implements InterfaceMenu{
         setupScene.setTextField(textMoney, "", Pos.CENTER, xMoney, addInformationButton.getLayoutY(), 20, 70, new Font(15), true, anchorPane);
         setupScene.setTextField(textToken,"",Pos.CENTER,xToken,addInformationButton.getLayoutY(),20,70,new Font(15),true,anchorPane);
         setupScene.setLabel(label, " ---> ", Pos.CENTER, xLabel, addInformationButton.getLayoutY(), 20, 50, new Font(15), Paint.valueOf("BLACK"), true, anchorPane);
-        setupScene.setButton(validButton,language.getShopMenuControllerAddExchangeButton(),Pos.CENTER,xButton,addInformationButton.getLayoutY(),20,100,new Font(15),true,anchorPane);
+        setupScene.setButton(validButton,language.getAddButton(),Pos.CENTER,xButton,addInformationButton.getLayoutY(),20,100,new Font(15),true,anchorPane);
         validButton.setOnMouseClicked((event)-> validAddMoneyInformation(textMoney,textToken,addInformationButton,addInformationButton.getLayoutY()));
     }
 
@@ -648,7 +648,7 @@ public class ShopMenuController implements InterfaceMenu{
      **/
     private void goToBuyingMenu(){
         settingMenuController.exitSettingMenu();
-        BuyingMoneyMenuController buyingMoneyMenuController = new BuyingMoneyMenuController(user);
+        BuyingMoneyMenuController buyingMoneyMenuController = new BuyingMoneyMenuController(user,language);
         buyingMoneyMenuController.setting();
     }
 
