@@ -11,13 +11,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -29,14 +25,15 @@ import java.util.List;
 
 public class HistoryShoppingMenuController implements InterfaceMenu{
 
-    private final BorderPane root = new BorderPane();
+    private BorderPane root;
     private final Stage stage;
-    private final AnchorPane anchorPane = new AnchorPane();
+    private AnchorPane anchorPane;
     private final SetupScene setupScene = new SetupScene();
     private final User user;
-    private final SettingMenuController settingMenuController;
+    private SettingMenuController settingMenuController;
     private final Database database;
     private final DatabaseName databaseName = new DatabaseName();
+    private Language language;
 
     private final Label labelTitle = new Label();
 
@@ -59,13 +56,14 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
     private boolean switchExchange = false;
     private boolean ADMIN = false;
 
-    public HistoryShoppingMenuController(User user, Stage stage, Database database, double soundVolume, boolean backgroundAnimation){
+    public HistoryShoppingMenuController(User user, Stage stage, Database database,Language language, double soundVolume, boolean backgroundAnimation){
         this.user = user;
         this.stage = stage;
         this.soundVolume = soundVolume;
         this.backgroundAnimation = backgroundAnimation;
         this.database = database;
-        settingMenuController = new SettingMenuController(this, soundVolume,backgroundAnimation);
+        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
+        this.language = language;
 
         if(user.getRank().equals("ADMIN")){
             ADMIN = true;
@@ -82,22 +80,24 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
                 Platform.exit();
             }
         });
+        root = new BorderPane();
         Scene scene = new Scene(root, 400, 800);
         scene.getStylesheets().add(getClass().getResource("historyShoppingMenu.css").toExternalForm());
         stage.setScene(scene);
+        anchorPane = new AnchorPane();
 
-        setupScene.setLabel(labelTitle,"Historique des échanges : Jeton", Pos.CENTER,0,20,20,400,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelTitle,language.getHistoryShoppingMenuControllerLabelTitle1(), Pos.CENTER,0,20,20,400,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
 
         setupScene.setTextArea(textInformation,0,100,700,400,false,true,anchorPane);
 
         setupScene.setTextField(textSearchUser,"",Pos.CENTER,175,650,20,200,new Font(15),false,anchorPane);
 
-        setupScene.setButton(returnShopMenuButton,"Quitter",Pos.CENTER,25,720,60,123.0,new Font(20.0),true,anchorPane);
+        setupScene.setButton(returnShopMenuButton,language.getQuitButton(),Pos.CENTER,25,720,60,123.0,new Font(20.0),true,anchorPane);
         setupScene.setButton(leftInformationButton,"<-",Pos.CENTER,100,580,20,50,new Font(15),false,anchorPane);
         setupScene.setButton(rightInformationButton,"->",Pos.CENTER,250,580,20,50,new Font(15),true,anchorPane);
-        setupScene.setButton(exchangeTokenButton,"Echange de jeton",Pos.CENTER,175,720,60,200,new Font(20),false,anchorPane);
-        setupScene.setButton(exchangeMoneyButton,"Echange d'argent",Pos.CENTER,175,720,60,200,new Font(20),true,anchorPane);
-        setupScene.setButton(searchUserButton,"Rechercher",Pos.CENTER,25,650,20,123,new Font(15),false,anchorPane);
+        setupScene.setButton(exchangeTokenButton,language.getTitleShopToken(),Pos.CENTER,175,720,60,200,new Font(20),false,anchorPane);
+        setupScene.setButton(exchangeMoneyButton,language.getTitleShopMoney(),Pos.CENTER,175,720,60,200,new Font(20),true,anchorPane);
+        setupScene.setButton(searchUserButton,language.getHistorySearchUserButton(),Pos.CENTER,25,650,20,123,new Font(15),false,anchorPane);
 
         leftInformationButton.setOnMouseClicked((event) -> leftInformation());
         rightInformationButton.setOnMouseClicked((event) -> rightInformation());
@@ -163,13 +163,13 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
                 if(ADMIN){
                     listOfInformationToken.add(resultSetToken.getString(2)+" : ");
                 }
-                listOfInformationToken.add(resultSetToken.getString(5)+" : "+resultSetToken.getInt(3)+" jetons ---> "+resultSetToken.getInt(4)+" $");
+                listOfInformationToken.add(resultSetToken.getString(5) + " : "+ resultSetToken.getInt(3) + " " + language.getToken() +" ---> " + resultSetToken.getInt(4)+" $");
             }
             while(resultSetMoney.next()){
                 if(ADMIN){
-                    listOfInformationMoney.add(resultSetMoney.getString(2)+" : ");
+                    listOfInformationMoney.add(resultSetMoney.getString(2) + " : ");
                 }
-                listOfInformationMoney.add(resultSetMoney.getString(5)+" : "+resultSetMoney.getInt(3)+" $ ---> "+resultSetMoney.getInt(4)+" jetons");
+                listOfInformationMoney.add(resultSetMoney.getString(5) + " : " + resultSetMoney.getInt(3) + " $ ---> " + resultSetMoney.getInt(4) + " " + language.getToken());
             }
         }
         catch (Exception e){ System.out.println("Erreur : getAllInformation dans HistoryShoppingMenuController"); }
@@ -251,13 +251,13 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
             exchangeMoneyButton.setVisible(true);
             exchangeTokenButton.setVisible(false);
             switchExchange = false;
-            labelTitle.setText("Historique des échanges : Jeton");
+            labelTitle.setText(language.getHistoryShoppingMenuControllerLabelTitle1());
         }
         else {
             exchangeMoneyButton.setVisible(false);
             exchangeTokenButton.setVisible(true);
             switchExchange = true;
-            labelTitle.setText("Historique des échanges : Argent");
+            labelTitle.setText(language.getHistoryShoppingMenuControllerLabelTitle2());
 
         }
         indexInformation = 0;
@@ -283,7 +283,7 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
      **/
     private void goToShopMenu(){
         settingMenuController.exitSettingMenu();
-        ShopMenuController shopMenuController = new ShopMenuController(stage,user,database,soundVolume,backgroundAnimation);
+        ShopMenuController shopMenuController = new ShopMenuController(stage,user,database,language,soundVolume,backgroundAnimation);
         shopMenuController.setting();
     }
 
@@ -308,5 +308,14 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
      **/
     public void setBackgroundAnimation(boolean newBackgroundAnimation){
         backgroundAnimation = newBackgroundAnimation;
+    }
+
+    public void setLanguage(Language language){ this.language = language; }
+
+    public void refresh(){
+        setting();
+        settingMenuController.exitSettingMenu();
+        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
+        settingMenuController.setting();
     }
 }

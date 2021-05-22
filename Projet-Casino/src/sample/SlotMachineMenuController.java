@@ -34,17 +34,18 @@ import java.util.List;
 
 public class SlotMachineMenuController implements InterfaceMenu{
 
-    private final BorderPane root = new BorderPane();
+    private  BorderPane root;
     private final Stage stage;
-    private final AnchorPane anchorPane = new AnchorPane();
+    private AnchorPane anchorPane;
     private final SetupScene setupScene = new SetupScene();
     private final User user;
-    private final SettingMenuController settingMenuController;
+    private SettingMenuController settingMenuController;
     private final LogMenuController logMenuController;
     private final RuleMenuController ruleMenuController;
     private final Database database;
     private final DatabaseName databaseName = new DatabaseName();
     private final MessageInterface messageInterface = new MessageInterface();
+    private Language language;
 
     private final List<Rectangle> listOfRectangleAnimate = new ArrayList<>();
     private final List<FillTransition> listOfFillTransition = new ArrayList<>();
@@ -76,16 +77,17 @@ public class SlotMachineMenuController implements InterfaceMenu{
 
     private final SlotMachine slotMachine;
 
-    public SlotMachineMenuController(User user, Stage stage, Database database, double soundVolume, boolean backgroundAnimation){
+    public SlotMachineMenuController(User user, Stage stage, Database database, Language language, double soundVolume, boolean backgroundAnimation){
         this.user = user;
         this.stage = stage;
         this.soundVolume = soundVolume;
         this.backgroundAnimation = backgroundAnimation;
         slotMachine = new SlotMachine(user);
         logMenuController = new LogMenuController();
-        settingMenuController = new SettingMenuController(this, soundVolume,backgroundAnimation);
-        ruleMenuController = new RuleMenuController(this);
+        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
+        ruleMenuController = new RuleMenuController(this,language);
         this.database = database;
+        this.language = language;
     }
 
     /** Méthode qui initialise le'interface de la machine à sous **/
@@ -96,9 +98,11 @@ public class SlotMachineMenuController implements InterfaceMenu{
                 Platform.exit();
             }
         });
+        root = new BorderPane();
         Scene scene = new Scene(root, 800, 800);
         scene.getStylesheets().add(getClass().getResource("slotMachineMenu.css").toExternalForm());
         stage.setScene(scene);
+        anchorPane = new AnchorPane();
 
         setupScene.setRectangle(cadreSlotMachine,105.0,275.0,199.0,601.0,5.0,5.0, Paint.valueOf("RED"),Paint.valueOf("RED"),1.0, StrokeType.INSIDE,true,anchorPane);
 
@@ -107,23 +111,23 @@ public class SlotMachineMenuController implements InterfaceMenu{
             setAnimationState(false);
         }
 
-        setupScene.setButton(startingGameButton,"Actionner", Pos.CENTER,504.0,615.0,134.0,256.0,new Font(25),true,anchorPane);
+        setupScene.setButton(startingGameButton,language.getStartingGameButton(), Pos.CENTER,504.0,615.0,134.0,256.0,new Font(25),true,anchorPane);
         setupScene.setImageView(pictureSlot1,130.0,300.0,150.0,151.0,new Image(getClass().getResource("image/slot_machine_seven.jpg").toExternalForm()),true,anchorPane);
         setupScene.setImageView(pictureSlot2,330,300.0,150.0,151.0,new Image(getClass().getResource("image/slot_machine_seven.jpg").toExternalForm()),true,anchorPane);
         setupScene.setImageView(pictureSlot3,530.0,300.0,150.0,151.0,new Image(getClass().getResource("image/slot_machine_seven.jpg").toExternalForm()),true,anchorPane);
-        setupScene.setLabel(labelProfit,"Gain : 0",Pos.CENTER_LEFT,39.0,686.0,63.0,455.0,new Font(33.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelToken,"Jetons : "+user.getToken(),Pos.CENTER_LEFT,39.0,615.0,70.0,455.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelUserName,"Joueur : "+user.getUserName(),Pos.CENTER_LEFT,39.0,565.0,50.0,463.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setButton(returnMainMenuButton,"Quitter",Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
+        setupScene.setLabel(labelProfit,language.getLabelProfit()+"0",Pos.CENTER_LEFT,39.0,686.0,63.0,455.0,new Font(33.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelToken,language.getLabelToken()+user.getToken(),Pos.CENTER_LEFT,39.0,615.0,70.0,455.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelUserName,language.getLabelPlayer()+user.getUserName(),Pos.CENTER_LEFT,39.0,565.0,50.0,463.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setButton(returnMainMenuButton,language.getQuitButton(),Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
 
         setupScene.setCircle(circleSetting,18,670,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("BLUE"),StrokeType.INSIDE,1.0,true,anchorPane);
 
         setupScene.setRectangle(rectangleLog,700.0,15.0,30.0,50.0,10.0,10.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),1.0,StrokeType.INSIDE,true,anchorPane);
-        setupScene.setLabel(labelLog,"Log",Pos.CENTER,700.0,15.0,23.0,50.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelLog,language.getLabelLog(),Pos.CENTER,700.0,15.0,23.0,50.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
 
         setupScene.setCircle(circleRule,16.0,770.0,30.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,true,anchorPane);
         setupScene.setLabel(labelRule,"?",Pos.CENTER,754.0,15.0,23.0,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelError,"Erreur : ",Pos.CENTER,280.0,488.0,50.0,401.0,new Font(20.0),Paint.valueOf("RED"),false,anchorPane);
+        setupScene.setLabel(labelError,"",Pos.CENTER,280.0,488.0,50.0,401.0,new Font(20.0),Paint.valueOf("RED"),false,anchorPane);
 
         createSoundPayout();
         createSoundSlot();
@@ -167,17 +171,17 @@ public class SlotMachineMenuController implements InterfaceMenu{
             case 1:
             case 7:
             case 10:
-                return "citron";
+                return language.getSlotMachineMenuControllerSymbolLemon();
             case 2:
             case 4:
             case 6:
             case 8:
-               return "pastèque";
+               return language.getSlotMachineMenuControllerSymbolWatermelon();
             case 3:
             case 9:
-               return "cerise";
+               return language.getSlotMachineMenuControllerSymbolCherry();
             case 5:
-                return "7";
+                return language.getSlotMachineMenuControllerSymbolSeven();
             default: return "";
         }
     }
@@ -198,19 +202,18 @@ public class SlotMachineMenuController implements InterfaceMenu{
 
     /** Méthode qui lance la machine à sous **/
     private void startingGame(){
-        labelToken.setText("Jetons : "+user.getToken());
         if(user.getToken() > 0) {
             logMenuController.resetLog();
             logMenuController.getLog("Le joueur "+user.getUserName()+" démarre une nouvelle partie.");
             slotMachine.useSlotMachine();
-            labelToken.setText("Jetons : "+user.getToken());
+            labelToken.setText(language.getLabelToken()+user.getToken());
 
             startingGameButton.setDisable(true);
             logMenuController.getLog("Le joueur "+user.getUserName()+" a lancé la machine à sous");
             animationSlot(slotMachine.getNbImage().get(0) + 1, slotMachine.getNbImage().get(1) + 1, slotMachine.getNbImage().get(2) + 1);
         }
         else{
-            messageInterface.setMessage(labelError,"Vous n'avez pas assez de jeton",Color.RED);
+            messageInterface.setMessage(labelError,language.getLabelErrorTokenNotEnough(),Color.RED);
         }
 
     }
@@ -222,7 +225,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
         ruleMenuController.exitRuleMenu();
         soundSlot.stop();
         soundPayout.stop();
-        MainMenuController mainMenuController = new MainMenuController(stage,user,database,soundVolume,backgroundAnimation);
+        MainMenuController mainMenuController = new MainMenuController(stage,user,database,language,soundVolume,backgroundAnimation);
         mainMenuController.setting();
     }
 
@@ -328,7 +331,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
         timePoint = timePoint.add(Duration.seconds(1));
 
         int gain = slotMachine.verifySlot();
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelProfit.setText("Gain : " +gain)));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelProfit.setText(language.getLabelProfit() +gain)));
         if(gain > 0){
             timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> soundPayout.play()));
             timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Le joueur "+user.getUserName()+" a gagné "+gain+" jetons.")));
@@ -342,7 +345,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
         }
 
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> slotMachine.reset()));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelToken.setText("Jetons : "+user.getToken())));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelToken.setText(language.getLabelToken()+user.getToken())));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> createSoundSlot()));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e ->  startingGameButton.setDisable(false)));
 
@@ -411,6 +414,15 @@ public class SlotMachineMenuController implements InterfaceMenu{
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         return simpleDateFormat.format(date);
+    }
+
+    public void setLanguage(Language language){ this.language = language; }
+
+    public void refresh(){
+        setting();
+        settingMenuController.exitSettingMenu();
+        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
+        settingMenuController.setting();
     }
 }
 

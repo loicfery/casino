@@ -51,17 +51,18 @@ public class RouletteMenuController implements InterfaceMenu{
     private final List<CellRoulette> listOfCellRoulette = new ArrayList<>();
     private List<CellRoulette> oldListOfCellsBet = new ArrayList<>();
 
-    private final BorderPane root = new BorderPane();
+    private BorderPane root;
     private final Stage stage;
-    private final AnchorPane anchorPane = new AnchorPane();
+    private AnchorPane anchorPane;
     private final SetupScene setupScene = new SetupScene();
     private final User user;
-    private final SettingMenuController settingMenuController;
+    private SettingMenuController settingMenuController;
     private final LogMenuController logMenuController;
     private final RuleMenuController ruleMenuController;
     private final Database database;
     private final DatabaseName databaseName = new DatabaseName();
     private final MessageInterface messageInterface = new MessageInterface();
+    private Language language;
 
     private final Roulette roulette;
 
@@ -100,16 +101,17 @@ public class RouletteMenuController implements InterfaceMenu{
     private final Rectangle rectangleInformationBet = new Rectangle();
 
 
-    public RouletteMenuController(User user, Stage stage, Database database, double soundVolume, boolean backgroundAnimation){
+    public RouletteMenuController(User user, Stage stage, Database database, Language language, double soundVolume, boolean backgroundAnimation){
         this.user = user;
         this.stage = stage;
         this.soundVolume = soundVolume;
         this.backgroundAnimation = backgroundAnimation;
         logMenuController = new LogMenuController();
-        settingMenuController = new SettingMenuController(this,soundVolume,backgroundAnimation);
-        ruleMenuController = new RuleMenuController(this);
+        settingMenuController = new SettingMenuController(this,language,soundVolume,backgroundAnimation);
+        ruleMenuController = new RuleMenuController(this,language);
         this.database = database;
         roulette = new Roulette(user);
+        this.language = language;
     }
 
     /** Méthode qui initialise l'interface de la roulette **/
@@ -120,9 +122,11 @@ public class RouletteMenuController implements InterfaceMenu{
                 Platform.exit();
             }
         });
+        root = new BorderPane();
         Scene scene = new Scene(root, 1100, 800);
         scene.getStylesheets().add(getClass().getResource("rouletteMenu.css").toExternalForm());
         stage.setScene(scene);
+        anchorPane = new AnchorPane();
 
         setupGameBoard();
         setCellBetPosition();
@@ -132,28 +136,28 @@ public class RouletteMenuController implements InterfaceMenu{
         pictureRoulette.setPickOnBounds(true);
         pictureRoulette.setPreserveRatio(true);
 
-        setupScene.setLabel(labelProfit,"Gain : 0",Pos.CENTER_LEFT,14.0,718.0,68.0,607.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelTokenUser,"Jetons : "+user.getToken(),Pos.CENTER_LEFT,14.0,640.0,68.0,613.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelUserName,"Joueur : "+user.getUserName(),Pos.CENTER_LEFT,14.0,563.0,68.0,613.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelInformationBetToken,"Information",Pos.CENTER,212.0,368.0,202.0,387.0,new Font(18),Paint.valueOf("BLACK"),false,anchorPane);
-        setupScene.setLabel(labelError,"Erreur",Pos.CENTER,197.0,600.0,60.0,387.0,new Font(20.0),Paint.valueOf("RED"),false,anchorPane);
-        setupScene.setLabel(labelLog,"Log",Pos.CENTER,1000.0,15.0,23.0,50.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelRule,"?",Pos.CENTER,1055.0,15.0,23,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setCircle(circleRule,16.0,1070.0,30.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,true,anchorPane);
+        setupScene.setCircle(circleBallRoulette,7.0,950,475,Paint.valueOf("BLACK"),Paint.valueOf("BLACK"),StrokeType.INSIDE,0.0,false,anchorPane);
+        setupScene.setCircle(circleSetting,18,970,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("GREEN"),StrokeType.INSIDE,1.0,true,anchorPane);
 
         setupScene.setRectangle(rectangleInformationBet,212,368,202,387,5.0,5.0,Paint.valueOf("WHITE"),Paint.valueOf("WHITE"),1.0,StrokeType.INSIDE,false,anchorPane);
         setupScene.setRectangle(rectangleLog,1000.0,15.0,30.0,50.0,10.0,10.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),1.0,StrokeType.INSIDE,true,anchorPane);
 
-        setupScene.setButton(modifyBetTokenButton,"Miser",Pos.CENTER,295.0,696.0,68.0,216.0,new Font(20.0),false,anchorPane);
-        setupScene.setButton(validBetTokenButton,"Miser",Pos.CENTER,295.0,696.0,68.0,216.0,new Font(20.0),false,anchorPane);
-        setupScene.setButton(startingGameButton,"Lancer",Pos.CENTER,25.0,416.0,102.0,251.0,new Font(20.0),true,anchorPane);
-        setupScene.setButton(returnMainMenuButton,"Quitter",Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
-        setupScene.setButton(newGameButton,"Nouvelle partie",Pos.CENTER,25,416,102,251,new Font(20),false,anchorPane);
+        setupScene.setLabel(labelProfit,language.getLabelProfit()+"0",Pos.CENTER_LEFT,14.0,718.0,68.0,607.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelTokenUser,language.getLabelToken()+user.getToken(),Pos.CENTER_LEFT,14.0,640.0,68.0,613.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelUserName,language.getLabelPlayer()+user.getUserName(),Pos.CENTER_LEFT,14.0,563.0,68.0,613.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelInformationBetToken,language.getInformation(),Pos.CENTER,212.0,368.0,202.0,387.0,new Font(18),Paint.valueOf("BLACK"),false,anchorPane);
+        setupScene.setLabel(labelError,"",Pos.CENTER,197.0,600.0,60.0,387.0,new Font(20.0),Paint.valueOf("RED"),false,anchorPane);
+        setupScene.setLabel(labelLog,language.getLabelLog(),Pos.CENTER,1000.0,15.0,23.0,50.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelRule,"?",Pos.CENTER,1055.0,15.0,23,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
 
-        setupScene.setTextField(textBetToken,"Mise",Pos.CENTER,234.0,597.0,80.0,338.0,new Font(20.0),false,anchorPane);
+        setupScene.setButton(modifyBetTokenButton, language.getBetButton(), Pos.CENTER,295.0,696.0,68.0,216.0,new Font(20.0),false,anchorPane);
+        setupScene.setButton(validBetTokenButton,language.getBetButton(),Pos.CENTER,295.0,696.0,68.0,216.0,new Font(20.0),false,anchorPane);
+        setupScene.setButton(startingGameButton,language.getStartingGameButton(),Pos.CENTER,25.0,416.0,102.0,251.0,new Font(20.0),true,anchorPane);
+        setupScene.setButton(returnMainMenuButton,language.getQuitButton(),Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
+        setupScene.setButton(newGameButton,language.getNewPartyButton(),Pos.CENTER,25,416,102,251,new Font(20),false,anchorPane);
 
-        setupScene.setCircle(circleRule,16.0,1070.0,30.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,true,anchorPane);
-        setupScene.setCircle(circleBallRoulette,7.0,950,475,Paint.valueOf("BLACK"),Paint.valueOf("BLACK"),StrokeType.INSIDE,0.0,false,anchorPane);
-        setupScene.setCircle(circleSetting,18,970,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("GREEN"),StrokeType.INSIDE,1.0,true,anchorPane);
+        setupScene.setTextField(textBetToken,"",Pos.CENTER,234.0,597.0,80.0,338.0,new Font(20.0),false,anchorPane);
 
         createSoundToken();
         createSoundRoulette();
@@ -688,7 +692,7 @@ public class RouletteMenuController implements InterfaceMenu{
                         labelInformationBetToken.setVisible(false);
                         rectangleInformationBet.setVisible(false);
                         textBetToken.setVisible(false);
-                        messageInterface.setMessage(labelError,"Vous ne pouvez pas placer de jeton ici", Color.RED);
+                        messageInterface.setMessage(labelError,language.getRouletteMenuControllerLabelErrorTokenPosition(), Color.RED);
                     }
                 }
             }
@@ -703,7 +707,7 @@ public class RouletteMenuController implements InterfaceMenu{
                     String cellsBet = getCellsBetString(listOfTokenUsed.get(indexTokenRemove).getListOfCellToken(), listOfTokenUsed.get(indexTokenRemove).getCircleToken());
                     oldListOfCellsBet = listOfTokenUsed.get(indexTokenRemove).getListOfCellBet();
                     listOfTokenUsed.get(indexTokenRemove).setListOfCellBetInterface(getCellsBet(cellsBet));
-                    labelInformationBetToken.setText("Mise d'un jeton  \n" + "Cases sélectionnées : \n" + listOfTokenUsed.get(indexTokenRemove).getCasesToString() + "\n Cases misées : \n" + cellsBet); //recup combinaison avec methode
+                    labelInformationBetToken.setText(language.getRouletteMenuControllerLabelInformationBetTokenPart1() + listOfTokenUsed.get(indexTokenRemove).getCasesToString() + language.getRouletteMenuControllerLabelInformationBetTokenPart2() + cellsBet);
                     textBetToken.setText(listOfTokenUsed.get(indexTokenRemove).getValueOfBet());
                     textBetToken.setVisible(true);
                     rectangleInformationBet.setVisible(false);
@@ -717,7 +721,7 @@ public class RouletteMenuController implements InterfaceMenu{
     /** Méthode qui returne les cases de la combinaison à partir de la position du jeton **/
     private String getCellsBetString(List<CellRoulette> listOfCellRouletteToken, Circle circleToken){
         if(listOfCellRouletteToken.size() == 0){
-            return "aucune case sélectionnée";
+            return language.getRouletteMenuControllerGetCellsBetStringListEmpty();
         }
         if(listOfCellRouletteToken.size() == 1){
             switch(listOfCellRouletteToken.get(0).getValueCell()){
@@ -726,13 +730,13 @@ public class RouletteMenuController implements InterfaceMenu{
                 case "3rd" : return "3;6;9;12;15;18;21;24;27;30;33;36";
                 case "red" : return "1;3;5;7;9;12;14;16;18;21;23;25;27;30;32;34;36";
                 case "black" : return "2;4;6;8;10;11;13;15;17;20;22;24;26;28;29;31;33;35";
-                case "1-12" : return "de 1 à 12";
-                case "13-24" : return "de 13 à 24";
-                case "25-36" : return "de 25 à 36";
+                case "1-12" : return "1-12";
+                case "13-24" : return "13-24";
+                case "25-36" : return "25-36";
                 case "even" : return "2;4;6;8;10;12;14;16;19;20;22;24;26;28;30;32;34;36";
                 case "odd" : return "1;3;5;7;9;11;13;15;17;19;21;23;25;27;29;31;33;35";
-                case "1-18" : return "de 1 à 18";
-                case "19-36" : return "de 19 à 36";
+                case "1-18" : return "1-18";
+                case "19-36" : return "19-36";
                 default:
                     if(( circleToken.getLayoutY() - circleToken.getRadius()) <= ORIGIN_Y_1){
                         String listCase = "";
@@ -778,9 +782,9 @@ public class RouletteMenuController implements InterfaceMenu{
                             validBetTokenButton.setVisible(false);
                             modifyBetTokenButton.setVisible(false);
                             textBetToken.setVisible(false);
-                            return "Vous ne pouvez pas miser \nsur ces deux cases en même temps";
+                            return language.getRouletteMenuControllerGetCellsBetStringSameCellBet();
                         case "13-24" :
-                            return "de 1 à 24";
+                            return "1-24";
                     }
                 case "13-24" :
                     switch (listOfCellRouletteToken.get(1).getValueCell()){
@@ -789,9 +793,9 @@ public class RouletteMenuController implements InterfaceMenu{
                             validBetTokenButton.setVisible(false);
                             modifyBetTokenButton.setVisible(false);
                             textBetToken.setVisible(false);
-                            return "Vous ne pouvez pas miser \nsur ces deux cases en même temps";
+                            return language.getRouletteMenuControllerGetCellsBetStringSameCellBet();
                         case "25-36" :
-                            return "de 13 à 36";
+                            return "13-36";
                     }
                 case "25-35" :
                     switch (listOfCellRouletteToken.get(1).getValueCell()){
@@ -800,7 +804,7 @@ public class RouletteMenuController implements InterfaceMenu{
                             validBetTokenButton.setVisible(false);
                             modifyBetTokenButton.setVisible(false);
                             textBetToken.setVisible(false);
-                            return "Vous ne pouvez pas miser \nsur ces deux cases en même temps";
+                            return language.getRouletteMenuControllerGetCellsBetStringSameCellBet();
                     }
                 case "1st" :
                     if(listOfCellRouletteToken.get(1).getValueCell().equals("2nd")){
@@ -829,7 +833,7 @@ public class RouletteMenuController implements InterfaceMenu{
             validBetTokenButton.setVisible(false);
             modifyBetTokenButton.setVisible(false);
             textBetToken.setVisible(false);
-            return "Cette combinaison de case est impossible";
+            return language.getRouletteMenuControllerGetCellsBetStringImpossibleCombination();
         }
 
         if(listOfCellRouletteToken.size() == 4){
@@ -841,7 +845,7 @@ public class RouletteMenuController implements InterfaceMenu{
             }
             return listOfCellRouletteToken.get(0).getValueCell()+";"+ listOfCellRouletteToken.get(1).getValueCell()+";"+ listOfCellRouletteToken.get(2).getValueCell()+";"+ listOfCellRouletteToken.get(3).getValueCell();
         }
-        return "aucune case sélectionnée";
+        return language.getRouletteMenuControllerGetCellsBetStringListEmpty();
     }
 
     private List<CellRoulette> getCellsBet(String cellsBet){
@@ -921,7 +925,7 @@ public class RouletteMenuController implements InterfaceMenu{
 
         String cellsBet = getCellsBetString(informationTokenBet.getListOfCellToken(),circleToken);
         listOfTokenUsed.get(tokenUsed).setListOfCellBetInterface(getCellsBet(cellsBet));
-        labelInformationBetToken.setText("Mise d'un jeton  \n"+ "Cases sélectionnées : \n" + informationTokenBet.getCasesToString() + "\n Cases misées : \n"+ cellsBet); //recup combinaison avec methode
+        labelInformationBetToken.setText(language.getRouletteMenuControllerLabelInformationBetTokenPart1() + informationTokenBet.getCasesToString() + language.getRouletteMenuControllerLabelInformationBetTokenPart2() + cellsBet); //recup combinaison avec methode
     }
 
     /** Méthode qui vérifie si un jeton est passé sur une case **/
@@ -948,7 +952,7 @@ public class RouletteMenuController implements InterfaceMenu{
                     if (indexTokenRemove >= 0) {
                         setPositionToken(ORIGIN_X_TOKEN, ORIGIN_Y_TOKEN, listOfCircleToken.get(indexTokenRemove), listLabelToken.get(indexTokenRemove), false);
                         roulette.deleteBet(listOfTokenUsed.get(indexTokenRemove).getListOfCellBet());
-                        labelTokenUser.setText("Jetons : "+user.getToken());
+                        labelTokenUser.setText(language.getLabelToken()+user.getToken());
                         listOfTokenUsed.remove(indexTokenRemove);
                         listLabelToken.get(indexTokenRemove).setText("0");
                         Label labelToken = listLabelToken.get(indexTokenRemove);
@@ -963,7 +967,7 @@ public class RouletteMenuController implements InterfaceMenu{
                     listLabelToken.get(indexTokenRemove).setText(textBetToken.getText());
 
                     roulette.modifyBet(oldListOfCellsBet,listOfTokenUsed.get(indexTokenRemove).getListOfCellBet(),valueOfBet);
-                    labelTokenUser.setText("Jetons : "+user.getToken());
+                    labelTokenUser.setText(language.getLabelToken()+user.getToken());
 
                     tokenUsed++;
                 }
@@ -998,7 +1002,7 @@ public class RouletteMenuController implements InterfaceMenu{
                 validBetTokenButton.setVisible(false);
                 textBetToken.setVisible(false);
                 startingGameButton.setVisible(true);
-                messageInterface.setMessage(labelError,"Il faut miser une valeur entière", Color.RED);
+                messageInterface.setMessage(labelError,language.getLabelErrorIntegerValue(), Color.RED);
                 return;
             }
 
@@ -1015,7 +1019,7 @@ public class RouletteMenuController implements InterfaceMenu{
                 tokenSound.play();
                 createSoundToken();
                 roulette.addBet(listOfTokenUsed.get(tokenUsed - 1).getListOfCellBet(),valueOfBet);
-                labelTokenUser.setText("Jetons : "+user.getToken());
+                labelTokenUser.setText(language.getLabelToken()+user.getToken());
             }
 
             validBetTokenButton.setVisible(false);
@@ -1172,7 +1176,7 @@ public class RouletteMenuController implements InterfaceMenu{
     /** Méthode pour lancer la roulette et mettre fin aux mises **/
     private void startingGame() {
         if(tokenUsed == 0){
-            messageInterface.setMessage(labelError,"Il faut placer un jeton au minimum", Color.RED);
+            messageInterface.setMessage(labelError,language.getLabelErrorNotEnoughTokenBet(), Color.RED);
         }
         else{
             startingGame = true;
@@ -1223,8 +1227,8 @@ public class RouletteMenuController implements InterfaceMenu{
                 tokenGain = gain - roulette.getBetTotal();
             }
         }
-        labelProfit.setText("Gain : " + tokenGain);
-        labelTokenUser.setText("Jetons : "+user.getToken());
+        labelProfit.setText(language.getLabelProfit() + tokenGain);
+        labelTokenUser.setText(language.getLabelToken()+user.getToken());
         newGameButton.setVisible(true);
         database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\",\""+databaseName.getGameRoulette()+"\","+tokenGain+",\""+getCurrentDate()+"\"",databaseName.getTableHistoryPartyGamedColumnMailUser()+","+databaseName.getTableHistoryPartyGamedColumnGameName()+","+databaseName.getTableHistoryPartyGamedColumnTokenGain()+","+databaseName.getTableHistoryPartyGamedColumnDate());
     }
@@ -1279,7 +1283,7 @@ public class RouletteMenuController implements InterfaceMenu{
         logMenuController.exitLogMenu();
         tokenSound.stop();
         rouletteSound.stop();
-        MainMenuController mainMenuController = new MainMenuController(stage,user, database,soundVolume,backgroundAnimation);
+        MainMenuController mainMenuController = new MainMenuController(stage,user, database,language,soundVolume,backgroundAnimation);
         mainMenuController.setting();
     }
 
@@ -1327,4 +1331,12 @@ public class RouletteMenuController implements InterfaceMenu{
         return simpleDateFormat.format(date);
     }
 
+    public void setLanguage(Language language){ this.language = language; }
+
+    public void refresh(){
+        setting();
+        settingMenuController.exitSettingMenu();
+        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
+        settingMenuController.setting();
+    }
 }

@@ -21,14 +21,16 @@ public class RuleMenuController {
     private final SetupScene setupScene = new SetupScene();
     private Stage stage;
     private InterfaceMenu interfaceMenu;
+    private final Language language;
 
     private final Label labelTitle = new Label();
     private final TextArea textRule = new TextArea();
     private int heightMax;
     private int widthMax;
 
-    public RuleMenuController(InterfaceMenu interfaceMenu){
+    public RuleMenuController(InterfaceMenu interfaceMenu, Language language){
         this.interfaceMenu = interfaceMenu;
+        this.language = language;
     }
 
     /**
@@ -62,20 +64,20 @@ public class RuleMenuController {
             if(interfaceMenu instanceof BlackJackMenuController) {
                 heightMax = 660;
                 widthMax = 700;
-                fileRule = new File("rule_blackJack.txt");
-                labelTitle.setText("Règles du Black Jack");
+                fileRule = new File(language.getRuleFileNameBlackJack());
+                labelTitle.setText(language.getLabelTitleBlackJack());
             }
             if(interfaceMenu instanceof RouletteMenuController){
                 heightMax = 665;
                 widthMax = 950;
-                fileRule = new File("rule_roulette.txt");
-                labelTitle.setText("Règles de la roulette");
+                fileRule = new File(language.getRuleFileNameRoulette());
+                labelTitle.setText(language.getLabelTitleRoulette());
             }
             if(interfaceMenu instanceof SlotMachineMenuController){
                 heightMax = 450;
                 widthMax = 580;
-                fileRule = new File("rule_slotMachine.txt");
-                labelTitle.setText("Règles des machines à sous");
+                fileRule = new File(language.getRuleFileNameSlotMachine());
+                labelTitle.setText(language.getLabelTitleSlotMachine());
             }
 
             if(fileRule != null) {
