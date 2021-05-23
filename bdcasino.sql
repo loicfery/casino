@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS HistoryExchangeTokens(
     Id_HistoryExchangeTokens BIGINT AUTO_INCREMENT,
     MailUser_HistoryExchangeTokens VARCHAR(50) NOT NULL,
     TokenPrice_HistoryExchangeTokens FLOAT NOT NULL,
-    MoneyGame_HistoryExchangeTokens BIGINT NOT NULL,
+    MoneyGain_HistoryExchangeTokens BIGINT NOT NULL,
     Date_HistoryExchangeTokens DATE NOT NULL,
     PRIMARY KEY (Id_HistoryExchangeTokens)) ENGINE=InnoDB;
 

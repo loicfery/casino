@@ -41,7 +41,7 @@ public class DatabaseName {
     }
 
     public String getTableHistoryExchangeTokenColumnMoneyGain() {
-        return "MoneyGame_HistoryExchangeTokens";
+        return "MoneyGain_HistoryExchangeTokens";
     }
 
     public String getTableHistoryExchangeMoney() {
