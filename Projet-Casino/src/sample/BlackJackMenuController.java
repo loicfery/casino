@@ -298,9 +298,9 @@ public class BlackJackMenuController implements InterfaceMenu{
     /**
      * Méthode pour modifier la visibilité d'un jetons
      **/
-    private void setTokenVisible(List<Shape> token) {
+    private void setTokenVisible(List<Shape> token, boolean visible) {
         for (Shape shape : token) {
-            shape.setVisible(true);
+            shape.setVisible(visible);
         }
     }
 
@@ -338,7 +338,7 @@ public class BlackJackMenuController implements InterfaceMenu{
 
                         logMenuController.getLog("Le joueur "+user.getUserName()+" mise "+valueOfBet+" jetons");
 
-                        setTokenVisible(token1);
+                        setTokenVisible(token1,true);
 
                         Timeline timeline = new Timeline();
                         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2),e -> startingGame()));
@@ -454,7 +454,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         blackJack.actionSplit();
 
         zoneBetUser2.setVisible(true);
-        setTokenVisible(token2);
+        setTokenVisible(token2,true);
         if(valueToken % 2 != 0 ){
             labelToken2.setText(valueToken/2+"");
             labelToken1.setText((valueToken/2) + 1+"");
@@ -596,20 +596,33 @@ public class BlackJackMenuController implements InterfaceMenu{
             else {
                 logMenuController.getLog("La main du joueur "+user.getUserName()+" a dépassé 21.");
             }
+
             if(!split && !surrender) {
                 if(blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)) <= 21){
+
                     croupierTurn();
                     hideAction();
                     newPartyButton.setVisible(true);
                 }
                 else {
+
                     hideAction();
                    distributeGain();
                     newPartyButton.setVisible(true);
                 }
             }
             else {
-                distributeGain();
+                if(userSecondHand.size() > 0 && split){
+                    indexCurrentHand = 2;
+                    split = false;
+                    System.out.println("test 1");
+                }
+                else {
+                    System.out.println("test 2");
+                    hideAction();
+                    distributeGain();
+                    newPartyButton.setVisible(true);
+                }
             }
         }
 
@@ -719,9 +732,11 @@ public class BlackJackMenuController implements InterfaceMenu{
         croupierHand = new ArrayList<>();
         userFirstHand = new ArrayList<>();
         userSecondHand = new ArrayList<>();
-        setTokenVisible(token1);
-        setTokenVisible(token2);
+        setTokenVisible(token1,false);
+        setTokenVisible(token2,false);
         zoneBetUser2.setVisible(false);
+        labelToken1.setVisible(false);
+        labelToken2.setVisible(false);
         labelValueUserFirstHand.setVisible(false);
         labelValueUserSecondHand.setVisible(false);
         labelValueCroupierHand.setVisible(false);
