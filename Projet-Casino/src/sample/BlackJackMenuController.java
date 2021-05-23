@@ -135,7 +135,7 @@ public class BlackJackMenuController implements InterfaceMenu{
 
         setupScene.setRectangle(zoneBetUser1,327.0,600.0,174.0,147.0,5.0,5.0,Paint.valueOf("#158000"),Paint.valueOf("BLACK"),5.0,StrokeType.INSIDE,true,anchorPane);
         setupScene.setRectangle(zoneBetUser2,550,600.0,174.0,147.0,5.0,5.0,Paint.valueOf("#158000"),Paint.valueOf("BLACK"),5.0,StrokeType.INSIDE,false,anchorPane);
-        setupScene.setLabel(labelToken,language.getLabelToken()+user.getToken(), Pos.CENTER_LEFT,30.0,660.0,55.0,163.0,new Font(30.0), Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelToken,language.getLabelToken()+user.getToken(), Pos.CENTER_LEFT,30.0,660.0,55.0,200,new Font(30.0), Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelProfit,language.getLabelProfit()+"0", Pos.CENTER_LEFT, 30.0,720.0,55.0,163.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelUserName,language.getLabelPlayer()+user.getUserName(), Pos.CENTER_LEFT,30.0,600.0,55.0,308.0,new Font(30.0),Color.BLACK,true,anchorPane);
         setupScene.setLabel(labelError,"", Pos.CENTER,100.0,455.0,36.0,700.0,new Font(25.0),Color.RED,false,anchorPane);

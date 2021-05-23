@@ -76,7 +76,7 @@ public class ShopMenuController implements InterfaceMenu{
     private int indexListMoney = 0;
     private boolean addTokenInformation = false;
     private boolean addMoneyInformation = false;
-    private boolean ADMIN;
+    private boolean ADMIN = false;
 
     public ShopMenuController(Stage stage,User user, Database database, Language language, double soundVolume, boolean backgroundAnimation){
         this.stage = stage;
@@ -89,9 +89,6 @@ public class ShopMenuController implements InterfaceMenu{
 
         if(user.getRank().equals("ADMIN")){
             ADMIN = true;
-        }
-        else {
-            ADMIN = false;
         }
     }
 
