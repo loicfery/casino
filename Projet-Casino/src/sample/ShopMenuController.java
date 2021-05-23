@@ -77,6 +77,8 @@ public class ShopMenuController implements InterfaceMenu{
     private boolean addTokenInformation = false;
     private boolean addMoneyInformation = false;
     private boolean ADMIN = false;
+    private int indexToken = 0;
+    private int indexMoney = 0;
 
     public ShopMenuController(Stage stage,User user, Database database, Language language, double soundVolume, boolean backgroundAnimation){
         this.stage = stage;
@@ -177,6 +179,7 @@ public class ShopMenuController implements InterfaceMenu{
             setupScene.setButton(button,language.getShopMenuControllerExchangeButton(),Pos.CENTER, positionOriginXToken,positionY,20,100,new Font(15),false,anchorPane);
             button.setOnMouseClicked((event)-> exchange(listOfShopToken.get(finalIndex)));
             listOfButtonShopToken.add(button);
+            indexToken ++;
 
             button = new Button();
             setupScene.setButton(button, "X",Pos.CENTER,positionOriginXToken + 110,positionY,20,20,new Font(15),false,anchorPane);
@@ -203,6 +206,7 @@ public class ShopMenuController implements InterfaceMenu{
             label = new Label();
             setupScene.setLabel(label,listOfShopMoney.get(index),Pos.CENTER_LEFT,414,positionY,20,200,new Font(20),Paint.valueOf("BLACK"),false,anchorPane);
             listOfLabelShopMoney.add(label);
+            indexMoney ++;
 
             button = new Button();
             setupScene.setButton(button,language.getShopMenuControllerExchangeButton(),Pos.CENTER, positionOriginXMoney,positionY,20,100,new Font(15),false,anchorPane);
@@ -233,6 +237,10 @@ public class ShopMenuController implements InterfaceMenu{
      * Méthode qui affiche les échanges de jetons
      **/
     private void printShopTokenInformation(){
+        System.out.println("printToken");
+        System.out.println("indexToken : "+indexToken);
+        System.out.println("indexMoney : "+indexMoney);
+
         int indexMax = (indexListToken + 5);
 
         if(indexMax > listOfShopToken.size()){
@@ -266,6 +274,9 @@ public class ShopMenuController implements InterfaceMenu{
      * Méthode qui affiche les échanges d'argents
      **/
     private void printShopMoneyInformation(){
+        System.out.println("printMoney");
+        System.out.println("indexToken : "+indexToken);
+        System.out.println("indexMoney : "+indexMoney);
         int indexMax = (indexListMoney + 5);
 
         if(indexMax > (listOfShopMoney.size())){
@@ -375,6 +386,7 @@ public class ShopMenuController implements InterfaceMenu{
      * Méthode qui permet de valider l'échange si l'utilisateur possède le nombre suffisant de jeton / d'argent
      **/
     private void exchange(String line){
+        System.out.println("test : "+line);
         cancelAddInformation();
         String[] lines = line.split(" ");
         int money;
@@ -454,11 +466,13 @@ public class ShopMenuController implements InterfaceMenu{
         listOfButtonExchange.get(listOfButtonExchange.size() - 1).setLayoutY(positionY);
 
         if(type.equals("token")){
+            indexToken  --;
             database.delete(databaseName.getTableExchangeToken(),databaseName.getTableExchangeTokenColumnPriceToken()+" = "+information.split(" ")[0]+" && "+databaseName.getTableExchangeTokenColumnMoneyGain()+" = "+information.split(" ")[3]);
             printShopTokenInformation();
         }
         else if(type.equals("money"))
         {
+            indexMoney --;
             database.delete(databaseName.getTableExchangeMoney(),databaseName.getTableExchangeMoneyColumnPriceMoney()+" = "+information.split(" ")[0]+" && "+databaseName.getTableExchangeMoneyColumnTokenGain()+" = "+information.split(" ")[3]);
             printShopMoneyInformation();
         }
@@ -532,10 +546,11 @@ public class ShopMenuController implements InterfaceMenu{
             listOfButtonShopToken.remove(addInformationButton);
 
             listOfShopToken.add(textToken.getText() + " jetons" +" ---> " + textMoney.getText()+" $");
-
             setupScene.setButton(exchangeButton, language.getShopMenuControllerExchangeButton(), Pos.CENTER, positionOriginXToken, positionY, 20, 100, new Font(15), false, anchorPane);
-            exchangeButton.setOnMouseClicked((event) -> exchange(listOfShopToken.get(listOfButtonShopToken.size() - 2)));
+            exchangeButton.setOnMouseClicked((event) -> exchange(listOfShopToken.get(indexToken - 1)));
             listOfButtonShopToken.add(exchangeButton);
+
+            indexToken ++;
 
             setupScene.setLabel(labelInformation, textToken.getText() + " " + language.getToken() +" ---> " + textMoney.getText() + " $", Pos.CENTER, 14, positionY, 20, 200, new Font(20), Paint.valueOf("BLACK"), false, anchorPane);
             listOfLabelShopToken.add(labelInformation);
@@ -581,8 +596,10 @@ public class ShopMenuController implements InterfaceMenu{
             listOfShopMoney.add(textMoney.getText() + " $ ---> " + textToken.getText() + " jetons");
 
             setupScene.setButton(exchangeButton, language.getShopMenuControllerExchangeButton(), Pos.CENTER, positionOriginXMoney, positionY, 20, 100, new Font(15), false, anchorPane);
-            exchangeButton.setOnMouseClicked((event) -> exchange(listOfShopMoney.get(listOfButtonShopMoney.size() - 2)));
+            exchangeButton.setOnMouseClicked((event) -> exchange(listOfShopMoney.get(indexMoney - 1)));
             listOfButtonShopMoney.add(exchangeButton);
+
+            indexMoney ++;
 
             setupScene.setLabel(labelInformation, textMoney.getText() + " $ ---> " + textToken.getText() + " " + language.getToken(), Pos.CENTER, 414, positionY, 20, 200, new Font(20), Paint.valueOf("BLACK"), false, anchorPane);
             listOfLabelShopMoney.add(labelInformation);
@@ -593,6 +610,7 @@ public class ShopMenuController implements InterfaceMenu{
 
             database.insert(databaseName.getTableExchangeMoney(),textMoney.getText()+","+textToken.getText(),databaseName.getTableExchangeMoneyColumnPriceMoney()+","+databaseName.getTableExchangeMoneyColumnTokenGain());
             listOfButtonShopMoney.add(addInformationButton);
+
 
             if (positionY >= 685) {
                 positionY = positionOriginY;
