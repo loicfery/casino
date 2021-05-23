@@ -37,6 +37,19 @@ CREATE TABLE IF NOT EXISTS HistoryPartyGamed(
     Date_HistoryPartyGamed DATE NOT NULL,
     PRIMARY KEY (Id_HistoryPartyGamed)) ENGINE=InnoDB;
 
+
+CREATE TABLE IF NOT EXISTS ExchangeMoney(
+    Id_ExchangeMoney BIGINT AUTO_INCREMENT,
+    MoneyPrice_ExchangeMoney BIGINT NOT NULL,
+    TokenGain_ExchangeMoney FLOAT,
+    PRIMARY KEY (Id_ExchangeMoney)) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS ExchangeToken (
+    Id_ExchangeToken BIGINT AUTO_INCREMENT,
+    TokenPrice_ExchangeToken BIGINT NOT NULL,
+    MoneyGain_ExchangeToken BIGINT,
+    PRIMARY KEY (Id_ExchangeToken)) ENGINE=InnoDB;
+
 CREATE TABLE IF NOT EXISTS ActionPlay (
     Id_Users BIGINT,
     Id_Game BIGINT NOT NULL,
@@ -44,36 +57,43 @@ CREATE TABLE IF NOT EXISTS ActionPlay (
     CONSTRAINT FK_ActionPlay_Id_Users FOREIGN KEY (Id_Users) REFERENCES Users (Id_Users),
     CONSTRAINT FK_ActionPlay_Id_Game FOREIGN KEY (Id_Game) REFERENCES Game (Id_Game)) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS Complete (
+CREATE TABLE IF NOT EXISTS AddMoney (
+    Id_HistoryExchangeMoney BIGINT,
+    Id_ExchangeMoney BIGINT,
+    PRIMARY KEY (Id_HistoryExchangeMoney,Id_HistoryExchangeMoney),
+     CONSTRAINT FK_Echange_Id_HistoryExchangeMoney FOREIGN KEY (Id_HistoryExchangeMoney) REFERENCES HistoryExchangeMoney (Id_HistoryExchangeMoney),
+     CONSTRAINT FK_Echange_Id_ExchangeMoney FOREIGN KEY (Id_ExchangeMoney) REFERENCES ExchangeMoney (Id_ExchangeMoney)) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS AddToken (
+    Id_ExchangeToken BIGINT,
+    Id_HistoryExchangeToken BIGINT,
+    PRIMARY KEY (Id_ExchangeToken,Id_HistoryExchangeToken),
+    CONSTRAINT FK_AddToken_Id_ExchangeToken FOREIGN KEY (Id_ExchangeToken) REFERENCES ExchangeToken(Id_ExchangeToken),
+    CONSTRAINT FK_AddToken_Id_HistoryExchangeToken FOREIGN KEY (Id_HistoryExchangeToken) REFERENCES HistoryExchangeToken(Id_HistoryExchangeToken)) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS BuyTokens (
     Id_Users BIGINT,
-    Id_HistoryExchangeTokens BIGINT NOT NULL,
-    PRIMARY KEY (Id_Users,Id_HistoryExchangeTokens),
-    CONSTRAINT FK_Complete_Id_Users FOREIGN KEY (Id_Users) REFERENCES Users (Id_Users),
-    CONSTRAINT FK_Complete_id_HistoryExchangeTokens FOREIGN KEY (Id_HistoryExchangeTokens) REFERENCES HistoryExchangeTokens (Id_HistoryExchangeTokens)) ENGINE=InnoDB;
+    Id_ExchangeToken BIGINT,
+    PRIMARY KEY (Id_Users,Id_ExchangeToken),
+    CONSTRAINT FK_BuyTokens_Id_Users FOREIGN KEY (Id_Users) REFERENCES Users(Id_Users),
+    CONSTRAINT FK_BuyTokens_Id_ExchangeToken FOREIGN KEY (Id_ExchangeToken) REFERENCES  ExchangeToken(Id_ExchangeToken)) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS Echange (
+CREATE TABLE IF NOT EXISTS BuyMoney(
     Id_Users BIGINT,
-    Id_HistoryExchangeMoney BIGINT NOT NULL,
-    PRIMARY KEY (Id_Users,Id_HistoryExchangeMoney),
-     CONSTRAINT FK_Echange_Id_Users FOREIGN KEY (Id_Users) REFERENCES Users (Id_Users),
-     CONSTRAINT FK_Echange_Id_HistoryExchangeTokens FOREIGN KEY (Id_HistoryExchangeMoney) REFERENCES HistoryExchangeMoney (Id_HistoryExchangeMoney)) ENGINE=InnoDB;
+    Id_ExchangeMoney BIGINT,
+    PRIMARY KEY (Id_Users,Id_ExchangeMoney),
+    CONSTRAINT FK_BuyMoney_Id_Users FOREIGN KEY (Id_Users) REFERENCES Users(Id_Users),
+    CONSTRAINT FK_BuyMoney_Id_ExchangeMoney FOREIGN KEEP (Id_ExchangeMoney) REFERENCES ExchangeMoney(Id_ExchangeMoney)) ENGINE=InooDB;
 
-
-CREATE TABLE IF NOT EXISTS Consulte (
+CREATE TABLE IF NOT EXISTS Consult (
     Id_Users  BIGINT,
-    Id_HistoryPartyGamed BIGINT NOT NULL,
-    PRIMARY KEY (Id_Users,Id_HistoryPartyGamed),
-    CONSTRAINT FK_Consulte_Id_Users FOREIGN KEY (Id_Users) REFERENCES Users (Id_Users),
-    CONSTRAINT FK_Consulte_Id_HistoryPartyGamed FOREIGN KEY (Id_HistoryPartyGamed) REFERENCES HistoryPartyGamed (Id_HistoryPartyGamed)) ENGINE=InnoDB;
+    Id_HistoryPartyGamed BIGINT,
+    Id_HistoryExchangeMoney BIGINT,
+    Id_HistoryExchangeTokens BIGINT,
+    PRIMARY KEY (Id_Users,Id_HistoryPartyGamed,Id_HistoryExchangeMoney,Id_HistoryExchangeTokens),
+    CONSTRAINT FK_Consult_Id_Users FOREIGN KEY (Id_Users) REFERENCES Users (Id_Users),
+    CONSTRAINT FK_Consult_Id_HistoryExchangeMoney FOREIGN KEY (Id_HistoryExchangeMoney) REFERENCES HistoryExchangeMoney (Id_HistoryExchangeMoney),
+    CONSTRAINT FK_Consult_Id_HistoryExchangeTokens FOREIGN KEY (Id_HistoryExchangeTokens) REFERENCES HistoryExchangeTokens (Id_HistoryExchangeTokens),
+    CONSTRAINT FK_Consult_Id_HistoryPartyGamed FOREIGN KEY (Id_HistoryPartyGamed) REFERENCES HistoryPartyGamed (Id_HistoryPartyGamed)) ENGINE=InnoDB;
 
-    CREATE TABLE IF NOT EXISTS ExchangeMoney(
-    Id_ExchangeMoney BIGINT AUTO_INCREMENT,
-    MoneyPrice_ExchangeMoney BIGINT NOT NULL,
-    TokenGain_ExchangeMoney FLOAT,
-    PRIMARY KEY (Id_ExchangeMoney)) ENGINE=InnoDB;
 
-    CREATE TABLE IF NOT EXISTS ExchangeToken (
-        Id_ExchangeToken BIGINT AUTO_INCREMENT,
-        TokenPrice_ExchangeToken BIGINT NOT NULL,
-        MoneyGain_ExchangeToken BIGINT,
-        PRIMARY KEY (Id_ExchangeToken)) ENGINE=InnoDB;
