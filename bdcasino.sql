@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS Consulte (
     CREATE TABLE IF NOT EXISTS ExchangeMoney(
     Id_ExchangeMoney BIGINT AUTO_INCREMENT,
     MoneyPrice_ExchangeMoney BIGINT NOT NULL,
-    TokenGame_ExchangeMoney FLOAT,
+    TokenGain_ExchangeMoney FLOAT,
     PRIMARY KEY (Id_ExchangeMoney)) ENGINE=InnoDB;
 
     CREATE TABLE IF NOT EXISTS ExchangeToken (

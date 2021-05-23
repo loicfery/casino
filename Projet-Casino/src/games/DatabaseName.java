@@ -105,7 +105,7 @@ public class DatabaseName {
     }
 
     public String getTableExchangeTokenColumnMoneyGain(){
-        return "TokenGame_ExchangeMoney";
+        return "TokenGain_ExchangeMoney";
     }
 
     public String getTableExchangeMoney(){
