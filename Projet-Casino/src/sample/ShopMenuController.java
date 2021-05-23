@@ -407,8 +407,8 @@ public class ShopMenuController implements InterfaceMenu{
                     user.addMoney(money);
                     user.removeToken(token);
                     database.insert(databaseName.getTableHistoryExchangeToken(),"\""+user.getEmail()+"\","+token+","+money+",\""+getCurrentDate()+"\"",databaseName.getTableHistoryExchangeTokenColumnMailUser()+","+databaseName.getTableHistoryExchangeTokenColumnPriceToken()+","+databaseName.getTableHistoryExchangeTokenColumnMoneyGain()+","+databaseName.getTableHistoryExchangeTokenColumnDate());
-                    titleShopTokenLabel.setText("Echange de jeton : "+user.getToken());
-                    titleShopMoneyLabel.setText("Echange d'argent : "+user.getMoney());
+                    titleShopTokenLabel.setText(language.getShopMenuControllerTitleShopTokenLabel()+user.getToken());
+                    titleShopMoneyLabel.setText(language.getShopMenuControllerTitleShopMoneyLabel()+user.getMoney());
                     messageInterface.setMessage(errorLabel,language.getShopMenuControllerLabelErrorExchangeValid(),Color.GREEN);
                 }
                 else {
@@ -531,7 +531,7 @@ public class ShopMenuController implements InterfaceMenu{
 
             listOfButtonShopToken.remove(addInformationButton);
 
-            listOfShopToken.add(textToken.getText() + " " + language.getToken() +" ---> " + textMoney.getText()+" $");
+            listOfShopToken.add(textToken.getText() + " jetons" +" ---> " + textMoney.getText()+" $");
 
             setupScene.setButton(exchangeButton, language.getShopMenuControllerExchangeButton(), Pos.CENTER, positionOriginXToken, positionY, 20, 100, new Font(15), false, anchorPane);
             exchangeButton.setOnMouseClicked((event) -> exchange(listOfShopToken.get(listOfButtonShopToken.size() - 2)));
@@ -578,10 +578,10 @@ public class ShopMenuController implements InterfaceMenu{
 
             listOfButtonShopMoney.remove(addInformationButton);
 
-            listOfShopMoney.add(textMoney.getText() + " $ ---> " + textToken.getText() + " " + language.getToken());
+            listOfShopMoney.add(textMoney.getText() + " $ ---> " + textToken.getText() + " jetons");
 
             setupScene.setButton(exchangeButton, language.getShopMenuControllerExchangeButton(), Pos.CENTER, positionOriginXMoney, positionY, 20, 100, new Font(15), false, anchorPane);
-            exchangeButton.setOnMouseClicked((event) -> exchange(listOfShopMoney.get(listOfButtonShopMoney.size() - 1)));
+            exchangeButton.setOnMouseClicked((event) -> exchange(listOfShopMoney.get(listOfButtonShopMoney.size() - 2)));
             listOfButtonShopMoney.add(exchangeButton);
 
             setupScene.setLabel(labelInformation, textMoney.getText() + " $ ---> " + textToken.getText() + " " + language.getToken(), Pos.CENTER, 414, positionY, 20, 200, new Font(20), Paint.valueOf("BLACK"), false, anchorPane);

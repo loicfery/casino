@@ -156,6 +156,12 @@ public class LanguageFrench implements Language{
         return "Votre échange a bien été effectué";
     }
 
+    public String getShopMenuControllerButtonExchangeToken(){ return "jetons"; }
+
+    public String getShopMenuControllerTitleShopTokenLabel(){ return "Echange de jeton : "; }
+
+    public String getShopMenuControllerTitleShopMoneyLabel(){ return "Echange d'argent : "; }
+
     /** HistoryShoppingMenuController **/
     public String getHistoryShoppingMenuControllerLabelTitle1(){
         return "Historique des échanges : Jeton";
@@ -229,6 +235,8 @@ public class LanguageFrench implements Language{
     public String getBuyingMoneyMenuControllerLabelErrorFieldEmpty(){ return "Le champ est vide"; }
 
     public String getBuyingMoneyMenuControllerLabelErrorMoneyAdd(){ return "d'argent ont été ajouté"; }
+
+    /**  **/
 
     /** **/
     public String getLabelToken(){

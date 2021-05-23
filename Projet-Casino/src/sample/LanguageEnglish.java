@@ -156,6 +156,12 @@ public class LanguageEnglish implements Language{
         return "Your exchange has been completed";
     }
 
+    public String getShopMenuControllerButtonExchangeToken(){ return "tokens"; }
+
+    public String getShopMenuControllerTitleShopTokenLabel(){ return "Token exchange : "; }
+
+    public String getShopMenuControllerTitleShopMoneyLabel(){ return "Money exchange : "; }
+
     /** HistoryShoppingMenuController **/
     public String getHistoryShoppingMenuControllerLabelTitle1(){
         return "History of exchanges : Token";

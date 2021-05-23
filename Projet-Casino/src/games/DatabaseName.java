@@ -97,27 +97,27 @@ public class DatabaseName {
     }
 
     public String getTableExchangeToken(){
-        return "ExchangeMoney";
-    }
-
-    public String getTableExchangeTokenColumnPriceToken(){
-        return "MoneyPrice_ExchangeMoney";
-    }
-
-    public String getTableExchangeTokenColumnMoneyGain(){
-        return "TokenGain_ExchangeMoney";
-    }
-
-    public String getTableExchangeMoney(){
         return "ExchangeToken";
     }
 
-    public String getTableExchangeMoneyColumnPriceMoney(){
+    public String getTableExchangeTokenColumnPriceToken(){
         return "TokenPrice_ExchangeToken";
     }
 
-    public String getTableExchangeMoneyColumnTokenGain(){
+    public String getTableExchangeTokenColumnMoneyGain(){
         return "MoneyGain_ExchangeToken";
+    }
+
+    public String getTableExchangeMoney(){
+        return "ExchangeMoney";
+    }
+
+    public String getTableExchangeMoneyColumnPriceMoney(){
+        return "MoneyPrice_ExchangeMoney";
+    }
+
+    public String getTableExchangeMoneyColumnTokenGain(){
+        return "TokenGain_ExchangeMoney";
     }
 
     public String getTableHistoryExchangeTokenColumnDate(){return "Date_HistoryExchangeTokens";}

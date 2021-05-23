@@ -50,6 +50,9 @@ public interface Language {
     String getShopMenuControllerHistoryShoppingButton();
     String getShopMenuControllerExchangeButton();
     String getShopMenuControllerLabelErrorExchangeValid();
+    String getShopMenuControllerButtonExchangeToken();
+    String getShopMenuControllerTitleShopTokenLabel();
+    String getShopMenuControllerTitleShopMoneyLabel();
 
     /** HistoryShoppingMenuController **/
     String getHistoryShoppingMenuControllerLabelTitle1();
