@@ -427,7 +427,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         actionInsuranceButton.setVisible(true);
         actionDoubleButton.setVisible(true);
         actionStandButton.setVisible(true);
-        actionSplitButton.setVisible(true);
+        actionSplitButton.setVisible(true); //bouton
         if(blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber() == blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber()){
             actionSplitButton.setVisible(true);
         }
