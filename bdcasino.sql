@@ -60,30 +60,30 @@ CREATE TABLE IF NOT EXISTS ActionPlay (
 CREATE TABLE IF NOT EXISTS AddMoney (
     Id_HistoryExchangeMoney BIGINT,
     Id_ExchangeMoney BIGINT,
-    PRIMARY KEY (Id_HistoryExchangeMoney,Id_HistoryExchangeMoney),
+    PRIMARY KEY (Id_HistoryExchangeMoney,Id_ExchangeMoney),
      CONSTRAINT FK_Echange_Id_HistoryExchangeMoney FOREIGN KEY (Id_HistoryExchangeMoney) REFERENCES HistoryExchangeMoney (Id_HistoryExchangeMoney),
      CONSTRAINT FK_Echange_Id_ExchangeMoney FOREIGN KEY (Id_ExchangeMoney) REFERENCES ExchangeMoney (Id_ExchangeMoney)) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS AddToken (
     Id_ExchangeToken BIGINT,
-    Id_HistoryExchangeToken BIGINT,
-    PRIMARY KEY (Id_ExchangeToken,Id_HistoryExchangeToken),
+    Id_HistoryExchangeTokens BIGINT,
+    PRIMARY KEY (Id_ExchangeToken,Id_HistoryExchangeTokens),
     CONSTRAINT FK_AddToken_Id_ExchangeToken FOREIGN KEY (Id_ExchangeToken) REFERENCES ExchangeToken(Id_ExchangeToken),
-    CONSTRAINT FK_AddToken_Id_HistoryExchangeToken FOREIGN KEY (Id_HistoryExchangeToken) REFERENCES HistoryExchangeToken(Id_HistoryExchangeToken)) ENGINE=InnoDB;
+    CONSTRAINT FK_AddToken_Id_HistoryExchangeTokens FOREIGN KEY (Id_HistoryExchangeTokens) REFERENCES HistoryExchangeTokens(Id_HistoryExchangeTokens)) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS BuyTokens (
     Id_Users BIGINT,
     Id_ExchangeToken BIGINT,
     PRIMARY KEY (Id_Users,Id_ExchangeToken),
     CONSTRAINT FK_BuyTokens_Id_Users FOREIGN KEY (Id_Users) REFERENCES Users(Id_Users),
-    CONSTRAINT FK_BuyTokens_Id_ExchangeToken FOREIGN KEY (Id_ExchangeToken) REFERENCES  ExchangeToken(Id_ExchangeToken)) ENGINE=InnoDB;
+    CONSTRAINT FK_BuyTokens_Id_ExchangeToken FOREIGN KEY (Id_ExchangeToken) REFERENCES ExchangeToken(Id_ExchangeToken)) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS BuyMoney(
     Id_Users BIGINT,
     Id_ExchangeMoney BIGINT,
     PRIMARY KEY (Id_Users,Id_ExchangeMoney),
     CONSTRAINT FK_BuyMoney_Id_Users FOREIGN KEY (Id_Users) REFERENCES Users(Id_Users),
-    CONSTRAINT FK_BuyMoney_Id_ExchangeMoney FOREIGN KEEP (Id_ExchangeMoney) REFERENCES ExchangeMoney(Id_ExchangeMoney)) ENGINE=InooDB;
+    CONSTRAINT FK_BuyMoney_Id_ExchangeMoney FOREIGN KEY (Id_ExchangeMoney) REFERENCES ExchangeMoney(Id_ExchangeMoney)) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS Consult (
     Id_Users  BIGINT,

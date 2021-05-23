@@ -250,7 +250,7 @@ public class LanguageEnglish implements Language{
     public String getLabelUserName(){ return "User name :"; }
 
     public String getLabelMail() {
-        return "Email";
+        return "Email :";
     }
 
     public String getQuitButton(){
