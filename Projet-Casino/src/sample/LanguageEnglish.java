@@ -302,7 +302,7 @@ public class LanguageEnglish implements Language{
     }
 
     public String getToken(){
-        return "Tokens";
+        return "tokens";
     }
 
     public String getTitleShopToken(){

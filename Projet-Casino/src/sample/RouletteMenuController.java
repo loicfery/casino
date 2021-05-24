@@ -59,7 +59,7 @@ public class RouletteMenuController implements InterfaceMenu{
     private final User user;
     private SettingMenuController settingMenuController;
     private final LogMenuController logMenuController;
-    private final RuleMenuController ruleMenuController;
+    private RuleMenuController ruleMenuController;
     private final Database database;
     private final DatabaseName databaseName = new DatabaseName();
     private final MessageInterface messageInterface = new MessageInterface();
@@ -1349,5 +1349,8 @@ public class RouletteMenuController implements InterfaceMenu{
         settingMenuController.exitSettingMenu();
         settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
         settingMenuController.setting();
+        ruleMenuController.exitRuleMenu();
+        ruleMenuController = new RuleMenuController(this,language);
+        ruleMenuController.setting();
     }
 }
