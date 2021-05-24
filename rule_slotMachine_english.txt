@@ -1,1 +1,18 @@
-Slot machine rules
+There are 3 reels containing 10 symbols in total, each reel contains :
+
+- 1 seven
+
+- 2 cherries
+
+- 3 lemons
+
+- 4 watermelons
+
+The goal is to align 3 identical symbols, knowing that the winnings will be different for each combination.
+The different wins are as follows:
+
+- 3 sevens --> 160 tokens
+- 3 cherries --> 25 tokens
+- 3 lemons --> 8 tokens
+- 3 watermelons --> 4 tokens
+- 3 different symbols --> 0 tokens

@@ -8,7 +8,7 @@ Il y a 3 bobines contenant 10 symboles au totale, chaque bobine contient :
 
 - 4 pastèques
 
-Le but est d'aligner 3 symbole identiques, sachant que le gain sera différent pour chaque combinaison.
+Le but est d'aligner 3 symboles identiques, sachant que le gain sera différent pour chaque combinaison.
 Les différents gains sont les suivants :
 
 - 3 sept --> 160 jetons

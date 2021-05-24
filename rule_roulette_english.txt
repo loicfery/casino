@@ -1,1 +1,31 @@
-Roulette rules
+Roulette consists of 36 numbers ranging from 0 to 36.
+The aim of the game is based on luck, you have to bet amounts on numbers and if one of them is winning
+then you win your bet plus a multiplier depending on how you bet.
+
+There are several ways to bet in order to win the rounds.
+
+Game Options:
+
+- The Full Bet: Here you bet on one or more numbers separately. When a number you bet on wins, you win 35 times the bet on that number!
+
+- The Horse: This bet consists of placing one or more tokens astride two adjacent numbers on the carpet.
+              If the ball lands on one of the two numbers on which your tokens are straddling, you win 17 times your bet!
+
+- The Transversal: As the name suggests, this allows you to bet on a line of 3 numbers.
+                    If the ball lands on one of the three numbers, you win 11 times your bet!
+
+- Square: This bet consists of placing a token on four adjacent numbers (forming a square on the carpet).
+             If the ball lands on one of the four numbers, you win 8 times your bet!
+
+- Dozen: Similar to the Crossing, this allows you to bet on 2 adjacent lines, with 6 numbers in total.
+                If the ball lands on one of the 6 numbers, you win 5 times your bet!
+
+- Column (horizontal): Allows you to bet on an entire column (0 excluded). If the ball lands on one of the 12 numbers, you win 2 times your bet!
+
+- 12P, 12M, 12D: These bets represent the first/middle/last 12 numbers respectively. Just like the column, you win 2 times your bet!
+
+- Red/Black/Even/Odd/Miss(1-18)/Pass(19-36): Also known as single odds, these bets allow you to bet on either red, black, even or odd,
+  miss (numbers between 1 and 18) and pass (numbers between 19 and 36). If the ball lands on any of these patterns, you will win 1x the bet!
+
+
+WARNING: If the 0 falls, it cancels all the single chances! Indeed, the 0 being a number apart neither even nor odd nor pass nor miss, only this number will win!

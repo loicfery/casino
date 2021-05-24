@@ -8,7 +8,7 @@ Possibilités de jeu :
 
 - Le Plein : Vous misez ici sur un ou plusieurs numéros de façon séparer. Lorsqu'un numéro sur lequel vous avez miser est gagnant vous remportez 35 fois la mise sur ce numéro !
 
-- Le Cheval : Cette mise consiste à placer un ou plusiuers jetons à cheval sur deux numéros adjacents sur le tapis. 
+- Le Cheval : Cette mise consiste à placer un ou plusieurs jetons à cheval sur deux numéros adjacents sur le tapis.
               Si la bille tombe sur l'un des deux numéros sur lesquels vos jetons sont à cheval vous remportez 17 fois votre mise !
 
 - La Transversale : Comme son nom l'indique, elle vous permet de miser sur une ligne composée de 3 numéros. 

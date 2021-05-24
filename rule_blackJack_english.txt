@@ -1,1 +1,31 @@
-Black Jack rules
+The goal of the player is to get closer to 21 without exceeding it.
+To do this, the player is dealt two cards which give a value, and the player has several choices:
+
+- Draw a card: You wish to take another card, which the dealer deals you.
+		            If the player draws and goes over 21, they lose their bet.
+
+- Stay: You stay if you are satisfied with your hand, that the total is sufficient
+
+
+- Double bet: You double your bet and receive one card, only one
+
+- Split: If the player's first two cards are a pair, they have the option of splitting them into two separate hands,
+             bet half the original bet on each and play them separately.
+			 Any 21 rolled after a split does not count as "blackjack".
+
+- Insurance:  The player may take out insurance to protect against a blackjack,
+              This means place a bet equal to half of his initial bet.
+	          If the dealer have a blackjack, the player wins twice the insurance plus the cost of the insurance
+	          but if the dealer don't have it, the insurance bet is lost.
+
+The dealer is the last player to act, and continues to play his hand like any other player after the players' turn.
+If the dealer makes blackjack, he collects all bets, including splits and doubles,
+except for players who also have blackjack.
+
+If the dealer jumps, this means goes over 21, all players still in the game win.
+Otherwise, players with a higher total than the dealer win and players with a lower total lose.
+In the event of a tie, the player's bet is refunded.
+
+Each card numbered from 2 to 10 has a face value.
+Jacks, queens and kings (the tricks), have a value of 10 points.
+Aces are worth 1 point or 11 points, at the player's option.

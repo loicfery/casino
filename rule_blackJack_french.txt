@@ -10,13 +10,13 @@ Pour cela il va recevoir 2 cartes qui donneront une valeur, le joueur aura alors
 - Doubler la mise : Vous doublez votre mise et vous recevez une carte, une seulement
 
 - Partager : Si les deux premières cartes du joueur forment une paire, il a la possibilité de les séparer en deux mains distinctes,
-             de miser le même montant sur chacune d’elles et de les jouer séparément.
+             de miser la motier de la mise initiale sur chacune d’elles et de les jouer séparément.
 			 Tout 21 obtenu après un split ne compte pas comme « blackjack ».
 
-- Assurance : Si la carte apparente du croupier est un As, le joueur peut prendre une assurance pour se prémunir d’un blackjack,
+- Assurance : Le joueur peut prendre une assurance pour se prémunir d’un blackjack,
               c’est à dire effectuer une mise correspondant à la moitié de sa mise initiale.
-	          Si la seconde carte du croupier est un 10 ou une figure, le joueur gagne 2 fois son assurance plus son coût
-	          mais si la seconde carte du croupier n’a pas pour valeur 10, la mise d’assurance est perdue.
+	          Si le croupier fait un blackjack, le joueur gagne 2 fois son assurance plus son coût
+	          mais si le croupier n’en fait pas, la mise d’assurance est perdue.
 
 Le croupier est le dernier joueur à agir, il continue de jouer sa main comme tout joueur après le tour des joueurs.
 Si le croupier fait blackjack, il ramasse toutes les mises, y compris les partages et les doubles,
@@ -29,7 +29,3 @@ En cas d’égalité, la mise du joueur est remboursée.
 Chaque carte numérotée de 2 à 10 a sa valeur nominale.
 Les valets, les dames et les rois (les figures), ont une valeur de 10 points.
 L’As vaut 1 point ou 11 points, au choix du joueur.
-
-
-
-
