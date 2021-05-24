@@ -428,7 +428,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         actionInsuranceButton.setVisible(true);
         actionDoubleButton.setVisible(true);
         actionStandButton.setVisible(true);
-        actionSplitButton.setVisible(true); //bouton
+        actionSplitButton.setVisible(true); //seulement pour faciliter les testes, à enlever pour un fonctionnement réel
         if(blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber() == blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber()){
             actionSplitButton.setVisible(true);
         }
@@ -617,10 +617,8 @@ public class BlackJackMenuController implements InterfaceMenu{
                 if(userSecondHand.size() > 0 && split){
                     indexCurrentHand = 2;
                     split = false;
-                    System.out.println("test 1");
                 }
                 else {
-                    System.out.println("test 2");
                     hideAction();
                     distributeGain();
                     newPartyButton.setVisible(true);
