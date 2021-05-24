@@ -89,7 +89,7 @@ public class InformationMenuController implements InterfaceMenu{
         setupScene.setLabel(labelTitle,language.getInformation(), Pos.CENTER,0,20,20,500,new Font(30), Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelEmail,language.getLabelMail(),Pos.CENTER_LEFT,20,120,20,300,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelUserName,language.getLabelUserName(),Pos.CENTER_LEFT,20,180,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelPassword,"Mot de passe :",Pos.CENTER_LEFT,20,240,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelPassword,language.getLabelPassword(),Pos.CENTER_LEFT,20,240,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelToken,language.getLabelToken()+user.getToken(),Pos.CENTER_LEFT,20,300,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelMoney,language.getLabelMoney()+user.getMoney(),Pos.CENTER_LEFT,20,360,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelError,"",Pos.CENTER,140,400,20,300,new Font(15),Paint.valueOf("RED"),false,anchorPane);
@@ -104,7 +104,7 @@ public class InformationMenuController implements InterfaceMenu{
         setupScene.setButton(returnMainMenuButton,language.getQuitButton(),Pos.CENTER,20,440,20,100,new Font(15),true,anchorPane);
         setupScene.setButton(changeEmailButton,language.getInformationMenuControllerChangeEmailButton(),Pos.CENTER,330,120,20,150,new Font(15),true,anchorPane);
         setupScene.setButton(changeUserNameButton,language.getInformationMenuControllerChangeUserNameButton(),Pos.CENTER,300,180,20,180,new Font(15),true,anchorPane);
-        setupScene.setButton(changePasswordButton,"Modifier mot de passe",Pos.CENTER,300,240,20,180,new Font(15),true,anchorPane);
+        setupScene.setButton(changePasswordButton,language.getInformationMenuControllerChangePasswordButton(),Pos.CENTER,300,240,20,180,new Font(15),true,anchorPane);
 
         setupScene.setCircle(circleSetting,18,475,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
 

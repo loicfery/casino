@@ -237,10 +237,6 @@ public class ShopMenuController implements InterfaceMenu{
      * Méthode qui affiche les échanges de jetons
      **/
     private void printShopTokenInformation(){
-        System.out.println("printToken");
-        System.out.println("indexToken : "+indexToken);
-        System.out.println("indexMoney : "+indexMoney);
-
         int indexMax = (indexListToken + 5);
 
         if(indexMax > listOfShopToken.size()){
@@ -274,15 +270,15 @@ public class ShopMenuController implements InterfaceMenu{
      * Méthode qui affiche les échanges d'argents
      **/
     private void printShopMoneyInformation(){
-        System.out.println("printMoney");
-        System.out.println("indexToken : "+indexToken);
-        System.out.println("indexMoney : "+indexMoney);
         int indexMax = (indexListMoney + 5);
 
         if(indexMax > (listOfShopMoney.size())){
             indexMax = listOfShopMoney.size();
             rightShopMoneyButton.setVisible(false);
             if(ADMIN){
+                System.out.println(listOfButtonShopMoney.get(indexMax).getLayoutX());
+                System.out.println(listOfButtonShopMoney.get(indexMax).getLayoutY());
+                System.out.println("____________________________________________________");
                 listOfButtonShopMoney.get(indexMax).setVisible(true);
             }
         }
@@ -624,7 +620,6 @@ public class ShopMenuController implements InterfaceMenu{
 
             printShopMoneyInformation();
         }
-
     }
 
     /**

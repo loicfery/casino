@@ -11,7 +11,6 @@ public interface Language {
     String getConnexionMenuControllerButtonNewAccount();
     String getConnexionMenuControllerButtonLoginMenuReturn();
     String getConnexionMenuControllerButtonInscription();
-    String getConnexionMenuControllerLabelNewPassword();
     String getConnexionMenuControllerLabelNewUserName();
     String getConnexionMenuControllerLabelErrorConnexion();
 
@@ -61,6 +60,7 @@ public interface Language {
     /** InformationMenuController **/
     String getInformationMenuControllerChangeEmailButton();
     String getInformationMenuControllerChangeUserNameButton();
+    String getInformationMenuControllerChangePasswordButton();
     String getInformationMenuControllerLabelErrorEmailChangeValid();
     String getInformationMenuControllerLabelErrorEmailWrongFormat();
     String getInformationMenuControllerLabelErrorEmailSame();
@@ -104,6 +104,7 @@ public interface Language {
     String getLabelPlayer();
     String getLabelUserName();
     String getLabelMail();
+    String getLabelPassword();
     String getQuitButton();
     String getNewPartyButton();
     String getBetButton();

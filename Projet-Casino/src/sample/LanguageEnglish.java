@@ -35,10 +35,6 @@ public class LanguageEnglish implements Language{
         return "Register";
     }
 
-    public String getConnexionMenuControllerLabelNewPassword() {
-        return "Password :";
-    }
-
     public String getConnexionMenuControllerLabelNewUserName() {
         return "User name :";
     }
@@ -176,6 +172,8 @@ public class LanguageEnglish implements Language{
 
     public String getInformationMenuControllerChangeUserNameButton(){ return "Edit user name"; }
 
+    public String getInformationMenuControllerChangePasswordButton(){ return "Edit password"; }
+
     public String getInformationMenuControllerLabelErrorEmailChangeValid(){ return "The email has been modified"; }
 
     public String getInformationMenuControllerLabelErrorEmailWrongFormat(){ return "The email does not match the format"; }
@@ -257,6 +255,10 @@ public class LanguageEnglish implements Language{
 
     public String getLabelMail() {
         return "Email :";
+    }
+
+    public String getLabelPassword() {
+        return "Password :";
     }
 
     public String getQuitButton(){

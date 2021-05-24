@@ -35,10 +35,6 @@ public class LanguageFrench implements Language{
         return "S'inscrire";
     }
 
-    public String getConnexionMenuControllerLabelNewPassword() {
-        return "Mot de passe :";
-    }
-
     public String getConnexionMenuControllerLabelNewUserName() {
         return "Pseudonyme :";
     }
@@ -176,6 +172,8 @@ public class LanguageFrench implements Language{
 
     public String getInformationMenuControllerChangeUserNameButton(){ return "Modifier pseudonyme"; }
 
+    public String getInformationMenuControllerChangePasswordButton(){ return "Modifier mot de passe"; }
+
     public String getInformationMenuControllerLabelErrorEmailChangeValid(){ return "L'email a été modifié"; }
 
     public String getInformationMenuControllerLabelErrorEmailWrongFormat(){ return "L'email ne correspond pas au format"; }
@@ -258,6 +256,10 @@ public class LanguageFrench implements Language{
     public String getLabelUserName(){ return "Pseudonyme :"; }
 
     public String getLabelMail() { return "Email :"; }
+
+    public String getLabelPassword() {
+        return "Mot de passe :";
+    }
 
     public String getQuitButton(){
         return "Quitter";

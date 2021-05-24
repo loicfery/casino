@@ -97,7 +97,7 @@ public class ConnexionMenuController implements InterfaceMenu{
         setupScene.setButton(buttonLoginMenuReturn,language.getConnexionMenuControllerButtonLoginMenuReturn(),Pos.CENTER,10,380,20,480,new Font(25),false,anchorPane);
         setupScene.setButton(buttonInscription,language.getConnexionMenuControllerButtonInscription(),Pos.CENTER,10,440,20,480,new Font(25),false,anchorPane);
         setupScene.setLabel(labelNewMail,language.getLabelMail(),Pos.CENTER,100,150,20,150,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
-        setupScene.setLabel(labelNewPassword,language.getConnexionMenuControllerLabelNewPassword(),Pos.CENTER,30,200,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
+        setupScene.setLabel(labelNewPassword,language.getLabelPassword(),Pos.CENTER,30,200,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
         setupScene.setLabel(labelNewUserName,language.getConnexionMenuControllerLabelNewUserName(),Pos.CENTER,30,250,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
         setupScene.setTextField(textNewEmail,"",Pos.CENTER,250,150,20,200,new Font(15),false,anchorPane);
         setupScene.setTextField(textNewPassword,"",Pos.CENTER,250,200,20,200,new Font(15),false,anchorPane);
