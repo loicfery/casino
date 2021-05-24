@@ -57,9 +57,9 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
     private double soundVolume;
     private boolean backgroundAnimation;
 
-    private List<String> listOfGameBlackJack = new ArrayList<>();
-    private List<String> listOfGameSlotMachine = new ArrayList<>();
-    private List<String> listOfGameRoulette = new ArrayList<>();
+    private List<String> listOfGameBlackJack;
+    private List<String> listOfGameSlotMachine;
+    private List<String> listOfGameRoulette;
     private List<String> currentList = new ArrayList<>();
     private int indexList = 0;
     private boolean ADMIN = false;
@@ -95,7 +95,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         stage.setScene(scene);
         anchorPane = new AnchorPane();
 
-        setupScene.setLabel(titleLabel,"Historique de jeux : Black Jack",Pos.CENTER,0,20,20,600,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(titleLabel,language.getHistoryGamePlayedTitleLabelBlackJack(),Pos.CENTER,0,20,20,600,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
 
         setupScene.setTextArea(textHistory,200,150,530,380,false,true,anchorPane);
 
@@ -109,7 +109,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         setupScene.setButton(rightInformationButton,"->",Pos.CENTER,450,720,20,50,new Font(15),false,anchorPane);
         setupScene.setButton(searchUserButton,language.getHistorySearchUserButton(),Pos.CENTER,20,550,20,150,new Font(15),false,anchorPane);
 
-        setupScene.setCircle(circleSetting,30,750,40,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())), Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
+        setupScene.setCircle(circleSetting,18,570,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
 
         circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
         returnShopMenuButton.setOnMouseClicked((event)-> goToMainMenu());
@@ -162,6 +162,10 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
      * Méthode qui récupère dans la base de données les historiques des parties jouées
      **/
     private void getAllInformation(String condition){
+        listOfGameBlackJack = new ArrayList<>();
+        listOfGameSlotMachine = new ArrayList<>();
+        listOfGameRoulette = new ArrayList<>();
+
         completeList(listOfGameBlackJack,databaseName.getGameBlackJack(),"Erreur black jack de getAllInformation dans HistoryGamePlayedMenuController",condition);
         completeList(listOfGameSlotMachine,databaseName.getGameSlotMachine(),"Erreur machine à sous de getAllInformation dans HistoryGamePlayedMenuController",condition);
         completeList(listOfGameRoulette,databaseName.getGameRoulette(),"\"Erreur roulette de getAllInformation dans HistoryGamePlayedMenuController\"",condition);

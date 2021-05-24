@@ -234,8 +234,6 @@ public class LanguageFrench implements Language{
 
     public String getBuyingMoneyMenuControllerLabelErrorMoneyAdd(){ return "d'argent ont été ajouté"; }
 
-    /**  **/
-
     /** **/
     public String getLabelToken(){
         return "Jetons : ";

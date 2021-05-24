@@ -11,9 +11,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -48,12 +52,14 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
     private final Button exchangeMoneyButton = new Button();
     private final Button searchUserButton = new Button();
 
+    private final Circle circleSetting = new Circle();
+
     private double soundVolume;
     private boolean backgroundAnimation;
-    private List<String> listOfInformationToken = new ArrayList<>();
-    private List<String> listOfInformationMoney = new ArrayList<>();
-    private int indexInformation = 0;
-    private boolean switchExchange = false;
+    private List<String> listOfInformationToken;
+    private List<String> listOfInformationMoney;
+    private int indexInformation;
+    private boolean switchExchange;
     private boolean ADMIN = false;
 
     public HistoryShoppingMenuController(User user, Stage stage, Database database,Language language, double soundVolume, boolean backgroundAnimation){
@@ -86,7 +92,7 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         stage.setScene(scene);
         anchorPane = new AnchorPane();
 
-        setupScene.setLabel(labelTitle,language.getHistoryShoppingMenuControllerLabelTitle1(), Pos.CENTER,0,20,20,400,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelTitle,language.getHistoryShoppingMenuControllerLabelTitle1(), Pos.CENTER,0,40,20,360,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
 
         setupScene.setTextArea(textInformation,0,100,700,400,false,true,anchorPane);
 
@@ -99,12 +105,15 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         setupScene.setButton(exchangeMoneyButton,language.getTitleShopMoney(),Pos.CENTER,175,720,60,200,new Font(20),true,anchorPane);
         setupScene.setButton(searchUserButton,language.getHistorySearchUserButton(),Pos.CENTER,25,650,20,123,new Font(15),false,anchorPane);
 
+        setupScene.setCircle(circleSetting,18,372,28,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
+
         leftInformationButton.setOnMouseClicked((event) -> leftInformation());
         rightInformationButton.setOnMouseClicked((event) -> rightInformation());
         returnShopMenuButton.setOnMouseClicked((event)-> goToShopMenu());
         exchangeTokenButton.setOnMouseClicked((event) -> switchExchange());
         exchangeMoneyButton.setOnMouseClicked((event) -> switchExchange());
         searchUserButton.setOnMouseClicked((event)-> searchUser());
+        circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
 
         if(ADMIN){
             textSearchUser.setVisible(true);
@@ -116,6 +125,10 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
             String conditionMoney = databaseName.getTableHistoryExchangeMoneyColumnMailUser() + " = \"" + user.getEmail() + "\"";
             getAllInformation(conditionToken,conditionMoney);
         }
+
+        textInformation.setText("");
+        switchExchange = false;
+        indexInformation = 0;
         printInformation();
 
         root.getChildren().add(anchorPane);
@@ -155,6 +168,9 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
      * Méthode qui récupère de la base de données tous les historiques d'échanges
      **/
     private void getAllInformation(String conditionToken, String conditionMoney){
+        listOfInformationToken = new ArrayList<>();
+        listOfInformationMoney = new ArrayList<>();
+
         try {
             ResultSet resultSetToken = database.select(databaseName.getTableHistoryExchangeToken(), conditionToken);
             ResultSet resultSetMoney = database.select(databaseName.getTableHistoryExchangeMoney(), conditionMoney);
@@ -316,6 +332,14 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         setting();
         settingMenuController.exitSettingMenu();
         settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
+        settingMenuController.setting();
+    }
+
+    /**
+     * Méthode qui affiche le menu des paramètres
+     */
+    private void goToMenuSetting(){
+        settingMenuController.exitSettingMenu();
         settingMenuController.setting();
     }
 }
