@@ -97,6 +97,7 @@ public class ShopMenuController implements InterfaceMenu{
         }
     }
 
+    /** Méthode pour initialiser l'interface de la boutique **/
     public void setting(){
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -143,7 +144,7 @@ public class ShopMenuController implements InterfaceMenu{
     }
 
     /**
-     * Méthode qui récupère dans la base de données les échanges de jetons et d'argents
+     * Méthode qui récupère dans la base de données les échanges de jetons et d'argent
      **/
     private void getShopList(){
         listOfShopToken = new ArrayList<>();
@@ -258,6 +259,9 @@ public class ShopMenuController implements InterfaceMenu{
         printListExchange(indexMax, indexListToken, listOfLabelShopToken, listOfButtonShopToken, listOfButtonShopTokenDelete, addExchangeTokenButton, leftShopTokenButton);
     }
 
+    /**
+     * Méthode qui affiche les échanges de la liste en paramètre
+     **/
     private void printListExchange(int indexMax, int indexListToken, List<Label> listOfLabelShopToken, List<Button> listOfButtonShopToken, List<Button> listOfButtonShopTokenDelete, Button addExchangeTokenButton, Button leftShopTokenButton) {
         for(int index = indexListToken; index < indexMax; index ++){
             listOfLabelShopToken.get(index).setVisible(true);
@@ -296,6 +300,7 @@ public class ShopMenuController implements InterfaceMenu{
         printListExchange(indexMax, indexListMoney, listOfLabelShopMoney, listOfButtonShopMoney, listOfButtonShopMoneyDelete, addExchangeMoneyButton, leftShopMoneyButton);
     }
 
+    /** Méthode qui cache les échanges **/
     private void hideExchange(int indexListToken, List<String> listOfShopToken, Button addExchangeTokenButton, List<Label> listOfLabelShopToken, List<Button> listOfButtonShopToken, List<Button> listOfButtonShopTokenDelete) {
         int indexMax = (indexListToken + 5);
 
@@ -660,14 +665,17 @@ public class ShopMenuController implements InterfaceMenu{
         settingMenuController.setting();
     }
 
+    /** Méthode qui retourne la date courante sous la forme yyy_MM_dd **/
     private String getCurrentDate(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         return simpleDateFormat.format(date);
     }
 
+    /** Méthode qui modifie la langue **/
     public void setLanguage(Language language){ this.language = language; }
 
+    /** Méthode qui rafraichit ce menu **/
     public void refresh(){
         setting();
         settingMenuController.exitSettingMenu();

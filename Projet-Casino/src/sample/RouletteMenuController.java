@@ -1214,6 +1214,7 @@ public class RouletteMenuController implements InterfaceMenu{
         }
     }
 
+    /** Méthode qui calcule les gains **/
     private void calculateGain(int cellValueChoose){
         int gain = roulette.finalGain(cellValueChoose);
         int tokenGain;
@@ -1288,7 +1289,7 @@ public class RouletteMenuController implements InterfaceMenu{
         mainMenuController.setting();
     }
 
-
+    /** Méthode qui change le volume sonores des effets sonores **/
     public void setSoundVolume(double newSoundVolume){
         if(newSoundVolume <= 1.0 && newSoundVolume >= 0){
             soundVolume = newSoundVolume;
@@ -1297,43 +1298,52 @@ public class RouletteMenuController implements InterfaceMenu{
         }
     }
 
+    /** Méthode qui ouvre l'interface du menu des paramètres **/
     private void goToMenuSetting(){
         settingMenuController.exitSettingMenu();
         settingMenuController.setting();
     }
 
+    /** Méthode qui active/désactive les animations en arrière plan **/
     public void setBackgroundAnimation(boolean newBackgroundAnimation){
         backgroundAnimation = newBackgroundAnimation;
     }
 
+    /** Méthode qui crée le son des jetons **/
     private void createSoundToken(){
         tokenSound = new MediaPlayer(new Media(new File("Projet-Casino/sound/tokenSound.mp3").toURI().toString()));
         tokenSound.setVolume(soundVolume);
     }
 
+    /** Méthode qui crée le son de la bille qui tourne dans la roulette **/
     private void createSoundRoulette(){
         rouletteSound = new MediaPlayer(new Media(new File("Projet-Casino/sound/rouletteSound.mp3").toURI().toString()));
         rouletteSound.setVolume(soundVolume);
     }
 
+    /** Méthode qui ouvre l'interface du menu des log d'une partie **/
     private void goToLogMenu(){
         logMenuController.exitLogMenu();
         logMenuController.setting();
     }
 
+    /** Méthode qui ouvre l'interface du menu des règles **/
     private void goToRuleMenu(){
         ruleMenuController.exitRuleMenu();
         ruleMenuController.setting();
     }
 
+    /** Méthode qui retourne la date courante dans la forme yyy-MM-dd **/
     private String getCurrentDate(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         return simpleDateFormat.format(date);
     }
 
+    /** Méthode qui modifie la langue **/
     public void setLanguage(Language language){ this.language = language; }
 
+    /** Méthode qui rafraichit ce menu **/
     public void refresh(){
         setting();
         settingMenuController.exitSettingMenu();

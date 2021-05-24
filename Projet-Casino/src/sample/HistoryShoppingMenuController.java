@@ -78,7 +78,7 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
     }
 
     /**
-     * Méthode qui initialise l'interface
+     * Méthode qui initialise l'interface du menu de l'historique de la boutique
      **/
     public void setting(){
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -136,6 +136,9 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         stage.show();
     }
 
+    /** Méthode pour rechercher des historiques avec un email précis
+     * Utilisable seulement par un ADMIN
+     * **/
     private void searchUser(){
         textInformation.setText("");
         listOfInformationToken = new ArrayList<>();
@@ -327,8 +330,10 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         backgroundAnimation = newBackgroundAnimation;
     }
 
+    /** Méthode qui modifie la langue **/
     public void setLanguage(Language language){ this.language = language; }
 
+    /** Méthode qui rafraichit ce menu **/
     public void refresh(){
         setting();
         settingMenuController.exitSettingMenu();

@@ -554,6 +554,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         }
     }
 
+    /** Méthode qui fait piocher une carte  **/
     private void drawCard() {
         int positionCardX;
         Card newCard = blackJack.getListOfUserHand().get(indexCurrentHand).getHand().get(blackJack.getListOfUserHand().get(indexCurrentHand).getHand().size() - 1);
@@ -642,6 +643,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         }
     }
 
+    /** Méthode qui distribue les gains **/
     private void distributeGain(){
         blackJack.betDistribute();
         int gain = user.getToken() - valueTokenUserBegin;
@@ -664,6 +666,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         labelToken.setText(language.getLabelToken() + user.getToken());
     }
 
+    /** Méthode qui vérifie si il y a un split **/
     private void checkSplit() {
         if(!split) {
             hideAction();
@@ -721,6 +724,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         reset();
     }
 
+    /** Méthode qui réinitialise ce menu **/
     private void reset(){
         resetCards();
         cardSound.stop();
@@ -763,6 +767,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         }
     }
 
+    /** Méthode qui lance l'animation de distribution des 3 premières cartes **/
     private void animationCardBegin(){
         currentPositionXUserFirstHand = ORIGIN_X_FIRST_HAND;
         currentPositionXCroupier = ORIGIN_X_Croupier;
@@ -801,6 +806,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         timeline.play();
     }
 
+    /** Méthode qui change le volume sonores des effets sonores **/
     public void setSoundVolume(double newSoundVolume){
         if(newSoundVolume >= 0 && newSoundVolume <= 1.0){
             this.soundVolume = newSoundVolume;
@@ -809,15 +815,18 @@ public class BlackJackMenuController implements InterfaceMenu{
         }
     }
 
+    /** Méthode qui active/désactive les animations en arrière plan **/
     public void setBackgroundAnimation(boolean newBackgroundAnimation){
         backgroundAnimation = newBackgroundAnimation;
     }
 
+    /** Méthode qui ouvre l'interface du menu des paramètres **/
     private void goToMenuSetting(){
         settingMenuController.exitSettingMenu();
         settingMenuController.setting();
     }
 
+    /** Méthode qui ouvre l'interface du menu des log de la partie **/
     private void goToLogMenu(){
         logMenuController.exitLogMenu();
         logMenuController.setting();
@@ -825,24 +834,29 @@ public class BlackJackMenuController implements InterfaceMenu{
         tokenSound.stop();
     }
 
+    /** Méthode qui crée le son des cartes distribuées **/
     private void createCardSound(){
         cardSound = new MediaPlayer(new Media(new File("Projet-Casino/sound/dealingThreeCardsSound.mp3").toURI().toString()));
         cardSound.setVolume(soundVolume);
     }
 
+    /** Méthode qui ouvre l'interface du menu des règles du black jack **/
     private void goToRuleMenu(){
         ruleMenuController.exitRuleMenu();
         ruleMenuController.setting();
     }
 
+    /** Méthode qui retourne la date courante dans la forme yyyy-MM-dd **/
     private String getCurrentDate(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         return simpleDateFormat.format(date);
     }
 
+    /** Méthode qui modifie la langue **/
     public void setLanguage(Language language){ this.language = language; }
 
+    /** Méthode qui rafraichit ce menu **/
     public void refresh(){
         setting();
         settingMenuController.exitSettingMenu();

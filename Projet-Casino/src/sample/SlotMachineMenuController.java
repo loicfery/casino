@@ -91,7 +91,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
         this.language = language;
     }
 
-    /** Méthode qui initialise le'interface de la machine à sous **/
+    /** Méthode qui initialise l'interface de la machine à sous **/
     public void setting(){
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -230,6 +230,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
         mainMenuController.setting();
     }
 
+    /** Méthode qui lance les animations en arrière plan **/
     private void animation(){
         int indexColor = 0;
         Color[] colors = {Color.YELLOW,Color.GREEN};
@@ -271,6 +272,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
         }
     }
 
+    /** Méthode qui crée une animation de changement de couleur pour une forme géometrique **/
     private FillTransition animate(Shape shape, Color firstColor, Color secondColor){
         FillTransition animation = new FillTransition(Duration.millis(500),shape, firstColor,secondColor);
         animation.setCycleCount(Transition.INDEFINITE);
@@ -279,12 +281,14 @@ public class SlotMachineMenuController implements InterfaceMenu{
         return animation;
     }
 
+    /** Méthode qui crée un rectangle animé **/
     private Rectangle createRectangleAnimate(double layoutX, double layoutY, double width, double height){
         Rectangle rectangle = new Rectangle(layoutX,layoutY,width,height);
         anchorPane.getChildren().add(rectangle);
         return rectangle;
     }
 
+    /** Méthode qui crée une étoile animé **/
     private Polygon createStarAnimate(double layoutX, Paint color){
         Polygon star = new Polygon();
         star.setLayoutX(layoutX);
@@ -298,6 +302,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
         return star;
     }
 
+    /** Méthode qui lance l'animation de la machine à sous **/
     private void animationSlot(int symbolOne, int symbolTwo, int symbolThree){
         Timeline timeline = new Timeline();
         Duration timePoint = Duration.ZERO;
@@ -354,7 +359,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
 
     }
 
-
+    /** Méthode pour modifier le volume sonore des effets sonores **/
     public void setSoundVolume(double newSoundVolume){
         if(newSoundVolume >= 0 && newSoundVolume <= 1.0){
             this.soundVolume = newSoundVolume;
@@ -363,11 +368,13 @@ public class SlotMachineMenuController implements InterfaceMenu{
         }
     }
 
+    /** Méthode pour ouvrir le menu des paramètres **/
     private void goToMenuSetting(){
         settingMenuController.exitSettingMenu();
         settingMenuController.setting();
     }
 
+    /** Méthode pour active/désactiver les animations en arrière plan **/
     public void setBackgroundAnimation(boolean newBackgroundAnimation){
         backgroundAnimation = newBackgroundAnimation;
         if(backgroundAnimation){
@@ -378,16 +385,19 @@ public class SlotMachineMenuController implements InterfaceMenu{
         }
     }
 
+    /** Méthode pour créer le son de la machine à sous en fonctionnement **/
     private void createSoundSlot(){
         soundSlot = new MediaPlayer(new Media(new File("Projet-Casino/sound/slotMachineSlotsSound.mp3").toURI().toString()));
         soundSlot.setVolume(soundVolume);
     }
 
+    /** Méthode pour créer le son du paiement de la machine à sous en cas de victoire **/
     private void createSoundPayout(){
         soundPayout = new MediaPlayer(new Media(new File("Projet-Casino/sound/slotMachinePayoutSound.wav").toURI().toString()));
         soundPayout.setVolume(soundVolume);
     }
 
+    /** Méthode pour modifier la visibilité des animations en arrière plan **/
     private void setAnimationState(boolean visible){
         if(!visible) {
             for (FillTransition fillTransition : listOfFillTransition) {
@@ -401,24 +411,29 @@ public class SlotMachineMenuController implements InterfaceMenu{
         }
     }
 
+    /** Méthode pour se dirriger l'interface du menu principal **/
     private void goToLogMenu(){
         logMenuController.exitLogMenu();
         logMenuController.setting();
     }
 
+    /** Méthode pour ouvrir l'interface des règles de la machine à sous **/
     private void goToRuleMenu(){
         ruleMenuController.exitRuleMenu();
         ruleMenuController.setting();
     }
 
+    /** Méthode qui retourne la date courrente sous le format yyyy-MM-dd **/
     private String getCurrentDate(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         return simpleDateFormat.format(date);
     }
 
+    /** Méthode pour modifier le language **/
     public void setLanguage(Language language){ this.language = language; }
 
+    /** Méthode pour rafraichir ce menu **/
     public void refresh(){
         setting();
         settingMenuController.exitSettingMenu();

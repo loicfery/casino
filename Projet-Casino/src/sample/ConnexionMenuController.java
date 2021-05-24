@@ -74,7 +74,7 @@ public class ConnexionMenuController implements InterfaceMenu{
         this.language = language;
     }
 
-    /** Méthode qui initialise l'interface de connexion **/
+    /** Méthode qui initialise l'interface du menu de connexion **/
     public void setting(){
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -235,29 +235,34 @@ public class ConnexionMenuController implements InterfaceMenu{
         this.user = user;
     }
 
-    /** Méthode pour charger le menu principal **/
+    /** Méthode qui charge le menu principal **/
     private void switchMainMenu(){
         MainMenuController mainMenuController = new MainMenuController(stage,user, database,language, soundVolume,backgroundAnimation);
         mainMenuController.setting();
     }
 
+    /** Méthode qui modifie le volume sonore des effets sonores **/
     public void setSoundVolume(double newSoundVolume){
         if(newSoundVolume <= 1.0 && newSoundVolume >= 0){
             soundVolume = newSoundVolume;
         }
     }
 
+    /** Méthode qui active/désactive les animations en arrière plan **/
     public void setBackgroundAnimation(boolean newBackgroundAnimation){
         backgroundAnimation = newBackgroundAnimation;
     }
 
+    /** Méthode qui ouvre l'interface du menu des paramètres **/
     private void goToMenuSetting(){
         settingMenuController.exitSettingMenu();
         settingMenuController.setting();
     }
 
+    /** Méthode qui modifie la langue **/
     public void setLanguage(Language language){ this.language = language; }
 
+    /** Méthode qui rafraichit ce menu **/
     public void refresh(){
         setting();
         settingMenuController.exitSettingMenu();

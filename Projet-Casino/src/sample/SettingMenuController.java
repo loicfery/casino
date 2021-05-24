@@ -107,6 +107,7 @@ public class SettingMenuController {
         }
     }
 
+    /** Méthode qui affiche la langue actuelle dans les boutons de langues **/
     private void checkLanguage(){
         if(language instanceof LanguageFrench){
             languageFrenchRadioButton.setSelected(true);
@@ -118,6 +119,7 @@ public class SettingMenuController {
         }
     }
 
+    /** Méthode qui change de langue **/
     private void switchLanguage(RadioButton button){
         if(languageFrenchRadioButton.getText().equals(button.getText())){
             language = new LanguageFrench();

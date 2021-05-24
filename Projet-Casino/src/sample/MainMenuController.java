@@ -56,6 +56,7 @@ public class MainMenuController implements InterfaceMenu{
         this.language = language;
     }
 
+    /** Méthode qui intialise l'interface du menu principal **/
     public void setting(){
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -93,65 +94,77 @@ public class MainMenuController implements InterfaceMenu{
         stage.show();
     }
 
+    /** Méthode qui redirrige vers l'interface du menu de connexion **/
     private void goToConnexionMenu(){
         settingMenuController.exitSettingMenu();
         ConnexionMenuController controller = new ConnexionMenuController(stage,database,language);
         controller.setting();
     }
 
+    /** Méthode qui redirrige vers l'interface du menu d'information **/
     private void goToInformationMenu(){
         settingMenuController.exitSettingMenu();
         InformationMenuController informationMenuController = new InformationMenuController(user,stage, database,language,soundVolume,backgroundAnimation);
         informationMenuController.setting();
     }
 
+    /** Méthode qui redirrige vers l'interface du menu de boutique **/
     private void goToShopMenu() {
         settingMenuController.exitSettingMenu();
         ShopMenuController shopMenuController = new ShopMenuController(stage,user,database,language,soundVolume,backgroundAnimation);
         shopMenuController.setting();
     }
 
+    /** Méthode qui redirrige vers l'interface du menu du jeu black jack **/
     private void goToBlackJackMenu(){
         settingMenuController.exitSettingMenu();
         BlackJackMenuController blackJackMenuController = new BlackJackMenuController(user,stage, database,language,soundVolume,backgroundAnimation);
         blackJackMenuController.setting();
     }
 
+    /** Méthode qui redirrige vers l'interface du menu du jeu machine à sous **/
     private void goToSlotMachineMenu(){
         settingMenuController.exitSettingMenu();
         SlotMachineMenuController slotMachineMenuController = new SlotMachineMenuController(user,stage,database,language,soundVolume,backgroundAnimation);
         slotMachineMenuController.setting();
     }
 
+    /** Méthode qui redirrige vers l'interface du menu du jeu roulette **/
     private void goToRouletteMenu(){
         settingMenuController.exitSettingMenu();
         RouletteMenuController rouletteMenuController = new RouletteMenuController(user,stage, database,language,soundVolume,backgroundAnimation);
         rouletteMenuController.setting();
     }
 
+    /** Méthode qui redirrige vers l'interface du menu de l'historique des parties jouées **/
     private void goToHistoryGamePlayedMenu(){
         settingMenuController.exitSettingMenu();
         HistoryGamePlayedMenuController historyGamePlayedMenuController = new HistoryGamePlayedMenuController(user,stage,database,language,soundVolume,backgroundAnimation);
         historyGamePlayedMenuController.setting();
     }
 
+    /** Méthode qui modifie le volume sonore des effets sonores **/
     public void setSoundVolume(double newSoundVolume){
         if(newSoundVolume >= 0 && newSoundVolume <= 1.0){
             this.soundVolume = newSoundVolume;
         }
     }
 
+    /** Méthode  qui active/désactive les animations en arrière plan **/
     public void setBackgroundAnimation(boolean newBackgroundAnimation){
         backgroundAnimation = newBackgroundAnimation;
     }
 
+    /** Méthode qui ouvre l'interface du menu des paramètres **/
     private void goToMenuSetting(){
         settingMenuController.exitSettingMenu();
         settingMenuController.setting();
     }
 
+    /** Méthode qui change la langue **/
     public void setLanguage(Language language){ this.language = language; }
 
+    /** Méthode qui rafraichit ce menu **/
     public void refresh(){
         setting();
         settingMenuController.exitSettingMenu();

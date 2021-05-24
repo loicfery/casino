@@ -23,6 +23,7 @@ public class LogMenuController {
     private final Label labelTitle = new Label();
     private final TextArea textLog = new TextArea();
 
+    /** Méthode qui initialise l'interface du menu des log d'une partie **/
     public void setting(){
         stageLog = new Stage();
         stageLog.setResizable(false);
@@ -38,6 +39,7 @@ public class LogMenuController {
         stageLog.show();
     }
 
+    /** Méthode qui affiche le contenue du log **/
     private void setTextLog(){
         textLog.setText("");
         for(String line : listOfLog){
@@ -45,17 +47,20 @@ public class LogMenuController {
         }
     }
 
+    /** Méthode qui ajoute du contenue dans le log **/
     public void getLog(String log){
         listOfLog.add(log + "\n\n");
         setTextLog();
     }
 
+    /** Méthode pour ferme l'interface du menu des paramètres **/
     public void exitLogMenu() {
         if (stageLog != null) {
             stageLog.close();
         }
     }
 
+    /** Méthode pour réinitialiser le log **/
     public void resetLog(){
         listOfLog = new ArrayList<>();
     }

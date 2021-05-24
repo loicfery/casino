@@ -72,7 +72,7 @@ public class InformationMenuController implements InterfaceMenu{
     }
 
     /**
-     * Méthode qui charge le menu d'informations
+     * Méthode qui charge l'interface du menu d'informations
      */
     public void setting(){
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -118,6 +118,7 @@ public class InformationMenuController implements InterfaceMenu{
         stage.show();
     }
 
+    /** Méthode qui récupère le mot de passe dans la base de données **/
     private void getPassword(String email){
         try {
             ResultSet resultSet = database.select(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser()+" = \"" + email + "\"");
@@ -169,6 +170,7 @@ public class InformationMenuController implements InterfaceMenu{
         }
     }
 
+    /** Méthode qui modifie les historiques avec les nouvelles informations **/
     private void modifyHistory(String newMail){
         database.update(databaseName.getTableHistoryPartyGamed(),databaseName.getTableHistoryPartyGamedColumnMailUser(),newMail,databaseName.getTableHistoryPartyGamedColumnMailUser()+" = \""+user.getEmail()+"\"");
         database.update(databaseName.getTableHistoryExchangeMoney(),databaseName.getTableHistoryExchangeMoneyColumnMailUser(),newMail,databaseName.getTableHistoryExchangeMoneyColumnMailUser()+" = \""+user.getEmail()+"\"");
@@ -246,8 +248,10 @@ public class InformationMenuController implements InterfaceMenu{
         settingMenuController.setting();
     }
 
+    /** Méthode qui modifie la langue **/
     public void setLanguage(Language language){ this.language = language; }
 
+    /** Méthode qui rafraichit ce menu **/
     public void refresh(){
         setting();
         settingMenuController.exitSettingMenu();

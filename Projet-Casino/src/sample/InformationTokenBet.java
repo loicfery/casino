@@ -20,6 +20,7 @@ public class InformationTokenBet {
         this.listOfCellToken = listOfCellToken;
     }
 
+    /** Méthode qui retourne toutes les cases de la mise **/
     public String getCasesToString(){
         String cases = " ";
         for(int index = 0; index < listOfCellToken.size(); index ++){

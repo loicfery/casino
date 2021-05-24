@@ -8,6 +8,7 @@ import javafx.util.Duration;
 
 public class MessageInterface {
 
+    /** Méthode qui affiche un message pendants 3 secondes **/
     public void setMessage(Label label, String message, Color color){
         Timeline timeline = new Timeline();
         Duration timePoint = Duration.ZERO;
