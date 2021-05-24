@@ -143,7 +143,7 @@ public class InformationMenuController implements InterfaceMenu{
     private void changeEmail(){
         if(!textEmail.getText().isEmpty()){
             if(!textEmail.getText().equals(user.getEmail())) {
-                if (ControleSaisie.validEmail(textEmail.getText())) {
+                if (InputControl.validEmail(textEmail.getText())) {
                     try {
                         ResultSet resultSet = database.select(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser() + " = \"" + textEmail.getText() + "\"");
                         if (resultSet.next()) {
@@ -181,7 +181,7 @@ public class InformationMenuController implements InterfaceMenu{
     private void changeUserName(){
         if(!textUserName.getText().isEmpty()){
             if(!textUserName.getText().equals(user.getUserName())) {
-                if (ControleSaisie.isUsername(textUserName.getText()) && textUserName.getText().length() > 5) {
+                if (InputControl.isUsername(textUserName.getText()) && textUserName.getText().length() > 5) {
                     database.update(databaseName.getTableUser(), databaseName.getTableUserColumnUserName(), "\"" + textUserName.getText() + "\"", databaseName.getTableUserColumnMailUser() + " = \"" + user.getEmail() + "\"");
                     user.setUserName(textUserName.getText());
                     messageInterface.setMessage(labelError, language.getInformationMenuControllerLabelErrorUserNameChangeValid(), Color.GREEN);
@@ -206,7 +206,7 @@ public class InformationMenuController implements InterfaceMenu{
             if (!textPassword.getText().isEmpty()) {
                 ResultSet resultSet = database.select(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser() + " = \"" + user.getEmail() + "\"");
                 if (!resultSet.getString(4).equals(textPassword.getText())) {
-                    if (ControleSaisie.validPassword(textPassword.getText()) && textPassword.getText().length() > 5) {
+                    if (InputControl.validPassword(textPassword.getText()) && textPassword.getText().length() > 5) {
                         database.update(databaseName.getTableUser(), databaseName.getTableUserColumnPassword(), "\"" + textPassword.getText() + "\"", databaseName.getTableUserColumnMailUser() + " = \"" + user.getEmail() + "\"");
                         messageInterface.setMessage(labelError, language.getInformationMenuControllerLabelErrorPasswordChangeValid(), Color.GREEN);
                     } else {
