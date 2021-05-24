@@ -29,6 +29,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -132,13 +133,13 @@ public class RouletteMenuController implements InterfaceMenu{
         setCellBetPosition();
         setCellRoulettePosition();
 
-        setupScene.setImageView(pictureRoulette,638.0,350.0,425.0,471.0, new Image(getClass().getResource("image/roulette.jpg").toExternalForm()),true,anchorPane);
+        setupScene.setImageView(pictureRoulette,638.0,350.0,425.0,471.0, new Image(new File("Projet-Casino/image/roulette.jpg").toURI().toString()),true,anchorPane);
         pictureRoulette.setPickOnBounds(true);
         pictureRoulette.setPreserveRatio(true);
 
         setupScene.setCircle(circleRule,16.0,1070.0,30.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,true,anchorPane);
         setupScene.setCircle(circleBallRoulette,7.0,950,475,Paint.valueOf("BLACK"),Paint.valueOf("BLACK"),StrokeType.INSIDE,0.0,false,anchorPane);
-        setupScene.setCircle(circleSetting,18,970,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("GREEN"),StrokeType.INSIDE,1.0,true,anchorPane);
+        setupScene.setCircle(circleSetting,18,970,30,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())),Paint.valueOf("GREEN"),StrokeType.INSIDE,1.0,true,anchorPane);
 
         setupScene.setRectangle(rectangleInformationBet,212,368,202,387,5.0,5.0,Paint.valueOf("WHITE"),Paint.valueOf("WHITE"),1.0,StrokeType.INSIDE,false,anchorPane);
         setupScene.setRectangle(rectangleLog,1000.0,15.0,30.0,50.0,10.0,10.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),1.0,StrokeType.INSIDE,true,anchorPane);
@@ -1306,12 +1307,12 @@ public class RouletteMenuController implements InterfaceMenu{
     }
 
     private void createSoundToken(){
-        tokenSound = new MediaPlayer(new Media(getClass().getResource("sound/tokenSound.mp3").toExternalForm()));
+        tokenSound = new MediaPlayer(new Media(new File("Projet-Casino/sound/tokenSound.mp3").toURI().toString()));
         tokenSound.setVolume(soundVolume);
     }
 
     private void createSoundRoulette(){
-        rouletteSound = new MediaPlayer(new Media(getClass().getResource("sound/rouletteSound.mp3").toExternalForm()));
+        rouletteSound = new MediaPlayer(new Media(new File("Projet-Casino/sound/rouletteSound.mp3").toURI().toString()));
         rouletteSound.setVolume(soundVolume);
     }
 

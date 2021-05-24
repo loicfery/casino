@@ -23,6 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.stage.WindowEvent;
 
+import java.io.File;
 import java.sql.ResultSet;
 
 
@@ -104,7 +105,7 @@ public class ConnexionMenuController implements InterfaceMenu{
         setupScene.setTextField(textNewUserName,"",Pos.CENTER,250,250,20,200,new Font(15),false,anchorPane);
         setupScene.setLabel(labelError,"",Pos.CENTER,50,330,20,400,new Font(15),Paint.valueOf("RED"),false,anchorPane);
 
-        setupScene.setCircle(circleSetting,18,475,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
+        setupScene.setCircle(circleSetting,18,475,30,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
 
         buttonLogin.setOnMouseClicked((event)-> goToMainMenu());
         textEmail.setOnAction((event)-> goToMainMenu());

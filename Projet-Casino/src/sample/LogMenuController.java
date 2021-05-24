@@ -29,7 +29,6 @@ public class LogMenuController {
         BorderPane rootLog = new BorderPane();
         AnchorPane anchorPaneLog = new AnchorPane();
         Scene sceneLog = new Scene(rootLog, 360, 850);
-        //scene.getStylesheets().add(getClass().getResource("interfaceMenuSetting.css").toExternalForm());
         stageLog.setScene(sceneLog);
 
         setupScene.setLabel(labelTitle,"Historique", Pos.CENTER,0,25,20,360,new Font(30), Paint.valueOf("BLACK"),true,anchorPaneLog);

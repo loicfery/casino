@@ -46,7 +46,6 @@ public class BuyingMoneyMenuController {
         stage = new Stage();
         stage.setResizable(false);
         Scene scene = new Scene(root, 400, 400);
-        //scene.getStylesheets().add(getClass().getResource("shopMenu.css").toExternalForm());
         stage.setScene(scene);
 
         setupScene.setLabel(titleLabel,language.getBuyingMoneyMenuControllerTitleLabel(), Pos.CENTER,0,20,20,400,new Font(30), Paint.valueOf("BLACK"),true,anchorPane);

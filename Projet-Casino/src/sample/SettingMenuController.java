@@ -52,7 +52,6 @@ public class SettingMenuController {
         stage = new Stage();
         stage.setResizable(false);
         Scene sceneSetting = new Scene(root, 500, 500);
-        //scene.getStylesheets().add(getClass().getResource("interfaceMenuSetting.css").toExternalForm());
         stage.setScene(sceneSetting);
 
         setupScene.setLabel(titleLabel,language.getSettingMenuControllerTitleLabel(), Pos.CENTER,150,15,30,200,new Font(30), Paint.valueOf("BLACK"),true, anchorPane);

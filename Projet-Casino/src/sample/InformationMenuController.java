@@ -22,6 +22,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.io.File;
 import java.sql.ResultSet;
 
 
@@ -82,7 +83,6 @@ public class InformationMenuController implements InterfaceMenu{
         });
         root = new BorderPane();
         Scene scene = new Scene(root, 500, 500);
-        //scene.getStylesheets().add(getClass().getResource("connexionMenu.css").toExternalForm());
         stage.setScene(scene);
         anchorPane = new AnchorPane();
 
@@ -106,7 +106,7 @@ public class InformationMenuController implements InterfaceMenu{
         setupScene.setButton(changeUserNameButton,language.getInformationMenuControllerChangeUserNameButton(),Pos.CENTER,300,180,20,180,new Font(15),true,anchorPane);
         setupScene.setButton(changePasswordButton,language.getInformationMenuControllerChangePasswordButton(),Pos.CENTER,300,240,20,180,new Font(15),true,anchorPane);
 
-        setupScene.setCircle(circleSetting,18,475,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
+        setupScene.setCircle(circleSetting,18,475,30,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
 
         circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
         returnMainMenuButton.setOnMouseClicked((event)-> goToMainMenu());

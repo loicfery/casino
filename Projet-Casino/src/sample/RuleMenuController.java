@@ -43,7 +43,6 @@ public class RuleMenuController {
         AnchorPane anchorPaneLog = new AnchorPane();
         setRule();
         Scene sceneLog = new Scene(rootLog, widthMax, heightMax);
-        //scene.getStylesheets().add(getClass().getResource("interfaceMenuSetting.css").toExternalForm());
         stage.setScene(sceneLog);
 
         setupScene.setLabel(labelTitle,labelTitle.getText(), Pos.CENTER,0,25,20,widthMax,new Font(30), Paint.valueOf("BLACK"),true,anchorPaneLog);

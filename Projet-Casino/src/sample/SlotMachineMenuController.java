@@ -27,6 +27,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -112,15 +113,15 @@ public class SlotMachineMenuController implements InterfaceMenu{
         }
 
         setupScene.setButton(startingGameButton,language.getStartingGameButton(), Pos.CENTER,504.0,615.0,134.0,256.0,new Font(25),true,anchorPane);
-        setupScene.setImageView(pictureSlot1,130.0,300.0,150.0,151.0,new Image(getClass().getResource("image/slot_machine_seven.jpg").toExternalForm()),true,anchorPane);
-        setupScene.setImageView(pictureSlot2,330,300.0,150.0,151.0,new Image(getClass().getResource("image/slot_machine_seven.jpg").toExternalForm()),true,anchorPane);
-        setupScene.setImageView(pictureSlot3,530.0,300.0,150.0,151.0,new Image(getClass().getResource("image/slot_machine_seven.jpg").toExternalForm()),true,anchorPane);
+        setupScene.setImageView(pictureSlot1,130.0,300.0,150.0,151.0,new Image(new File("Projet-Casino/image/slot_machine_seven.jpg").toURI().toString()),true,anchorPane);
+        setupScene.setImageView(pictureSlot2,330,300.0,150.0,151.0,new Image(new File("Projet-Casino/image/slot_machine_seven.jpg").toURI().toString()),true,anchorPane);
+        setupScene.setImageView(pictureSlot3,530.0,300.0,150.0,151.0,new Image(new File("Projet-Casino/image/slot_machine_seven.jpg").toURI().toString()),true,anchorPane);
         setupScene.setLabel(labelProfit,language.getLabelProfit()+"0",Pos.CENTER_LEFT,39.0,686.0,63.0,455.0,new Font(33.0),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelToken,language.getLabelToken()+user.getToken(),Pos.CENTER_LEFT,39.0,615.0,70.0,455.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelUserName,language.getLabelPlayer()+user.getUserName(),Pos.CENTER_LEFT,39.0,565.0,50.0,463.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setButton(returnMainMenuButton,language.getQuitButton(),Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
 
-        setupScene.setCircle(circleSetting,18,670,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("BLUE"),StrokeType.INSIDE,1.0,true,anchorPane);
+        setupScene.setCircle(circleSetting,18,670,30,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())),Paint.valueOf("BLUE"),StrokeType.INSIDE,1.0,true,anchorPane);
 
         setupScene.setRectangle(rectangleLog,700.0,15.0,30.0,50.0,10.0,10.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),1.0,StrokeType.INSIDE,true,anchorPane);
         setupScene.setLabel(labelLog,language.getLabelLog(),Pos.CENTER,700.0,15.0,23.0,50.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
@@ -148,20 +149,20 @@ public class SlotMachineMenuController implements InterfaceMenu{
             case 1:
             case 7:
             case 10:
-                switchPictureSlot(slot, new Image(getClass().getResource("image/slot_machine_lemon.jpg").toExternalForm()));
+                switchPictureSlot(slot, new Image(new File("Projet-Casino/image/slot_machine_lemon.jpg").toURI().toString()));
                 break;
             case 2:
             case 4:
             case 6:
             case 8:
-                switchPictureSlot(slot,new Image(getClass().getResource("image/slot_machine_watermelon.jpg").toExternalForm()));
+                switchPictureSlot(slot,new Image(new File("Projet-Casino/image/slot_machine_watermelon.jpg").toURI().toString()));
                 break;
             case 3:
             case 9:
-                switchPictureSlot(slot,new Image(getClass().getResource("image/slot_machine_cherry.jpg").toExternalForm()));
+                switchPictureSlot(slot,new Image(new File("Projet-Casino/image/slot_machine_cherry.jpg").toURI().toString()));
                 break;
             case 5:
-                switchPictureSlot(slot,new Image(getClass().getResource("image/slot_machine_seven.jpg").toExternalForm()));
+                switchPictureSlot(slot,new Image(new File("Projet-Casino/image/slot_machine_seven.jpg").toURI().toString()));
                 break;
         }
     }
@@ -378,12 +379,12 @@ public class SlotMachineMenuController implements InterfaceMenu{
     }
 
     private void createSoundSlot(){
-        soundSlot = new MediaPlayer(new Media(getClass().getResource("sound/slotMachineSlotsSound.mp3").toExternalForm()));
+        soundSlot = new MediaPlayer(new Media(new File("Projet-Casino/sound/slotMachineSlotsSound.mp3").toURI().toString()));
         soundSlot.setVolume(soundVolume);
     }
 
     private void createSoundPayout(){
-        soundPayout = new MediaPlayer(new Media(getClass().getResource("sound/slotMachinePayoutSound.wav").toExternalForm()));
+        soundPayout = new MediaPlayer(new Media(new File("Projet-Casino/sound/slotMachinePayoutSound.wav").toURI().toString()));
         soundPayout.setVolume(soundVolume);
     }
 

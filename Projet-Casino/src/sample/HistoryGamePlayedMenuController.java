@@ -22,6 +22,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.io.File;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +110,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         setupScene.setButton(rightInformationButton,"->",Pos.CENTER,450,720,20,50,new Font(15),false,anchorPane);
         setupScene.setButton(searchUserButton,language.getHistorySearchUserButton(),Pos.CENTER,20,550,20,150,new Font(15),false,anchorPane);
 
-        setupScene.setCircle(circleSetting,18,570,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
+        setupScene.setCircle(circleSetting,18,570,30,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
 
         circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
         returnShopMenuButton.setOnMouseClicked((event)-> goToMainMenu());

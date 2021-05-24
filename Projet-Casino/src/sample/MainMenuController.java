@@ -17,7 +17,7 @@ import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
-import javafx.stage.WindowEvent;;
+import javafx.stage.WindowEvent;;import java.io.File;
 
 
 public class MainMenuController implements InterfaceMenu{
@@ -69,16 +69,16 @@ public class MainMenuController implements InterfaceMenu{
         stage.setScene(scene);
         anchorPane = new AnchorPane();
 
-        setupScene.setImageView(pictureBlackJackMenu,20.0,170.0,300.0,370.0,new Image(getClass().getResource("image/blackjack.png").toExternalForm()),true,anchorPane);
-        setupScene.setImageView(pictureSlotMachineMenu,410.0,490.0,290.0,370.0,new Image(getClass().getResource("image/slot_machine.jpg").toExternalForm()),true,anchorPane);
-        setupScene.setImageView(pictureRouletteMenu,20.0,490.0,290.0,370.0,new Image(getClass().getResource("image/roulette2.jpg").toExternalForm()),true,anchorPane);
-        setupScene.setImageView(pictureShopMenu,315,20,80,120,new Image(getClass().getResource("image/shop.jpg").toExternalForm()),true,anchorPane);
+        setupScene.setImageView(pictureBlackJackMenu,20.0,170.0,300.0,370.0,new Image(new File("Projet-Casino/image/blackjack.png").toURI().toString()),true,anchorPane);
+        setupScene.setImageView(pictureSlotMachineMenu,410.0,490.0,290.0,370.0,new Image(new File("Projet-Casino/image/slot_machine.jpg").toURI().toString()),true,anchorPane);
+        setupScene.setImageView(pictureRouletteMenu,20.0,490.0,290.0,370.0,new Image(new File("Projet-Casino/image/roulette2.jpg").toURI().toString()),true,anchorPane);
+        setupScene.setImageView(pictureShopMenu,315,20,80,120,new Image(new File("Projet-Casino/image/shop.jpg").toURI().toString()),true,anchorPane);
 
         setupScene.setButton(logoutButton,language.getMainMenuControllerLogoutButton(), Pos.CENTER,20,20,80,120,new Font(15),true,anchorPane);
         setupScene.setButton(informationMenuButton,language.getInformation(),Pos.CENTER,170,20,80,120,new Font(15),true,anchorPane);
         setupScene.setButton(historyGamePlayedButton,language.getMainMenuControllerHistoryGamePlayedButton(),Pos.CENTER,470,20,80,150,new Font(15),true,anchorPane);
 
-        setupScene.setCircle(circleSetting,30,750,40,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())), Paint.valueOf("GREEN"), StrokeType.INSIDE,1.0,true,anchorPane);
+        setupScene.setCircle(circleSetting,30,750,40,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())), Paint.valueOf("GREEN"), StrokeType.INSIDE,1.0,true,anchorPane);
 
         logoutButton.setOnMouseClicked((event)-> goToConnexionMenu());
         informationMenuButton.setOnMouseClicked((event)-> goToInformationMenu());

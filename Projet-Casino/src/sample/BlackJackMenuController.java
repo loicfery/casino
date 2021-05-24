@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -157,7 +158,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         initToken1();
         initToken2();
 
-        setupScene.setCircle(circleSetting,18,670,30,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())),Paint.valueOf("GREEN"),StrokeType.INSIDE,1.0,true,anchorPane);
+        setupScene.setCircle(circleSetting,18,670,30,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())),Paint.valueOf("GREEN"),StrokeType.INSIDE,1.0,true,anchorPane);
 
         setupScene.setRectangle(rectangleLog,700.0,15.0,30.0,50.0,10.0,10.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),1.0,StrokeType.INSIDE,true,anchorPane);
         setupScene.setLabel(labelLog,language.getLabelLog(),Pos.CENTER,700,15,30,50,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
@@ -170,7 +171,7 @@ public class BlackJackMenuController implements InterfaceMenu{
 
         createCardSound();
 
-        tokenSound = new MediaPlayer(new Media(getClass().getResource("sound/tokenSound.mp3").toExternalForm()));
+        tokenSound = new MediaPlayer(new Media(new File("Projet-Casino/sound/tokenSound.mp3").toURI().toString()));
         tokenSound.setVolume(soundVolume);
 
         returnMainMenuButton.setOnMouseClicked((event) -> goToMainMenu());
@@ -368,19 +369,19 @@ public class BlackJackMenuController implements InterfaceMenu{
      **/
     private ImageView chooseCard(int cardNumber, String cardRank) {
         switch (cardNumber) {
-            case 1 : return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/asOfHeart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/asOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/asOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/asOfSquare.jpg").toExternalForm()));
-            case 2 : return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/twoOfheart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/twoOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/twoOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/twoOfSquare.jpg").toExternalForm()));
-            case 3 : return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/threeOfHeart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/threeOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/threeOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/threeOfSquare.jpg").toExternalForm()));
-            case 4 : return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/fourOfheart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/fourOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/fourOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/fourOfSquare.jpg").toExternalForm()));
-            case 5 : return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/fiveOfHeart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/fiveOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/fiveOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/fiveOfSquare.jpg").toExternalForm()));
-            case 6 : return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/sixOfheart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/sixOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/sixOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/sixOfSquare.jpg").toExternalForm()));
-            case 7 : return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/sevenOfHeart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/sevenOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/sevenofClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/sevenOfSquare.jpg").toExternalForm()));
-            case 8 : return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/eightOfHeart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/eightOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/eightOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/eightOfSquare.jpg").toExternalForm()));
-            case 9 : return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/nineOfheart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/nineOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/nineOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/nineOfSquare.jpg").toExternalForm()));
-            case 10 : return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/tenOfHeart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/tenOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/tenOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/tenOfSquare.jpg").toExternalForm()));
-            case 11 : return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/jackOfHeart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/jackOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/jackOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/jackOfSquare.jpg").toExternalForm()));
-            case 12 : return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/queenOfHeart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/queenOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/queenOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/queenOfSquare.jpg").toExternalForm()));
-            case 13 : return getCardByRank(cardRank, new Image(getClass().getResource("image/cartes/kingOfHeart.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/kingOfSpade.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/kingOfClover.jpg").toExternalForm()), new Image(getClass().getResource("image/cartes/kingOfClover.jpg").toExternalForm()));
+            case 1 : return getCardByRank(cardRank, new Image(new File("Projet-Casino/image/cartes/asOfHeart.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/asOfClover.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/asOfSpade.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/asOfSquare.jpg").toURI().toString()));
+            case 2 : return getCardByRank(cardRank, new Image(new File("Projet-Casino/image/cartes/asOfheart.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/twoOfClover.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/twoOfSpade.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/twoOfSquare.jpg").toURI().toString()));
+            case 3 : return getCardByRank(cardRank, new Image(new File("Projet-Casino/image/cartes/threeOfHeart.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/threeOfSpade.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/threeOfClover.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/threeOfSquare.jpg").toURI().toString()));
+            case 4 : return getCardByRank(cardRank, new Image(new File("Projet-Casino/image/cartes/fourOfheart.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/fourOfSpade.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/fourOfClover.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/fourOfSquare.jpg").toURI().toString()));
+            case 5 : return getCardByRank(cardRank, new Image(new File("Projet-Casino/image/cartes/fiveOfHeart.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/fiveOfSpade.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/fiveOfClover.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/fiveOfSquare.jpg").toURI().toString()));
+            case 6 : return getCardByRank(cardRank, new Image(new File("Projet-Casino/image/cartes/sixOfheart.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/sixOfSpade.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/sixOfClover.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/sixOfSquare.jpg").toURI().toString()));
+            case 7 : return getCardByRank(cardRank, new Image(new File("Projet-Casino/image/cartes/sevenOfHeart.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/sevenOfSpade.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/sevenofClover.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/sevenOfSquare.jpg").toURI().toString()));
+            case 8 : return getCardByRank(cardRank, new Image(new File("Projet-Casino/image/cartes/eightOfHeart.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/eightOfSpade.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/eightOfClover.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/eightOfSquare.jpg").toURI().toString()));
+            case 9 : return getCardByRank(cardRank, new Image(new File("Projet-Casino/image/cartes/nineOfheart.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/nineOfSpade.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/nineOfClover.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/nineOfSquare.jpg").toURI().toString()));
+            case 10 : return getCardByRank(cardRank, new Image(new File("Projet-Casino/image/cartes/tenOfHeart.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/tenOfSpade.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/tenOfClover.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/tenOfSquare.jpg").toURI().toString()));
+            case 11 : return getCardByRank(cardRank, new Image(new File("Projet-Casino/image/cartes/jackOfHeart.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/jackOfSpade.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/jackOfClover.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/jackOfSquare.jpg").toURI().toString()));
+            case 12 : return getCardByRank(cardRank, new Image(new File("Projet-Casino/image/cartes/queenOfHeart.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/queenOfSpade.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/queenOfClover.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/queenOfSquare.jpg").toURI().toString()));
+            case 13 : return getCardByRank(cardRank, new Image(new File("Projet-Casino/image/cartes/kingOfHeart.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/kingOfSpade.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/kingOfClover.jpg").toURI().toString()), new Image(new File("Projet-Casino/image/cartes/kingOfClover.jpg").toURI().toString()));
             default : return null;
         }
     }
@@ -825,7 +826,7 @@ public class BlackJackMenuController implements InterfaceMenu{
     }
 
     private void createCardSound(){
-        cardSound = new MediaPlayer(new Media(getClass().getResource("sound/dealingThreeCardsSound.mp3").toExternalForm()));
+        cardSound = new MediaPlayer(new Media(new File("Projet-Casino/sound/dealingThreeCardsSound.mp3").toURI().toString()));
         cardSound.setVolume(soundVolume);
     }
 

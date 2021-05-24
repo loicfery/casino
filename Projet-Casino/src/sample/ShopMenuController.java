@@ -23,6 +23,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.io.File;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -124,7 +125,7 @@ public class ShopMenuController implements InterfaceMenu{
 
         setupScene.setLine(middleLine,400,200,0,0,0,520,Paint.valueOf("BLACK"),1.0,true,anchorPane);
 
-        setupScene.setCircle(circleSetting,30,750,40,new ImagePattern(new Image(getClass().getResource("image/pictureSetting.png").toExternalForm())), Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
+        setupScene.setCircle(circleSetting,30,750,40,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())), Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
 
         historyShoppingButton.setOnMouseClicked((event) -> goToHistoryShoppingMenu());
         returnMainMenuButton.setOnMouseClicked((event)-> goToMainMenu());
