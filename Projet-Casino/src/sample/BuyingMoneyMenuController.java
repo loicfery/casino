@@ -27,14 +27,16 @@ public class BuyingMoneyMenuController {
     private final Label userNameLabel = new Label();
     private final Label userMoneyLabel = new Label();
     private final Label errorLabel = new Label();
+    private final Label labelTitleMoney;
 
     private final TextField textMoney = new TextField();
 
     private final Button validButton = new Button();
 
-    public BuyingMoneyMenuController(User user, Language language){
+    public BuyingMoneyMenuController(User user, Language language, Label labelTitleMoney){
         this.user = user;
         this.language = language;
+        this.labelTitleMoney = labelTitleMoney;
     }
 
     /**
@@ -74,6 +76,7 @@ public class BuyingMoneyMenuController {
                 if(value > 0) {
                     user.addMoney(value);
                     userMoneyLabel.setText(language.getLabelMoney() + user.getMoney());
+                    labelTitleMoney.setText(language.getShopMenuControllerTitleShopMoneyLabel()+user.getMoney());
                     textMoney.setText("");
                     messageInterface.setMessage(errorLabel,value + " " + language.getBuyingMoneyMenuControllerLabelErrorMoneyAdd(),Color.GREEN);
                 }
