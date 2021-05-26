@@ -110,6 +110,7 @@ public class Database {
         try {
             Statement statement = connection.createStatement();
             statement.execute(request);
+            System.out.println(request);
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println(request);

@@ -150,8 +150,7 @@ public class InformationMenuController implements InterfaceMenu{
                         if (resultSet.next()) {
                             messageInterface.setMessage(labelError, language.getLabelErrorMailAlreadyUsed(), Color.RED);
                         } else {
-                            modifyHistory(textEmail.getText());
-                            database.update(databaseName.getTableUser(), "MailUser", "\"" + textEmail.getText() + "\"", databaseName.getTableUserColumnMailUser() + " = \"" + user.getEmail() + "\"");
+                            database.update(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser(), "\"" + textEmail.getText() + "\"", databaseName.getTableUserColumnMailUser() + " = \"" + user.getEmail() + "\"");
                             user.setEmail(textEmail.getText());
                             messageInterface.setMessage(labelError, language.getInformationMenuControllerLabelErrorEmailChangeValid(), Color.GREEN);
                         }
@@ -170,12 +169,6 @@ public class InformationMenuController implements InterfaceMenu{
         }
     }
 
-    /** Méthode qui modifie les historiques avec les nouvelles informations **/
-    private void modifyHistory(String newMail){
-        database.update(databaseName.getTableHistoryPartyGamed(),databaseName.getTableHistoryPartyGamedColumnMailUser(),newMail,databaseName.getTableHistoryPartyGamedColumnMailUser()+" = \""+user.getEmail()+"\"");
-        database.update(databaseName.getTableHistoryExchangeMoney(),databaseName.getTableHistoryExchangeMoneyColumnMailUser(),newMail,databaseName.getTableHistoryExchangeMoneyColumnMailUser()+" = \""+user.getEmail()+"\"");
-        database.update(databaseName.getTableHistoryExchangeToken(),databaseName.getTableHistoryExchangeTokenColumnMailUser(),newMail,databaseName.getTableHistoryExchangeTokenColumnMailUser()+" = \""+user.getEmail()+"\"");
-    }
 
     /**
      * Méthode qui modifie le pseudonyme de l'utilisateur
