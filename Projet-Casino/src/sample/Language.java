@@ -1,128 +1,51 @@
 package sample;
 
-public interface Language {
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
-    /** ConnexionMenuController **/
-    String getConnexionMenuControllerLabelTitle1();
-    String getConnexionMenuControllerLabelTitle2();
-    String getConnexionMenuControllerLabelEmail();
-    String getConnexionMenuControllerLabelPassword();
-    String getConnexionMenuControllerButtonLogin();
-    String getConnexionMenuControllerButtonNewAccount();
-    String getConnexionMenuControllerButtonLoginMenuReturn();
-    String getConnexionMenuControllerButtonInscription();
-    String getConnexionMenuControllerLabelNewUserName();
-    String getConnexionMenuControllerLabelErrorConnexion();
+public class Language {
 
-    /** MainMenuController **/
-    String getMainMenuControllerLogoutButton();
-    String getMainMenuControllerHistoryGamePlayedButton();
+    private File file;
+    private List<String> listOfLine;
+    private List<String> listOfObject;
+    private String language;
 
-    /** BlackJackMenuController **/
-    String getBlackJackMenuControllerTextBetUser();
-    String getBlackJackMenuControllerActionSurrenderButton();
-    String getBlackJackMenuControllerActionHitButton();
-    String getBlackJackMenuControllerActionDoubleButton();
-    String getBlackjackMenuControllerActionStandButton();
-    String getBlackJackMenuControllerActionInsuranceButton();
-    String getBlackJackMenuControllerActionSplitButton();
-    String getBlackJackMenuControllerLabelErrorBetEmpty();
-    String getBlackJackMenuControllerLabelErrorBetWrongValue();
-    String getBlackJackMenuControllerLabelValueHand();
+    public Language(String language){
+        this.language = language;
+        getAllText(language);
+    }
 
-    /** SlotMachineMenuController **/
-    String getSlotMachineMenuControllerSymbolLemon();
-    String getSlotMachineMenuControllerSymbolWatermelon();
-    String getSlotMachineMenuControllerSymbolCherry();
-    String getSlotMachineMenuControllerSymbolSeven();
+    private void getAllText(String fileName){
+        listOfLine = new ArrayList<>();
+        listOfObject = new ArrayList<>();
 
-    /** RouletteMenuController **/
-    String getRouletteMenuControllerLabelErrorTokenPosition();
-    String getRouletteMenuControllerLabelInformationBetTokenPart1();
-    String getRouletteMenuControllerLabelInformationBetTokenPart2();
-    String getRouletteMenuControllerGetCellsBetStringListEmpty();
-    String getRouletteMenuControllerGetCellsBetStringSameCellBet();
-    String getRouletteMenuControllerGetCellsBetStringImpossibleCombination();
+        try {
+            file = new File(fileName);
+            BufferedReader buffer = new BufferedReader(new FileReader(file));
+            String line = buffer.readLine();
 
-    /** ShopMenuController **/
-    String getShopMenuControllerAddMoneyButton();
-    String getShopMenuControllerHistoryShoppingButton();
-    String getShopMenuControllerExchangeButton();
-    String getShopMenuControllerLabelErrorExchangeValid();
-    String getShopMenuControllerButtonExchangeToken();
-    String getShopMenuControllerTitleShopTokenLabel();
-    String getShopMenuControllerTitleShopMoneyLabel();
+            while(line != null){
+                listOfObject.add(line);
+                line = buffer.readLine();
+                listOfLine.add(line);
+                buffer.readLine();
+                line = buffer.readLine();
+            }
+        }
+        catch (Exception exception){
+            System.err.println("Erreur file \"language_french\"");
+        }
+    }
 
-    /** HistoryShoppingMenuController **/
-    String getHistoryShoppingMenuControllerLabelTitle1();
-    String getHistoryShoppingMenuControllerLabelTitle2();
+    public String getLine(String object){
+        if(listOfObject.contains(object)){
+            return listOfLine.get(listOfObject.indexOf(object));
+        }
+        return "";
+    }
 
-    /** InformationMenuController **/
-    String getInformationMenuControllerChangeEmailButton();
-    String getInformationMenuControllerChangeUserNameButton();
-    String getInformationMenuControllerChangePasswordButton();
-    String getInformationMenuControllerLabelErrorEmailChangeValid();
-    String getInformationMenuControllerLabelErrorEmailWrongFormat();
-    String getInformationMenuControllerLabelErrorEmailSame();
-    String getInformationMenuControllerLabelErrorUserNameChangeValid();
-    String getInformationMenuControllerLabelErrorUserNameWrongFormat();
-    String getInformationMenuControllerLabelErrorUserNameSame();
-    String getInformationMenuControllerLabelErrorPasswordChangeValid();
-    String getInformationMenuControllerLabelErrorPasswordWrongFormat();
-    String getInformationMenuControllerLabelErrorPasswordSame();
-
-    /** HistoryGamePlayed **/
-    String getHistoryGamePlayedNoGameRegister();
-    String getHistoryGamePlayedTitleLabelBlackJack();
-    String getHistoryGamePlayedTitleLabelSlotMachine();
-    String getHistoryGamePlayedTitleLabelRoulette();
-
-    /** SettingMenuController **/
-    String getSettingMenuControllerTitleLabel();
-    String getSettingMenuControllerSoundVolumeTitleLabel();
-    String getSettingMenuControllerBackgroundAnimation();
-    String getSettingMenuControllerLanguage();
-
-    /** RuleMenuController **/
-    String getRuleFileNameBlackJack();
-    String getLabelTitleBlackJack();
-    String getRuleFileNameRoulette();
-    String getLabelTitleRoulette();
-    String getRuleFileNameSlotMachine();
-    String getLabelTitleSlotMachine();
-
-    /** BuyingMoneyMenuController **/
-    String getBuyingMoneyMenuControllerTitleLabel();
-    String getBuyingMoneyMenuControllerLabelErrorWrongValue();
-    String getBuyingMoneyMenuControllerLabelErrorFieldEmpty();
-    String getBuyingMoneyMenuControllerLabelErrorMoneyAdd();
-
-    /** **/
-    String getLabelToken();
-    String getLabelMoney();
-    String getLabelProfit();
-    String getLabelPlayer();
-    String getLabelUserName();
-    String getLabelMail();
-    String getLabelPassword();
-    String getQuitButton();
-    String getNewPartyButton();
-    String getBetButton();
-    String getLabelLog();
-    String getLabelErrorTokenNotEnough();
-    String getLabelErrorMoneyNotEnough();
-    String getInformation();
-    String getStartingGameButton();
-    String getLabelErrorIntegerValue();
-    String getLabelErrorNotEnoughTokenBet();
-    String getToken();
-    String getTitleShopToken();
-    String getTitleShopMoney();
-    String getLabelErrorMailAlreadyUsed();
-    String getLabelErrorEmptyField();
-    String getHistorySearchUserButton();
-    String getGameBlackJackButton();
-    String getGameSlotMachineButton();
-    String getGameRouletteButton();
-    String getAddButton();
+    public String getLanguage(){ return language; }
 }

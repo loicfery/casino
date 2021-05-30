@@ -80,7 +80,7 @@ public class BlackJackMenuController implements InterfaceMenu{
     private final Rectangle rectangleLog = new Rectangle();
 
     private final Label labelToken = new Label();
-    private final Label labelProfit = new Label();
+    private final Label labelGain = new Label();
     private final Label labelUserName = new Label();
     private final Label labelError = new Label();
     private final Label labelToken1 = new Label();
@@ -136,24 +136,24 @@ public class BlackJackMenuController implements InterfaceMenu{
 
         setupScene.setRectangle(zoneBetUser1,327.0,600.0,174.0,147.0,5.0,5.0,Paint.valueOf("#158000"),Paint.valueOf("BLACK"),5.0,StrokeType.INSIDE,true,anchorPane);
         setupScene.setRectangle(zoneBetUser2,550,600.0,174.0,147.0,5.0,5.0,Paint.valueOf("#158000"),Paint.valueOf("BLACK"),5.0,StrokeType.INSIDE,false,anchorPane);
-        setupScene.setLabel(labelToken,language.getLabelToken()+user.getToken(), Pos.CENTER_LEFT,30.0,660.0,55.0,200,new Font(30.0), Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelProfit,language.getLabelProfit()+"0", Pos.CENTER_LEFT, 30.0,720.0,55.0,163.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelUserName,language.getLabelPlayer()+user.getUserName(), Pos.CENTER_LEFT,30.0,600.0,55.0,308.0,new Font(30.0),Color.BLACK,true,anchorPane);
+        setupScene.setLabel(labelToken,language.getLine("tokenLabel") + ": " +user.getToken(), Pos.CENTER_LEFT,30.0,660.0,55.0,200,new Font(30.0), Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelGain,language.getLine("gainLabel") + " 0", Pos.CENTER_LEFT, 30.0,720.0,55.0,163.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelUserName,language.getLine("playerLabel") + " " + user.getUserName(), Pos.CENTER_LEFT,30.0,600.0,55.0,308.0,new Font(30.0),Color.BLACK,true,anchorPane);
         setupScene.setLabel(labelError,"", Pos.CENTER,100.0,455.0,36.0,700.0,new Font(25.0),Color.RED,false,anchorPane);
-        setupScene.setTextField(textBetUser,language.getBlackJackMenuControllerTextBetUser(), Pos.CENTER,280.0,380.0,79.0,252.0,new Font(30.0),true,anchorPane);
-        setupScene.setButton(returnMainMenuButton,language.getQuitButton(),Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
-        setupScene.setButton(newPartyButton,language.getNewPartyButton(),Pos.CENTER,14.0,80.0,57.0,200.0,new Font(20.0),false,anchorPane);
-        setupScene.setButton(validBetButton,language.getBetButton(),Pos.CENTER,320.0,500.0,72.0,163.0,new Font(30.0),true,anchorPane);
+        setupScene.setTextField(textBetUser,language.getLine("blackJackBetText"), Pos.CENTER,280.0,380.0,79.0,252.0,new Font(30.0),true,anchorPane);
+        setupScene.setButton(returnMainMenuButton,language.getLine("quitButton"),Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
+        setupScene.setButton(newPartyButton,language.getLine("newPartyButton"),Pos.CENTER,14.0,80.0,57.0,200.0,new Font(20.0),false,anchorPane);
+        setupScene.setButton(validBetButton,language.getLine("betButton"),Pos.CENTER,320.0,500.0,72.0,163.0,new Font(30.0),true,anchorPane);
         setupScene.setLabel(labelValueUserFirstHand,"",Pos.CENTER,250.0,330.0,20.0,300.0,new Font(20.0),Paint.valueOf("BLACK"),false,anchorPane);
         setupScene.setLabel(labelValueUserSecondHand,"",Pos.CENTER,473.0,330.0,20.0,300.0,new Font(20.0),Paint.valueOf("BLACK"),false,anchorPane);
         setupScene.setLabel(labelValueCroupierHand,"",Pos.CENTER,250.0,260,20.0,300.0,new Font(20.0),Paint.valueOf("BLACK"),false,anchorPane);
 
-        setupScene.setButton(actionSurrenderButton,language.getBlackJackMenuControllerActionSurrenderButton(),Pos.CENTER,30.0,500.0,55.0,250,new Font(20.0),false,anchorPane);
-        setupScene.setButton(actionHitButton,language.getBlackJackMenuControllerActionHitButton(),Pos.CENTER,30.0,430.0,55.0,250,new Font(20.0),false,anchorPane);
-        setupScene.setButton(actionDoubleButton,language.getBlackJackMenuControllerActionDoubleButton(),Pos.CENTER,30.0,360.0,55.0,250,new Font(20.0),false,anchorPane);
-        setupScene.setButton(actionStandButton,language.getBlackjackMenuControllerActionStandButton(),Pos.CENTER,30.0,290.0,55.0,250,new Font(20.0),false,anchorPane);
-        setupScene.setButton(actionInsuranceButton,language.getBlackJackMenuControllerActionInsuranceButton(),Pos.CENTER,30.0,220.0,55.0,250,new Font(20.0),false,anchorPane);
-        setupScene.setButton(actionSplitButton,language.getBlackJackMenuControllerActionSplitButton(),Pos.CENTER,30.0,150.0,55.0,250,new Font(20.0),false,anchorPane);
+        setupScene.setButton(actionSurrenderButton,language.getLine("blackJackActionSurrenderButton"),Pos.CENTER,30.0,500.0,55.0,250,new Font(20.0),false,anchorPane);
+        setupScene.setButton(actionHitButton,language.getLine("blackJackActionHitButton"),Pos.CENTER,30.0,430.0,55.0,250,new Font(20.0),false,anchorPane);
+        setupScene.setButton(actionDoubleButton,language.getLine("blackJackActionDoubleButton"),Pos.CENTER,30.0,360.0,55.0,250,new Font(20.0),false,anchorPane);
+        setupScene.setButton(actionStandButton,language.getLine("blackJackActionStandButton"),Pos.CENTER,30.0,290.0,55.0,250,new Font(20.0),false,anchorPane);
+        setupScene.setButton(actionInsuranceButton,language.getLine("blackJackActionInsuranceButton"),Pos.CENTER,30.0,220.0,55.0,250,new Font(20.0),false,anchorPane);
+        setupScene.setButton(actionSplitButton,language.getLine("blackJackActionSplitButton"),Pos.CENTER,30.0,150.0,55.0,250,new Font(20.0),false,anchorPane);
 
         initToken1();
         initToken2();
@@ -161,7 +161,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         setupScene.setCircle(circleSetting,18,670,30,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())),Paint.valueOf("GREEN"),StrokeType.INSIDE,1.0,true,anchorPane);
 
         setupScene.setRectangle(rectangleLog,700.0,15.0,30.0,50.0,10.0,10.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),1.0,StrokeType.INSIDE,true,anchorPane);
-        setupScene.setLabel(labelLog,language.getLabelLog(),Pos.CENTER,700,15,30,50,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelLog,language.getLine("logLabel"),Pos.CENTER,700,15,30,50,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
 
         setupScene.setCircle(circleRule,16.0,770.0,30.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,true,anchorPane);
         setupScene.setLabel(labelRule,"?",Pos.CENTER,754.0,15.0,23,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
@@ -310,7 +310,7 @@ public class BlackJackMenuController implements InterfaceMenu{
      **/
     private void validBet() {
         if (textBetUser.getText().isEmpty()) {
-            messageInterface.setMessage(labelError,language.getBlackJackMenuControllerLabelErrorBetEmpty(),Color.RED);
+            messageInterface.setMessage(labelError,language.getLine("blackJackErrorLabelBetEmpty"),Color.RED);
         } else {
             try {
                 int valueOfBet = Integer.parseInt(textBetUser.getText());
@@ -318,11 +318,11 @@ public class BlackJackMenuController implements InterfaceMenu{
                 int BET_MIN = 2;
                 int BET_MAX = 100;
                 if (valueOfBet < BET_MIN || valueOfBet > BET_MAX) {
-                    messageInterface.setMessage(labelError,language.getBlackJackMenuControllerLabelErrorBetWrongValue(),Color.RED);
+                    messageInterface.setMessage(labelError,language.getLine("blackJackErrorLabelBetWrongValue"),Color.RED);
                 } else {
                     int newTokenUser = user.getToken() - valueOfBet;
                     if (newTokenUser < 0) {
-                        messageInterface.setMessage(labelError,language.getLabelErrorTokenNotEnough(),Color.RED);
+                        messageInterface.setMessage(labelError,language.getLine("errorLabelNotEnoughToken"),Color.RED);
                     }
                     else {
                         tokenSound.play();
@@ -335,7 +335,7 @@ public class BlackJackMenuController implements InterfaceMenu{
 
                         labelToken1.setVisible(true);
                         labelToken1.setText(blackJack.getBet().getBet(user)+"");
-                        labelToken.setText(language.getLabelToken() + (user.getToken() - valueOfBet));
+                        labelToken.setText(language.getLine("tokenLabel") + ": " + (user.getToken() - valueOfBet));
 
                         logMenuController.getLog("Le joueur "+user.getUserName()+" mise "+valueOfBet+" jetons");
 
@@ -473,8 +473,8 @@ public class BlackJackMenuController implements InterfaceMenu{
         currentPositionXUserSecondHand += 25;
         currentPositionXUserFirstHand -= 25;
 
-        labelValueUserFirstHand.setText(language.getBlackJackMenuControllerLabelValueHand()+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)));
-        labelValueUserSecondHand.setText(language.getBlackJackMenuControllerLabelValueHand()+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(2)));
+        labelValueUserFirstHand.setText(language.getLine("blackJackValueHandLabel")+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)));
+        labelValueUserSecondHand.setText(language.getLine("blackJackValueHandLabel")+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(2)));
         labelValueUserSecondHand.setVisible(true);
 
         logMenuController.getLog("La main n°1 contient la carte "+blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber()+" de "+blackJack.getListOfUserHand().get(1).getHand().get(0).getRank()+".");
@@ -541,8 +541,8 @@ public class BlackJackMenuController implements InterfaceMenu{
             int tokenLose = (blackJack.getBet().getBet(user)) / 2;
 
             logMenuController.getLog("Le joueur "+user.getUserName()+" a perdu "+tokenLose+" jetons.");
-            labelProfit.setText(language.getLabelProfit()+"-" + tokenLose);
-            labelToken.setText(language.getLabelToken()+ user.getToken());
+            labelGain.setText(language.getLine("gainLabel")+" -" + tokenLose);
+            labelToken.setText(language.getLine("tokenLabel") + ": " + user.getToken());
             newPartyButton.setVisible(true);
             database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\",\""+databaseName.getGameBlackJack()+"\","+tokenLose,databaseName.getTableHistoryPartyGamedColumnMailUser()+","+databaseName.getTableHistoryPartyGamedColumnGameName()+","+databaseName.getTableHistoryPartyGamedColumnTokenGain());
         }
@@ -576,12 +576,12 @@ public class BlackJackMenuController implements InterfaceMenu{
 
         if(indexCurrentHand == 1){
             positionCardX = currentPositionXUserFirstHand;
-            labelValueUserFirstHand.setText(language.getBlackJackMenuControllerLabelValueHand()+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(indexCurrentHand)));
+            labelValueUserFirstHand.setText(language.getLine("blackJackValueHandLabel")+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(indexCurrentHand)));
             currentPositionXUserFirstHand += 25;
         }
         else {
             positionCardX = currentPositionXUserSecondHand;
-            labelValueUserSecondHand.setText(language.getBlackJackMenuControllerLabelValueHand()+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(indexCurrentHand)));
+            labelValueUserSecondHand.setText(language.getLine("blackJackValueHandLabel")+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(indexCurrentHand)));
             currentPositionXUserSecondHand += 25;
         }
         ImageView card = chooseCard(newCard.getNumber(),newCard.getRank());
@@ -660,8 +660,8 @@ public class BlackJackMenuController implements InterfaceMenu{
         }
 
         database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\",\""+databaseName.getGameBlackJack()+"\","+gain+",\""+getCurrentDate()+"\"",databaseName.getTableHistoryPartyGamedColumnMailUser()+","+databaseName.getTableHistoryPartyGamedColumnGameName()+","+databaseName.getTableHistoryPartyGamedColumnTokenGain()+","+databaseName.getTableHistoryPartyGamedColumnDate());
-        labelProfit.setText(language.getLabelProfit() + gain);
-        labelToken.setText(language.getLabelToken() + user.getToken());
+        labelGain.setText(language.getLine("gainLabel") + " " + gain);
+        labelToken.setText(language.getLine("tokenLabel") + ": " + user.getToken());
     }
 
     /** Méthode qui vérifie si il y a un split **/
@@ -693,7 +693,7 @@ public class BlackJackMenuController implements InterfaceMenu{
             timeline.getKeyFrames().add(new KeyFrame(timePoint, e ->  logMenuController.getLog("Le croupier pioche la carte "+blackJack.getListOfUserHand().get(0).getHand().get(indexTimeline).getNumber()+" de "+blackJack.getListOfUserHand().get(0).getHand().get(indexTimeline).getRank())));
             timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> croupierHand.add(card)));
             timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> setupCard(card, currentPositionXCroupier, ORIGIN_Y_CROUPIER)));
-            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelValueCroupierHand.setText(language.getBlackJackMenuControllerLabelValueHand() + blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(0)))));
+            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelValueCroupierHand.setText(language.getLine("blackJackValueHandLabel") + blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(0)))));
             timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> currentPositionXCroupier += 50));
             timePoint = timePoint.add(Duration.seconds(0.5));
             timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> cardSound.pause()));
@@ -778,7 +778,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Le joueur "+user.getUserName()+" pioche la carte "+blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber()+" de "+blackJack.getListOfUserHand().get(1).getHand().get(0).getRank())));
         timeline.getKeyFrames().add(new KeyFrame(timePoint,e -> userFirstHand.add(chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(0).getRank()))));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> setupCard(userFirstHand.get(0), currentPositionXUserFirstHand, ORIGIN_Y_USER)));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelValueUserFirstHand.setText(language.getBlackJackMenuControllerLabelValueHand()+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)))));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelValueUserFirstHand.setText(language.getLine("blackJackValueHandLabel")+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)))));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelValueUserFirstHand.setVisible(true)));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> currentPositionXUserFirstHand += 25));
         timePoint = timePoint.add(pause);
@@ -786,7 +786,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Le croupier pioche la carte "+blackJack.getListOfUserHand().get(0).getHand().get(0).getNumber()+" de "+blackJack.getListOfUserHand().get(0).getHand().get(0).getRank())));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> croupierHand.add(chooseCard(blackJack.getListOfUserHand().get(0).getHand().get(0).getNumber(), blackJack.getListOfUserHand().get(0).getHand().get(0).getRank()))));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> setupCard(croupierHand.get(0), currentPositionXCroupier, ORIGIN_Y_CROUPIER)));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelValueCroupierHand.setText(language.getBlackJackMenuControllerLabelValueHand()+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(0)))));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelValueCroupierHand.setText(language.getLine("blackJackValueHandLabel")+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(0)))));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelValueCroupierHand.setVisible(true)));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e ->  currentPositionXCroupier += 25));
         timePoint = timePoint.add(pause);
@@ -794,7 +794,7 @@ public class BlackJackMenuController implements InterfaceMenu{
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Le joueur "+user.getUserName()+" pioche la carte "+blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber()+" de "+blackJack.getListOfUserHand().get(1).getHand().get(1).getRank()+"\n")));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> userFirstHand.add(chooseCard(blackJack.getListOfUserHand().get(1).getHand().get(1).getNumber(), blackJack.getListOfUserHand().get(1).getHand().get(1).getRank()))));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> setupCard(userFirstHand.get(1), currentPositionXUserFirstHand, ORIGIN_Y_USER)));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelValueUserFirstHand.setText(language.getBlackJackMenuControllerLabelValueHand()+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)))));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelValueUserFirstHand.setText(language.getLine("blackJackValueHandLabel")+blackJack.countValueOfUserHand(blackJack.getListOfUserHand().get(1)))));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> currentPositionXUserFirstHand += 25));
 
         timePoint = timePoint.add(pause);

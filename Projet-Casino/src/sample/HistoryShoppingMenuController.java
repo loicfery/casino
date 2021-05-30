@@ -93,18 +93,18 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         stage.setScene(scene);
         anchorPane = new AnchorPane();
 
-        setupScene.setLabel(labelTitle,language.getHistoryShoppingMenuControllerLabelTitle1(), Pos.CENTER,0,40,20,360,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelTitle,language.getLine("historyShoppingTitleLabel1"), Pos.CENTER,0,40,20,360,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
 
         setupScene.setTextArea(textInformation,0,100,700,400,false,true,anchorPane);
 
         setupScene.setTextField(textSearchUser,"",Pos.CENTER,175,650,20,200,new Font(15),false,anchorPane);
 
-        setupScene.setButton(returnShopMenuButton,language.getQuitButton(),Pos.CENTER,25,720,60,123.0,new Font(20.0),true,anchorPane);
+        setupScene.setButton(returnShopMenuButton,language.getLine("quitButton"),Pos.CENTER,25,720,60,123.0,new Font(20.0),true,anchorPane);
         setupScene.setButton(leftInformationButton,"<-",Pos.CENTER,100,580,20,50,new Font(15),false,anchorPane);
         setupScene.setButton(rightInformationButton,"->",Pos.CENTER,250,580,20,50,new Font(15),true,anchorPane);
-        setupScene.setButton(exchangeTokenButton,language.getTitleShopToken(),Pos.CENTER,175,720,60,200,new Font(20),false,anchorPane);
-        setupScene.setButton(exchangeMoneyButton,language.getTitleShopMoney(),Pos.CENTER,175,720,60,200,new Font(20),true,anchorPane);
-        setupScene.setButton(searchUserButton,language.getHistorySearchUserButton(),Pos.CENTER,25,650,20,123,new Font(15),false,anchorPane);
+        setupScene.setButton(exchangeTokenButton,language.getLine("shopTokenTitleLabel"),Pos.CENTER,175,720,60,200,new Font(20),false,anchorPane);
+        setupScene.setButton(exchangeMoneyButton,language.getLine("shopMoneyTitleLabel"),Pos.CENTER,175,720,60,200,new Font(20),true,anchorPane);
+        setupScene.setButton(searchUserButton,language.getLine("historySearchUserButton"),Pos.CENTER,25,650,20,123,new Font(15),false,anchorPane);
 
         setupScene.setCircle(circleSetting,18,372,28,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
 
@@ -183,13 +183,13 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
                 if(ADMIN){
                     listOfInformationToken.add(resultSetToken.getString(2)+" : ");
                 }
-                listOfInformationToken.add(resultSetToken.getString(5) + " : "+ resultSetToken.getInt(3) + " " + language.getToken() +" ---> " + resultSetToken.getInt(4)+" $");
+                listOfInformationToken.add(resultSetToken.getString(5) + " : "+ resultSetToken.getInt(3) + " " + language.getLine("tokenLabel") +" ---> " + resultSetToken.getInt(4)+" $");
             }
             while(resultSetMoney.next()){
                 if(ADMIN){
                     listOfInformationMoney.add(resultSetMoney.getString(2) + " : ");
                 }
-                listOfInformationMoney.add(resultSetMoney.getString(5) + " : " + resultSetMoney.getInt(3) + " $ ---> " + resultSetMoney.getInt(4) + " " + language.getToken());
+                listOfInformationMoney.add(resultSetMoney.getString(5) + " : " + resultSetMoney.getInt(3) + " $ ---> " + resultSetMoney.getInt(4) + " " + language.getLine("tokenLabel"));
             }
         }
         catch (Exception e){ System.out.println("Erreur : getAllInformation dans HistoryShoppingMenuController"); }
@@ -271,13 +271,13 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
             exchangeMoneyButton.setVisible(true);
             exchangeTokenButton.setVisible(false);
             switchExchange = false;
-            labelTitle.setText(language.getHistoryShoppingMenuControllerLabelTitle1());
+            labelTitle.setText(language.getLine("historyShoppingTitleLabel1"));
         }
         else {
             exchangeMoneyButton.setVisible(false);
             exchangeTokenButton.setVisible(true);
             switchExchange = true;
-            labelTitle.setText(language.getHistoryShoppingMenuControllerLabelTitle2());
+            labelTitle.setText(language.getLine("historyShoppingTitleLabel2"));
 
         }
         indexInformation = 0;

@@ -1,0 +1,287 @@
+connexionLabelTitle1
+Welcome to the casino
+
+connexionLabelTitle2
+New Account
+
+connexionLabelEmail
+Email
+
+connexionLabelPassword
+Password
+
+connexionButtonLogin
+Login
+
+connexionButtonNewAccount
+New Account
+
+connexionButtonLoginMenuReturn
+Login
+
+connexionButtonInscription
+Register
+
+connexionUserName
+User name :
+
+connexionErrorConnexionLabel
+Incorrect email or password
+
+mainMenuLogoutButton
+Logout
+
+mainMennuHistoryGamePlayedButton
+Game history
+
+blackJackBetText
+Your bet
+
+blackJackActionSurrenderButton
+Surrender
+
+blackJackActionHitButton
+Draw a card
+
+blackJackActionDoubleButton
+Double the bet
+
+blackJackActionStandButton
+Stand
+
+blackJackActionInsuranceButton
+Insurance
+
+blackJackActionSplitButton
+Split
+
+blackJackErrorLabelBetEmpty
+You have to enter a bet
+
+blackJackErrorLabelBetWrongValue
+You can only bet between 2 and 100 tokens
+
+blackJackValueHandLabel
+value of the hand :
+
+slotMachineLemonSymbol
+Lemon
+
+slotMachineWatermelonSymbol
+watermelon
+
+slotMachineCherrySymbol
+cherry
+
+slotMachineSevenSymbol
+seven
+
+rouletteErrorLabelWrongTokenPosition
+You cannot place a toke here
+
+rouletteInformationBetTokenLabel
+Placing a token  \nSelected cells : \n|\n Cells bets : \n
+
+rouletteCellBetEmpty
+No cell selected
+
+rouletteSameCellBet
+You can't bet on both \non these two cells at the same time
+
+rouletteCellBetCombinationImpossible
+This combination of cells is impossible
+
+shopAddMoneyButton
+Add money
+
+shopHistoryShoppingButton
+Purchase history
+
+shopExchangeButton
+Exchange
+
+shopErrorLabelExchangeValid
+Your exchange has been completed
+
+shopExchangeTokenButton
+tokens
+
+shopTitleTokenLabel
+Token exchange :
+
+shopTitleMoneyLabel
+Money exchange :
+
+historyShoppingTitleLabel1
+History of exchanges : Token
+
+historyShoppingTitleLabel2
+History of exchanges : Money
+
+informationChangeEmailButton
+Edit email
+
+informationChangeUserNameButton
+Edit user name
+
+informationChangePasswordButton
+Edit password
+
+informationErrorLabelChangeEmailValid
+The email has been modified
+
+informationErrorLabelEmailWrongFormat
+The email does not match the format
+
+informationErrorLabelSameEmail
+The email is the same
+
+informationErrorLabelChangeUserNameValid
+The user name has been modified
+
+informationErrorLabelUserNameWrongFormat
+The user name does not math the format
+
+informationErrorLabelSameUserName
+The user name is the same
+
+informationErrorLabelChangePasswordValid
+The password has been modified
+
+informationErrorLabelPasswordWrongFormat
+The password does not math the format
+
+informationErrorLabelSamePassword
+The password is the same
+
+historyGamePlayedNoGameRegister
+There are no recorded game
+
+historyGamePlayedBlackJackTitleLabel
+Game history : Black Jack
+
+historyGamePlayedSlotMachineTitleLabel
+Game history : Slot machine
+
+historyGamePlayedRouletteTitleLabel
+Game history : Roulette
+
+settingTitleLabel
+Settings
+
+settingSoundVolumeTitleLabel
+Sound volume :
+
+settingBackgroundAnimationTitleLabel
+Background animation :
+
+settingLanguageTitleLabel
+Language :
+
+ruleFileNameBlackJack
+rule_blackJack_english.txt
+
+ruleBlackJackTitleLabel
+Black Jack rules
+
+ruleFileNameSlotMachine
+rule_slotMachine_english.txt
+
+ruleSlotMachineTitleLabel
+Slot machine rules
+
+ruleFileNameRoulette
+rule_roulette_english.txt
+
+ruleRouletteTitleLabel
+Roulette rules
+
+buyingMoneyTitleLabel
+Add money
+
+buyingMoneyErrorLabelWrongValue
+A strictly positive value is required
+
+buyingMoneyErrorLabelFieldEmpty
+The field is empty
+
+buyingMoneyErrorLabelMoneyAdd
+of money have been added
+
+tokenLabel
+Tokens
+
+moneyLabel
+Money :
+
+gainLabel
+Gain :
+
+playerLabel
+Player :
+
+userNameLabel
+User name :
+
+emailLabel
+Email :
+
+passwordLabel
+Password :
+
+quitButton
+Quit
+
+newPartyButton
+New party
+
+betButton
+Bet
+
+logLabel
+Log
+
+errorLabelNotEnoughToken
+You don't have enough tokens
+
+errorLabelNotEnoughMoney
+You don't have enough money
+
+informationLabel
+Information
+
+startingGameButton
+Launch
+
+errorLabelIntegerValue
+You have to bet a integer value
+
+errorLabelNotEnoughTokenBet
+You must place at least one token
+
+shopTokenTitleLabel
+Token exchange :
+
+shopMoneyTitleLabel
+Money exchange :
+
+ErrorLabelMailAlreadyUsed
+This email is already used
+
+ErrorLabelEmptyField
+One or more fields are empty
+
+historySearchUserButton
+Research
+
+gameBlackJackButton
+Black Jack
+
+gameSlotMachineButton
+Slot machine
+
+gameRouletteButton
+Roulette
+
+addButton
+Add

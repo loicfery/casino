@@ -75,9 +75,9 @@ public class MainMenuController implements InterfaceMenu{
         setupScene.setImageView(pictureRouletteMenu,20.0,490.0,290.0,370.0,new Image(new File("Projet-Casino/image/roulette2.jpg").toURI().toString()),true,anchorPane);
         setupScene.setImageView(pictureShopMenu,315,20,80,120,new Image(new File("Projet-Casino/image/shop.jpg").toURI().toString()),true,anchorPane);
 
-        setupScene.setButton(logoutButton,language.getMainMenuControllerLogoutButton(), Pos.CENTER,20,20,80,120,new Font(15),true,anchorPane);
-        setupScene.setButton(informationMenuButton,language.getInformation(),Pos.CENTER,170,20,80,120,new Font(15),true,anchorPane);
-        setupScene.setButton(historyGamePlayedButton,language.getMainMenuControllerHistoryGamePlayedButton(),Pos.CENTER,470,20,80,150,new Font(15),true,anchorPane);
+        setupScene.setButton(logoutButton,language.getLine("mainMenuLogoutButton"), Pos.CENTER,20,20,80,120,new Font(15),true,anchorPane);
+        setupScene.setButton(informationMenuButton,language.getLine("informationLabel"),Pos.CENTER,170,20,80,120,new Font(15),true,anchorPane);
+        setupScene.setButton(historyGamePlayedButton,language.getLine("mainMennuHistoryGamePlayedButton"),Pos.CENTER,470,20,80,150,new Font(15),true,anchorPane);
 
         setupScene.setCircle(circleSetting,30,750,40,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())), Paint.valueOf("GREEN"), StrokeType.INSIDE,1.0,true,anchorPane);
 

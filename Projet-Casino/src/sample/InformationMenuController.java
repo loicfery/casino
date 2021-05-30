@@ -86,12 +86,12 @@ public class InformationMenuController implements InterfaceMenu{
         stage.setScene(scene);
         anchorPane = new AnchorPane();
 
-        setupScene.setLabel(labelTitle,language.getInformation(), Pos.CENTER,0,20,20,500,new Font(30), Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelEmail,language.getLabelMail(),Pos.CENTER_LEFT,20,120,20,300,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelUserName,language.getLabelUserName(),Pos.CENTER_LEFT,20,180,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelPassword,language.getLabelPassword(),Pos.CENTER_LEFT,20,240,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelToken,language.getLabelToken()+user.getToken(),Pos.CENTER_LEFT,20,300,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelMoney,language.getLabelMoney()+user.getMoney(),Pos.CENTER_LEFT,20,360,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelTitle,language.getLine("informationLabel"), Pos.CENTER,0,20,20,500,new Font(30), Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelEmail,language.getLine("emailLabel"),Pos.CENTER_LEFT,20,120,20,300,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelUserName,language.getLine("userNameLabel"),Pos.CENTER_LEFT,20,180,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelPassword,language.getLine("passwordLabel"),Pos.CENTER_LEFT,20,240,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelToken,language.getLine("tokenLabel") + ": " + user.getToken(),Pos.CENTER_LEFT,20,300,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelMoney,language.getLine("moneyLabel") + " " + user.getMoney(),Pos.CENTER_LEFT,20,360,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelError,"",Pos.CENTER,140,400,20,300,new Font(15),Paint.valueOf("RED"),false,anchorPane);
 
         setupScene.setTextField(textEmail,"",Pos.CENTER_LEFT,90,120,20,230,new Font(15),true,anchorPane);
@@ -101,10 +101,10 @@ public class InformationMenuController implements InterfaceMenu{
         setupScene.setTextField(textPassword,"",Pos.CENTER_LEFT,160,240,20,130,new Font(15),true,anchorPane);
         getPassword(textEmail.getText());
 
-        setupScene.setButton(returnMainMenuButton,language.getQuitButton(),Pos.CENTER,20,440,20,100,new Font(15),true,anchorPane);
-        setupScene.setButton(changeEmailButton,language.getInformationMenuControllerChangeEmailButton(),Pos.CENTER,330,120,20,150,new Font(15),true,anchorPane);
-        setupScene.setButton(changeUserNameButton,language.getInformationMenuControllerChangeUserNameButton(),Pos.CENTER,300,180,20,180,new Font(15),true,anchorPane);
-        setupScene.setButton(changePasswordButton,language.getInformationMenuControllerChangePasswordButton(),Pos.CENTER,300,240,20,180,new Font(15),true,anchorPane);
+        setupScene.setButton(returnMainMenuButton,language.getLine("quitButton"),Pos.CENTER,20,440,20,100,new Font(15),true,anchorPane);
+        setupScene.setButton(changeEmailButton,language.getLine("informationChangeEmailButton"),Pos.CENTER,330,120,20,150,new Font(15),true,anchorPane);
+        setupScene.setButton(changeUserNameButton,language.getLine("informationChangeUserNameButton"),Pos.CENTER,300,180,20,180,new Font(15),true,anchorPane);
+        setupScene.setButton(changePasswordButton,language.getLine("informationChangePasswordButton"),Pos.CENTER,300,240,20,180,new Font(15),true,anchorPane);
 
         setupScene.setCircle(circleSetting,18,475,30,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
 
@@ -148,24 +148,24 @@ public class InformationMenuController implements InterfaceMenu{
                     try {
                         ResultSet resultSet = database.select(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser() + " = \"" + textEmail.getText() + "\"");
                         if (resultSet.next()) {
-                            messageInterface.setMessage(labelError, language.getLabelErrorMailAlreadyUsed(), Color.RED);
+                            messageInterface.setMessage(labelError, language.getLine("ErrorLabelMailAlreadyUsed"), Color.RED);
                         } else {
                             database.update(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser(), "\"" + textEmail.getText() + "\"", databaseName.getTableUserColumnMailUser() + " = \"" + user.getEmail() + "\"");
                             user.setEmail(textEmail.getText());
-                            messageInterface.setMessage(labelError, language.getInformationMenuControllerLabelErrorEmailChangeValid(), Color.GREEN);
+                            messageInterface.setMessage(labelError, language.getLine("informationErrorLabelChangeEmailValid"), Color.GREEN);
                         }
                     } catch (Exception e) {
                     }
                 } else {
-                    messageInterface.setMessage(labelError, language.getInformationMenuControllerLabelErrorEmailWrongFormat(), Color.RED);
+                    messageInterface.setMessage(labelError, language.getLine("informationErrorLabelEmailWrongFormat"), Color.RED);
                 }
             }
             else {
-                messageInterface.setMessage(labelError,language.getInformationMenuControllerLabelErrorEmailSame(),Color.RED);
+                messageInterface.setMessage(labelError,language.getLine("informationErrorLabelSameEmail"),Color.RED);
             }
         }
         else {
-            messageInterface.setMessage(labelError,language.getLabelErrorEmptyField(),Color.RED);
+            messageInterface.setMessage(labelError,language.getLine("ErrorLabelEmptyField"),Color.RED);
         }
     }
 
@@ -179,17 +179,17 @@ public class InformationMenuController implements InterfaceMenu{
                 if (InputControl.isUsername(textUserName.getText()) && textUserName.getText().length() > 5) {
                     database.update(databaseName.getTableUser(), databaseName.getTableUserColumnUserName(), "\"" + textUserName.getText() + "\"", databaseName.getTableUserColumnMailUser() + " = \"" + user.getEmail() + "\"");
                     user.setUserName(textUserName.getText());
-                    messageInterface.setMessage(labelError, language.getInformationMenuControllerLabelErrorUserNameChangeValid(), Color.GREEN);
+                    messageInterface.setMessage(labelError, language.getLine("informationErrorLabelChangeUserNameValid"), Color.GREEN);
                 } else {
-                    messageInterface.setMessage(labelError, language.getInformationMenuControllerLabelErrorUserNameWrongFormat(), Color.RED);
+                    messageInterface.setMessage(labelError, language.getLine("informationErrorLabelUserNameWrongFormat"), Color.RED);
                 }
             }
             else {
-                messageInterface.setMessage(labelError,language.getInformationMenuControllerLabelErrorUserNameSame(),Color.RED);
+                messageInterface.setMessage(labelError,language.getLine("informationErrorLabelSameUserName"),Color.RED);
             }
         }
         else {
-            messageInterface.setMessage(labelError,language.getLabelErrorEmptyField(),Color.RED);
+            messageInterface.setMessage(labelError,language.getLine("ErrorLabelEmptyField"),Color.RED);
         }
     }
 
@@ -203,17 +203,17 @@ public class InformationMenuController implements InterfaceMenu{
                 if (!resultSet.getString(4).equals(textPassword.getText())) {
                     if (InputControl.validPassword(textPassword.getText()) && textPassword.getText().length() > 5) {
                         database.update(databaseName.getTableUser(), databaseName.getTableUserColumnPassword(), "\"" + textPassword.getText() + "\"", databaseName.getTableUserColumnMailUser() + " = \"" + user.getEmail() + "\"");
-                        messageInterface.setMessage(labelError, language.getInformationMenuControllerLabelErrorPasswordChangeValid(), Color.GREEN);
+                        messageInterface.setMessage(labelError, language.getLine("informationErrorLabelChangePasswordValid"), Color.GREEN);
                     } else {
-                        messageInterface.setMessage(labelError, language.getInformationMenuControllerLabelErrorPasswordWrongFormat(), Color.RED);
+                        messageInterface.setMessage(labelError, language.getLine("informationErrorLabelPasswordWrongFormat"), Color.RED);
                     }
                 }
                 else {
-                    messageInterface.setMessage(labelError, language.getInformationMenuControllerLabelErrorPasswordSame(), Color.RED);
+                    messageInterface.setMessage(labelError, language.getLine("informationErrorLabelSamePassword"), Color.RED);
                 }
             }
             else {
-                messageInterface.setMessage(labelError, language.getLabelErrorEmptyField(), Color.RED);
+                messageInterface.setMessage(labelError, language.getLine("ErrorLabelEmptyField"), Color.RED);
             }
         }
         catch (Exception e){ System.out.println("Erreur : changePassword dans InformationMenuController"); }

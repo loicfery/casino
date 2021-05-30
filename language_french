@@ -1,0 +1,287 @@
+connexionLabelTitle1
+Bienvenue au casino
+
+connexionLabelTitle2
+Nouveau Compte
+
+connexionLabelEmail
+Email
+
+connexionLabelPassword
+Mot de passe
+
+connexionButtonLogin
+Connexion
+
+connexionButtonNewAccount
+Nouveau Compte
+
+connexionButtonLoginMenuReturn
+Se connecter
+
+connexionButtonInscription
+S'inscrire
+
+connexionUserName
+Pseudonyme :
+
+connexionErrorConnexionLabel
+L'email ou le mot de passe est incorrect
+
+mainMenuLogoutButton
+Déconnexion
+
+mainMennuHistoryGamePlayedButton
+Historique jeux
+
+blackJackBetText
+Votre mise
+
+blackJackActionSurrenderButton
+Abandonner
+
+blackJackActionHitButton
+Tirer une carte
+
+blackJackActionDoubleButton
+Doubler la mise
+
+blackJackActionStandButton
+Rester
+
+blackJackActionInsuranceButton
+Assurance
+
+blackJackActionSplitButton
+Partager
+
+blackJackErrorLabelBetEmpty
+Il faut entrer une mise
+
+blackJackErrorLabelBetWrongValue
+Vous ne pouvez miser qu'entre 2 et 100 jetons
+
+blackJackValueHandLabel
+valeur de la main :
+
+slotMachineLemonSymbol
+citron
+
+slotMachineWatermelonSymbol
+pastèque
+
+slotMachineCherrySymbol
+cerise
+
+slotMachineSevenSymbol
+sept
+
+rouletteErrorLabelWrongTokenPosition
+Vous ne pouvez pas placer de jeton ici
+
+rouletteInformationBetTokenLabel
+Mise d'un jeton  \n Cases sélectionnées : \n|\n Cases misées : \n
+
+rouletteCellBetEmpty
+aucune case sélectionnée
+
+rouletteSameCellBet
+Vous ne pouvez pas miser \nsur ces deux cases en même temps
+
+rouletteCellBetCombinationImpossible
+Cette combinaison de case est impossible
+
+shopAddMoneyButton
+Ajouter de l'argent
+
+shopHistoryShoppingButton
+Historique achats
+
+shopExchangeButton
+Echanger
+
+shopErrorLabelExchangeValid
+Votre échange a bien été effectué
+
+shopExchangeTokenButton
+jetons
+
+shopTitleTokenLabel
+Echange de jeton :
+
+shopTitleMoneyLabel
+Echange d'argent :
+
+historyShoppingTitleLabel1
+Historique des échanges : Jeton
+
+historyShoppingTitleLabel2
+Historique des échanges : Argent
+
+informationChangeEmailButton
+Modifier email
+
+informationChangeUserNameButton
+Modifier pseudonyme
+
+informationChangePasswordButton
+Modifier mot de passe
+
+informationErrorLabelChangeEmailValid
+L'email a été modifié
+
+informationErrorLabelEmailWrongFormat
+L'email ne correspond pas au format
+
+informationErrorLabelSameEmail
+L'email est le même
+
+informationErrorLabelChangeUserNameValid
+Le pseudonyme a été modifié
+
+informationErrorLabelUserNameWrongFormat
+Le pseudonyme ne correspond pas au format
+
+informationErrorLabelSameUserName
+Le pseudonyme est le même
+
+informationErrorLabelChangePasswordValid
+Le mot de passe a été modifié
+
+informationErrorLabelPasswordWrongFormat
+Le mot de passe ne correspond pas au format
+
+informationErrorLabelSamePassword
+Le mot de passe est le même
+
+historyGamePlayedNoGameRegister
+Il n'y a aucune partie enregistrée
+
+historyGamePlayedBlackJackTitleLabel
+Historique de jeux : Black Jack
+
+historyGamePlayedSlotMachineTitleLabel
+Historique de jeux : Machine à sous
+
+historyGamePlayedRouletteTitleLabel
+Historique de jeux : Roulette
+
+settingTitleLabel
+Paramètres
+
+settingSoundVolumeTitleLabel
+volume son :
+
+settingBackgroundAnimationTitleLabel
+Animation arrière plan :
+
+settingLanguageTitleLabel
+Langue :
+
+ruleFileNameBlackJack
+rule_blackJack_french.txt
+
+ruleBlackJackTitleLabel
+Règles du Black Jack
+
+ruleFileNameSlotMachine
+rule_slotMachine_french.txt
+
+ruleSlotMachineTitleLabel
+Règles des machines à sous
+
+ruleFileNameRoulette
+rule_roulette_french.txt
+
+ruleRouletteTitleLabel
+Règles de la roulette
+
+buyingMoneyTitleLabel
+Ajouter de l'argent
+
+buyingMoneyErrorLabelWrongValue
+Il faut une valeur strictement positive
+
+buyingMoneyErrorLabelFieldEmpty
+Le champ est vide
+
+buyingMoneyErrorLabelMoneyAdd
+d'argent ont été ajouté
+
+tokenLabel
+Jetons
+
+moneyLabel
+Argent :
+
+gainLabel
+Gain :
+
+playerLabel
+Joueur :
+
+userNameLabel
+Pseudonyme :
+
+emailLabel
+Email :
+
+passwordLabel
+Mot de passe :
+
+quitButton
+Quitter
+
+newPartyButton
+Nouvelle partie
+
+betButton
+Miser
+
+logLabel
+Log
+
+errorLabelNotEnoughToken
+Vous n'avez pas assez de jeton
+
+errorLabelNotEnoughMoney
+Vous n'avez pas assez d'argent
+
+informationLabel
+Informations
+
+startingGameButton
+Lancer
+
+errorLabelIntegerValue
+Il faut miser une valeur entière
+
+errorLabelNotEnoughTokenBet
+Il faut placer un jeton au minimum
+
+shopTokenTitleLabel
+Echange de jeton :
+
+shopMoneyTitleLabel
+Echange d'argent :
+
+ErrorLabelMailAlreadyUsed
+Cette email est déjà utilisé
+
+ErrorLabelEmptyField
+Un ou plusieurs champs sont vides
+
+historySearchUserButton
+Rechercher
+
+gameBlackJackButton
+Black Jack
+
+gameSlotMachineButton
+Machine à sous
+
+gameRouletteButton
+Roulette
+
+addButton
+Ajouter

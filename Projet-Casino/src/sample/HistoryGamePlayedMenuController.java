@@ -96,19 +96,19 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         stage.setScene(scene);
         anchorPane = new AnchorPane();
 
-        setupScene.setLabel(titleLabel,language.getHistoryGamePlayedTitleLabelBlackJack(),Pos.CENTER,0,20,20,600,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(titleLabel,language.getLine("historyGamePlayedBlackJackTitleLabel"),Pos.CENTER,0,20,20,600,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
 
         setupScene.setTextArea(textHistory,200,150,530,380,false,true,anchorPane);
 
         setupScene.setTextField(textSearchUser,"",Pos.CENTER,20,500,20,150,new Font(15),false,anchorPane);
 
-        setupScene.setButton(gameBlackJackButton,language.getGameBlackJackButton(),Pos.CENTER,20,150,20,150,new Font(15),true,anchorPane);
-        setupScene.setButton(gameSlotMachineButton,language.getGameSlotMachineButton(),Pos.CENTER,20,250,20,150,new Font(15),true,anchorPane);
-        setupScene.setButton(gameRouletteButton,language.getGameRouletteButton(),Pos.CENTER,20,350,20,150,new Font(15),true,anchorPane);
-        setupScene.setButton(returnShopMenuButton,language.getQuitButton(), Pos.CENTER,25,720,60,123.0,new Font(20.0),true,anchorPane);
+        setupScene.setButton(gameBlackJackButton,language.getLine("gameBlackJackButton"),Pos.CENTER,20,150,20,150,new Font(15),true,anchorPane);
+        setupScene.setButton(gameSlotMachineButton,language.getLine("gameSlotMachineButton"),Pos.CENTER,20,250,20,150,new Font(15),true,anchorPane);
+        setupScene.setButton(gameRouletteButton,language.getLine("gameRouletteButton"),Pos.CENTER,20,350,20,150,new Font(15),true,anchorPane);
+        setupScene.setButton(returnShopMenuButton,language.getLine("quitButton"), Pos.CENTER,25,720,60,123.0,new Font(20.0),true,anchorPane);
         setupScene.setButton(leftInformationButton,"<-",Pos.CENTER,300,720,20,50,new Font(15),false,anchorPane);
         setupScene.setButton(rightInformationButton,"->",Pos.CENTER,450,720,20,50,new Font(15),false,anchorPane);
-        setupScene.setButton(searchUserButton,language.getHistorySearchUserButton(),Pos.CENTER,20,550,20,150,new Font(15),false,anchorPane);
+        setupScene.setButton(searchUserButton,language.getLine("historySearchUserButton"),Pos.CENTER,20,550,20,150,new Font(15),false,anchorPane);
 
         setupScene.setCircle(circleSetting,18,570,30,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
 
@@ -196,11 +196,11 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
 
             while (resultSet.next()){
                 list.add(resultSet.getString(2) + " : ");
-                list.add(resultSet.getString(5) + " : " + resultSet.getString(3) + " --> " + resultSet.getInt(4) + " " + language.getToken());
+                list.add(resultSet.getString(5) + " : " + resultSet.getString(3) + " --> " + resultSet.getInt(4) + " " + language.getLine("tokenLabel"));
             }
 
             if(list.size() == 0){
-                list.add(language.getHistoryGamePlayedNoGameRegister());
+                list.add(language.getLine("historyGamePlayedNoGameRegister"));
             }
         }
         catch (Exception e){ System.out.println(errorMessage); }
@@ -272,7 +272,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
      * Méthode qui affiche l'historique pour le black jack
      **/
     private void setGameBlackJack(){
-        titleLabel.setText(language.getHistoryGamePlayedTitleLabelBlackJack());
+        titleLabel.setText(language.getLine("historyGamePlayedBlackJackTitleLabel"));
         currentList = listOfGameBlackJack;
         indexList = 0;
         currentGame = "blackJack";
@@ -283,7 +283,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
      * Méthode qui affiche l'historique pour la machine à sous
      **/
     private void setGameSlotMachine(){
-        titleLabel.setText(language.getHistoryGamePlayedTitleLabelSlotMachine());
+        titleLabel.setText(language.getLine("historyGamePlayedSlotMachineTitleLabel"));
         currentList = listOfGameSlotMachine;
         indexList = 0;
         currentGame = "slotMachine";
@@ -294,7 +294,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
      * Méthode qui affiche l'historique pour la roulette
      **/
     private void setGameRoulette(){
-        titleLabel.setText(language.getHistoryGamePlayedTitleLabelRoulette());
+        titleLabel.setText(language.getLine("historyGamePlayedRouletteTitleLabel"));
         currentList = listOfGameRoulette;
         indexList = 0;
         currentGame = "roulette";

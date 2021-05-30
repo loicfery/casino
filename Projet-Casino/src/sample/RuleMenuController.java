@@ -63,20 +63,20 @@ public class RuleMenuController {
             if(interfaceMenu instanceof BlackJackMenuController) {
                 heightMax = 660;
                 widthMax = 700;
-                fileRule = new File(language.getRuleFileNameBlackJack());
-                labelTitle.setText(language.getLabelTitleBlackJack());
+                fileRule = new File(language.getLine("ruleFileNameBlackJack"));
+                labelTitle.setText(language.getLine("ruleBlackJackTitleLabel"));
             }
             if(interfaceMenu instanceof RouletteMenuController){
                 heightMax = 665;
                 widthMax = 950;
-                fileRule = new File(language.getRuleFileNameRoulette());
-                labelTitle.setText(language.getLabelTitleRoulette());
+                fileRule = new File(language.getLine("ruleFileNameRoulette"));
+                labelTitle.setText(language.getLine("ruleRouletteTitleLabel"));
             }
             if(interfaceMenu instanceof SlotMachineMenuController){
                 heightMax = 450;
                 widthMax = 580;
-                fileRule = new File(language.getRuleFileNameSlotMachine());
-                labelTitle.setText(language.getLabelTitleSlotMachine());
+                fileRule = new File(language.getLine("ruleFileNameSlotMachine"));
+                labelTitle.setText(language.getLine("ruleSlotMachineTitleLabel"));
             }
 
             if(fileRule != null) {

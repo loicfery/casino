@@ -111,8 +111,8 @@ public class ShopMenuController implements InterfaceMenu{
         stage.setScene(scene);
         anchorPane = new AnchorPane();
 
-        setupScene.setLabel(titleShopTokenLabel,language.getTitleShopToken()+user.getToken(),Pos.CENTER,0,200,20,400,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(titleShopMoneyLabel,language.getTitleShopMoney()+user.getMoney(),Pos.CENTER,400,200,20,400,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(titleShopTokenLabel,language.getLine("shopTokenTitleLabel")+user.getToken(),Pos.CENTER,0,200,20,400,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(titleShopMoneyLabel,language.getLine("shopMoneyTitleLabel")+user.getMoney(),Pos.CENTER,400,200,20,400,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(errorLabel,"",Pos.CENTER,250,700,20,300,new Font(20),Paint.valueOf("RED"),false,anchorPane);
 
         setupScene.setButton(leftShopTokenButton,"<-",Pos.CENTER,100,750,20,50,new Font(15),true,anchorPane);
@@ -120,9 +120,9 @@ public class ShopMenuController implements InterfaceMenu{
         setupScene.setButton(leftShopMoneyButton,"<-",Pos.CENTER,500,750,20,50,new Font(15),true,anchorPane);
         setupScene.setButton(rightShopMoneyButton,"->",Pos.CENTER,650,750,20,50,new Font(15),true,anchorPane);
 
-        setupScene.setButton(addMoneyButton,language.getShopMenuControllerAddMoneyButton(),Pos.CENTER,360,14,60,200,new Font(20),true,anchorPane);
-        setupScene.setButton(historyShoppingButton,language.getShopMenuControllerHistoryShoppingButton(), Pos.CENTER,150,14,60,200,new Font(20),true,anchorPane);
-        setupScene.setButton(returnMainMenuButton,language.getQuitButton(),Pos.CENTER,14.0,14.0,60,123.0,new Font(20.0),true,anchorPane);
+        setupScene.setButton(addMoneyButton,language.getLine("shopAddMoneyButton"),Pos.CENTER,360,14,60,200,new Font(20),true,anchorPane);
+        setupScene.setButton(historyShoppingButton,language.getLine("shopHistoryShoppingButton"), Pos.CENTER,150,14,60,200,new Font(20),true,anchorPane);
+        setupScene.setButton(returnMainMenuButton,language.getLine("quitButton"),Pos.CENTER,14.0,14.0,60,123.0,new Font(20.0),true,anchorPane);
 
         setupScene.setLine(middleLine,400,200,0,0,0,520,Paint.valueOf("BLACK"),1.0,true,anchorPane);
 
@@ -159,12 +159,12 @@ public class ShopMenuController implements InterfaceMenu{
         try {
             ResultSet resultSet = database.select(databaseName.getTableExchangeMoney(), "");
             while (resultSet.next()) {
-                listOfShopMoney.add(resultSet.getInt(2)+" $ ---> "+resultSet.getInt(3)+" "+language.getToken());
+                listOfShopMoney.add(resultSet.getInt(2)+" $ ---> "+resultSet.getInt(3) + " " + language.getLine("tokenLabel"));
             }
 
             resultSet = database.select(databaseName.getTableExchangeToken(),"");
             while (resultSet.next()){
-                listOfShopToken.add(resultSet.getInt(2)+" "+language.getToken()+" ---> "+resultSet.getInt(3)+" $");
+                listOfShopToken.add(resultSet.getInt(2)+" "+language.getLine("tokenLabel")+" ---> "+resultSet.getInt(3)+" $");
             }
 
             setupShopList();
@@ -191,7 +191,7 @@ public class ShopMenuController implements InterfaceMenu{
             listOfLabelShopToken.add(label);
 
             button = new Button();
-            setupScene.setButton(button,language.getShopMenuControllerExchangeButton(),Pos.CENTER, positionOriginXToken,positionY,20,100,new Font(15),false,anchorPane);
+            setupScene.setButton(button,language.getLine("shopExchangeButton"),Pos.CENTER, positionOriginXToken,positionY,20,100,new Font(15),false,anchorPane);
             button.setOnMouseClicked((event)-> exchange(listOfShopToken.get(finalIndex)));
             listOfButtonShopToken.add(button);
             indexToken ++;
@@ -221,7 +221,7 @@ public class ShopMenuController implements InterfaceMenu{
             indexMoney ++;
 
             button = new Button();
-            setupScene.setButton(button,language.getShopMenuControllerExchangeButton(),Pos.CENTER, positionOriginXMoney,positionY,20,100,new Font(15),false,anchorPane);
+            setupScene.setButton(button,language.getLine("shopExchangeButton"),Pos.CENTER, positionOriginXMoney,positionY,20,100,new Font(15),false,anchorPane);
             button.setOnMouseClicked((event) -> exchange(listOfShopMoney.get(finalIndex)));
             listOfButtonShopMoney.add(button);
 
@@ -374,10 +374,10 @@ public class ShopMenuController implements InterfaceMenu{
                     user.removeMoney(money);
                     user.addToken(token);
                     database.insert(databaseName.getTableHistoryExchangeMoney(),"\""+user.getEmail()+"\","+money+","+token+",\""+getCurrentDate()+"\"",databaseName.getTableHistoryExchangeMoneyColumnMailUser()+","+databaseName.getTableHistoryExchangeMoneyColumnPriceMoney()+","+databaseName.getTableHistoryExchangeMoneyColumnMoneyGain()+","+databaseName.getTableHistoryExchangeMoneyColumnDate());
-                    messageInterface.setMessage(errorLabel,language.getShopMenuControllerLabelErrorExchangeValid(),Color.GREEN);
+                    messageInterface.setMessage(errorLabel,language.getLine("shopErrorLabelExchangeValid"),Color.GREEN);
                 }
                 else {
-                    messageInterface.setMessage(errorLabel,language.getLabelErrorMoneyNotEnough(),Color.RED);
+                    messageInterface.setMessage(errorLabel,language.getLine("errorLabelNotEnoughMoney"),Color.RED);
                 }
             }
             catch (Exception e){ System.out.println("Problème dans exchange de shopMenuController : argent"); }
@@ -391,17 +391,17 @@ public class ShopMenuController implements InterfaceMenu{
                     user.addMoney(money);
                     user.removeToken(token);
                     database.insert(databaseName.getTableHistoryExchangeToken(),"\""+user.getEmail()+"\","+token+","+money+",\""+getCurrentDate()+"\"",databaseName.getTableHistoryExchangeTokenColumnMailUser()+","+databaseName.getTableHistoryExchangeTokenColumnPriceToken()+","+databaseName.getTableHistoryExchangeTokenColumnMoneyGain()+","+databaseName.getTableHistoryExchangeTokenColumnDate());
-                    messageInterface.setMessage(errorLabel,language.getShopMenuControllerLabelErrorExchangeValid(),Color.GREEN);
+                    messageInterface.setMessage(errorLabel,language.getLine("shopErrorLabelExchangeValid"),Color.GREEN);
                 }
                 else {
-                    messageInterface.setMessage(errorLabel,language.getLabelErrorTokenNotEnough(),Color.RED);
+                    messageInterface.setMessage(errorLabel,language.getLine("errorLabelNotEnoughToken"),Color.RED);
                 }
             }
             catch (Exception e){ System.out.println("Problème dans exchange de shopMenuController token"); }
         }
 
-        titleShopTokenLabel.setText(language.getShopMenuControllerTitleShopTokenLabel()+user.getToken());
-        titleShopMoneyLabel.setText(language.getShopMenuControllerTitleShopMoneyLabel()+user.getMoney());
+        titleShopTokenLabel.setText(language.getLine("shopTitleTokenLabel")+user.getToken());
+        titleShopMoneyLabel.setText(language.getLine("shopTitleMoneyLabel")+user.getMoney());
     }
 
     /**
@@ -472,7 +472,7 @@ public class ShopMenuController implements InterfaceMenu{
         setupScene.setTextField(textMoney, "", Pos.CENTER, xMoney, addInformationButton.getLayoutY(), 20, 70, new Font(15), true, anchorPane);
         setupScene.setTextField(textToken,"",Pos.CENTER,xToken,addInformationButton.getLayoutY(),20,70,new Font(15),true,anchorPane);
         setupScene.setLabel(label, " ---> ", Pos.CENTER, xLabel, addInformationButton.getLayoutY(), 20, 50, new Font(15), Paint.valueOf("BLACK"), true, anchorPane);
-        setupScene.setButton(validButton,language.getAddButton(),Pos.CENTER,xButton,addInformationButton.getLayoutY(),20,100,new Font(15),true,anchorPane);
+        setupScene.setButton(validButton,language.getLine("addButton"),Pos.CENTER,xButton,addInformationButton.getLayoutY(),20,100,new Font(15),true,anchorPane);
         validButton.setOnMouseClicked((event) -> validAddTokenInformation(textMoney,textToken,addInformationButton,addInformationButton.getLayoutY()));
     }
 
@@ -497,7 +497,7 @@ public class ShopMenuController implements InterfaceMenu{
         setupScene.setTextField(textMoney, "", Pos.CENTER, xMoney, addInformationButton.getLayoutY(), 20, 70, new Font(15), true, anchorPane);
         setupScene.setTextField(textToken,"",Pos.CENTER,xToken,addInformationButton.getLayoutY(),20,70,new Font(15),true,anchorPane);
         setupScene.setLabel(label, " ---> ", Pos.CENTER, xLabel, addInformationButton.getLayoutY(), 20, 50, new Font(15), Paint.valueOf("BLACK"), true, anchorPane);
-        setupScene.setButton(validButton,language.getAddButton(),Pos.CENTER,xButton,addInformationButton.getLayoutY(),20,100,new Font(15),true,anchorPane);
+        setupScene.setButton(validButton,language.getLine("addButton"),Pos.CENTER,xButton,addInformationButton.getLayoutY(),20,100,new Font(15),true,anchorPane);
         validButton.setOnMouseClicked((event)-> validAddMoneyInformation(textMoney,textToken,addInformationButton,addInformationButton.getLayoutY()));
     }
 
@@ -517,13 +517,13 @@ public class ShopMenuController implements InterfaceMenu{
             }
 
             listOfShopToken.add(textToken.getText() + " jetons" +" ---> " + textMoney.getText()+" $");
-            setupScene.setButton(exchangeButton, language.getShopMenuControllerExchangeButton(), Pos.CENTER, positionOriginXToken, positionY, 20, 100, new Font(15), false, anchorPane);
+            setupScene.setButton(exchangeButton, language.getLine("shopExchangeButton"), Pos.CENTER, positionOriginXToken, positionY, 20, 100, new Font(15), false, anchorPane);
             exchangeButton.setOnMouseClicked((event) -> exchange(listOfShopToken.get(indexToken - 1)));
             listOfButtonShopToken.add(exchangeButton);
 
             indexToken ++;
 
-            setupScene.setLabel(labelInformation, textToken.getText() + " " + language.getToken() +" ---> " + textMoney.getText() + " $", Pos.CENTER, 14, positionY, 20, 200, new Font(20), Paint.valueOf("BLACK"), false, anchorPane);
+            setupScene.setLabel(labelInformation, textToken.getText() + " " + language.getLine("tokenLabel") +" ---> " + textMoney.getText() + " $", Pos.CENTER, 14, positionY, 20, 200, new Font(20), Paint.valueOf("BLACK"), false, anchorPane);
             listOfLabelShopToken.add(labelInformation);
 
             setupScene.setButton(deleteInformationButton, "X", Pos.CENTER, positionOriginXToken + 110, positionY, 20, 20, new Font(15), false, anchorPane);
@@ -563,13 +563,13 @@ public class ShopMenuController implements InterfaceMenu{
 
             listOfShopMoney.add(textMoney.getText() + " $ ---> " + textToken.getText() + " jetons");
 
-            setupScene.setButton(exchangeButton, language.getShopMenuControllerExchangeButton(), Pos.CENTER, positionOriginXMoney, positionY, 20, 100, new Font(15), false, anchorPane);
+            setupScene.setButton(exchangeButton, language.getLine("shopExchangeButton"), Pos.CENTER, positionOriginXMoney, positionY, 20, 100, new Font(15), false, anchorPane);
             exchangeButton.setOnMouseClicked((event) -> exchange(listOfShopMoney.get(indexMoney - 1)));
             listOfButtonShopMoney.add(exchangeButton);
 
             indexMoney ++;
 
-            setupScene.setLabel(labelInformation, textMoney.getText() + " $ ---> " + textToken.getText() + " " + language.getToken(), Pos.CENTER, 414, positionY, 20, 200, new Font(20), Paint.valueOf("BLACK"), false, anchorPane);
+            setupScene.setLabel(labelInformation, textMoney.getText() + " $ ---> " + textToken.getText() + " " + language.getLine("tokenLabel"), Pos.CENTER, 414, positionY, 20, 200, new Font(20), Paint.valueOf("BLACK"), false, anchorPane);
             listOfLabelShopMoney.add(labelInformation);
 
             setupScene.setButton(deleteInformationButton, "X", Pos.CENTER, positionOriginXMoney + 110, positionY, 20, 20, new Font(15), false, anchorPane);

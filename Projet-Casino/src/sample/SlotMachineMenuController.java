@@ -70,7 +70,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
     private final ImageView pictureSlot3 = new ImageView();
 
     private final Label labelToken = new Label();
-    private final Label labelProfit = new Label();
+    private final Label labelGain = new Label();
     private final Label labelUserName = new Label();
     private final Label labelRule = new Label();
     private final Label labelError = new Label();
@@ -112,19 +112,19 @@ public class SlotMachineMenuController implements InterfaceMenu{
             setAnimationState(false);
         }
 
-        setupScene.setButton(startingGameButton,language.getStartingGameButton(), Pos.CENTER,504.0,615.0,134.0,256.0,new Font(25),true,anchorPane);
+        setupScene.setButton(startingGameButton,language.getLine("startingGameButton"), Pos.CENTER,504.0,615.0,134.0,256.0,new Font(25),true,anchorPane);
         setupScene.setImageView(pictureSlot1,130.0,300.0,150.0,151.0,new Image(new File("Projet-Casino/image/slot_machine_seven.jpg").toURI().toString()),true,anchorPane);
         setupScene.setImageView(pictureSlot2,330,300.0,150.0,151.0,new Image(new File("Projet-Casino/image/slot_machine_seven.jpg").toURI().toString()),true,anchorPane);
         setupScene.setImageView(pictureSlot3,530.0,300.0,150.0,151.0,new Image(new File("Projet-Casino/image/slot_machine_seven.jpg").toURI().toString()),true,anchorPane);
-        setupScene.setLabel(labelProfit,language.getLabelProfit()+"0",Pos.CENTER_LEFT,39.0,686.0,63.0,455.0,new Font(33.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelToken,language.getLabelToken()+user.getToken(),Pos.CENTER_LEFT,39.0,615.0,70.0,455.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelUserName,language.getLabelPlayer()+user.getUserName(),Pos.CENTER_LEFT,39.0,565.0,50.0,463.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setButton(returnMainMenuButton,language.getQuitButton(),Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
+        setupScene.setLabel(labelGain,language.getLine("gainLabel") + " 0",Pos.CENTER_LEFT,39.0,686.0,63.0,455.0,new Font(33.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelToken,language.getLine("tokenLabel") + ": " + user.getToken(),Pos.CENTER_LEFT,39.0,615.0,70.0,455.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelUserName,language.getLine("playerLabel") + " " + user.getUserName(),Pos.CENTER_LEFT,39.0,565.0,50.0,463.0,new Font(30.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setButton(returnMainMenuButton,language.getLine("quitButton"),Pos.CENTER,14.0,14.0,57.0,123.0,new Font(20.0),true,anchorPane);
 
         setupScene.setCircle(circleSetting,18,670,30,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())),Paint.valueOf("BLUE"),StrokeType.INSIDE,1.0,true,anchorPane);
 
         setupScene.setRectangle(rectangleLog,700.0,15.0,30.0,50.0,10.0,10.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),1.0,StrokeType.INSIDE,true,anchorPane);
-        setupScene.setLabel(labelLog,language.getLabelLog(),Pos.CENTER,700.0,15.0,23.0,50.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelLog,language.getLine("logLabel"),Pos.CENTER,700.0,15.0,23.0,50.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
 
         setupScene.setCircle(circleRule,16.0,770.0,30.0,Paint.valueOf("#a1a1a1"),Paint.valueOf("BLACK"),StrokeType.INSIDE,1.0,true,anchorPane);
         setupScene.setLabel(labelRule,"?",Pos.CENTER,754.0,15.0,23.0,32.0,new Font(20.0),Paint.valueOf("BLACK"),true,anchorPane);
@@ -172,17 +172,17 @@ public class SlotMachineMenuController implements InterfaceMenu{
             case 1:
             case 7:
             case 10:
-                return language.getSlotMachineMenuControllerSymbolLemon();
+                return language.getLine("slotMachineLemonSymbol");
             case 2:
             case 4:
             case 6:
             case 8:
-               return language.getSlotMachineMenuControllerSymbolWatermelon();
+               return language.getLine("slotMachineWatermelonSymbol");
             case 3:
             case 9:
-               return language.getSlotMachineMenuControllerSymbolCherry();
+               return language.getLine("slotMachineCherrySymbol");
             case 5:
-                return language.getSlotMachineMenuControllerSymbolSeven();
+                return language.getLine("slotMachineSevenSymbol");
             default: return "";
         }
     }
@@ -205,16 +205,16 @@ public class SlotMachineMenuController implements InterfaceMenu{
     private void startingGame(){
         if(user.getToken() > 0) {
             logMenuController.resetLog();
-            logMenuController.getLog("Le joueur "+user.getUserName()+" démarre une nouvelle partie.");
+            logMenuController.getLog("Le joueur " + user.getUserName()+" démarre une nouvelle partie.");
             slotMachine.useSlotMachine();
-            labelToken.setText(language.getLabelToken()+user.getToken());
+            labelToken.setText(language.getLine("tokenLabel") + ": " + user.getToken());
 
             startingGameButton.setDisable(true);
-            logMenuController.getLog("Le joueur "+user.getUserName()+" a lancé la machine à sous");
+            logMenuController.getLog("Le joueur " + user.getUserName()+" a lancé la machine à sous");
             animationSlot(slotMachine.getNbImage().get(0) + 1, slotMachine.getNbImage().get(1) + 1, slotMachine.getNbImage().get(2) + 1);
         }
         else{
-            messageInterface.setMessage(labelError,language.getLabelErrorTokenNotEnough(),Color.RED);
+            messageInterface.setMessage(labelError,language.getLine("errorLabelNotEnoughToken"),Color.RED);
         }
 
     }
@@ -328,30 +328,30 @@ public class SlotMachineMenuController implements InterfaceMenu{
         }
 
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> switchPicture(symbolOne,1)));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Premier symbole : "+getPicture(symbolOne))));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Premier symbole : " + getPicture(symbolOne))));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> switchPicture(symbolTwo,2)));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Deuxième symbole : "+getPicture(symbolTwo))));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Deuxième symbole : " + getPicture(symbolTwo))));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> switchPicture(symbolThree,3)));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Troisième symbole : "+getPicture(symbolThree))));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Troisième symbole : " + getPicture(symbolThree))));
 
         timePoint = timePoint.add(Duration.seconds(1));
 
         int gain = slotMachine.verifySlot();
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelProfit.setText(language.getLabelProfit() +gain)));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelGain.setText(language.getLine("gainLabel") + " " + gain)));
         if(gain > 0){
             timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> soundPayout.play()));
-            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Le joueur "+user.getUserName()+" a gagné "+gain+" jetons.")));
-            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\",\""+databaseName.getGameSlotMachine()+"\","+gain+",\""+getCurrentDate()+"\"",databaseName.getTableHistoryPartyGamedColumnMailUser()+","+databaseName.getTableHistoryPartyGamedColumnGameName()+","+databaseName.getTableHistoryPartyGamedColumnTokenGain()+","+databaseName.getTableHistoryPartyGamedColumnDate())));
+            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Le joueur "+user.getUserName() + " a gagné " + gain + " jetons.")));
+            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\",\""+databaseName.getGameSlotMachine() + "\","+gain+",\"" + getCurrentDate()+"\"",databaseName.getTableHistoryPartyGamedColumnMailUser() + ","+databaseName.getTableHistoryPartyGamedColumnGameName() + ","+databaseName.getTableHistoryPartyGamedColumnTokenGain() + ","+databaseName.getTableHistoryPartyGamedColumnDate())));
 
         }
         else {
-            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Le joueur "+user.getUserName()+" a gagné aucun jeton.")));
-            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail()+"\",\""+databaseName.getGameSlotMachine()+"\",-1,\""+getCurrentDate()+"\"",databaseName.getTableHistoryPartyGamedColumnMailUser()+","+databaseName.getTableHistoryPartyGamedColumnGameName()+","+databaseName.getTableHistoryPartyGamedColumnTokenGain()+","+databaseName.getTableHistoryPartyGamedColumnDate())));
+            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> logMenuController.getLog("Le joueur " + user.getUserName() + " a gagné aucun jeton.")));
+            timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> database.insert(databaseName.getTableHistoryPartyGamed(),"\""+user.getEmail() + "\",\""+databaseName.getGameSlotMachine() + "\",-1,\""+getCurrentDate()+"\"",databaseName.getTableHistoryPartyGamedColumnMailUser() + ","+databaseName.getTableHistoryPartyGamedColumnGameName() + ","+databaseName.getTableHistoryPartyGamedColumnTokenGain() + ","+databaseName.getTableHistoryPartyGamedColumnDate())));
 
         }
 
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> slotMachine.reset()));
-        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelToken.setText(language.getLabelToken()+user.getToken())));
+        timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> labelToken.setText(language.getLine("tokenLabel") + ": " + user.getToken())));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e -> createSoundSlot()));
         timeline.getKeyFrames().add(new KeyFrame(timePoint, e ->  startingGameButton.setDisable(false)));
 

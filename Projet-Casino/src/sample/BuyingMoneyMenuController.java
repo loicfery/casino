@@ -25,7 +25,7 @@ public class BuyingMoneyMenuController {
 
     private final Label titleLabel = new Label();
     private final Label userNameLabel = new Label();
-    private final Label userMoneyLabel = new Label();
+    private final Label moneyLabel = new Label();
     private final Label errorLabel = new Label();
     private final Label labelTitleMoney;
 
@@ -48,14 +48,14 @@ public class BuyingMoneyMenuController {
         Scene scene = new Scene(root, 400, 400);
         stage.setScene(scene);
 
-        setupScene.setLabel(titleLabel,language.getBuyingMoneyMenuControllerTitleLabel(), Pos.CENTER,0,20,20,400,new Font(30), Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(userNameLabel,language.getLabelUserName()+user.getUserName(),Pos.CENTER,20,150,20,150,new Font(15),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(userMoneyLabel,language.getLabelMoney()+user.getMoney(),Pos.CENTER,200,150,20,150,new Font(15),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(titleLabel,language.getLine("shopMoneyTitleLabel"), Pos.CENTER,0,20,20,400,new Font(30), Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(userNameLabel,language.getLine("userNameLabel") + ": " + user.getUserName(),Pos.CENTER,20,150,20,150,new Font(15),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(moneyLabel,language.getLine("moneyLabel") + ": " + user.getMoney(),Pos.CENTER,200,150,20,150,new Font(15),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(errorLabel,"",Pos.CENTER_LEFT,100,300,20,300,new Font(15),Paint.valueOf("RED"),false,anchorPane);
 
         setupScene.setTextField(textMoney,"",Pos.CENTER,100,200,20,200,new Font(15),true,anchorPane);
 
-        setupScene.setButton(validButton,language.getAddButton(),Pos.CENTER,150,250,20,100,new Font(15),true,anchorPane);
+        setupScene.setButton(validButton,language.getLine("addButton"),Pos.CENTER,150,250,20,100,new Font(15),true,anchorPane);
 
         validButton.setOnMouseClicked((event)-> addMoney());
 
@@ -74,20 +74,20 @@ public class BuyingMoneyMenuController {
                 value = Integer.parseInt(textMoney.getText());
                 if(value > 0) {
                     user.addMoney(value);
-                    userMoneyLabel.setText(language.getLabelMoney() + user.getMoney());
-                    labelTitleMoney.setText(language.getShopMenuControllerTitleShopMoneyLabel()+user.getMoney());
+                    moneyLabel.setText(language.getLine("moneyLabel") + ": " + user.getMoney());
+                    labelTitleMoney.setText(language.getLine("shopTokenTitleMoney") + ": " + user.getMoney());
                     textMoney.setText("");
-                    messageInterface.setMessage(errorLabel,value + " " + language.getBuyingMoneyMenuControllerLabelErrorMoneyAdd(),Color.GREEN);
+                    messageInterface.setMessage(errorLabel,value + " " + language.getLine("buyingMoneyErrorLabelMoneyAdd"),Color.GREEN);
                 }
                 else {
-                    messageInterface.setMessage(errorLabel,language.getBuyingMoneyMenuControllerLabelErrorWrongValue(),Color.RED);
+                    messageInterface.setMessage(errorLabel,language.getLine("buyingMoneyErrorLabelWrongValue"),Color.RED);
                 }
             } catch (Exception e) {
                 System.out.println("Erreur type de addMoney dans BuyingMoneyMenuController");
             }
         }
         else {
-            messageInterface.setMessage(errorLabel,language.getBuyingMoneyMenuControllerLabelErrorFieldEmpty(),Color.RED);
+            messageInterface.setMessage(errorLabel,language.getLine("buyingMoneyErrorLabelFieldEmpty"),Color.RED);
         }
     }
 }

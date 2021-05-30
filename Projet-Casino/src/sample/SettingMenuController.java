@@ -54,12 +54,12 @@ public class SettingMenuController {
         Scene sceneSetting = new Scene(root, 500, 500);
         stage.setScene(sceneSetting);
 
-        setupScene.setLabel(titleLabel,language.getSettingMenuControllerTitleLabel(), Pos.CENTER,150,15,30,200,new Font(30), Paint.valueOf("BLACK"),true, anchorPane);
+        setupScene.setLabel(titleLabel,language.getLine("settingTitleLabel"), Pos.CENTER,150,15,30,200,new Font(30), Paint.valueOf("BLACK"),true, anchorPane);
 
-        setupScene.setLabel(soundVolumeTitleLabel,language.getSettingMenuControllerSoundVolumeTitleLabel(),Pos.CENTER_LEFT,50,200,20,120,new Font(15),Paint.valueOf("BLACK"),true, anchorPane);
-        setupScene.setLabel(backgroundAnimationLabel,language.getSettingMenuControllerBackgroundAnimation(),Pos.CENTER_LEFT,50,250,20,200,new Font(15),Paint.valueOf("BLACK"),true, anchorPane);
+        setupScene.setLabel(soundVolumeTitleLabel,language.getLine("settingSoundVolumeTitleLabel"),Pos.CENTER_LEFT,50,200,20,120,new Font(15),Paint.valueOf("BLACK"),true, anchorPane);
+        setupScene.setLabel(backgroundAnimationLabel,language.getLine("settingBackgroundAnimationTitleLabel"),Pos.CENTER_LEFT,50,250,20,200,new Font(15),Paint.valueOf("BLACK"),true, anchorPane);
         setupScene.setLabel(soundVolumeLabel,""+(int)(soundVolume * 100),Pos.CENTER,370,200,23,80,new Font(20),Paint.valueOf("BLACK"),true, anchorPane);
-        setupScene.setLabel(languageLabel,language.getSettingMenuControllerLanguage(),Pos.CENTER_LEFT,50,300,20,100,new Font(15),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(languageLabel,language.getLine("settingLanguageTitleLabel"),Pos.CENTER_LEFT,50,300,20,100,new Font(15),Paint.valueOf("BLACK"),true,anchorPane);
 
         setupScene.setSlider(soundVolumeSlider,160,200,23,200,0.0,1.0, soundVolume,true, anchorPane);
 
@@ -109,11 +109,11 @@ public class SettingMenuController {
 
     /** Méthode qui affiche la langue actuelle dans les boutons de langues **/
     private void checkLanguage(){
-        if(language instanceof LanguageFrench){
+        if(language.getLanguage().equals("language_french")){
             languageFrenchRadioButton.setSelected(true);
             languageFrenchRadioButton.requestFocus();
         }
-        if(language instanceof LanguageEnglish){
+        if(language.getLanguage().equals("language_english")){
             languageEnglishRadioButton.setSelected(true);
             languageEnglishRadioButton.requestFocus();
         }
@@ -122,10 +122,10 @@ public class SettingMenuController {
     /** Méthode qui change de langue **/
     private void switchLanguage(RadioButton button){
         if(languageFrenchRadioButton.getText().equals(button.getText())){
-            language = new LanguageFrench();
+            language = new Language("language_french");
         }
         if(languageEnglishRadioButton.getText().equals(button.getText())){
-            language = new LanguageEnglish();
+            language = new Language("language_english");
         }
 
         interfaceMenu.setLanguage(language);

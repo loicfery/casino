@@ -88,18 +88,18 @@ public class ConnexionMenuController implements InterfaceMenu{
         stage.setScene(scene);
         anchorPane = new AnchorPane();
 
-        setupScene.setLabel(labelTitle,language.getConnexionMenuControllerLabelTitle1(), Pos.CENTER,0,50,20,500,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelEmail,language.getConnexionMenuControllerLabelEmail(),Pos.CENTER,60,200,20,150,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelPassword,language.getConnexionMenuControllerLabelPassword(),Pos.CENTER,260,200,20,200,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelTitle,language.getLine("connexionLabelTitle1"), Pos.CENTER,0,50,20,500,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelEmail,language.getLine("connexionLabelEmail"),Pos.CENTER,60,200,20,150,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelPassword,language.getLine("connexionLabelPassword"),Pos.CENTER,260,200,20,200,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setTextField(textEmail,"",Pos.CENTER,40,250,10,200,new Font(15),true,anchorPane);
         setupScene.setTextField(textPassword,"",Pos.CENTER,270,250,10,200,new Font(15),true,anchorPane);
-        setupScene.setButton(buttonLogin,language.getConnexionMenuControllerButtonLogin(),Pos.CENTER,10,380,20,480,new Font(25),true,anchorPane);
-        setupScene.setButton(buttonNewAccount,language.getConnexionMenuControllerButtonNewAccount(),Pos.CENTER,10,440,20,480,new Font(25),true,anchorPane);
-        setupScene.setButton(buttonLoginMenuReturn,language.getConnexionMenuControllerButtonLoginMenuReturn(),Pos.CENTER,10,380,20,480,new Font(25),false,anchorPane);
-        setupScene.setButton(buttonInscription,language.getConnexionMenuControllerButtonInscription(),Pos.CENTER,10,440,20,480,new Font(25),false,anchorPane);
-        setupScene.setLabel(labelNewMail,language.getLabelMail(),Pos.CENTER,100,150,20,150,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
-        setupScene.setLabel(labelNewPassword,language.getLabelPassword(),Pos.CENTER,30,200,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
-        setupScene.setLabel(labelNewUserName,language.getConnexionMenuControllerLabelNewUserName(),Pos.CENTER,30,250,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
+        setupScene.setButton(buttonLogin,language.getLine("connexionButtonLogin"),Pos.CENTER,10,380,20,480,new Font(25),true,anchorPane);
+        setupScene.setButton(buttonNewAccount,language.getLine("connexionButtonNewAccount"),Pos.CENTER,10,440,20,480,new Font(25),true,anchorPane);
+        setupScene.setButton(buttonLoginMenuReturn,language.getLine("connexionButtonLoginMenuReturn"),Pos.CENTER,10,380,20,480,new Font(25),false,anchorPane);
+        setupScene.setButton(buttonInscription,language.getLine("connexionButtonInscription"),Pos.CENTER,10,440,20,480,new Font(25),false,anchorPane);
+        setupScene.setLabel(labelNewMail,language.getLine("emailLabel"),Pos.CENTER,100,150,20,150,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
+        setupScene.setLabel(labelNewPassword,language.getLine("passwordLabel"),Pos.CENTER,30,200,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
+        setupScene.setLabel(labelNewUserName,language.getLine("connexionUserName"),Pos.CENTER,30,250,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
         setupScene.setTextField(textNewEmail,"",Pos.CENTER,250,150,20,200,new Font(15),false,anchorPane);
         setupScene.setTextField(textNewPassword,"",Pos.CENTER,250,200,20,200,new Font(15),false,anchorPane);
         setupScene.setTextField(textNewUserName,"",Pos.CENTER,250,250,20,200,new Font(15),false,anchorPane);
@@ -141,13 +141,13 @@ public class ConnexionMenuController implements InterfaceMenu{
                     switchMainMenu();
                 }
                 else {
-                    messageInterface.setMessage(labelError,language.getConnexionMenuControllerLabelErrorConnexion(),Color.RED);
+                    messageInterface.setMessage(labelError,language.getLine("connexionErrorConnexionLabel"),Color.RED);
                 }
             }
             catch (Exception e){}
 
         } else {
-            messageInterface.setMessage(labelError,language.getLabelErrorEmptyField(),Color.RED);
+            messageInterface.setMessage(labelError,language.getLine("ErrorLabelEmptyField"),Color.RED);
         }
 
     }
@@ -162,7 +162,7 @@ public class ConnexionMenuController implements InterfaceMenu{
         buttonNewAccount.setVisible(false);
         settingMenuController.exitSettingMenu();
 
-        labelTitle.setText(language.getConnexionMenuControllerLabelTitle2());
+        labelTitle.setText(language.getLine("connexionLabelTitle2"));
 
         labelNewMail.setVisible(true);
         labelNewPassword.setVisible(true);
@@ -199,12 +199,12 @@ public class ConnexionMenuController implements InterfaceMenu{
                     switchMainMenu();
                 }
                 else {
-                    messageInterface.setMessage(labelError,language.getLabelErrorMailAlreadyUsed(), Color.RED);
+                    messageInterface.setMessage(labelError,language.getLine("ErrorLabelMailAlreadyUsed"), Color.RED);
                 }
             }
             catch (Exception e){}
         } else {
-            messageInterface.setMessage(labelError,language.getLabelErrorEmptyField(), Color.RED);
+            messageInterface.setMessage(labelError,language.getLine("ErrorLabelEmptyField"), Color.RED);
         }
 
     }
@@ -218,7 +218,7 @@ public class ConnexionMenuController implements InterfaceMenu{
         buttonLogin.setVisible(true);
         buttonNewAccount.setVisible(true);
 
-        labelTitle.setText(language.getConnexionMenuControllerLabelTitle1());
+        labelTitle.setText(language.getLine("connexionLabelTitle1"));
 
         labelNewMail.setVisible(false);
         labelNewPassword.setVisible(false);
