@@ -21,7 +21,7 @@ public class BuyingMoneyMenuController {
     private final User user;
     private  Stage stage;
     private final MessageInterface messageInterface = new MessageInterface();
-    private final Language language;
+    private Language language;
 
     private final Label titleLabel = new Label();
     private final Label userNameLabel = new Label();
@@ -49,8 +49,8 @@ public class BuyingMoneyMenuController {
         stage.setScene(scene);
 
         setupScene.setLabel(titleLabel,language.getLine("shopMoneyTitleLabel"), Pos.CENTER,0,20,20,400,new Font(30), Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(userNameLabel,language.getLine("userNameLabel") + ": " + user.getUserName(),Pos.CENTER,20,150,20,150,new Font(15),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(moneyLabel,language.getLine("moneyLabel") + ": " + user.getMoney(),Pos.CENTER,200,150,20,150,new Font(15),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(userNameLabel,language.getLine("userNameLabel") + " " + user.getUserName(),Pos.CENTER,20,150,20,150,new Font(15),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(moneyLabel,language.getLine("moneyLabel") + " " + user.getMoney(),Pos.CENTER,200,150,20,150,new Font(15),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(errorLabel,"",Pos.CENTER_LEFT,100,300,20,300,new Font(15),Paint.valueOf("RED"),false,anchorPane);
 
         setupScene.setTextField(textMoney,"",Pos.CENTER,100,200,20,200,new Font(15),true,anchorPane);
@@ -88,6 +88,21 @@ public class BuyingMoneyMenuController {
         }
         else {
             messageInterface.setMessage(errorLabel,language.getLine("buyingMoneyErrorLabelFieldEmpty"),Color.RED);
+        }
+    }
+
+    public void setLanguage(Language language){ this.language = language; }
+
+    public void refresh(){
+        titleLabel.setText(language.getLine("shopMoneyTitleLabel"));
+        userNameLabel.setText(language.getLine("userNameLabel") + " " + user.getUserName());
+        moneyLabel.setText(language.getLine("moneyLabel") + " " + user.getMoney());
+        validButton.setText(language.getLine("addButton"));
+    }
+
+    public void exitBuyingMenu(){
+        if(stage != null){
+            stage.close();
         }
     }
 }

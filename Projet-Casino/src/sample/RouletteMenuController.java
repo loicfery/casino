@@ -1345,12 +1345,18 @@ public class RouletteMenuController implements InterfaceMenu{
 
     /** Méthode qui rafraichit ce menu **/
     public void refresh(){
-        setting();
-        settingMenuController.exitSettingMenu();
-        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
-        settingMenuController.setting();
-        ruleMenuController.exitRuleMenu();
-        ruleMenuController = new RuleMenuController(this,language);
-        ruleMenuController.setting();
+        labelGain.setText(language.getLine("gainLabel")+"0");
+        labelTokenUser.setText(language.getLine("tokenLabel") + ": " + user.getToken());
+        labelUserName.setText(language.getLine("playerLabel") + user.getUserName());
+        labelInformationBetToken.setText(language.getLine("informationLabel"));
+        labelLog.setText(language.getLine("logLabel"));
+        modifyBetTokenButton.setText(language.getLine("betButton"));
+        validBetTokenButton.setText(language.getLine("betButton"));
+        startingGameButton.setText(language.getLine("startingGameButton"));
+        returnMainMenuButton.setText(language.getLine("quitButton"));
+        newGameButton.setText(language.getLine("newPartyButton"));
+
+        ruleMenuController.setLanguage(language);
+        ruleMenuController.setRule();
     }
 }

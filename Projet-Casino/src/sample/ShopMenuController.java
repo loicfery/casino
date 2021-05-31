@@ -42,6 +42,7 @@ public class ShopMenuController implements InterfaceMenu{
     private final DatabaseName databaseName = new DatabaseName();
     private final MessageInterface messageInterface = new MessageInterface();
     private Language language;
+    private BuyingMoneyMenuController buyingMoneyMenuController;
 
     private List<String> listOfShopToken;
     private List<String> listOfShopMoney;
@@ -111,8 +112,8 @@ public class ShopMenuController implements InterfaceMenu{
         stage.setScene(scene);
         anchorPane = new AnchorPane();
 
-        setupScene.setLabel(titleShopTokenLabel,language.getLine("shopTokenTitleLabel")+user.getToken(),Pos.CENTER,0,200,20,400,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(titleShopMoneyLabel,language.getLine("shopMoneyTitleLabel")+user.getMoney(),Pos.CENTER,400,200,20,400,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(titleShopTokenLabel,language.getLine("shopTokenTitleLabel") + user.getToken(),Pos.CENTER,0,200,20,400,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(titleShopMoneyLabel,language.getLine("shopMoneyTitleLabel") + user.getMoney(),Pos.CENTER,400,200,20,400,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(errorLabel,"",Pos.CENTER,250,700,20,300,new Font(20),Paint.valueOf("RED"),false,anchorPane);
 
         setupScene.setButton(leftShopTokenButton,"<-",Pos.CENTER,100,750,20,50,new Font(15),true,anchorPane);
@@ -159,12 +160,12 @@ public class ShopMenuController implements InterfaceMenu{
         try {
             ResultSet resultSet = database.select(databaseName.getTableExchangeMoney(), "");
             while (resultSet.next()) {
-                listOfShopMoney.add(resultSet.getInt(2)+" $ ---> "+resultSet.getInt(3) + " " + language.getLine("tokenLabel"));
+                listOfShopMoney.add(resultSet.getInt(2) + " $ ---> " + resultSet.getInt(3) + " " + language.getLine("tokenLabel"));
             }
 
             resultSet = database.select(databaseName.getTableExchangeToken(),"");
             while (resultSet.next()){
-                listOfShopToken.add(resultSet.getInt(2)+" "+language.getLine("tokenLabel")+" ---> "+resultSet.getInt(3)+" $");
+                listOfShopToken.add(resultSet.getInt(2) + " " + language.getLine("tokenLabel") + " ---> " + resultSet.getInt(3) + " $");
             }
 
             setupShopList();
@@ -627,8 +628,10 @@ public class ShopMenuController implements InterfaceMenu{
      * Utilisable pour ajouter de l'argent pour simuler l'achat avec de l'argent réel
      **/
     private void goToBuyingMenu(){
-        settingMenuController.exitSettingMenu();
-        BuyingMoneyMenuController buyingMoneyMenuController = new BuyingMoneyMenuController(user,language,titleShopMoneyLabel);
+        if(buyingMoneyMenuController != null) {
+            buyingMoneyMenuController.exitBuyingMenu();
+        }
+        buyingMoneyMenuController = new BuyingMoneyMenuController(user,language,titleShopMoneyLabel);
         buyingMoneyMenuController.setting();
     }
 
@@ -677,9 +680,54 @@ public class ShopMenuController implements InterfaceMenu{
 
     /** Méthode qui rafraichit ce menu **/
     public void refresh(){
-        setting();
-        settingMenuController.exitSettingMenu();
-        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
-        settingMenuController.setting();
+        titleShopTokenLabel.setText(language.getLine("shopTokenTitleLabel") + user.getToken());
+        titleShopMoneyLabel.setText(language.getLine("shopMoneyTitleLabel") + user.getMoney());
+        addMoneyButton.setText(language.getLine("shopAddMoneyButton"));
+        historyShoppingButton.setText(language.getLine("shopHistoryShoppingButton"));
+        returnMainMenuButton.setText(language.getLine("quitButton"));
+
+        reset();
+        getShopList();
+
+        if(buyingMoneyMenuController != null){
+            buyingMoneyMenuController.setLanguage(language);
+            buyingMoneyMenuController.refresh();
+        }
+    }
+
+    public void reset(){
+        if(listOfButtonShopToken.size() > 0){
+            for(Button button : listOfButtonShopToken){
+                button.setVisible(false);
+                anchorPane.getChildren().remove(button);
+            }
+        }
+
+        if(listOfLabelShopToken.size() > 0){
+            for(Label label : listOfLabelShopToken){
+                label.setVisible(false);
+                anchorPane.getChildren().remove(label);
+            }
+        }
+
+        addExchangeTokenButton.setVisible(false);
+        anchorPane.getChildren().remove(addExchangeTokenButton);
+
+        if(listOfButtonShopMoney.size() > 0){
+            for(Button button : listOfButtonShopMoney){
+                button.setVisible(false);
+                anchorPane.getChildren().remove(button);
+            }
+        }
+
+        if(listOfLabelShopMoney.size() > 0){
+            for(Label label : listOfLabelShopMoney){
+                label.setVisible(false);
+                anchorPane.getChildren().remove(label);
+            }
+        }
+
+        addExchangeMoneyButton.setVisible(false);
+        anchorPane.getChildren().remove(addExchangeMoneyButton);
     }
 }

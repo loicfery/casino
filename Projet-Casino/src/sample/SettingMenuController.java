@@ -130,5 +130,13 @@ public class SettingMenuController {
 
         interfaceMenu.setLanguage(language);
         interfaceMenu.refresh();
+        refresh();
+    }
+
+    private void refresh(){
+        titleLabel.setText(language.getLine("settingTitleLabel"));
+        soundVolumeTitleLabel.setText(language.getLine("settingSoundVolumeTitleLabel"));
+        backgroundAnimationLabel.setText(language.getLine("settingBackgroundAnimationTitleLabel"));
+        languageLabel.setText(language.getLine("settingLanguageTitleLabel"));
     }
 }

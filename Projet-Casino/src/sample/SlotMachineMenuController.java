@@ -435,13 +435,15 @@ public class SlotMachineMenuController implements InterfaceMenu{
 
     /** Méthode pour rafraichir ce menu **/
     public void refresh(){
-        setting();
-        settingMenuController.exitSettingMenu();
-        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
-        settingMenuController.setting();
-        ruleMenuController.exitRuleMenu();
-        ruleMenuController = new RuleMenuController(this,language);
-        ruleMenuController.setting();
+        startingGameButton.setText(language.getLine("startingGameButton"));
+        labelGain.setText(language.getLine("gainLabel") + " 0");
+        labelToken.setText(language.getLine("tokenLabel") + ": " + user.getToken());
+        labelUserName.setText(language.getLine("playerLabel") + " " + user.getUserName());
+        returnMainMenuButton.setText(language.getLine("quitButton"));
+        labelLog.setText(language.getLine("logLabel"));
+
+        ruleMenuController.setLanguage(language);
+        ruleMenuController.setRule();
     }
 }
 

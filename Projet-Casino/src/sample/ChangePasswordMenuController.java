@@ -22,20 +22,20 @@ public class ChangePasswordMenuController {
     private Stage stage;
     private final SetupScene setupScene = new SetupScene();
     private Language language;
-    private User user;
-    private Database database;
+    private final User user;
+    private final Database database;
     private final DatabaseName databaseName = new DatabaseName();
     private final MessageInterface messageInterface = new MessageInterface();
 
-    private Label titleLabel = new Label();
-    private Label oldPasswordLabel = new Label();
-    private Label newPasswordLabel = new Label();
-    private Label newPasswordConfirmationLabel = new Label();
-    private Label errorLabel = new Label();
+    private final Label titleLabel = new Label();
+    private final Label oldPasswordLabel = new Label();
+    private final Label newPasswordLabel = new Label();
+    private final Label newPasswordConfirmationLabel = new Label();
+    private final Label errorLabel = new Label();
 
-    private PasswordField oldPasswordText = new PasswordField();
-    private PasswordField newPasswordText = new PasswordField();
-    private PasswordField newPasswordConfirmationText = new PasswordField();
+    private final PasswordField oldPasswordText = new PasswordField();
+    private final PasswordField newPasswordText = new PasswordField();
+    private final PasswordField newPasswordConfirmationText = new PasswordField();
 
     private Button validButton = new Button();
 
@@ -112,5 +112,16 @@ public class ChangePasswordMenuController {
         if(stage != null) {
             stage.close();
         }
+    }
+
+    /** Méthode qui modifie la langue **/
+    public void setLanguage(Language language){ this.language = language; }
+
+    public void refresh(){
+        titleLabel.setText(language.getLine("changePasswordTitleLabel"));
+        oldPasswordLabel.setText(language.getLine("changePasswordOldPassword"));
+        newPasswordLabel.setText(language.getLine("changePasswordNewPassword"));
+        newPasswordConfirmationLabel.setText(language.getLine("changePasswordNewPasswordConfirmation"));
+        validButton.setText(language.getLine("changePasswordValidButton"));
     }
 }

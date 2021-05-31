@@ -175,6 +175,7 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
     private void getAllInformation(String conditionToken, String conditionMoney){
         listOfInformationToken = new ArrayList<>();
         listOfInformationMoney = new ArrayList<>();
+        textInformation.setText("");
 
         try {
             ResultSet resultSetToken = database.select(databaseName.getTableHistoryExchangeToken(), conditionToken);
@@ -336,11 +337,25 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
 
     /** Méthode qui rafraichit ce menu **/
     public void refresh(){
-        setting();
-        settingMenuController.exitSettingMenu();
-        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
-        settingMenuController.setting();
+        labelTitle.setText(language.getLine("historyShoppingTitleLabel1"));
+        returnShopMenuButton.setText(language.getLine("quitButton"));
+        exchangeTokenButton.setText(language.getLine("shopTokenTitleLabel"));
+        exchangeMoneyButton.setText(language.getLine("shopMoneyTitleLabel"));
+        searchUserButton.setText(language.getLine("historySearchUserButton"));
+
+        if(ADMIN){
+
+            getAllInformation("","");
+        }
+        else {
+            String conditionToken = databaseName.getTableHistoryExchangeTokenColumnMailUser() + " = \"" + user.getEmail() + "\"";
+            String conditionMoney = databaseName.getTableHistoryExchangeMoneyColumnMailUser() + " = \"" + user.getEmail() + "\"";
+            getAllInformation(conditionToken,conditionMoney);
+        }
+
+        printInformation();
     }
+
 
     /**
      * Méthode qui affiche le menu des paramètres

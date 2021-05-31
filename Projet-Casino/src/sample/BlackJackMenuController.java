@@ -48,8 +48,8 @@ public class BlackJackMenuController implements InterfaceMenu{
     private final SetupScene setupScene = new SetupScene();
     private final User user;
     private final LogMenuController logMenuController;
-    private SettingMenuController settingMenuController;
-    private RuleMenuController ruleMenuController;
+    private final SettingMenuController settingMenuController;
+    private final RuleMenuController ruleMenuController;
     private final Database database;
     private final DatabaseName databaseName = new DatabaseName();
     private final MessageInterface messageInterface = new MessageInterface();
@@ -856,12 +856,22 @@ public class BlackJackMenuController implements InterfaceMenu{
 
     /** Méthode qui rafraichit ce menu **/
     public void refresh(){
-        setting();
-        settingMenuController.exitSettingMenu();
-        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
-        settingMenuController.setting();
-        ruleMenuController.exitRuleMenu();
-        ruleMenuController = new RuleMenuController(this,language);
-        ruleMenuController.setting();
+        labelToken.setText(language.getLine("tokenLabel") + ": " +user.getToken());
+        labelGain.setText(language.getLine("gainLabel") + " 0");
+        labelUserName.setText(language.getLine("playerLabel") + " " + user.getUserName());
+        textBetUser.setText(language.getLine("blackJackBetText"));
+        returnMainMenuButton.setText(language.getLine("quitButton"));
+        newPartyButton.setText(language.getLine("newPartyButton"));
+        validBetButton.setText(language.getLine("betButton"));
+        actionSurrenderButton.setText(language.getLine("blackJackActionSurrenderButton"));
+        actionHitButton.setText(language.getLine("blackJackActionHitButton"));
+        actionDoubleButton.setText(language.getLine("blackJackActionDoubleButton"));
+        actionStandButton.setText(language.getLine("blackJackActionStandButton"));
+        actionInsuranceButton.setText(language.getLine("blackJackActionInsuranceButton"));
+        actionSplitButton.setText(language.getLine("blackJackActionSplitButton"));
+        labelLog.setText(language.getLine("logLabel"));
+
+        ruleMenuController.setLanguage(language);
+        ruleMenuController.setRule();
     }
 }

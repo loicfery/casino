@@ -166,9 +166,8 @@ public class MainMenuController implements InterfaceMenu{
 
     /** Méthode qui rafraichit ce menu **/
     public void refresh(){
-        setting();
-        settingMenuController.exitSettingMenu();
-        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
-        settingMenuController.setting();
+        logoutButton.setText(language.getLine("mainMenuLogoutButton"));
+        informationMenuButton.setText(language.getLine("informationLabel"));
+        historyGamePlayedButton.setText(language.getLine("mainMennuHistoryGamePlayedButton"));
     }
 }

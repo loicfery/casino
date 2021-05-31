@@ -21,7 +21,7 @@ public class RuleMenuController {
     private final SetupScene setupScene = new SetupScene();
     private Stage stage;
     private InterfaceMenu interfaceMenu;
-    private final Language language;
+    private Language language;
 
     private final Label labelTitle = new Label();
     private final TextArea textRule = new TextArea();
@@ -48,7 +48,6 @@ public class RuleMenuController {
         setupScene.setLabel(labelTitle,labelTitle.getText(), Pos.CENTER,0,25,20,widthMax,new Font(30), Paint.valueOf("BLACK"),true,anchorPaneLog);
         setupScene.setTextArea(textRule,0,100,(heightMax - 100),widthMax,false,true,anchorPaneLog);
 
-
         rootLog.getChildren().add(anchorPaneLog);
         stage.show();
     }
@@ -56,8 +55,9 @@ public class RuleMenuController {
     /**
      * Méthode pour écrire les règles du jeux dans une zone de texte
      **/
-    private void setRule() {
+    public void setRule() {
         File fileRule = null;
+        textRule.setText("");
 
         try {
             if(interfaceMenu instanceof BlackJackMenuController) {
@@ -102,4 +102,6 @@ public class RuleMenuController {
             stage.close();
         }
     }
+
+    public void setLanguage(Language language){ this.language = language; }
 }

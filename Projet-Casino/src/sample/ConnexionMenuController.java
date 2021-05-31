@@ -44,7 +44,8 @@ public class ConnexionMenuController implements InterfaceMenu{
     private double soundVolume;
     private boolean backgroundAnimation;
 
-    private final Label labelTitle = new Label();
+    private final Label labelTitle1 = new Label();
+    private final Label labelTitle2 = new Label();
     private final Label labelEmail = new Label();
     private final Label labelPassword = new Label();
     private final Label labelNewMail = new Label();
@@ -88,7 +89,8 @@ public class ConnexionMenuController implements InterfaceMenu{
         stage.setScene(scene);
         anchorPane = new AnchorPane();
 
-        setupScene.setLabel(labelTitle,language.getLine("connexionLabelTitle1"), Pos.CENTER,0,50,20,500,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelTitle1,language.getLine("connexionLabelTitle1"), Pos.CENTER,0,50,20,500,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelTitle2,language.getLine("connexionLabelTitle2"), Pos.CENTER,0,50,20,500,new Font(30),Paint.valueOf("BLACK"),false,anchorPane);
         setupScene.setLabel(labelEmail,language.getLine("connexionLabelEmail"),Pos.CENTER,60,200,20,150,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(labelPassword,language.getLine("connexionLabelPassword"),Pos.CENTER,260,200,20,200,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setTextField(textEmail,"",Pos.CENTER,40,250,10,200,new Font(15),true,anchorPane);
@@ -128,7 +130,8 @@ public class ConnexionMenuController implements InterfaceMenu{
             try {
                 ResultSet resultSet = database.select(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser()+" = '" + textEmail.getText() + "' and "+ databaseName.getTableUserColumnPassword() +" = MD5('" + textPassword.getText() + "')");
                 if (resultSet.next()) {
-                    labelTitle.setVisible(false);
+                    labelTitle1.setVisible(false);
+                    labelTitle2.setVisible(false);
                     labelEmail.setVisible(false);
                     textEmail.setVisible(false);
                     labelPassword.setVisible(false);
@@ -160,10 +163,9 @@ public class ConnexionMenuController implements InterfaceMenu{
         textPassword.setVisible(false);
         buttonLogin.setVisible(false);
         buttonNewAccount.setVisible(false);
-        settingMenuController.exitSettingMenu();
+        labelTitle1.setVisible(false);
 
-        labelTitle.setText(language.getLine("connexionLabelTitle2"));
-
+        labelTitle2.setVisible(true);
         labelNewMail.setVisible(true);
         labelNewPassword.setVisible(true);
         labelNewUserName.setVisible(true);
@@ -184,16 +186,6 @@ public class ConnexionMenuController implements InterfaceMenu{
                 ResultSet resultSet = database.select(databaseName.getTableUser(),databaseName.getTableUserColumnMailUser()+" = '"+textNewEmail.getText()+"'");
 
                 if(!resultSet.next()) {
-                    labelNewMail.setVisible(false);
-                    labelNewPassword.setVisible(false);
-                    labelNewUserName.setVisible(false);
-                    textNewEmail.setVisible(false);
-                    textNewPassword.setVisible(false);
-                    textNewUserName.setVisible(false);
-                    buttonInscription.setVisible(false);
-                    buttonLoginMenuReturn.setVisible(false);
-                    settingMenuController.exitSettingMenu();
-
                     database.insert(databaseName.getTableUser(), "'" + textNewUserName.getText() + "', '" + textNewEmail.getText() + "',MD5('" + textNewPassword.getText() + "'),'USER',100,0", databaseName.getTableUserColumnUserName() + "," + databaseName.getTableUserColumnMailUser() + "," + databaseName.getTableUserColumnPassword() + "," + databaseName.getTableUserColumnRank() + "," + databaseName.getTableUserColumnMoney() + "," + databaseName.getTableUserColumnToken());
                     setUser(new User(textNewUserName.getText(), textNewEmail.getText(), "USER", 100, 0, database));
                     switchMainMenu();
@@ -217,9 +209,9 @@ public class ConnexionMenuController implements InterfaceMenu{
         textPassword.setVisible(true);
         buttonLogin.setVisible(true);
         buttonNewAccount.setVisible(true);
+        labelTitle1.setVisible(true);
 
-        labelTitle.setText(language.getLine("connexionLabelTitle1"));
-
+        labelTitle2.setVisible(false);
         labelNewMail.setVisible(false);
         labelNewPassword.setVisible(false);
         labelNewUserName.setVisible(false);
@@ -228,7 +220,6 @@ public class ConnexionMenuController implements InterfaceMenu{
         textNewUserName.setVisible(false);
         buttonInscription.setVisible(false);
         buttonLoginMenuReturn.setVisible(false);
-        settingMenuController.exitSettingMenu();
     }
 
     private void setUser(User user){
@@ -237,6 +228,7 @@ public class ConnexionMenuController implements InterfaceMenu{
 
     /** Méthode qui charge le menu principal **/
     private void switchMainMenu(){
+        settingMenuController.exitSettingMenu();
         MainMenuController mainMenuController = new MainMenuController(stage,user, database,language, soundVolume,backgroundAnimation);
         mainMenuController.setting();
     }
@@ -264,9 +256,16 @@ public class ConnexionMenuController implements InterfaceMenu{
 
     /** Méthode qui rafraichit ce menu **/
     public void refresh(){
-        setting();
-        settingMenuController.exitSettingMenu();
-        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
-        settingMenuController.setting();
+        labelTitle1.setText(language.getLine("connexionLabelTitle1"));
+        labelTitle2.setText(language.getLine("connexionLabelTitle2"));
+        labelEmail.setText(language.getLine("connexionLabelEmail"));
+        labelPassword.setText(language.getLine("connexionLabelPassword"));
+        buttonLogin.setText(language.getLine("connexionButtonLogin"));
+        buttonNewAccount.setText(language.getLine("connexionButtonNewAccount"));
+        buttonLoginMenuReturn.setText(language.getLine("connexionButtonLoginMenuReturn"));
+        buttonInscription.setText(language.getLine("connexionButtonInscription"));
+        labelNewMail.setText(language.getLine("emailLabel"));
+        labelNewPassword.setText(language.getLine("passwordLabel"));
+        labelNewUserName.setText(language.getLine("connexionUserName"));
     }
 }

@@ -179,7 +179,9 @@ public class InformationMenuController implements InterfaceMenu{
     }
 
     private void changePassword(){
-        changePasswordMenuController.exitChangePasswordMenu();
+        if(changePasswordMenuController != null) {
+            changePasswordMenuController.exitChangePasswordMenu();
+        }
         changePasswordMenuController = new ChangePasswordMenuController(user,database,language);
         changePasswordMenuController.setting();
     }
@@ -212,9 +214,19 @@ public class InformationMenuController implements InterfaceMenu{
 
     /** Méthode qui rafraichit ce menu **/
     public void refresh(){
-        setting();
-        settingMenuController.exitSettingMenu();
-        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
-        settingMenuController.setting();
+        labelTitle.setText(language.getLine("informationLabel"));
+        labelEmail.setText(language.getLine("emailLabel"));
+        labelUserName.setText(language.getLine("userNameLabel"));
+        labelToken.setText(language.getLine("tokenLabel") + ": " + user.getToken());
+        labelMoney.setText(language.getLine("moneyLabel") + " " + user.getMoney());
+        returnMainMenuButton.setText(language.getLine("quitButton"));
+        changeEmailButton.setText(language.getLine("informationChangeEmailButton"));
+        changeUserNameButton.setText(language.getLine("informationChangeUserNameButton"));
+        changePasswordButton.setText(language.getLine("informationChangePasswordButton"));
+
+        if(changePasswordMenuController != null){
+            changePasswordMenuController.setLanguage(language);
+            changePasswordMenuController.refresh();
+        }
     }
 }

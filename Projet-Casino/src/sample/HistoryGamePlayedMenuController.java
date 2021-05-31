@@ -49,7 +49,9 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
 
     private final Circle circleSetting = new Circle();
 
-    private final Label titleLabel = new Label();
+    private final Label blackJackTitleLabel = new Label();
+    private final Label slotMachineTitleLabel = new Label();
+    private final Label rouletteTitleLabel = new Label();
 
     private final TextArea textHistory = new TextArea();
 
@@ -96,7 +98,9 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         stage.setScene(scene);
         anchorPane = new AnchorPane();
 
-        setupScene.setLabel(titleLabel,language.getLine("historyGamePlayedBlackJackTitleLabel"),Pos.CENTER,0,20,20,600,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(blackJackTitleLabel,language.getLine("historyGamePlayedBlackJackTitleLabel"),Pos.CENTER,0,20,20,600,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(slotMachineTitleLabel,language.getLine("historyGamePlayedSlotMachineTitleLabel"),Pos.CENTER,0,20,20,600,new Font(30),Paint.valueOf("BLACK"),false,anchorPane);
+        setupScene.setLabel(rouletteTitleLabel,language.getLine("historyGamePlayedRouletteTitleLabel"),Pos.CENTER,0,20,20,600,new Font(30),Paint.valueOf("BLACK"),false,anchorPane);
 
         setupScene.setTextArea(textHistory,200,150,530,380,false,true,anchorPane);
 
@@ -121,15 +125,18 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         gameSlotMachineButton.setOnMouseClicked((event)-> setGameSlotMachine());
         searchUserButton.setOnMouseClicked((event)-> searchUser());
 
-        getAllInformation("");
-        currentList = listOfGameBlackJack;
-        currentGame = "blackJack";
-        printInformation(currentList);
-
         if(ADMIN){
             textSearchUser.setVisible(true);
             searchUserButton.setVisible(true);
+            getAllInformation("");
         }
+        else {
+            getAllInformation(databaseName.getTableUserColumnMailUser() + " = '" + user.getEmail() + "'");
+        }
+
+        currentList = listOfGameBlackJack;
+        currentGame = "blackJack";
+        printInformation(currentList);
 
         root.getChildren().add(anchorPane);
         stage.show();
@@ -272,7 +279,9 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
      * Méthode qui affiche l'historique pour le black jack
      **/
     private void setGameBlackJack(){
-        titleLabel.setText(language.getLine("historyGamePlayedBlackJackTitleLabel"));
+        slotMachineTitleLabel.setVisible(false);
+        rouletteTitleLabel.setVisible(false);
+        blackJackTitleLabel.setVisible(true);
         currentList = listOfGameBlackJack;
         indexList = 0;
         currentGame = "blackJack";
@@ -283,7 +292,9 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
      * Méthode qui affiche l'historique pour la machine à sous
      **/
     private void setGameSlotMachine(){
-        titleLabel.setText(language.getLine("historyGamePlayedSlotMachineTitleLabel"));
+        blackJackTitleLabel.setVisible(false);
+        rouletteTitleLabel.setVisible(false);
+        slotMachineTitleLabel.setVisible(true);
         currentList = listOfGameSlotMachine;
         indexList = 0;
         currentGame = "slotMachine";
@@ -294,7 +305,9 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
      * Méthode qui affiche l'historique pour la roulette
      **/
     private void setGameRoulette(){
-        titleLabel.setText(language.getLine("historyGamePlayedRouletteTitleLabel"));
+        slotMachineTitleLabel.setVisible(false);
+        blackJackTitleLabel.setVisible(false);
+        rouletteTitleLabel.setVisible(true);
         currentList = listOfGameRoulette;
         indexList = 0;
         currentGame = "roulette";
@@ -339,9 +352,33 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
 
     /** Méthode qui rafraichit ce menu **/
     public void refresh(){
-        setting();
-        settingMenuController.exitSettingMenu();
-        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
-        settingMenuController.setting();
+        blackJackTitleLabel.setText(language.getLine("historyGamePlayedBlackJackTitleLabel"));
+        slotMachineTitleLabel.setText(language.getLine("historyGamePlayedSlotMachineTitleLabel"));
+        rouletteTitleLabel.setText(language.getLine("historyGamePlayedRouletteTitleLabel"));
+        gameBlackJackButton.setText(language.getLine("gameBlackJackButton"));
+        gameSlotMachineButton.setText(language.getLine("gameSlotMachineButton"));
+        gameRouletteButton.setText(language.getLine("gameRouletteButton"));
+        returnShopMenuButton.setText(language.getLine("quitButton"));
+        searchUserButton.setText(language.getLine("historySearchUserButton"));
+
+        if(ADMIN){
+            getAllInformation("");
+        }
+        else {
+            getAllInformation(databaseName.getTableUserColumnMailUser() + " = '" + user.getEmail() + "'");
+        }
+
+        switch(currentGame){
+            case "blackJack" :
+                currentList = listOfGameBlackJack;
+                break;
+            case "roulette":
+                currentList = listOfGameRoulette;
+                break;
+            case "slotMachine":
+                currentList = listOfGameSlotMachine;
+        }
+
+        printInformation(currentList);
     }
 }
