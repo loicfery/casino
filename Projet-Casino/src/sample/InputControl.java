@@ -15,7 +15,7 @@ public class InputControl {
      * Méthode qui vérifie si texte correspond au format d'un nom d'utilisateur
      **/
     public static boolean isUsername(String text){
-        if(text.matches("^[A-Za-z0-9]+$+")){
+        if(text.matches("^[A-Za-z0-9]+$+") && text.length() >= 5){
             return true;
         }
         return false;
@@ -25,15 +25,25 @@ public class InputControl {
      * Méthode qui vérifie si texte correspond au format d'un email
      **/
     public static boolean validEmail(final String text){
-        matcher = patternEmail.matcher(text);
-        return matcher.matches();
+        if(text.length() >= 5) {
+            matcher = patternEmail.matcher(text);
+            return matcher.matches();
+        }
+        else{
+            return false;
+        }
     }
 
     /**
      * Méthode qui vérifie si texte correspond au format d'un mot de passe
      **/
     public static boolean validPassword(final String text){
-        matcher = patternPassword.matcher(text);
-        return matcher.matches();
+        if(text.length() >= 5) {
+            matcher = patternPassword.matcher(text);
+            return matcher.matches();
+        }
+        else {
+            return false;
+        }
     }
 }
