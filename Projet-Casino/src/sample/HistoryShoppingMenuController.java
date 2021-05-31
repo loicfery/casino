@@ -59,7 +59,7 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
     private boolean backgroundAnimation;
     private List<String> listOfInformationToken;
     private List<String> listOfInformationMoney;
-    private int indexInformation;
+    private int indexInformation = 0;
     private boolean switchExchange;
     private boolean ADMIN = false;
 
@@ -140,13 +140,14 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
      * Utilisable seulement par un ADMIN
      * **/
     private void searchUser(){
+        indexInformation = 0;
         textInformation.setText("");
         listOfInformationToken = new ArrayList<>();
         listOfInformationMoney = new ArrayList<>();
 
         if(!textSearchUser.getText().isEmpty()) {
-            String conditionToken = databaseName.getTableHistoryExchangeTokenColumnMailUser() + " = \"%" + textSearchUser.getText() + "%\"";
-            String conditionMoney = databaseName.getTableHistoryExchangeMoneyColumnMailUser() + " = \"%" + textSearchUser.getText() + "%\"";
+            String conditionToken = databaseName.getTableHistoryExchangeTokenColumnMailUser() + " like \"%" + textSearchUser.getText() + "%\"";
+            String conditionMoney = databaseName.getTableHistoryExchangeMoneyColumnMailUser() + " like \"%" + textSearchUser.getText() + "%\"";
             getAllInformation(conditionToken, conditionMoney);
         }
         else {
