@@ -54,17 +54,17 @@ public class ChangePasswordMenuController {
         Scene sceneSetting = new Scene(root, 400, 500);
         stage.setScene(sceneSetting);
 
-        setupScene.setLabel(titleLabel,"Changement de mot de passe",Pos.CENTER,0,15,20,400,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(oldPasswordLabel,"Mot de passe actuel", Pos.CENTER,0,100,20,400,new Font(15), Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(newPasswordLabel,"Nouveau mot de passe",Pos.CENTER,0,200,20,400,new Font(15),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(newPasswordConfirmationLabel,"Confirmation nouveau mot de passe",Pos.CENTER,0,300,20,400,new Font(15),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(titleLabel,language.getLine("changePasswordTitleLabel"),Pos.CENTER,0,15,20,400,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(oldPasswordLabel,language.getLine("changePasswordOldPassword"), Pos.CENTER,0,100,20,400,new Font(15), Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(newPasswordLabel,language.getLine("changePasswordNewPassword"),Pos.CENTER,0,200,20,400,new Font(15),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(newPasswordConfirmationLabel,language.getLine("changePasswordNewPasswordConfirmation"),Pos.CENTER,0,300,20,400,new Font(15),Paint.valueOf("BLACK"),true,anchorPane);
         setupScene.setLabel(errorLabel,"",Pos.CENTER,0,400,20,400,new Font(15),Paint.valueOf("RED"),false,anchorPane);
 
         setupScene.setTextField(oldPasswordText,"",Pos.CENTER,100,150,20,200,new Font(10),true,anchorPane);
         setupScene.setTextField(newPasswordText,"",Pos.CENTER,100,250,20,200,new Font(10),true,anchorPane);
         setupScene.setTextField(newPasswordConfirmationText,"",Pos.CENTER,100,350,20,200,new Font(10),true,anchorPane);
 
-        setupScene.setButton(validButton,"Modifier",Pos.CENTER,15,460,20,370,new Font(15),true,anchorPane);
+        setupScene.setButton(validButton,language.getLine("changePasswordValidButton"),Pos.CENTER,15,460,20,370,new Font(15),true,anchorPane);
 
         validButton.setOnMouseClicked((event)-> editPassword());
 
@@ -79,25 +79,25 @@ public class ChangePasswordMenuController {
                 resultSet.next();
 
                 if(!oldPasswordText.getText().equals(resultSet.getString(4))){
-                    messageInterface.setMessage(errorLabel,"Le mot de passe est incorrect",Color.RED);
+                    messageInterface.setMessage(errorLabel,language.getLine("changePasswordErrorLabelWrongPassword"),Color.RED);
                     return;
                 }
                 if(!newPasswordText.getText().equals(newPasswordConfirmationText.getText())){
-                    messageInterface.setMessage(errorLabel,"Les mots de passe ne correspondent pas",Color.RED);
+                    messageInterface.setMessage(errorLabel,language.getLine("changePasswordErrorLabelNotSamePassword"),Color.RED);
                     return;
                 }
                 else {
                     if(resultSet.getString(4).equals(newPasswordText.getText())){
-                        messageInterface.setMessage(errorLabel,"Le mot de passe est le même",Color.RED);
+                        messageInterface.setMessage(errorLabel,language.getLine("changePasswordErrorLabelSamePassword"),Color.RED);
                         return;
                     }
                     else {
                         if(inputControl.validPassword(newPasswordText.getText())) {
                             database.update(databaseName.getTableUser(), databaseName.getTableUserColumnPassword(), "\"" + newPasswordText.getText() + "\"", databaseName.getTableUserColumnMailUser() + " = \"" + user.getEmail() + "\"");
-                            messageInterface.setMessage(errorLabel, "Mot de passe Modifié", Color.GREEN);
+                            messageInterface.setMessage(errorLabel, language.getLine("changePasswordErrorLabelPasswordEdit"), Color.GREEN);
                         }
                         else {
-                            messageInterface.setMessage(errorLabel,"Le format ne correspond pas",Color.RED);
+                            messageInterface.setMessage(errorLabel,language.getLine("changePasswordErrorLabelWrongFormat"),Color.RED);
                         }
                     }
                 }
@@ -109,7 +109,7 @@ public class ChangePasswordMenuController {
             }
         }
         else{
-            messageInterface.setMessage(errorLabel,"Un ou plusieurs champs sont vide", Color.RED);
+            messageInterface.setMessage(errorLabel,language.getLine("ErrorLabelEmptyField"), Color.RED);
         }
     }
 

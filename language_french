@@ -285,3 +285,33 @@ Roulette
 
 addButton
 Ajouter
+
+changePasswordTitleLabel
+Changement de mot de passe
+
+changePasswordOldPassword
+Mot de passe actuel
+
+changePasswordNewPassword
+Nouveau mot de passe
+
+changePasswordNewPasswordConfirmation
+Confirmation nouveau mot de passe
+
+changePasswordValidButton
+Modifier
+
+changePasswordErrorLabelWrongPassword
+Le mot de passe est incorrect
+
+changePasswordErrorLabelNotSamePassword
+Les mots de passe ne correspondent pas
+
+changePasswordErrorLabelSamePassword
+Le mot de passe n'a pas changé
+
+changePasswordErrorLabelPasswordEdit
+Mot de passe Modifié
+
+changePasswordErrorLabelWrongFormat
+Le format ne correspond pas
