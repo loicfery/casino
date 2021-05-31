@@ -126,7 +126,7 @@ public class ConnexionMenuController implements InterfaceMenu{
     private void goToMainMenu(){
         if (!textEmail.getText().isEmpty() && !textPassword.getText().isEmpty()) {
             try {
-                ResultSet resultSet = database.select(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser()+" = '" + textEmail.getText() + "' and "+ databaseName.getTableUserColumnPassword() +" = '" + textPassword.getText() + "'");
+                ResultSet resultSet = database.select(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser()+" = '" + textEmail.getText() + "' and "+ databaseName.getTableUserColumnPassword() +" = MD5('" + textPassword.getText() + "')");
                 if (resultSet.next()) {
                     labelTitle.setVisible(false);
                     labelEmail.setVisible(false);
@@ -181,7 +181,7 @@ public class ConnexionMenuController implements InterfaceMenu{
     private void newAccountGoToMainMenu(){
         if (!textNewEmail.getText().isEmpty() && !textNewPassword.getText().isEmpty() && !textNewUserName.getText().isEmpty()) {
             try {
-                ResultSet resultSet = database.select(databaseName.getTableUser(),databaseName.getTableUserColumnMailUser()+" = \""+textNewEmail.getText()+"\"");
+                ResultSet resultSet = database.select(databaseName.getTableUser(),databaseName.getTableUserColumnMailUser()+" = '"+textNewEmail.getText()+"'");
 
                 if(!resultSet.next()) {
                     labelNewMail.setVisible(false);
@@ -194,7 +194,7 @@ public class ConnexionMenuController implements InterfaceMenu{
                     buttonLoginMenuReturn.setVisible(false);
                     settingMenuController.exitSettingMenu();
 
-                    database.insert(databaseName.getTableUser(), "\"" + textNewUserName.getText() + "\", \"" + textNewEmail.getText() + "\",\"" + textNewPassword.getText() + "\",\"USER\",100,0", databaseName.getTableUserColumnUserName() + "," + databaseName.getTableUserColumnMailUser() + "," + databaseName.getTableUserColumnPassword() + "," + databaseName.getTableUserColumnRank() + "," + databaseName.getTableUserColumnMoney() + "," + databaseName.getTableUserColumnToken());
+                    database.insert(databaseName.getTableUser(), "'" + textNewUserName.getText() + "', '" + textNewEmail.getText() + "',MD5('" + textNewPassword.getText() + "'),'USER',100,0", databaseName.getTableUserColumnUserName() + "," + databaseName.getTableUserColumnMailUser() + "," + databaseName.getTableUserColumnPassword() + "," + databaseName.getTableUserColumnRank() + "," + databaseName.getTableUserColumnMoney() + "," + databaseName.getTableUserColumnToken());
                     setUser(new User(textNewUserName.getText(), textNewEmail.getText(), "USER", 100, 0, database));
                     switchMainMenu();
                 }

@@ -26,7 +26,6 @@ public class ChangePasswordMenuController {
     private Database database;
     private final DatabaseName databaseName = new DatabaseName();
     private final MessageInterface messageInterface = new MessageInterface();
-    private final InputControl inputControl = new InputControl();
 
     private Label titleLabel = new Label();
     private Label oldPasswordLabel = new Label();
@@ -75,33 +74,29 @@ public class ChangePasswordMenuController {
     private void editPassword(){
         if(!oldPasswordText.getText().isEmpty() && !newPasswordText.getText().isEmpty() && !newPasswordConfirmationText.getText().isEmpty()){
             try {
-                ResultSet resultSet = database.select(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser() + " = \"" + user.getEmail() + "\"");
-                resultSet.next();
+                ResultSet resultSet = database.select(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser() + " = '" + user.getEmail() + "'," + databaseName.getTableUserColumnPassword() + " = MD5('" + oldPasswordText.getText() + "')");
 
-                if(!oldPasswordText.getText().equals(resultSet.getString(4))){
+                if(!resultSet.next()){
                     messageInterface.setMessage(errorLabel,language.getLine("changePasswordErrorLabelWrongPassword"),Color.RED);
-                    return;
-                }
-                if(!newPasswordText.getText().equals(newPasswordConfirmationText.getText())){
-                    messageInterface.setMessage(errorLabel,language.getLine("changePasswordErrorLabelNotSamePassword"),Color.RED);
-                    return;
                 }
                 else {
-                    if(resultSet.getString(4).equals(newPasswordText.getText())){
-                        messageInterface.setMessage(errorLabel,language.getLine("changePasswordErrorLabelSamePassword"),Color.RED);
-                        return;
-                    }
-                    else {
-                        if(inputControl.validPassword(newPasswordText.getText())) {
-                            database.update(databaseName.getTableUser(), databaseName.getTableUserColumnPassword(), "\"" + newPasswordText.getText() + "\"", databaseName.getTableUserColumnMailUser() + " = \"" + user.getEmail() + "\"");
-                            messageInterface.setMessage(errorLabel, language.getLine("changePasswordErrorLabelPasswordEdit"), Color.GREEN);
+                    if (!newPasswordText.getText().equals(newPasswordConfirmationText.getText())) {
+                        messageInterface.setMessage(errorLabel, language.getLine("changePasswordErrorLabelNotSamePassword"), Color.RED);
+                    } else {
+                        if (oldPasswordText.getText().equals(newPasswordText.getText())) {
+                            messageInterface.setMessage(errorLabel, language.getLine("changePasswordErrorLabelSamePassword"), Color.RED);
                         }
                         else {
-                            messageInterface.setMessage(errorLabel,language.getLine("changePasswordErrorLabelWrongFormat"),Color.RED);
+                            if (InputControl.validPassword(newPasswordText.getText())) {
+                                database.update(databaseName.getTableUser(), databaseName.getTableUserColumnPassword(), "MD5('" + newPasswordText.getText() + "')", databaseName.getTableUserColumnMailUser() + " = '" + user.getEmail() + "'");
+                                messageInterface.setMessage(errorLabel, language.getLine("changePasswordErrorLabelPasswordEdit"), Color.GREEN);
+                            }
+                            else {
+                                messageInterface.setMessage(errorLabel, language.getLine("changePasswordErrorLabelWrongFormat"), Color.RED);
+                            }
                         }
                     }
                 }
-
             }
             catch (Exception exception){
                 System.err.println("Erreur editPassword");

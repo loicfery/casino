@@ -131,11 +131,11 @@ public class InformationMenuController implements InterfaceMenu{
             if(!textEmail.getText().equals(user.getEmail())) {
                 if (InputControl.validEmail(textEmail.getText())) {
                     try {
-                        ResultSet resultSet = database.select(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser() + " = \"" + textEmail.getText() + "\"");
+                        ResultSet resultSet = database.select(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser() + " = '" + textEmail.getText() + "'");
                         if (resultSet.next()) {
                             messageInterface.setMessage(labelError, language.getLine("ErrorLabelMailAlreadyUsed"), Color.RED);
                         } else {
-                            database.update(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser(), "\"" + textEmail.getText() + "\"", databaseName.getTableUserColumnMailUser() + " = \"" + user.getEmail() + "\"");
+                            database.update(databaseName.getTableUser(), databaseName.getTableUserColumnMailUser(), "'" + textEmail.getText() + "'", databaseName.getTableUserColumnMailUser() + " = '" + user.getEmail() + "'");
                             user.setEmail(textEmail.getText());
                             messageInterface.setMessage(labelError, language.getLine("informationErrorLabelChangeEmailValid"), Color.GREEN);
                         }
@@ -162,7 +162,7 @@ public class InformationMenuController implements InterfaceMenu{
         if(!textUserName.getText().isEmpty()){
             if(!textUserName.getText().equals(user.getUserName())) {
                 if (InputControl.isUsername(textUserName.getText()) && textUserName.getText().length() > 5) {
-                    database.update(databaseName.getTableUser(), databaseName.getTableUserColumnUserName(), "\"" + textUserName.getText() + "\"", databaseName.getTableUserColumnMailUser() + " = \"" + user.getEmail() + "\"");
+                    database.update(databaseName.getTableUser(), databaseName.getTableUserColumnUserName(), "'" + textUserName.getText() + "'", databaseName.getTableUserColumnMailUser() + " = '" + user.getEmail() + "'");
                     user.setUserName(textUserName.getText());
                     messageInterface.setMessage(labelError, language.getLine("informationErrorLabelChangeUserNameValid"), Color.GREEN);
                 } else {
