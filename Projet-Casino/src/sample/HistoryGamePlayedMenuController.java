@@ -24,7 +24,9 @@ import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class HistoryGamePlayedMenuController implements InterfaceMenu{
@@ -46,6 +48,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
     private final Button rightInformationButton = new Button();
     private final Button leftInformationButton = new Button();
     private final Button searchUserButton = new Button();
+    private final Button searchByDateButton = new Button();
 
     private final Circle circleSetting = new Circle();
 
@@ -56,6 +59,9 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
     private final TextArea textHistory = new TextArea();
 
     private final TextField textSearchUser = new TextField();
+    private final TextField textSearchDateYear = new TextField();
+    private final TextField textSearchDateMonth = new TextField();
+    private final TextField textSearchDateDay = new TextField();
 
     private double soundVolume;
     private boolean backgroundAnimation;
@@ -104,7 +110,10 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
 
         setupScene.setTextArea(textHistory,200,150,530,380,false,true,anchorPane);
 
-        setupScene.setTextField(textSearchUser,"",Pos.CENTER,20,500,20,150,new Font(15),false,anchorPane);
+        setupScene.setTextField(textSearchUser,"",Pos.CENTER,20,600,20,150,new Font(15),false,anchorPane);
+        setupScene.setTextField(textSearchDateYear,"",Pos.CENTER,20,500,20,60,new Font(15),true,anchorPane);
+        setupScene.setTextField(textSearchDateMonth,"",Pos.CENTER,90,500,20,35,new Font(15),true,anchorPane);
+        setupScene.setTextField(textSearchDateDay,"",Pos.CENTER,135,500,20,35,new Font(15),true,anchorPane);
 
         setupScene.setButton(gameBlackJackButton,language.getLine("gameBlackJackButton"),Pos.CENTER,20,150,20,150,new Font(15),true,anchorPane);
         setupScene.setButton(gameSlotMachineButton,language.getLine("gameSlotMachineButton"),Pos.CENTER,20,250,20,150,new Font(15),true,anchorPane);
@@ -112,7 +121,8 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         setupScene.setButton(returnShopMenuButton,language.getLine("quitButton"), Pos.CENTER,25,720,60,123.0,new Font(20.0),true,anchorPane);
         setupScene.setButton(leftInformationButton,"<-",Pos.CENTER,300,720,20,50,new Font(15),false,anchorPane);
         setupScene.setButton(rightInformationButton,"->",Pos.CENTER,450,720,20,50,new Font(15),false,anchorPane);
-        setupScene.setButton(searchUserButton,language.getLine("historySearchUserButton"),Pos.CENTER,20,550,20,150,new Font(15),false,anchorPane);
+        setupScene.setButton(searchUserButton,language.getLine("historySearchUserByEmailButton"),Pos.CENTER,20,650,20,150,new Font(10),false,anchorPane);
+        setupScene.setButton(searchByDateButton,"Rechercher par date",Pos.CENTER,20,550,20,150,new Font(10),true,anchorPane);
 
         setupScene.setCircle(circleSetting,18,570,30,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
 
@@ -124,6 +134,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         gameBlackJackButton.setOnMouseClicked((event)-> setGameBlackJack());
         gameSlotMachineButton.setOnMouseClicked((event)-> setGameSlotMachine());
         searchUserButton.setOnMouseClicked((event)-> searchUser());
+        searchByDateButton.setOnMouseClicked((event)-> searchByDate());
 
         if(ADMIN){
             textSearchUser.setVisible(true);
@@ -151,7 +162,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
             listOfGameRoulette = new ArrayList<>();
             listOfGameSlotMachine = new ArrayList<>();
             indexList = 0;
-            getAllInformation(databaseName.getTableHistoryPartyGamedColumnMailUser() + " like \"%" + textSearchUser.getText() + "%\"");
+            getAllInformation(databaseName.getTableHistoryPartyGamedColumnMailUser() + " like '%" + textSearchUser.getText() + "%'");
         }
         else {
             getAllInformation("");
@@ -169,6 +180,90 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         printInformation(currentList);
     }
 
+    private void searchByDate(){
+        int year = 0,month = 0,day = 0;
+        String condition = "";
+
+        if(!textSearchDateYear.getText().isEmpty()){
+            try{
+                year = Integer.parseInt(textSearchDateYear.getText());
+                if(year < 2000 || year > Integer.parseInt(new SimpleDateFormat("yyyy").format(new Date()))){
+                    return;
+                }
+            }
+            catch (Exception exception){
+                return;
+            }
+        }
+
+        if(!textSearchDateMonth.getText().isEmpty()){
+            try{
+                month = Integer.parseInt(textSearchDateMonth.getText());
+                if(month < 1 || month > 12){
+                    return;
+                }
+            }
+            catch (Exception exception){
+                return;
+            }
+        }
+
+        if(!textSearchDateDay.getText().isEmpty()){
+            try{
+                day = Integer.parseInt(textSearchDateDay.getText());
+                if(day < 1){
+                    return;
+                }
+                else{
+                    switch(month){
+                        case 1 :
+                        case 3 :
+                        case 5 :
+                        case 7 :
+                        case 8 :
+                        case 10 :
+                        case 12 :
+                            if(day > 31){
+                                return;
+                            }
+                            break;
+                        default:
+                            if(day > 30){
+                                return;
+                            }
+                    }
+                }
+            }
+            catch (Exception exception){
+                return;
+            }
+        }
+
+        if(year != 0){
+            condition = condition + year + "-";
+        }
+        else{
+            condition = condition + "%-";
+        }
+
+        if(month != 0){
+            condition = condition + month + "-";
+        }
+        else{
+            condition = condition + "%-";
+        }
+
+        if(day != 0){
+            condition = condition + day;
+        }
+        else{
+            condition = condition + "%";
+        }
+
+        getAllInformation(databaseName.getTableHistoryPartyGamedColumnDate() + " like '" + condition + "'");
+        System.out.println(condition);
+    }
+
     /**
      * Méthode qui récupère dans la base de données les historiques des parties jouées
      **/
@@ -176,6 +271,8 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         listOfGameBlackJack = new ArrayList<>();
         listOfGameSlotMachine = new ArrayList<>();
         listOfGameRoulette = new ArrayList<>();
+        textHistory.setText("");
+        System.out.println("condition : "+condition);
 
         completeList(listOfGameBlackJack,databaseName.getGameBlackJack(),"Erreur black jack de getAllInformation dans HistoryGamePlayedMenuController",condition);
         completeList(listOfGameSlotMachine,databaseName.getGameSlotMachine(),"Erreur machine à sous de getAllInformation dans HistoryGamePlayedMenuController",condition);
@@ -240,7 +337,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         indexList -= 16;
         printInformation(currentList);
 
-        if(indexList <= 16){
+        if(indexList < 16){
             leftInformationButton.setVisible(false);
         }
         else {
@@ -261,7 +358,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         indexList += 16;
         printInformation(currentList);
 
-        if(indexList <= 16){
+        if(indexList < 16){
             leftInformationButton.setVisible(false);
         }
         else {

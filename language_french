@@ -271,8 +271,8 @@ Cette email est déjà utilisé
 ErrorLabelEmptyField
 Un ou plusieurs champs sont vides
 
-historySearchUserButton
-Rechercher
+historySearchUserByEmailButton
+Rechercher par email
 
 gameBlackJackButton
 Black Jack

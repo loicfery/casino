@@ -271,8 +271,8 @@ This email is already used
 ErrorLabelEmptyField
 One or more fields are empty
 
-historySearchUserButton
-Research
+historySearchUserByEmailButton
+Research by email
 
 gameBlackJackButton
 Black Jack
