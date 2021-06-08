@@ -158,7 +158,9 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
      * **/
     private void searchUser(){
         if(!textSearchUser.getText().isEmpty()) {
-            getAllInformation(databaseName.getTableHistoryPartyGamedColumnMailUser() + " like '%" + textSearchUser.getText() + "%'");
+            String conditionDate = getConditionDate();
+            String conditionEmail = databaseName.getTableHistoryPartyGamedColumnMailUser() + " like '%" + textSearchUser.getText() + "%'";
+            getAllInformation(conditionEmail + " && " + conditionDate);
         }
         else {
             getAllInformation("");
@@ -184,6 +186,24 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
     }
 
     private void searchByDate(){
+        String conditionDate = getConditionDate();
+
+        if(conditionDate.equals("")){
+            return;
+        }
+
+        if(ADMIN) {
+            String conditionEmail = databaseName.getTableHistoryPartyGamedColumnMailUser() + " like '%" + textSearchUser.getText() + "%'";
+            getAllInformation(conditionEmail + " && " + conditionDate);
+        }
+        else {
+            getAllInformation(conditionDate);
+        }
+        setCurrentList();
+        printInformation(currentList);
+    }
+
+    private String getConditionDate(){
         int year = 0,month = 0,day = 0;
         String condition = "";
 
@@ -191,11 +211,11 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
             try{
                 year = Integer.parseInt(textSearchDateYear.getText());
                 if(year < 2000 || year > Integer.parseInt(new SimpleDateFormat("yyyy").format(new Date()))){
-                    return;
+                    return "";
                 }
             }
             catch (Exception exception){
-                return;
+                return "";
             }
         }
 
@@ -203,11 +223,11 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
             try{
                 month = Integer.parseInt(textSearchDateMonth.getText());
                 if(month < 1 || month > 12){
-                    return;
+                    return "";
                 }
             }
             catch (Exception exception){
-                return;
+                return "";
             }
         }
 
@@ -215,7 +235,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
             try{
                 day = Integer.parseInt(textSearchDateDay.getText());
                 if(day < 1){
-                    return;
+                    return "";
                 }
                 else{
                     switch(month){
@@ -227,18 +247,18 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
                         case 10 :
                         case 12 :
                             if(day > 31){
-                                return;
+                                return "";
                             }
                             break;
                         default:
                             if(day > 30){
-                                return;
+                                return "";
                             }
                     }
                 }
             }
             catch (Exception exception){
-                return;
+                return "";
             }
         }
 
@@ -263,10 +283,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
             condition = condition + "%";
         }
 
-        getAllInformation(databaseName.getTableHistoryPartyGamedColumnDate() + " like '" + condition + "'");
-        setCurrentList();
-        printInformation(currentList);
-        System.out.println(condition);
+        return databaseName.getTableHistoryPartyGamedColumnDate() + " like '" + condition + "'";
     }
 
     /**
