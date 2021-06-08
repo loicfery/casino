@@ -158,17 +158,21 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
      * **/
     private void searchUser(){
         if(!textSearchUser.getText().isEmpty()) {
-            listOfGameBlackJack = new ArrayList<>();
-            listOfGameRoulette = new ArrayList<>();
-            listOfGameSlotMachine = new ArrayList<>();
-            indexList = 0;
             getAllInformation(databaseName.getTableHistoryPartyGamedColumnMailUser() + " like '%" + textSearchUser.getText() + "%'");
         }
         else {
             getAllInformation("");
         }
+
+        setCurrentList();
+        printInformation(currentList);
+    }
+
+    private void setCurrentList(){
+        System.out.println("current game : "+currentGame);
         switch(currentGame){
             case "blackJack" :
+                System.out.println("test BJ");
                 currentList = listOfGameBlackJack;
                 break;
             case "slotMachine" :
@@ -177,7 +181,6 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
             case "roulette" :
                 currentList = listOfGameRoulette;
         }
-        printInformation(currentList);
     }
 
     private void searchByDate(){
@@ -261,6 +264,8 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         }
 
         getAllInformation(databaseName.getTableHistoryPartyGamedColumnDate() + " like '" + condition + "'");
+        setCurrentList();
+        printInformation(currentList);
         System.out.println(condition);
     }
 
@@ -271,8 +276,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         listOfGameBlackJack = new ArrayList<>();
         listOfGameSlotMachine = new ArrayList<>();
         listOfGameRoulette = new ArrayList<>();
-        textHistory.setText("");
-        System.out.println("condition : "+condition);
+        indexList = 0;
 
         completeList(listOfGameBlackJack,databaseName.getGameBlackJack(),"Erreur black jack de getAllInformation dans HistoryGamePlayedMenuController",condition);
         completeList(listOfGameSlotMachine,databaseName.getGameSlotMachine(),"Erreur machine à sous de getAllInformation dans HistoryGamePlayedMenuController",condition);
@@ -298,10 +302,14 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
                 resultSet = database.select(databaseName.getTableHistoryPartyGamed(), databaseName.getTableHistoryPartyGamedColumnGameName()+" = \"" + game + "\" && "+ databaseName.getTableHistoryPartyGamedColumnGameName() + " = \"" + user.getEmail() + "\"");
             }
 
+            System.out.println("condition : "+condition);
             while (resultSet.next()){
+                System.out.println(resultSet.getString(2) + "," + resultSet.getString(5) + ":" + resultSet.getString(3) + "-->" + resultSet.getInt(4) + " " + language.getLine("tokenLabel"));
                 list.add(resultSet.getString(2) + " : ");
                 list.add(resultSet.getString(5) + " : " + resultSet.getString(3) + " --> " + resultSet.getInt(4) + " " + language.getLine("tokenLabel"));
             }
+
+            System.out.println("-------------------------------------------");
 
             if(list.size() == 0){
                 list.add(language.getLine("historyGamePlayedNoGameRegister"));
