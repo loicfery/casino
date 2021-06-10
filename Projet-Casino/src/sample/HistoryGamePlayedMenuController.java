@@ -144,26 +144,20 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         searchByDateButton.setOnMouseClicked((event)-> searchByDate());
 
         textSearchDateYear.textProperty().addListener(new ChangeListener<String>() {
-            public void changed(final ObservableValue<? extends String> observableValue, final String oldValue,
-                                final String newValue) {
-                if (!wholeNumberPattern.matcher(newValue).matches())
-                    textSearchDateYear.setText(oldValue);
+            public void changed(final ObservableValue<? extends String> observableValue, final String oldValue, final String newValue) {
+                InputControl.inputControlNumber(oldValue,newValue,textSearchDateYear);
             }
         });
 
         textSearchDateMonth.textProperty().addListener(new ChangeListener<String>() {
-            public void changed(final ObservableValue<? extends String> observableValue, final String oldValue,
-                                final String newValue) {
-                if (!wholeNumberPattern.matcher(newValue).matches())
-                    textSearchDateMonth.setText(oldValue);
+            public void changed(final ObservableValue<? extends String> observableValue, final String oldValue, final String newValue) {
+                InputControl.inputControlNumber(oldValue,newValue,textSearchDateMonth);
             }
         });
 
         textSearchDateDay.textProperty().addListener(new ChangeListener<String>() {
-            public void changed(final ObservableValue<? extends String> observableValue, final String oldValue,
-                                final String newValue) {
-                if (!wholeNumberPattern.matcher(newValue).matches())
-                    textSearchDateDay.setText(oldValue);
+            public void changed(final ObservableValue<? extends String> observableValue, final String oldValue, final String newValue) {
+                InputControl.inputControlNumber(oldValue,newValue,textSearchDateDay);
             }
         });
 

@@ -64,8 +64,6 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
 
     private final Circle circleSetting = new Circle();
 
-    private final Pattern wholeNumberPattern = Pattern.compile("\\d*");
-
     private double soundVolume;
     private boolean backgroundAnimation;
     private List<String> listOfInformationToken;
@@ -133,26 +131,20 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         searchByDateButton.setOnMouseClicked((event) ->searchByDate());
 
         textSearchDateYear.textProperty().addListener(new ChangeListener<String>() {
-            public void changed(final ObservableValue<? extends String> observableValue, final String oldValue,
-                                final String newValue) {
-                if (!wholeNumberPattern.matcher(newValue).matches())
-                    textSearchDateYear.setText(oldValue);
+            public void changed(final ObservableValue<? extends String> observableValue, final String oldValue, final String newValue) {
+                InputControl.inputControlNumber(oldValue,newValue,textSearchDateYear);
             }
         });
 
         textSearchDateMonth.textProperty().addListener(new ChangeListener<String>() {
-            public void changed(final ObservableValue<? extends String> observableValue, final String oldValue,
-                                final String newValue) {
-                if (!wholeNumberPattern.matcher(newValue).matches())
-                    textSearchDateMonth.setText(oldValue);
-            }
+            public void changed(final ObservableValue<? extends String> observableValue, final String oldValue, final String newValue) {
+               InputControl.inputControlNumber(oldValue,newValue,textSearchDateMonth);
+                }
         });
 
         textSearchDateDay.textProperty().addListener(new ChangeListener<String>() {
-            public void changed(final ObservableValue<? extends String> observableValue, final String oldValue,
-                                final String newValue) {
-                if (!wholeNumberPattern.matcher(newValue).matches())
-                    textSearchDateDay.setText(oldValue);
+            public void changed(final ObservableValue<? extends String> observableValue, final String oldValue, final String newValue) {
+                InputControl.inputControlNumber(oldValue,newValue,textSearchDateDay);
             }
         });
 
