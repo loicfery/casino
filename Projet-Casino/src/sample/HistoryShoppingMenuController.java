@@ -4,6 +4,8 @@ import games.Database;
 import games.DatabaseName;
 import games.User;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -28,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 
 public class HistoryShoppingMenuController implements InterfaceMenu{
@@ -60,6 +63,8 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
     private final Button searchByDateButton = new Button();
 
     private final Circle circleSetting = new Circle();
+
+    private final Pattern wholeNumberPattern = Pattern.compile("\\d*");
 
     private double soundVolume;
     private boolean backgroundAnimation;
@@ -126,6 +131,30 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         searchUserButton.setOnMouseClicked((event)-> searchUser());
         circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
         searchByDateButton.setOnMouseClicked((event) ->searchByDate());
+
+        textSearchDateYear.textProperty().addListener(new ChangeListener<String>() {
+            public void changed(final ObservableValue<? extends String> observableValue, final String oldValue,
+                                final String newValue) {
+                if (!wholeNumberPattern.matcher(newValue).matches())
+                    textSearchDateYear.setText(oldValue);
+            }
+        });
+
+        textSearchDateMonth.textProperty().addListener(new ChangeListener<String>() {
+            public void changed(final ObservableValue<? extends String> observableValue, final String oldValue,
+                                final String newValue) {
+                if (!wholeNumberPattern.matcher(newValue).matches())
+                    textSearchDateMonth.setText(oldValue);
+            }
+        });
+
+        textSearchDateDay.textProperty().addListener(new ChangeListener<String>() {
+            public void changed(final ObservableValue<? extends String> observableValue, final String oldValue,
+                                final String newValue) {
+                if (!wholeNumberPattern.matcher(newValue).matches())
+                    textSearchDateDay.setText(oldValue);
+            }
+        });
 
         if(ADMIN){
             textSearchUser.setVisible(true);

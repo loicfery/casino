@@ -4,6 +4,8 @@ import games.Database;
 import games.DatabaseName;
 import games.User;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.ImagePattern;
@@ -28,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class HistoryGamePlayedMenuController implements InterfaceMenu{
 
@@ -66,6 +70,8 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
     private double soundVolume;
     private boolean backgroundAnimation;
 
+    private final Pattern wholeNumberPattern = Pattern.compile("\\d*");
+
     private List<String> listOfGameBlackJack;
     private List<String> listOfGameSlotMachine;
     private List<String> listOfGameRoulette;
@@ -73,6 +79,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
     private int indexList = 0;
     private boolean ADMIN = false;
     private String currentGame;
+    private boolean inputControlNumber = true;
 
     public HistoryGamePlayedMenuController(User user, Stage stage, Database database, Language language, double soundVolume, boolean backgroundAnimation){
         this.user = user;
@@ -135,6 +142,30 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         gameSlotMachineButton.setOnMouseClicked((event)-> setGameSlotMachine());
         searchUserButton.setOnMouseClicked((event)-> searchUser());
         searchByDateButton.setOnMouseClicked((event)-> searchByDate());
+
+        textSearchDateYear.textProperty().addListener(new ChangeListener<String>() {
+            public void changed(final ObservableValue<? extends String> observableValue, final String oldValue,
+                                final String newValue) {
+                if (!wholeNumberPattern.matcher(newValue).matches())
+                    textSearchDateYear.setText(oldValue);
+            }
+        });
+
+        textSearchDateMonth.textProperty().addListener(new ChangeListener<String>() {
+            public void changed(final ObservableValue<? extends String> observableValue, final String oldValue,
+                                final String newValue) {
+                if (!wholeNumberPattern.matcher(newValue).matches())
+                    textSearchDateMonth.setText(oldValue);
+            }
+        });
+
+        textSearchDateDay.textProperty().addListener(new ChangeListener<String>() {
+            public void changed(final ObservableValue<? extends String> observableValue, final String oldValue,
+                                final String newValue) {
+                if (!wholeNumberPattern.matcher(newValue).matches())
+                    textSearchDateDay.setText(oldValue);
+            }
+        });
 
         if(ADMIN){
             textSearchUser.setVisible(true);

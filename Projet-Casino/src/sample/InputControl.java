@@ -1,5 +1,8 @@
 package sample;
 
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,6 +47,19 @@ public class InputControl {
         }
         else {
             return false;
+        }
+    }
+
+    public static void inputControlNumber(KeyEvent keyEvent, TextField textField){
+        String character = keyEvent.getText();
+        System.out.println("test : " + character);
+        if(!"0123456789".contains(character)) {
+            keyEvent.consume();
+            textField.setText(textField.getText().substring(textField.getText().length() - 1));
+            System.out.println("pas nombre");
+        }
+        else {
+            System.out.println("nombre");
         }
     }
 }
