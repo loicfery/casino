@@ -24,7 +24,9 @@ import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -45,6 +47,9 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
     private final TextArea textInformation = new TextArea();
 
     private final TextField textSearchUser = new TextField();
+    private final TextField textSearchDateYear = new TextField();
+    private final TextField textSearchDateMonth = new TextField();
+    private final TextField textSearchDateDay = new TextField();
 
     private final Button returnShopMenuButton = new Button();
     private final Button leftInformationButton = new Button();
@@ -52,6 +57,7 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
     private final Button exchangeTokenButton = new Button();
     private final Button exchangeMoneyButton = new Button();
     private final Button searchUserButton = new Button();
+    private final Button searchByDateButton = new Button();
 
     private final Circle circleSetting = new Circle();
 
@@ -59,7 +65,7 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
     private boolean backgroundAnimation;
     private List<String> listOfInformationToken;
     private List<String> listOfInformationMoney;
-    private int indexInformation = 0;
+    private int indexInformation;
     private boolean switchExchange;
     private boolean ADMIN = false;
 
@@ -88,23 +94,27 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
             }
         });
         root = new BorderPane();
-        Scene scene = new Scene(root, 400, 800);
+        Scene scene = new Scene(root, 400, 900);
         scene.getStylesheets().add(getClass().getResource("historyShoppingMenu.css").toExternalForm());
         stage.setScene(scene);
         anchorPane = new AnchorPane();
 
         setupScene.setLabel(labelTitle,language.getLine("historyShoppingTitleLabel1"), Pos.CENTER,0,40,20,360,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
 
-        setupScene.setTextArea(textInformation,0,100,700,400,false,true,anchorPane);
+        setupScene.setTextArea(textInformation,0,100,450,400,false,true,anchorPane);
 
         setupScene.setTextField(textSearchUser,"",Pos.CENTER,175,650,20,200,new Font(15),false,anchorPane);
+        setupScene.setTextField(textSearchDateYear,"",Pos.CENTER,175,750,20,60,new Font(15),true,anchorPane);
+        setupScene.setTextField(textSearchDateMonth,"",Pos.CENTER,245,750,20,35,new Font(15),true,anchorPane);
+        setupScene.setTextField(textSearchDateDay,"",Pos.CENTER,290,750,20,35,new Font(15),true,anchorPane);
 
-        setupScene.setButton(returnShopMenuButton,language.getLine("quitButton"),Pos.CENTER,25,720,60,123.0,new Font(20.0),true,anchorPane);
+        setupScene.setButton(returnShopMenuButton,language.getLine("quitButton"),Pos.CENTER,25,820,60,123.0,new Font(20.0),true,anchorPane);
         setupScene.setButton(leftInformationButton,"<-",Pos.CENTER,100,580,20,50,new Font(15),false,anchorPane);
         setupScene.setButton(rightInformationButton,"->",Pos.CENTER,250,580,20,50,new Font(15),true,anchorPane);
-        setupScene.setButton(exchangeTokenButton,language.getLine("shopTokenTitleLabel"),Pos.CENTER,175,720,60,200,new Font(20),false,anchorPane);
-        setupScene.setButton(exchangeMoneyButton,language.getLine("shopMoneyTitleLabel"),Pos.CENTER,175,720,60,200,new Font(20),true,anchorPane);
-        setupScene.setButton(searchUserButton,language.getLine("historySearchUserButton"),Pos.CENTER,25,650,20,123,new Font(15),false,anchorPane);
+        setupScene.setButton(exchangeTokenButton,language.getLine("shopTokenTitleLabel"),Pos.CENTER,175,820,60,200,new Font(20),false,anchorPane);
+        setupScene.setButton(exchangeMoneyButton,language.getLine("shopMoneyTitleLabel"),Pos.CENTER,175,820,60,200,new Font(20),true,anchorPane);
+        setupScene.setButton(searchUserButton,language.getLine("historySearchUserByEmailButton"),Pos.CENTER,25,650,20,123,new Font(10),false,anchorPane);
+        setupScene.setButton(searchByDateButton,language.getLine("historySearchByDateButton"),Pos.CENTER,25,750,20,123,new Font(10),true,anchorPane);
 
         setupScene.setCircle(circleSetting,18,372,28,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
 
@@ -115,6 +125,7 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         exchangeMoneyButton.setOnMouseClicked((event) -> switchExchange());
         searchUserButton.setOnMouseClicked((event)-> searchUser());
         circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
+        searchByDateButton.setOnMouseClicked((event) ->searchByDate());
 
         if(ADMIN){
             textSearchUser.setVisible(true);
@@ -146,9 +157,16 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         listOfInformationMoney = new ArrayList<>();
 
         if(!textSearchUser.getText().isEmpty()) {
-            String conditionToken = databaseName.getTableHistoryExchangeTokenColumnMailUser() + " like \"%" + textSearchUser.getText() + "%\"";
-            String conditionMoney = databaseName.getTableHistoryExchangeMoneyColumnMailUser() + " like \"%" + textSearchUser.getText() + "%\"";
-            getAllInformation(conditionToken, conditionMoney);
+            String conditionDateExchangeToken = getConditionDate(databaseName.getTableHistoryExchangeTokenColumnDate());
+            String conditionDateExchangeMoney = getConditionDate(databaseName.getTableHistoryExchangeMoneyColumnDate());
+
+            if(conditionDateExchangeToken.equals("") || conditionDateExchangeMoney.equals("")){
+                return;
+            }
+
+            String conditionExchangeToken = databaseName.getTableHistoryExchangeTokenColumnMailUser() + " like \"%" + textSearchUser.getText() + "%\" && " + conditionDateExchangeToken;
+            String conditionExchangeMoney = databaseName.getTableHistoryExchangeMoneyColumnMailUser() + " like \"%" + textSearchUser.getText() + "%\" && " + conditionDateExchangeMoney;
+            getAllInformation(conditionExchangeToken, conditionExchangeMoney);
         }
         else {
             getAllInformation("","");
@@ -169,6 +187,109 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         }
     }
 
+    private String getConditionDate(String columnName){
+        int year = 0,month = 0,day = 0;
+        String condition = "";
+
+        if(!textSearchDateYear.getText().isEmpty()){
+            try{
+                year = Integer.parseInt(textSearchDateYear.getText());
+                if(year < 2000 || year > Integer.parseInt(new SimpleDateFormat("yyyy").format(new Date()))){
+                    return "";
+                }
+            }
+            catch (Exception exception){
+                return "";
+            }
+        }
+
+        if(!textSearchDateMonth.getText().isEmpty()){
+            try{
+                month = Integer.parseInt(textSearchDateMonth.getText());
+                if(month < 1 || month > 12){
+                    return "";
+                }
+            }
+            catch (Exception exception){
+                return "";
+            }
+        }
+
+        if(!textSearchDateDay.getText().isEmpty()){
+            try{
+                day = Integer.parseInt(textSearchDateDay.getText());
+                if(day < 1){
+                    return "";
+                }
+                else{
+                    switch(month){
+                        case 1 :
+                        case 3 :
+                        case 5 :
+                        case 7 :
+                        case 8 :
+                        case 10 :
+                        case 12 :
+                            if(day > 31){
+                                return "";
+                            }
+                            break;
+                        default:
+                            if(day > 30){
+                                return "";
+                            }
+                    }
+                }
+            }
+            catch (Exception exception){
+                return "";
+            }
+        }
+
+        if(year != 0){
+            condition = condition + textSearchDateYear.getText() + "-";
+        }
+        else{
+            condition = condition + "%-";
+        }
+
+        if(month != 0){
+            condition = condition + textSearchDateMonth.getText() + "-";
+        }
+        else{
+            condition = condition + "%-";
+        }
+
+        if(day != 0){
+            condition = condition + textSearchDateDay.getText();
+        }
+        else{
+            condition = condition + "%";
+        }
+        System.out.println(columnName + " like '" + condition + "'");
+        return columnName + " like '" + condition + "'";
+    }
+
+    private void searchByDate(){
+        String conditionDateExchangeToken = getConditionDate(databaseName.getTableHistoryExchangeTokenColumnDate());
+        String conditionDateExchangeMoney = getConditionDate(databaseName.getTableHistoryExchangeMoneyColumnDate());
+
+        if(conditionDateExchangeToken.equals("") || conditionDateExchangeMoney.equals("")){
+            return;
+        }
+
+        if(ADMIN) {
+            String conditionEmailExchangeToken = databaseName.getTableHistoryExchangeTokenColumnMailUser() + " like '%" + textSearchUser.getText() + "%'";
+            String conditionEmailExchangeMoney = databaseName.getTableHistoryExchangeMoneyColumnMailUser() + " like '%" + textSearchUser.getText() + "%'";
+            getAllInformation(conditionEmailExchangeToken + " && " + conditionDateExchangeToken,conditionEmailExchangeMoney + " && " + conditionDateExchangeMoney);
+        }
+        else {
+            getAllInformation(conditionDateExchangeToken,conditionDateExchangeMoney);
+        }
+
+        printInformation();
+    }
+
     /**
      * Méthode qui récupère de la base de données tous les historiques d'échanges
      **/
@@ -176,6 +297,7 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
         listOfInformationToken = new ArrayList<>();
         listOfInformationMoney = new ArrayList<>();
         textInformation.setText("");
+        indexInformation = 0;
 
         try {
             ResultSet resultSetToken = database.select(databaseName.getTableHistoryExchangeToken(), conditionToken);
@@ -192,6 +314,14 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
                     listOfInformationMoney.add(resultSetMoney.getString(2) + " : ");
                 }
                 listOfInformationMoney.add(resultSetMoney.getString(5) + " : " + resultSetMoney.getInt(3) + " $ ---> " + resultSetMoney.getInt(4) + " " + language.getLine("tokenLabel"));
+            }
+
+            leftInformationButton.setVisible(false);
+            if(indexInformation >= listOfInformationToken.size()){
+                rightInformationButton.setVisible(false);
+            }
+            else {
+                rightInformationButton.setVisible(true);
             }
         }
         catch (Exception e){ System.out.println("Erreur : getAllInformation dans HistoryShoppingMenuController"); }

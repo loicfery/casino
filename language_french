@@ -315,3 +315,6 @@ Mot de passe Modifié
 
 changePasswordErrorLabelWrongFormat
 Le format ne correspond pas
+
+historySearchByDateButton
+Rechercher par date

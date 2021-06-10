@@ -122,7 +122,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         setupScene.setButton(leftInformationButton,"<-",Pos.CENTER,300,720,20,50,new Font(15),false,anchorPane);
         setupScene.setButton(rightInformationButton,"->",Pos.CENTER,450,720,20,50,new Font(15),false,anchorPane);
         setupScene.setButton(searchUserButton,language.getLine("historySearchUserByEmailButton"),Pos.CENTER,20,650,20,150,new Font(10),false,anchorPane);
-        setupScene.setButton(searchByDateButton,"Rechercher par date",Pos.CENTER,20,550,20,150,new Font(10),true,anchorPane);
+        setupScene.setButton(searchByDateButton,language.getLine("historySearchByDateButton"),Pos.CENTER,20,550,20,150,new Font(10),true,anchorPane);
 
         setupScene.setCircle(circleSetting,18,570,30,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
 
@@ -171,10 +171,8 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
     }
 
     private void setCurrentList(){
-        System.out.println("current game : "+currentGame);
         switch(currentGame){
             case "blackJack" :
-                System.out.println("test BJ");
                 currentList = listOfGameBlackJack;
                 break;
             case "slotMachine" :
@@ -263,21 +261,21 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         }
 
         if(year != 0){
-            condition = condition + year + "-";
+            condition = condition + textSearchDateYear.getText() + "-";
         }
         else{
             condition = condition + "%-";
         }
 
         if(month != 0){
-            condition = condition + month + "-";
+            condition = condition + textSearchDateMonth.getText() + "-";
         }
         else{
             condition = condition + "%-";
         }
 
         if(day != 0){
-            condition = condition + day;
+            condition = condition + textSearchDateDay.getText();
         }
         else{
             condition = condition + "%";
@@ -319,14 +317,11 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
                 resultSet = database.select(databaseName.getTableHistoryPartyGamed(), databaseName.getTableHistoryPartyGamedColumnGameName()+" = \"" + game + "\" && "+ databaseName.getTableHistoryPartyGamedColumnGameName() + " = \"" + user.getEmail() + "\"");
             }
 
-            System.out.println("condition : "+condition);
             while (resultSet.next()){
-                System.out.println(resultSet.getString(2) + "," + resultSet.getString(5) + ":" + resultSet.getString(3) + "-->" + resultSet.getInt(4) + " " + language.getLine("tokenLabel"));
                 list.add(resultSet.getString(2) + " : ");
                 list.add(resultSet.getString(5) + " : " + resultSet.getString(3) + " --> " + resultSet.getInt(4) + " " + language.getLine("tokenLabel"));
             }
 
-            System.out.println("-------------------------------------------");
 
             if(list.size() == 0){
                 list.add(language.getLine("historyGamePlayedNoGameRegister"));
