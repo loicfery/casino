@@ -14,7 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.ImagePattern;
@@ -31,7 +30,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class HistoryGamePlayedMenuController implements InterfaceMenu{
 
@@ -44,6 +42,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
     private final Database database;
     private final DatabaseName databaseName = new DatabaseName();
     private Language language;
+    private Scene scene;
 
     private final Button returnShopMenuButton = new Button();
     private final Button gameBlackJackButton = new Button();
@@ -108,7 +107,7 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
             }
         });
         root = new BorderPane();
-        Scene scene = new Scene(root, 600, 800);
+        scene = new Scene(root, 600, 800);
         scene.getStylesheets().add(getClass().getResource("historyShoppingMenu.css").toExternalForm());
         stage.setScene(scene);
         anchorPane = new AnchorPane();
@@ -528,5 +527,64 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         }
 
         printInformation(currentList);
+        refreshPosition();
+    }
+
+    private void refreshPosition(){
+        scene.setRoot(new BorderPane());
+        scene = new Scene(root, sizeX * 600, sizeY * 800);
+        stage.setScene(scene);
+
+        blackJackTitleLabel.setLayoutY(sizeY * 20);
+        blackJackTitleLabel.setPrefHeight(sizeY * 20);
+        blackJackTitleLabel.setPrefWidth(sizeX * 600);
+        blackJackTitleLabel.setFont(new Font(sizeX * 30));
+
+        slotMachineTitleLabel.setLayoutY(sizeY * 20);
+        slotMachineTitleLabel.setPrefHeight(sizeY * 20);
+        slotMachineTitleLabel.setPrefWidth(sizeX * 600);
+        slotMachineTitleLabel.setFont(new Font(sizeX * 30));
+
+        rouletteTitleLabel.setLayoutY(sizeY * 20);
+        rouletteTitleLabel.setPrefHeight(sizeY * 20);
+        rouletteTitleLabel.setPrefWidth(sizeX * 600);
+        rouletteTitleLabel.setFont(new Font(sizeX * 30));
+
+        textHistory.setLayoutX(sizeX * 200);
+        textHistory.setLayoutY(sizeY * 150);
+        textHistory.setPrefHeight(sizeY * 530);
+        textHistory.setPrefWidth(sizeX * 380);
+        textHistory.setStyle("-fx-font-size: " + sizeX * 30);
+
+        textSearchUser.setLayoutX(sizeX * 20);
+        textSearchUser.setLayoutY(sizeY * 600);
+        textSearchUser.setPrefHeight(sizeY * 20);
+        textSearchUser.setPrefWidth(sizeX * 150);
+        textSearchUser.setFont(new Font(sizeX * 15));
+
+        textSearchDateYear.setLayoutX(sizeX * 20);
+        textSearchDateYear.setLayoutY(sizeY * 500);
+        textSearchDateYear.setPrefHeight(sizeY * 20);
+        textSearchDateYear.setPrefWidth(sizeX * 60);
+        textSearchDateYear.setFont(new Font(sizeX * 15));
+
+        textSearchDateMonth.setLayoutX(sizeX * 90);
+        textSearchDateMonth.setLayoutY(sizeY * 500);
+        textSearchDateMonth.setPrefHeight(sizeY * 20);
+        textSearchDateMonth.setPrefWidth(sizeX * 35);
+        textSearchDateMonth.setFont(new Font(sizeX * 15));
+
+        setupScene.setTextField(textSearchDateDay,"",Pos.CENTER,135,500,20,35,new Font(15),true,anchorPane);
+
+        setupScene.setButton(gameBlackJackButton,language.getLine("gameBlackJackButton"),Pos.CENTER,20,150,20,150,new Font(15),true,anchorPane);
+        setupScene.setButton(gameSlotMachineButton,language.getLine("gameSlotMachineButton"),Pos.CENTER,20,250,20,150,new Font(15),true,anchorPane);
+        setupScene.setButton(gameRouletteButton,language.getLine("gameRouletteButton"),Pos.CENTER,20,350,20,150,new Font(15),true,anchorPane);
+        setupScene.setButton(returnShopMenuButton,language.getLine("quitButton"), Pos.CENTER,25,720,60,123.0,new Font(20.0),true,anchorPane);
+        setupScene.setButton(leftInformationButton,"<-",Pos.CENTER,300,720,20,50,new Font(15),false,anchorPane);
+        setupScene.setButton(rightInformationButton,"->",Pos.CENTER,450,720,20,50,new Font(15),false,anchorPane);
+        setupScene.setButton(searchUserButton,language.getLine("historySearchUserByEmailButton"),Pos.CENTER,20,650,20,150,new Font(10),false,anchorPane);
+        setupScene.setButton(searchByDateButton,language.getLine("historySearchByDateButton"),Pos.CENTER,20,550,20,150,new Font(10),true,anchorPane);
+
+        setupScene.setCircle(circleSetting,18,570,30,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").t
     }
 }

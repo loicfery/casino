@@ -112,27 +112,27 @@ public class ShopMenuController implements InterfaceMenu{
             }
         });
         root = new BorderPane();
-        scene = new Scene(root, 800, 800);
+        scene = new Scene(root, sizeX * 800, sizeY * 800);
         scene.getStylesheets().add(getClass().getResource("shopMenu.css").toExternalForm());
         stage.setScene(scene);
         anchorPane = new AnchorPane();
 
-        setupScene.setLabel(titleShopTokenLabel,language.getLine("shopTokenTitleLabel") + user.getToken(),Pos.CENTER,0,200,20,400,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(titleShopMoneyLabel,language.getLine("shopMoneyTitleLabel") + user.getMoney(),Pos.CENTER,400,200,20,400,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(errorLabel,"",Pos.CENTER,250,700,20,300,new Font(20),Paint.valueOf("RED"),false,anchorPane);
+        setupScene.setLabel(titleShopTokenLabel,language.getLine("shopTokenTitleLabel") + user.getToken(),Pos.CENTER,0,sizeY * 200,sizeY * 20,sizeX * 400,new Font(sizeX * 30),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(titleShopMoneyLabel,language.getLine("shopMoneyTitleLabel") + user.getMoney(),Pos.CENTER,sizeX * 400,sizeY * 200,sizeY * 20,sizeX * 400,new Font(sizeX * 30),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(errorLabel,"",Pos.CENTER,sizeX *  250,sizeY * 700,sizeY * 20,sizeX * 300,new Font(sizeX * 20),Paint.valueOf("RED"),false,anchorPane);
 
-        setupScene.setButton(leftShopTokenButton,"<-",Pos.CENTER,100,750,20,50,new Font(15),true,anchorPane);
-        setupScene.setButton(rightShopTokenButton,"->",Pos.CENTER,250,750,20,50,new Font(15),true,anchorPane);
-        setupScene.setButton(leftShopMoneyButton,"<-",Pos.CENTER,500,750,20,50,new Font(15),true,anchorPane);
-        setupScene.setButton(rightShopMoneyButton,"->",Pos.CENTER,650,750,20,50,new Font(15),true,anchorPane);
+        setupScene.setButton(leftShopTokenButton,"<-",Pos.CENTER,sizeX * 100,sizeY * 750,sizeY * 20,sizeX * 50,new Font(sizeX * 15),true,anchorPane);
+        setupScene.setButton(rightShopTokenButton,"->",Pos.CENTER,sizeX * 250,sizeY * 750,sizeY * 20,sizeX * 50,new Font(sizeX * 15),true,anchorPane);
+        setupScene.setButton(leftShopMoneyButton,"<-",Pos.CENTER,sizeX * 500,sizeY * 750,sizeY * 20,sizeX * 50,new Font(sizeX * 15),true,anchorPane);
+        setupScene.setButton(rightShopMoneyButton,"->",Pos.CENTER,sizeX * 650,sizeY * 750,sizeY * 20,sizeX * 50,new Font(sizeX * 15),true,anchorPane);
 
-        setupScene.setButton(addMoneyButton,language.getLine("shopAddMoneyButton"),Pos.CENTER,360,14,60,200,new Font(20),true,anchorPane);
-        setupScene.setButton(historyShoppingButton,language.getLine("shopHistoryShoppingButton"), Pos.CENTER,150,14,60,200,new Font(20),true,anchorPane);
-        setupScene.setButton(returnMainMenuButton,language.getLine("quitButton"),Pos.CENTER,14.0,14.0,60,123.0,new Font(20.0),true,anchorPane);
+        setupScene.setButton(addMoneyButton,language.getLine("shopAddMoneyButton"),Pos.CENTER,sizeX * 360,sizeY * 14,sizeY * 60,sizeX * 200,new Font(sizeX * 20),true,anchorPane);
+        setupScene.setButton(historyShoppingButton,language.getLine("shopHistoryShoppingButton"), Pos.CENTER,sizeX * 150, sizeY * 14,sizeY * 60,sizeX * 200,new Font(sizeX * 20),true,anchorPane);
+        setupScene.setButton(returnMainMenuButton,language.getLine("quitButton"),Pos.CENTER,sizeX * 14.0,sizeY * 14.0,sizeY * 60,sizeX * 123.0,new Font(sizeX * 20.0),true,anchorPane);
 
-        setupScene.setLine(middleLine,400,200,0,0,0,520,Paint.valueOf("BLACK"),1.0,true,anchorPane);
+        setupScene.setLine(middleLine,sizeX * 400,sizeY * 200,0,0,0,sizeY * 520,Paint.valueOf("BLACK"),1.0,true,anchorPane);
 
-        setupScene.setCircle(circleSetting,30,750,40,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())), Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
+        setupScene.setCircle(circleSetting,Math.max(sizeX,sizeY) * 30,sizeX * 750,sizeY * 40,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())), Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
 
         historyShoppingButton.setOnMouseClicked((event) -> goToHistoryShoppingMenu());
         returnMainMenuButton.setOnMouseClicked((event)-> goToMainMenu());
@@ -747,11 +747,13 @@ public class ShopMenuController implements InterfaceMenu{
         scene = new Scene(root, sizeX * 800, sizeY * 800);
         stage.setScene(scene);
 
+        titleShopTokenLabel.setLayoutY(sizeY * 200);
         titleShopTokenLabel.setPrefHeight(sizeY * 20);
         titleShopTokenLabel.setPrefWidth(sizeX * 400);
         titleShopTokenLabel.setFont(new Font(sizeX * 30));
 
         titleShopMoneyLabel.setLayoutX(sizeX * 400);
+        titleShopMoneyLabel.setLayoutY(sizeY * 200);
         titleShopMoneyLabel.setPrefHeight(sizeY * 20);
         titleShopMoneyLabel.setPrefWidth(sizeX * 400);
         titleShopMoneyLabel.setFont(new Font(sizeX * 30));
