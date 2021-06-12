@@ -43,6 +43,7 @@ public class ShopMenuController implements InterfaceMenu{
     private final MessageInterface messageInterface = new MessageInterface();
     private Language language;
     private BuyingMoneyMenuController buyingMoneyMenuController;
+    private Scene scene;
 
     private List<String> listOfShopToken;
     private List<String> listOfShopMoney;
@@ -111,7 +112,7 @@ public class ShopMenuController implements InterfaceMenu{
             }
         });
         root = new BorderPane();
-        Scene scene = new Scene(root, 800, 800);
+        scene = new Scene(root, 800, 800);
         scene.getStylesheets().add(getClass().getResource("shopMenu.css").toExternalForm());
         stage.setScene(scene);
         anchorPane = new AnchorPane();
@@ -701,6 +702,8 @@ public class ShopMenuController implements InterfaceMenu{
             buyingMoneyMenuController.setLanguage(language);
             buyingMoneyMenuController.refresh();
         }
+
+        refreshPosition();
     }
 
     public void reset(){
@@ -737,5 +740,76 @@ public class ShopMenuController implements InterfaceMenu{
 
         addExchangeMoneyButton.setVisible(false);
         anchorPane.getChildren().remove(addExchangeMoneyButton);
+    }
+
+    private void refreshPosition(){
+        scene.setRoot(new BorderPane());
+        scene = new Scene(root, sizeX * 800, sizeY * 800);
+        stage.setScene(scene);
+
+        titleShopTokenLabel.setPrefHeight(sizeY * 20);
+        titleShopTokenLabel.setPrefWidth(sizeX * 400);
+        titleShopTokenLabel.setFont(new Font(sizeX * 30));
+
+        titleShopMoneyLabel.setLayoutX(sizeX * 400);
+        titleShopMoneyLabel.setPrefHeight(sizeY * 20);
+        titleShopMoneyLabel.setPrefWidth(sizeX * 400);
+        titleShopMoneyLabel.setFont(new Font(sizeX * 30));
+
+        errorLabel.setLayoutX(sizeX * 250);
+        errorLabel.setLayoutY(sizeY * 700);
+        errorLabel.setPrefHeight(sizeY * 20);
+        errorLabel.setPrefWidth(sizeX * 300);
+        errorLabel.setFont(new Font(sizeX * 20));
+
+        leftShopTokenButton.setLayoutX(sizeX * 100);
+        leftShopTokenButton.setLayoutY(sizeY * 750);
+        leftShopTokenButton.setPrefHeight(sizeY * 20);
+        leftShopTokenButton.setPrefWidth(sizeX * 50);
+        leftShopTokenButton.setFont(new Font(sizeX * 15));
+
+        rightShopTokenButton.setLayoutX(sizeX * 250);
+        rightShopTokenButton.setLayoutY(sizeY * 750);
+        rightShopTokenButton.setPrefHeight(sizeY * 20);
+        rightShopTokenButton.setPrefWidth(sizeX * 50);
+        rightShopTokenButton.setFont(new Font(sizeX * 15));
+
+        leftShopMoneyButton.setLayoutX(sizeX * 500);
+        leftShopMoneyButton.setLayoutY(sizeY * 750);
+        leftShopMoneyButton.setPrefHeight(sizeY * 20);
+        leftShopMoneyButton.setPrefWidth(sizeX * 50);
+        leftShopMoneyButton.setFont(new Font(sizeX * 15));
+
+        rightShopMoneyButton.setLayoutX(sizeX * 650);
+        rightShopMoneyButton.setLayoutY(sizeY * 750);
+        rightShopMoneyButton.setPrefHeight(sizeY * 20);
+        rightShopMoneyButton.setPrefWidth(sizeX * 50);
+        rightShopMoneyButton.setFont(new Font(sizeX * 15));
+
+        addMoneyButton.setLayoutX(sizeX * 360);
+        addMoneyButton.setLayoutY(sizeY * 14);
+        addMoneyButton.setPrefHeight(sizeY * 60);
+        addMoneyButton.setPrefWidth(sizeX * 200);
+        addMoneyButton.setFont(new Font(sizeX * 20));
+
+        historyShoppingButton.setLayoutX(sizeX * 150);
+        historyShoppingButton.setLayoutY(sizeY * 14);
+        historyShoppingButton.setPrefHeight(sizeY * 60);
+        historyShoppingButton.setPrefWidth(sizeX * 200);
+        historyShoppingButton.setFont(new Font(sizeX * 20));
+
+        returnMainMenuButton.setLayoutX(sizeX * 14);
+        returnMainMenuButton.setLayoutY(sizeY * 14);
+        returnMainMenuButton.setPrefHeight(sizeY * 60);
+        returnMainMenuButton.setPrefWidth(sizeX * 123);
+        returnMainMenuButton.setFont(new Font(sizeX * 20));
+
+        middleLine.setLayoutX(sizeX * 400);
+        middleLine.setLayoutY(sizeY * 200);
+        middleLine.setEndY(sizeY * 520);
+
+        circleSetting.setLayoutX(sizeX * 750);
+        circleSetting.setLayoutY(sizeY * 40);
+        circleSetting.setRadius(Math.max(sizeX,sizeY));
     }
 }
