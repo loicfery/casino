@@ -39,9 +39,12 @@ public class InformationMenuController implements InterfaceMenu{
     private final MessageInterface messageInterface = new MessageInterface();
     private Language language;
     private ChangePasswordMenuController changePasswordMenuController;
+    private Scene scene;
 
     private double soundVolume;
     private boolean backgroundAnimation;
+    private double sizeX;
+    private double sizeY;
 
     private final Label labelTitle = new Label();
     private final Label labelUserName = new Label();
@@ -60,14 +63,16 @@ public class InformationMenuController implements InterfaceMenu{
     private final TextField textEmail = new TextField();
     private final TextField textUserName = new TextField();
 
-    public InformationMenuController(User user, Stage stage, Database database, Language language, double soundVolume, boolean backgroundAnimation){
+    public InformationMenuController(User user, Stage stage, Database database, Language language, double soundVolume, boolean backgroundAnimation, double sizeX, double sizeY){
         this.user = user;
         this.stage = stage;
         this.soundVolume = soundVolume;
         this.backgroundAnimation = backgroundAnimation;
-        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
+        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation,sizeX,sizeY);
         this.database = database;
         this.language = language;
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
     }
 
     /**
@@ -81,7 +86,7 @@ public class InformationMenuController implements InterfaceMenu{
             }
         });
         root = new BorderPane();
-        Scene scene = new Scene(root, 500, 500);
+        scene = new Scene(root, sizeX * 500, sizeY * 500);
         stage.setScene(scene);
         anchorPane = new AnchorPane();
 
@@ -119,7 +124,7 @@ public class InformationMenuController implements InterfaceMenu{
      */
     private void goToMainMenu(){
         settingMenuController.exitSettingMenu();
-      MainMenuController mainMenuController = new MainMenuController(stage,user, database,language,soundVolume,backgroundAnimation);
+      MainMenuController mainMenuController = new MainMenuController(stage,user, database,language,soundVolume,backgroundAnimation,sizeX,sizeY);
       mainMenuController.setting();
     }
 
@@ -212,6 +217,10 @@ public class InformationMenuController implements InterfaceMenu{
     /** Méthode qui modifie la langue **/
     public void setLanguage(Language language){ this.language = language; }
 
+    public void setSizeX(double sizeX){ this.sizeX = sizeX; }
+
+    public void setSizeY(double sizeY){ this.sizeY = sizeY; }
+
     /** Méthode qui rafraichit ce menu **/
     public void refresh(){
         labelTitle.setText(language.getLine("informationLabel"));
@@ -228,5 +237,87 @@ public class InformationMenuController implements InterfaceMenu{
             changePasswordMenuController.setLanguage(language);
             changePasswordMenuController.refresh();
         }
+
+        refreshPosition();
+    }
+
+    private void refreshPosition(){
+        scene.setRoot(new BorderPane());
+        scene = new Scene(root, sizeX * 500, sizeY * 500);
+        stage.setScene(scene);
+
+        labelTitle.setPrefHeight(sizeY * 20);
+        labelTitle.setPrefWidth(sizeX * 500);
+        labelTitle.setFont(new Font(sizeX * 30));
+
+        labelEmail.setLayoutX(sizeX * 20);
+        labelEmail.setLayoutY(sizeY * 120);
+        labelEmail.setPrefHeight(sizeY * 20);
+        labelEmail.setPrefWidth(sizeX * 300);
+        labelEmail.setFont(new Font(sizeX * 20));
+
+        labelUserName.setLayoutX(sizeX * 20);
+        labelUserName.setLayoutY(sizeY * 180);
+        labelUserName.setPrefHeight(sizeY * 20);
+        labelUserName.setPrefWidth(sizeX * 500);
+        labelUserName.setFont(new Font(sizeX * 20));
+
+        labelToken.setLayoutX(sizeX * 20);
+        labelToken.setLayoutY(sizeY * 240);
+        labelToken.setPrefHeight(sizeY * 20);
+        labelToken.setPrefWidth(sizeX * 500);
+        labelToken.setFont(new Font(sizeX * 20));
+
+        labelMoney.setLayoutX(sizeX * 20);
+        labelMoney.setLayoutY(sizeY * 300);
+        labelMoney.setPrefHeight(sizeY * 20);
+        labelMoney.setPrefWidth(sizeX * 500);
+        labelMoney.setFont(new Font(sizeX * 20));
+
+        labelError.setLayoutX(sizeX * 140);
+        labelError.setLayoutY(sizeY * 360);
+        labelError.setPrefHeight(sizeY * 20);
+        labelError.setPrefWidth(sizeX * 300);
+        labelError.setFont(new Font(sizeX * 15));
+
+        textEmail.setLayoutX(sizeX * 90);
+        textEmail.setLayoutY(sizeY * 120);
+        textEmail.setPrefHeight(sizeY * 20);
+        textEmail.setPrefWidth(sizeX * 230);
+        textEmail.setFont(new Font(sizeX * 15));
+
+        textUserName.setLayoutX(sizeX * 150);
+        textUserName.setLayoutY(sizeY * 180);
+        textUserName.setPrefHeight(sizeY * 20);
+        textUserName.setPrefWidth(sizeX * 140);
+        textUserName.setFont(new Font(sizeX * 15));
+
+        returnMainMenuButton.setLayoutX(sizeX * 20);
+        returnMainMenuButton.setLayoutY(sizeY * 440);
+        returnMainMenuButton.setPrefHeight(sizeY * 20);
+        returnMainMenuButton.setPrefWidth(sizeX * 100);
+        returnMainMenuButton.setFont(new Font(sizeX * 15));
+
+        changeEmailButton.setLayoutX(sizeX * 330);
+        changeEmailButton.setLayoutY(sizeY * 120);
+        changeEmailButton.setPrefHeight(sizeY * 20);
+        changeEmailButton.setPrefWidth(sizeX * 150);
+        changeEmailButton.setFont(new Font(sizeX * 15));
+
+        changeUserNameButton.setLayoutX(sizeX * 300);
+        changeUserNameButton.setLayoutY(sizeY * 180);
+        changeUserNameButton.setPrefHeight(sizeY * 20);
+        changeUserNameButton.setPrefWidth(sizeX * 180);
+        changeUserNameButton.setFont(new Font(sizeX * 15));
+
+        changePasswordButton.setLayoutX(sizeX * 20);
+        changePasswordButton.setLayoutY(sizeY * 380);
+        changePasswordButton.setPrefHeight(sizeY * 20);
+        changePasswordButton.setPrefWidth(sizeX * 180);
+        changePasswordButton.setFont(new Font(sizeX * 15));
+
+        circleSetting.setLayoutX(sizeX * 475);
+        circleSetting.setLayoutY(sizeY * 30);
+        circleSetting.setRadius(Math.max(sizeX,sizeY) * 18);
     }
 }

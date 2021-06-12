@@ -55,6 +55,8 @@ public class SlotMachineMenuController implements InterfaceMenu{
     private MediaPlayer soundPayout;
     private MediaPlayer soundSlot;
     private double soundVolume;
+    private double sizeX;
+    private double sizeY;
 
     private final Rectangle cadreSlotMachine = new Rectangle();
     private final Rectangle rectangleLog = new Rectangle();
@@ -78,17 +80,19 @@ public class SlotMachineMenuController implements InterfaceMenu{
 
     private final SlotMachine slotMachine;
 
-    public SlotMachineMenuController(User user, Stage stage, Database database, Language language, double soundVolume, boolean backgroundAnimation){
+    public SlotMachineMenuController(User user, Stage stage, Database database, Language language, double soundVolume, boolean backgroundAnimation, double sizeX, double sizeY){
         this.user = user;
         this.stage = stage;
         this.soundVolume = soundVolume;
         this.backgroundAnimation = backgroundAnimation;
         slotMachine = new SlotMachine(user);
         logMenuController = new LogMenuController();
-        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
+        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation,sizeX,sizeY);
         ruleMenuController = new RuleMenuController(this,language);
         this.database = database;
         this.language = language;
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
     }
 
     /** Méthode qui initialise l'interface de la machine à sous **/
@@ -226,7 +230,7 @@ public class SlotMachineMenuController implements InterfaceMenu{
         ruleMenuController.exitRuleMenu();
         soundSlot.stop();
         soundPayout.stop();
-        MainMenuController mainMenuController = new MainMenuController(stage,user,database,language,soundVolume,backgroundAnimation);
+        MainMenuController mainMenuController = new MainMenuController(stage,user,database,language,soundVolume,backgroundAnimation,sizeX,sizeY);
         mainMenuController.setting();
     }
 
@@ -432,6 +436,10 @@ public class SlotMachineMenuController implements InterfaceMenu{
 
     /** Méthode pour modifier le language **/
     public void setLanguage(Language language){ this.language = language; }
+
+    public void setSizeX(double sizeX){ this.sizeX = sizeX; }
+
+    public void setSizeY(double sizeY){ this.sizeY = sizeY; }
 
     /** Méthode pour rafraichir ce menu **/
     public void refresh(){

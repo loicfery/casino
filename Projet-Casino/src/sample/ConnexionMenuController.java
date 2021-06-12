@@ -40,9 +40,12 @@ public class ConnexionMenuController implements InterfaceMenu{
     private final DatabaseName databaseName = new DatabaseName();
     private final MessageInterface messageInterface = new MessageInterface();
     private Language language;
+    private Scene scene;
 
     private double soundVolume;
     private boolean backgroundAnimation;
+    private double sizeX;
+    private double sizeY;
 
     private final Label labelTitle1 = new Label();
     private final Label labelTitle2 = new Label();
@@ -66,13 +69,15 @@ public class ConnexionMenuController implements InterfaceMenu{
 
     private final Circle circleSetting = new Circle();
 
-    public ConnexionMenuController(Stage stage, Database database, Language language){
+    public ConnexionMenuController(Stage stage, Database database, Language language, double sizeX, double sizeY){
         this.stage = stage;
         this.soundVolume = 0.5;
         this.backgroundAnimation = true;
-        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
+        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation,sizeX,sizeY);
         this.database = database;
         this.language = language;
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
     }
 
     /** Méthode qui initialise l'interface du menu de connexion **/
@@ -84,30 +89,30 @@ public class ConnexionMenuController implements InterfaceMenu{
             }
         });
         root = new BorderPane();
-        Scene scene = new Scene(root, 500, 500);
+        scene = new Scene(root, sizeX * 500, sizeY * 500);
         scene.getStylesheets().add(getClass().getResource("connexionMenu.css").toExternalForm());
         stage.setScene(scene);
         anchorPane = new AnchorPane();
 
-        setupScene.setLabel(labelTitle1,language.getLine("connexionLabelTitle1"), Pos.CENTER,0,50,20,500,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelTitle2,language.getLine("connexionLabelTitle2"), Pos.CENTER,0,50,20,500,new Font(30),Paint.valueOf("BLACK"),false,anchorPane);
-        setupScene.setLabel(labelEmail,language.getLine("connexionLabelEmail"),Pos.CENTER,60,200,20,150,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelPassword,language.getLine("connexionLabelPassword"),Pos.CENTER,260,200,20,200,new Font(25),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setTextField(textEmail,"",Pos.CENTER,40,250,10,200,new Font(15),true,anchorPane);
-        setupScene.setTextField(textPassword,"",Pos.CENTER,270,250,10,200,new Font(15),true,anchorPane);
-        setupScene.setButton(buttonLogin,language.getLine("connexionButtonLogin"),Pos.CENTER,10,380,20,480,new Font(25),true,anchorPane);
-        setupScene.setButton(buttonNewAccount,language.getLine("connexionButtonNewAccount"),Pos.CENTER,10,440,20,480,new Font(25),true,anchorPane);
-        setupScene.setButton(buttonLoginMenuReturn,language.getLine("connexionButtonLoginMenuReturn"),Pos.CENTER,10,380,20,480,new Font(25),false,anchorPane);
-        setupScene.setButton(buttonInscription,language.getLine("connexionButtonInscription"),Pos.CENTER,10,440,20,480,new Font(25),false,anchorPane);
-        setupScene.setLabel(labelNewMail,language.getLine("emailLabel"),Pos.CENTER,100,150,20,150,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
-        setupScene.setLabel(labelNewPassword,language.getLine("passwordLabel"),Pos.CENTER,30,200,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
-        setupScene.setLabel(labelNewUserName,language.getLine("connexionUserName"),Pos.CENTER,30,250,20,200,new Font(25),Paint.valueOf("BLACK"),false,anchorPane);
-        setupScene.setTextField(textNewEmail,"",Pos.CENTER,250,150,20,200,new Font(15),false,anchorPane);
-        setupScene.setTextField(textNewPassword,"",Pos.CENTER,250,200,20,200,new Font(15),false,anchorPane);
-        setupScene.setTextField(textNewUserName,"",Pos.CENTER,250,250,20,200,new Font(15),false,anchorPane);
-        setupScene.setLabel(labelError,"",Pos.CENTER,50,330,20,400,new Font(15),Paint.valueOf("RED"),false,anchorPane);
+        setupScene.setLabel(labelTitle1,language.getLine("connexionLabelTitle1"), Pos.CENTER,0,50,20,sizeX * 500,new Font(sizeX * 30),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelTitle2,language.getLine("connexionLabelTitle2"), Pos.CENTER,0,50,20,sizeX * 500,new Font(sizeX * 30),Paint.valueOf("BLACK"),false,anchorPane);
+        setupScene.setLabel(labelEmail,language.getLine("connexionLabelEmail"),Pos.CENTER,sizeX * 60,sizeY * 200,sizeY * 20,sizeX * 150,new Font(sizeX * 25),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setLabel(labelPassword,language.getLine("connexionLabelPassword"),Pos.CENTER,sizeX * 260,sizeY * 200,sizeY * 20,sizeX * 200,new Font(sizeX * 25),Paint.valueOf("BLACK"),true,anchorPane);
+        setupScene.setTextField(textEmail,"",Pos.CENTER,sizeX * 40,sizeY * 250,sizeY * 10,sizeX * 200,new Font(sizeX * 15),true,anchorPane);
+        setupScene.setTextField(textPassword,"",Pos.CENTER,sizeX * 270,sizeY * 250,sizeY * 10,sizeX * 200,new Font(sizeX * 15),true,anchorPane);
+        setupScene.setButton(buttonLogin,language.getLine("connexionButtonLogin"),Pos.CENTER,sizeX * 10,sizeY * 380,sizeY * 20,sizeX * 480,new Font(sizeX * 25),true,anchorPane);
+        setupScene.setButton(buttonNewAccount,language.getLine("connexionButtonNewAccount"),Pos.CENTER,sizeX * 10,sizeY * 440,sizeY * 20,sizeX * 480,new Font(sizeX * 25),true,anchorPane);
+        setupScene.setButton(buttonLoginMenuReturn,language.getLine("connexionButtonLoginMenuReturn"),Pos.CENTER,sizeX * 10,sizeY * 380,sizeY * 20,sizeX * 480,new Font(sizeX * 25),false,anchorPane);
+        setupScene.setButton(buttonInscription,language.getLine("connexionButtonInscription"),Pos.CENTER,sizeX * 10,sizeY * 440,sizeY * 20,sizeX * 480,new Font(sizeX * 25),false,anchorPane);
+        setupScene.setLabel(labelNewMail,language.getLine("emailLabel"),Pos.CENTER,sizeX * 100,sizeY * 150,sizeY * 20,sizeX * 150,new Font(sizeX * 25),Paint.valueOf("BLACK"),false,anchorPane);
+        setupScene.setLabel(labelNewPassword,language.getLine("passwordLabel"),Pos.CENTER,sizeX * 30,sizeY * 200,sizeY * 20,sizeX * 200,new Font(sizeX * 25),Paint.valueOf("BLACK"),false,anchorPane);
+        setupScene.setLabel(labelNewUserName,language.getLine("connexionUserName"),Pos.CENTER,sizeX * 30,sizeY * 250,sizeY * 20,sizeX * 200,new Font(sizeX * 25),Paint.valueOf("BLACK"),false,anchorPane);
+        setupScene.setTextField(textNewEmail,"",Pos.CENTER,sizeX * 250,sizeY * 150,sizeY * 20,sizeX * 200,new Font(sizeX * 15),false,anchorPane);
+        setupScene.setTextField(textNewPassword,"",Pos.CENTER,sizeX * 250,sizeY * 200,sizeY * 20,sizeX * 200,new Font(sizeX * 15),false,anchorPane);
+        setupScene.setTextField(textNewUserName,"",Pos.CENTER,sizeX * 250,sizeY * 250,sizeY * 20,sizeX * 200,new Font(sizeX * 15),false,anchorPane);
+        setupScene.setLabel(labelError,"",Pos.CENTER,sizeX * 50,sizeY * 330,sizeY * 20,sizeX * 400,new Font(sizeX * 15),Paint.valueOf("RED"),false,anchorPane);
 
-        setupScene.setCircle(circleSetting,18,475,30,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
+        setupScene.setCircle(circleSetting,Math.max(sizeX,sizeY) * 18,sizeX * 475,sizeY * 30,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
 
         buttonLogin.setOnMouseClicked((event)-> goToMainMenu());
         textEmail.setOnAction((event)-> goToMainMenu());
@@ -229,7 +234,7 @@ public class ConnexionMenuController implements InterfaceMenu{
     /** Méthode qui charge le menu principal **/
     private void switchMainMenu(){
         settingMenuController.exitSettingMenu();
-        MainMenuController mainMenuController = new MainMenuController(stage,user, database,language, soundVolume,backgroundAnimation);
+        MainMenuController mainMenuController = new MainMenuController(stage,user, database,language, soundVolume,backgroundAnimation,sizeX,sizeY);
         mainMenuController.setting();
     }
 
@@ -254,6 +259,10 @@ public class ConnexionMenuController implements InterfaceMenu{
     /** Méthode qui modifie la langue **/
     public void setLanguage(Language language){ this.language = language; }
 
+    public void setSizeX(double sizeX){ this.sizeX = sizeX; }
+
+    public void setSizeY(double sizeY){ this.sizeY = sizeY; }
+
     /** Méthode qui rafraichit ce menu **/
     public void refresh(){
         labelTitle1.setText(language.getLine("connexionLabelTitle1"));
@@ -267,5 +276,113 @@ public class ConnexionMenuController implements InterfaceMenu{
         labelNewMail.setText(language.getLine("emailLabel"));
         labelNewPassword.setText(language.getLine("passwordLabel"));
         labelNewUserName.setText(language.getLine("connexionUserName"));
+
+        refreshPosition();
+    }
+
+    private void refreshPosition(){
+        scene.setRoot(new BorderPane());
+        scene = new Scene(root, sizeX * 500, sizeY * 500);
+        stage.setScene(scene);
+
+        labelTitle1.setPrefWidth(sizeX * 500);
+        labelTitle1.setFont(new Font(sizeX * 30));
+
+        labelTitle2.setPrefWidth(sizeX * 500);
+        labelTitle2.setFont(new Font(sizeX * 30));
+
+        labelEmail.setLayoutX(sizeX * 60);
+        labelEmail.setLayoutY(sizeY * 200);
+        labelEmail.setPrefHeight(sizeY * 20);
+        labelEmail.setPrefWidth(sizeX * 150);
+        labelEmail.setFont(new Font(sizeX * 25));
+
+        labelPassword.setLayoutX(sizeX * 260);
+        labelPassword.setLayoutY(sizeY * 200);
+        labelPassword.setPrefHeight(sizeY * 20);
+        labelPassword.setPrefWidth(sizeX * 200);
+        labelPassword.setFont(new Font(sizeX * 25));
+
+        textEmail.setLayoutX(sizeX * 40);
+        textEmail.setLayoutY(sizeY * 250);
+        textEmail.setPrefHeight(sizeY * 10);
+        textEmail.setPrefWidth(sizeX * 200);
+        textEmail.setFont(new Font(sizeX * 15));
+
+        textPassword.setLayoutX(sizeX * 270);
+        textPassword.setLayoutY(sizeY * 250);
+        textPassword.setPrefHeight(sizeY * 10);
+        textPassword.setPrefWidth(sizeX * 200);
+        textPassword.setFont(new Font(sizeX * 15));
+
+        buttonLogin.setLayoutX(sizeX * 10);
+        buttonLogin.setLayoutY(sizeY * 380);
+        buttonLogin.setPrefHeight(sizeY * 20);
+        buttonLogin.setPrefWidth(sizeX * 480);
+        buttonLogin.setFont(new Font(sizeX * 25));
+
+        buttonNewAccount.setLayoutX(sizeX * 10);
+        buttonNewAccount.setLayoutY(sizeY * 440);
+        buttonNewAccount.setPrefHeight(sizeY * 20);
+        buttonNewAccount.setPrefWidth(sizeX * 480);
+        buttonNewAccount.setFont(new Font(sizeX * 25));
+
+        buttonLoginMenuReturn.setLayoutX(sizeX * 10);
+        buttonLoginMenuReturn.setLayoutY(sizeY * 380);
+        buttonLoginMenuReturn.setPrefHeight(sizeY * 20);
+        buttonLoginMenuReturn.setPrefWidth(sizeX * 480);
+        buttonLoginMenuReturn.setFont(new Font(sizeX * 25));
+
+        buttonInscription.setLayoutX(sizeX * 10);
+        buttonInscription.setLayoutY(sizeY * 440);
+        buttonInscription.setPrefHeight(sizeY * 20);
+        buttonInscription.setPrefWidth(sizeX * 480);
+        buttonInscription.setFont(new Font(sizeX * 25));
+
+        labelNewMail.setLayoutX(sizeX * 100);
+        labelNewMail.setLayoutY(sizeY * 150);
+        labelNewMail.setPrefHeight(sizeY * 20);
+        labelNewMail.setPrefWidth(sizeX * 150);
+        labelNewMail.setFont(new Font(sizeX * 25));
+
+        labelNewPassword.setLayoutX(sizeX * 30);
+        labelNewPassword.setLayoutY(sizeY * 200);
+        labelNewPassword.setPrefHeight(sizeY * 20);
+        labelNewPassword.setPrefWidth(sizeX * 200);
+        labelNewPassword.setFont(new Font(sizeX * 25));
+
+        labelNewUserName.setLayoutX(sizeX * 30);
+        labelNewUserName.setLayoutY(sizeY * 250);
+        labelNewUserName.setPrefHeight(sizeY * 20);
+        labelNewUserName.setPrefWidth(sizeX * 200);
+        labelNewUserName.setFont(new Font(sizeX * 25));
+
+        textNewEmail.setLayoutX(sizeX * 250);
+        textNewEmail.setLayoutY(sizeY * 150);
+        textNewEmail.setPrefHeight(sizeY * 20);
+        textNewEmail.setPrefWidth(sizeX * 200);
+        textNewEmail.setFont(new Font(sizeX * 15));
+
+        textNewPassword.setLayoutX(sizeX * 250);
+        textNewPassword.setLayoutY(sizeY * 200);
+        textNewPassword.setPrefHeight(sizeY * 20);
+        textNewPassword.setPrefWidth(sizeX * 200);
+        textNewPassword.setFont(new Font(sizeX * 15));
+
+        textNewUserName.setLayoutX(sizeX * 250);
+        textNewUserName.setLayoutY(sizeY * 250);
+        textNewUserName.setPrefHeight(sizeY * 20);
+        textNewUserName.setPrefWidth(sizeX * 200);
+        textNewUserName.setFont(new Font(sizeX * 15));
+
+        labelError.setLayoutX(sizeX * 50);
+        labelError.setLayoutY(sizeY * 330);
+        labelError.setPrefHeight(sizeY * 20);
+        labelError.setPrefWidth(sizeX * 400);
+        labelError.setFont(new Font(sizeX * 15));
+
+        circleSetting.setLayoutX(sizeX * 475);
+        circleSetting.setLayoutY(sizeY * 30);
+        circleSetting.setRadius(Math.max(sizeX,sizeY) * 18);
     }
 }

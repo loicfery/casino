@@ -83,15 +83,19 @@ public class ShopMenuController implements InterfaceMenu{
     private boolean ADMIN = false;
     private int indexToken = 0;
     private int indexMoney = 0;
+    private double sizeX;
+    private double sizeY;
 
-    public ShopMenuController(Stage stage,User user, Database database, Language language, double soundVolume, boolean backgroundAnimation){
+    public ShopMenuController(Stage stage,User user, Database database, Language language, double soundVolume, boolean backgroundAnimation, double sizeX, double sizeY){
         this.stage = stage;
         this.user = user;
         this.database = database;
         this.soundVolume = soundVolume;
         this.backgroundAnimation = backgroundAnimation;
-        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
+        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation,sizeX,sizeY);
         this.language = language;
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
 
         if(user.getRank().equals("ADMIN")){
             ADMIN = true;
@@ -619,7 +623,7 @@ public class ShopMenuController implements InterfaceMenu{
      **/
     private void goToHistoryShoppingMenu(){
         settingMenuController.exitSettingMenu();
-        HistoryShoppingMenuController historyShoppingMenuController = new HistoryShoppingMenuController(user,stage,database,language,soundVolume,backgroundAnimation);
+        HistoryShoppingMenuController historyShoppingMenuController = new HistoryShoppingMenuController(user,stage,database,language,soundVolume,backgroundAnimation,sizeX,sizeY);
         historyShoppingMenuController.setting();
     }
 
@@ -640,7 +644,7 @@ public class ShopMenuController implements InterfaceMenu{
      **/
     private void goToMainMenu(){
         settingMenuController.exitSettingMenu();
-        MainMenuController mainMenuController = new MainMenuController(stage,user, database,language,soundVolume,backgroundAnimation);
+        MainMenuController mainMenuController = new MainMenuController(stage,user, database,language,soundVolume,backgroundAnimation,sizeX,sizeY);
         mainMenuController.setting();
     }
 
@@ -677,6 +681,10 @@ public class ShopMenuController implements InterfaceMenu{
 
     /** Méthode qui modifie la langue **/
     public void setLanguage(Language language){ this.language = language; }
+
+    public void setSizeX(double sizeX){ this.sizeX = sizeX; }
+
+    public void setSizeY(double sizeY){ this.sizeY = sizeY; }
 
     /** Méthode qui rafraichit ce menu **/
     public void refresh(){

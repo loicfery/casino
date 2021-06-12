@@ -62,6 +62,8 @@ public class BlackJackMenuController implements InterfaceMenu{
 
     private double soundVolume;
     private boolean backgroundAnimation;
+    private double sizeX;
+    private double sizeY;
 
     private boolean split = false;
     private boolean stand = false;
@@ -106,18 +108,20 @@ public class BlackJackMenuController implements InterfaceMenu{
     private final Circle circleRule = new Circle();
     private final Circle circleSetting = new Circle();
 
-    public BlackJackMenuController(User user,Stage stage, Database database, Language language, double soundVolume, boolean backgroundAnimation){
+    public BlackJackMenuController(User user,Stage stage, Database database, Language language, double soundVolume, boolean backgroundAnimation, double sizeX, double sizeY){
         this.stage = stage;
         this.user = user;
         this.soundVolume = soundVolume;
         this.valueTokenUserBegin = user.getToken();
         this.backgroundAnimation = backgroundAnimation;
         logMenuController = new LogMenuController();
-        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
+        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation,sizeX,sizeY);
         ruleMenuController = new RuleMenuController(this,language);
         blackJack = new BlackJack(user);
         this.database = database;
         this.language = language;
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
     }
 
     /** Méthode qui initialise l'interface du black jack **/
@@ -417,7 +421,7 @@ public class BlackJackMenuController implements InterfaceMenu{
     private void goToMainMenu(){
         settingMenuController.exitSettingMenu();
         logMenuController.exitLogMenu();
-        MainMenuController mainMenuController = new MainMenuController(stage,user, database,language,soundVolume,backgroundAnimation);
+        MainMenuController mainMenuController = new MainMenuController(stage,user, database,language,soundVolume,backgroundAnimation,sizeX,sizeY);
         mainMenuController.setting();
     }
 
@@ -853,6 +857,10 @@ public class BlackJackMenuController implements InterfaceMenu{
 
     /** Méthode qui modifie la langue **/
     public void setLanguage(Language language){ this.language = language; }
+
+    public void setSizeX(double sizeX){ this.sizeX = sizeX; }
+
+    public void setSizeY(double sizeY){ this.sizeY = sizeY; }
 
     /** Méthode qui rafraichit ce menu **/
     public void refresh(){

@@ -169,4 +169,13 @@ public class SetupScene {
         radioButton.setPrefHeight(prefWidth);
         anchorPane.getChildren().add(radioButton);
     }
+
+    public void setMenu(MenuBar menu, double layoutX, double layoutY, double prefHeight, double prefWidth, boolean visible, AnchorPane anchorPane){
+        menu.setLayoutX(layoutX);
+        menu.setLayoutY(layoutY);
+        menu.setPrefHeight(prefHeight);
+        menu.setPrefWidth(prefWidth);
+        menu.setVisible(visible);
+        anchorPane.getChildren().add(menu);
+    }
 }

@@ -71,15 +71,19 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
     private int indexInformation;
     private boolean switchExchange;
     private boolean ADMIN = false;
+    private double sizeX;
+    private double sizeY;
 
-    public HistoryShoppingMenuController(User user, Stage stage, Database database,Language language, double soundVolume, boolean backgroundAnimation){
+    public HistoryShoppingMenuController(User user, Stage stage, Database database,Language language, double soundVolume, boolean backgroundAnimation, double sizeX, double sizeY){
         this.user = user;
         this.stage = stage;
         this.soundVolume = soundVolume;
         this.backgroundAnimation = backgroundAnimation;
         this.database = database;
-        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation);
+        settingMenuController = new SettingMenuController(this,language, soundVolume,backgroundAnimation,sizeX,sizeY);
         this.language = language;
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
 
         if(user.getRank().equals("ADMIN")){
             ADMIN = true;
@@ -456,7 +460,7 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
      **/
     private void goToShopMenu(){
         settingMenuController.exitSettingMenu();
-        ShopMenuController shopMenuController = new ShopMenuController(stage,user,database,language,soundVolume,backgroundAnimation);
+        ShopMenuController shopMenuController = new ShopMenuController(stage,user,database,language,soundVolume,backgroundAnimation,sizeX,sizeY);
         shopMenuController.setting();
     }
 
@@ -485,6 +489,10 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
 
     /** Méthode qui modifie la langue **/
     public void setLanguage(Language language){ this.language = language; }
+
+    public void setSizeX(double sizeX){ this.sizeX = sizeX; }
+
+    public void setSizeY(double sizeY){ this.sizeY = sizeY; }
 
     /** Méthode qui rafraichit ce menu **/
     public void refresh(){

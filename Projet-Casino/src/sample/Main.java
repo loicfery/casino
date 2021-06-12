@@ -25,7 +25,7 @@ public class Main extends Application {
 
         stage.setResizable(false);
 
-        ConnexionMenuController controller = new ConnexionMenuController(stage,database,new Language("language_french"));
+        ConnexionMenuController controller = new ConnexionMenuController(stage,database,new Language("language_french"),1,1);
         controller.setting();
     }
 

@@ -72,6 +72,8 @@ public class RouletteMenuController implements InterfaceMenu{
     private double soundVolume;
     private boolean backgroundAnimation;
     private boolean modify = false;
+    private double sizeX;
+    private double sizeY;
 
     private MediaPlayer tokenSound;
     private MediaPlayer rouletteSound;
@@ -102,17 +104,19 @@ public class RouletteMenuController implements InterfaceMenu{
     private final Rectangle rectangleInformationBet = new Rectangle();
 
 
-    public RouletteMenuController(User user, Stage stage, Database database, Language language, double soundVolume, boolean backgroundAnimation){
+    public RouletteMenuController(User user, Stage stage, Database database, Language language, double soundVolume, boolean backgroundAnimation, double sizeX, double sizeY){
         this.user = user;
         this.stage = stage;
         this.soundVolume = soundVolume;
         this.backgroundAnimation = backgroundAnimation;
         logMenuController = new LogMenuController();
-        settingMenuController = new SettingMenuController(this,language,soundVolume,backgroundAnimation);
+        settingMenuController = new SettingMenuController(this,language,soundVolume,backgroundAnimation,sizeX,sizeY);
         ruleMenuController = new RuleMenuController(this,language);
         this.database = database;
         roulette = new Roulette(user);
         this.language = language;
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
     }
 
     /** Méthode qui initialise l'interface de la roulette **/
@@ -1285,7 +1289,7 @@ public class RouletteMenuController implements InterfaceMenu{
         logMenuController.exitLogMenu();
         tokenSound.stop();
         rouletteSound.stop();
-        MainMenuController mainMenuController = new MainMenuController(stage,user, database,language,soundVolume,backgroundAnimation);
+        MainMenuController mainMenuController = new MainMenuController(stage,user, database,language,soundVolume,backgroundAnimation,sizeX,sizeY);
         mainMenuController.setting();
     }
 
@@ -1342,6 +1346,10 @@ public class RouletteMenuController implements InterfaceMenu{
 
     /** Méthode qui modifie la langue **/
     public void setLanguage(Language language){ this.language = language; }
+
+    public void setSizeX(double sizeX){ this.sizeX = sizeX; }
+
+    public void setSizeY(double sizeY){ this.sizeY = sizeY; }
 
     /** Méthode qui rafraichit ce menu **/
     public void refresh(){
