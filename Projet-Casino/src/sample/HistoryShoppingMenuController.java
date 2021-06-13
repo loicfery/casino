@@ -101,7 +101,7 @@ public class HistoryShoppingMenuController implements InterfaceMenu{
             }
         });
         root = new BorderPane();
-        Scene scene = new Scene(root, 400, 900);
+        Scene scene = new Scene(root, sizeX * 400, sizeY * 900);
         scene.getStylesheets().add(getClass().getResource("historyShoppingMenu.css").toExternalForm());
         stage.setScene(scene);
         anchorPane = new AnchorPane();

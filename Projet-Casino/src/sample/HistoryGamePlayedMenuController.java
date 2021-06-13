@@ -574,17 +574,62 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         textSearchDateMonth.setPrefWidth(sizeX * 35);
         textSearchDateMonth.setFont(new Font(sizeX * 15));
 
-        setupScene.setTextField(textSearchDateDay,"",Pos.CENTER,135,500,20,35,new Font(15),true,anchorPane);
+        textSearchDateDay.setLayoutX(sizeX * 135);
+        textSearchDateDay.setLayoutY(sizeY * 500);
+        textSearchDateDay.setPrefHeight(sizeY * 20);
+        textSearchDateDay.setPrefWidth(sizeX * 35);
+        textSearchDateDay.setFont(new Font(sizeX * 15));
 
-        setupScene.setButton(gameBlackJackButton,language.getLine("gameBlackJackButton"),Pos.CENTER,20,150,20,150,new Font(15),true,anchorPane);
-        setupScene.setButton(gameSlotMachineButton,language.getLine("gameSlotMachineButton"),Pos.CENTER,20,250,20,150,new Font(15),true,anchorPane);
-        setupScene.setButton(gameRouletteButton,language.getLine("gameRouletteButton"),Pos.CENTER,20,350,20,150,new Font(15),true,anchorPane);
-        setupScene.setButton(returnShopMenuButton,language.getLine("quitButton"), Pos.CENTER,25,720,60,123.0,new Font(20.0),true,anchorPane);
-        setupScene.setButton(leftInformationButton,"<-",Pos.CENTER,300,720,20,50,new Font(15),false,anchorPane);
-        setupScene.setButton(rightInformationButton,"->",Pos.CENTER,450,720,20,50,new Font(15),false,anchorPane);
-        setupScene.setButton(searchUserButton,language.getLine("historySearchUserByEmailButton"),Pos.CENTER,20,650,20,150,new Font(10),false,anchorPane);
-        setupScene.setButton(searchByDateButton,language.getLine("historySearchByDateButton"),Pos.CENTER,20,550,20,150,new Font(10),true,anchorPane);
+        gameBlackJackButton.setLayoutX(sizeX * 20);
+        gameBlackJackButton.setLayoutY(sizeY * 150);
+        gameBlackJackButton.setPrefHeight(sizeY * 20);
+        gameBlackJackButton.setPrefWidth(sizeX * 150);
+        gameBlackJackButton.setFont(new Font(sizeX * 15));
 
-        setupScene.setCircle(circleSetting,18,570,30,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").t
+        gameSlotMachineButton.setLayoutX(sizeX * 20);
+        gameSlotMachineButton.setLayoutY(sizeY * 250);
+        gameSlotMachineButton.setPrefHeight(sizeY * 20);
+        gameSlotMachineButton.setPrefWidth(sizeX * 150);
+        gameSlotMachineButton.setFont(new Font(sizeX * 15));
+
+        gameRouletteButton.setLayoutX(sizeX * 20);
+        gameRouletteButton.setLayoutY(sizeY * 350);
+        gameRouletteButton.setPrefHeight(sizeY * 20);
+        gameRouletteButton.setPrefWidth(sizeX * 150);
+        gameRouletteButton.setFont(new Font(sizeX * 15));
+
+        returnShopMenuButton.setLayoutX(sizeX * 25);
+        returnShopMenuButton.setLayoutY(sizeY * 720);
+        returnShopMenuButton.setPrefHeight(sizeY * 60);
+        returnShopMenuButton.setPrefWidth(sizeX * 123);
+        returnShopMenuButton.setFont(new Font(sizeX * 20));
+
+        leftInformationButton.setLayoutX(sizeX * 300);
+        leftInformationButton.setLayoutY(sizeY * 720);
+        leftInformationButton.setPrefHeight(sizeY * 20);
+        leftInformationButton.setPrefWidth(sizeX * 50);
+        leftInformationButton.setFont(new Font(sizeX * 15));
+
+        rightInformationButton.setLayoutX(sizeX * 450);
+        rightInformationButton.setLayoutY(sizeY * 720);
+        rightInformationButton.setPrefHeight(sizeY * 20);
+        rightInformationButton.setPrefWidth(sizeX * 50);
+        rightInformationButton.setFont(new Font(sizeX * 15));
+
+        searchUserButton.setLayoutX(sizeX * 20);
+        searchUserButton.setLayoutY(sizeY * 650);
+        searchUserButton.setPrefHeight(sizeY * 20);
+        searchUserButton.setPrefWidth(sizeX * 150);
+        searchUserButton.setFont(new Font(sizeX * 10));
+
+        searchByDateButton.setLayoutX(sizeX * 20);
+        searchByDateButton.setLayoutY(sizeY * 550);
+        searchByDateButton.setPrefHeight(sizeY * 20);
+        searchByDateButton.setPrefWidth(sizeX * 150);
+        searchByDateButton.setFont(new Font(sizeX * 10));
+
+        circleSetting.setLayoutX(sizeX * 570);
+        circleSetting.setLayoutY(sizeY * 30);
+        circleSetting.setRadius(Math.max(sizeX,sizeY) * 18);
     }
 }

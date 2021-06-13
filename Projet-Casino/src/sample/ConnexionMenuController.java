@@ -6,9 +6,9 @@ import games.User;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -19,12 +19,12 @@ import javafx.scene.shape.StrokeType;
 import javafx.stage.Stage;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
 import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ConnexionMenuController implements InterfaceMenu{
@@ -46,6 +46,12 @@ public class ConnexionMenuController implements InterfaceMenu{
     private boolean backgroundAnimation;
     private double sizeX;
     private double sizeY;
+
+    private final List<Integer> listOfLayoutX = new ArrayList<>();
+    private final List<Integer> listOfLayoutY = new ArrayList<>();
+    private final List<Integer> listOfPrefHeight = new ArrayList<>();
+    private final List<Integer> listOfPrefWidth = new ArrayList<>();
+    private final List<Integer> listOfRadius = new ArrayList<>();
 
     private final Label labelTitle1 = new Label();
     private final Label labelTitle2 = new Label();
@@ -78,6 +84,9 @@ public class ConnexionMenuController implements InterfaceMenu{
         this.language = language;
         this.sizeX = sizeX;
         this.sizeY = sizeY;
+
+        System.out.println(labelEmail.getClass());
+        System.out.println(textEmail.getClass());
     }
 
     /** Méthode qui initialise l'interface du menu de connexion **/
@@ -277,7 +286,7 @@ public class ConnexionMenuController implements InterfaceMenu{
         labelNewPassword.setText(language.getLine("passwordLabel"));
         labelNewUserName.setText(language.getLine("connexionUserName"));
 
-        refreshPosition();
+        refreshTest();
     }
 
     private void refreshPosition(){
@@ -384,5 +393,56 @@ public class ConnexionMenuController implements InterfaceMenu{
         circleSetting.setLayoutX(sizeX * 475);
         circleSetting.setLayoutY(sizeY * 30);
         circleSetting.setRadius(Math.max(sizeX,sizeY) * 18);
+    }
+
+    private void refreshTest(){
+        scene.setRoot(new BorderPane());
+        scene = new Scene(root, sizeX * 500, sizeY * 500);
+        stage.setScene(scene);
+
+        for(int index = 0; index < anchorPane.getChildren().size(); index ++){
+            if(anchorPane.getChildren().get(index) instanceof Label){
+                refreshPositionLabel(anchorPane.getChildren().get(index));
+            }
+            if(anchorPane.getChildren().get(index) instanceof TextField){
+                refreshPositionTextField(anchorPane.getChildren().get(index));
+            }
+            if(anchorPane.getChildren().get(index) instanceof Button){
+                refreshPositionButton(anchorPane.getChildren().get(index));
+            }
+            if(anchorPane.getChildren().get(index) instanceof Circle){
+                refreshPositionCircle(anchorPane.getChildren().get(index));
+            }
+        }
+    }
+
+    private void refreshPositionLabel(Node node){
+        node.setLayoutX(sizeX * node.getLayoutX());
+        node.setLayoutY(sizeY * node.getLayoutY());
+        ((Label) node).setPrefHeight(sizeY * ((Label) node).getPrefHeight());
+        ((Label) node).setPrefWidth(sizeX * ((Label) node).getPrefWidth());
+        ((Label) node).setFont(new Font(sizeX * ((Label) node).getFont().getSize()));
+    }
+
+    private void refreshPositionTextField(Node node){
+        node.setLayoutX(sizeX * node.getLayoutX());
+        node.setLayoutY(sizeY * node.getLayoutY());
+        ((TextField) node).setPrefHeight(sizeY * ((TextField) node).getPrefHeight());
+        ((TextField) node).setPrefWidth(sizeX * ((TextField) node).getPrefWidth());
+        ((TextField) node).setFont(new Font(sizeX * ((TextField) node).getFont().getSize()));
+    }
+
+    private void refreshPositionButton(Node node){
+        node.setLayoutX(sizeX * node.getLayoutX());
+        node.setLayoutY(sizeY * node.getLayoutY());
+        ((Button) node).setPrefHeight(sizeY * ((Button) node).getPrefHeight());
+        ((Button) node).setPrefWidth(sizeX * ((Button) node).getPrefWidth());
+        ((Button) node).setFont(new Font(sizeX * ((Button) node).getFont().getSize()));
+    }
+
+    private void refreshPositionCircle(Node node){
+        node.setLayoutX(sizeX * node.getLayoutX());
+        node.setLayoutY(sizeY * node.getLayoutY());
+        ((Circle) node).setRadius(Math.max(sizeX,sizeY) * ((Circle) node).getRadius());
     }
 }
