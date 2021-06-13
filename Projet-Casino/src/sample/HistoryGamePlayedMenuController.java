@@ -8,6 +8,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -71,6 +72,13 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
     private double sizeX;
     private double sizeY;
 
+    private final List<Double> listOfLayoutX = new ArrayList<>();
+    private final List<Double> listOfLayoutY = new ArrayList<>();
+    private final List<Double> listOfPrefHeight = new ArrayList<>();
+    private final List<Double> listOfPrefWidth = new ArrayList<>();
+    private final List<Double> listOfFontSize = new ArrayList<>();
+    private final List<Double> listOfRadius = new ArrayList<>();
+
     private List<String> listOfGameBlackJack;
     private List<String> listOfGameSlotMachine;
     private List<String> listOfGameRoulette;
@@ -107,32 +115,32 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
             }
         });
         root = new BorderPane();
-        scene = new Scene(root, 600, 800);
+        scene = new Scene(root, sizeX * 600, sizeY * 800);
         scene.getStylesheets().add(getClass().getResource("historyShoppingMenu.css").toExternalForm());
         stage.setScene(scene);
         anchorPane = new AnchorPane();
 
-        setupScene.setLabel(blackJackTitleLabel,language.getLine("historyGamePlayedBlackJackTitleLabel"),Pos.CENTER,0,20,20,600,new Font(30),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(slotMachineTitleLabel,language.getLine("historyGamePlayedSlotMachineTitleLabel"),Pos.CENTER,0,20,20,600,new Font(30),Paint.valueOf("BLACK"),false,anchorPane);
-        setupScene.setLabel(rouletteTitleLabel,language.getLine("historyGamePlayedRouletteTitleLabel"),Pos.CENTER,0,20,20,600,new Font(30),Paint.valueOf("BLACK"),false,anchorPane);
+        setupScene.setLabel(blackJackTitleLabel,language.getLine("historyGamePlayedBlackJackTitleLabel"),Pos.CENTER,0,sizeY * 20,sizeY * 20,sizeX * 600,new Font(sizeX * 30),Paint.valueOf("BLACK"),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,true,anchorPane);
+        setupScene.setLabel(slotMachineTitleLabel,language.getLine("historyGamePlayedSlotMachineTitleLabel"),Pos.CENTER,0,sizeY * 20,sizeY * 20,sizeX * 600,new Font(sizeX * 30),Paint.valueOf("BLACK"),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,false,anchorPane);
+        setupScene.setLabel(rouletteTitleLabel,language.getLine("historyGamePlayedRouletteTitleLabel"),Pos.CENTER,0,sizeY * 20,sizeY * 20,sizeX * 600,new Font(sizeX * 30),Paint.valueOf("BLACK"),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,false,anchorPane);
 
-        setupScene.setTextArea(textHistory,200,150,530,380,false,true,anchorPane);
+        setupScene.setTextArea(textHistory,sizeX * 200,sizeY * 150,sizeY * 530,sizeX * 380,false,sizeX * 20,listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,true,anchorPane);
 
-        setupScene.setTextField(textSearchUser,"",Pos.CENTER,20,600,20,150,new Font(15),false,anchorPane);
-        setupScene.setTextField(textSearchDateYear,"",Pos.CENTER,20,500,20,60,new Font(15),true,anchorPane);
-        setupScene.setTextField(textSearchDateMonth,"",Pos.CENTER,90,500,20,35,new Font(15),true,anchorPane);
-        setupScene.setTextField(textSearchDateDay,"",Pos.CENTER,135,500,20,35,new Font(15),true,anchorPane);
+        setupScene.setTextField(textSearchUser,"",Pos.CENTER,sizeX * 20,sizeY * 600,sizeY * 20,sizeX * 150,new Font(sizeX * 15),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,false,anchorPane);
+        setupScene.setTextField(textSearchDateYear,"",Pos.CENTER,sizeX * 20,sizeY * 500,sizeY * 20,sizeX * 60,new Font(sizeX * 15),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,true,anchorPane);
+        setupScene.setTextField(textSearchDateMonth,"",Pos.CENTER,sizeX * 90,sizeY * 500,sizeY * 20,sizeX * 35,new Font(sizeX * 15),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,true,anchorPane);
+        setupScene.setTextField(textSearchDateDay,"",Pos.CENTER,sizeX * 135,sizeY * 500,sizeY * 20,sizeX * 35,new Font(sizeX * 15),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,true,anchorPane);
 
-        setupScene.setButton(gameBlackJackButton,language.getLine("gameBlackJackButton"),Pos.CENTER,20,150,20,150,new Font(15),true,anchorPane);
-        setupScene.setButton(gameSlotMachineButton,language.getLine("gameSlotMachineButton"),Pos.CENTER,20,250,20,150,new Font(15),true,anchorPane);
-        setupScene.setButton(gameRouletteButton,language.getLine("gameRouletteButton"),Pos.CENTER,20,350,20,150,new Font(15),true,anchorPane);
-        setupScene.setButton(returnShopMenuButton,language.getLine("quitButton"), Pos.CENTER,25,720,60,123.0,new Font(20.0),true,anchorPane);
-        setupScene.setButton(leftInformationButton,"<-",Pos.CENTER,300,720,20,50,new Font(15),false,anchorPane);
-        setupScene.setButton(rightInformationButton,"->",Pos.CENTER,450,720,20,50,new Font(15),false,anchorPane);
-        setupScene.setButton(searchUserButton,language.getLine("historySearchUserByEmailButton"),Pos.CENTER,20,650,20,150,new Font(10),false,anchorPane);
-        setupScene.setButton(searchByDateButton,language.getLine("historySearchByDateButton"),Pos.CENTER,20,550,20,150,new Font(10),true,anchorPane);
+        setupScene.setButton(gameBlackJackButton,language.getLine("gameBlackJackButton"),Pos.CENTER,sizeX * 20,sizeY * 150,sizeY * 20,sizeX * 150,new Font(sizeX * 15),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,true,anchorPane);
+        setupScene.setButton(gameSlotMachineButton,language.getLine("gameSlotMachineButton"),Pos.CENTER,sizeX * 20,sizeY * 250,sizeY * 20,sizeX * 150,new Font(sizeX * 15),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,true,anchorPane);
+        setupScene.setButton(gameRouletteButton,language.getLine("gameRouletteButton"),Pos.CENTER,sizeX *  20,sizeY *  350,sizeY * 20,sizeX * 150,new Font(sizeX * 15),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,true,anchorPane);
+        setupScene.setButton(returnShopMenuButton,language.getLine("quitButton"), Pos.CENTER,sizeX * 25,sizeY * 720,sizeY * 60,sizeX * 123.0,new Font(sizeX * 20.0),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,true,anchorPane);
+        setupScene.setButton(leftInformationButton,"<-",Pos.CENTER,sizeX * 300,sizeY * 720,sizeY * 20,sizeX * 50,new Font(sizeX * 15),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,false,anchorPane);
+        setupScene.setButton(rightInformationButton,"->",Pos.CENTER,sizeX * 450,sizeY * 720,sizeY * 20,sizeX * 50,new Font(sizeX * 15),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,false,anchorPane);
+        setupScene.setButton(searchUserButton,language.getLine("historySearchUserByEmailButton"),Pos.CENTER,sizeX * 20,sizeY * 650,sizeY * 20,sizeX * 150,new Font( sizeX * 10),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,false,anchorPane);
+        setupScene.setButton(searchByDateButton,language.getLine("historySearchByDateButton"),Pos.CENTER,sizeX * 20,sizeY * 550,sizeY * 20,sizeX * 150,new Font(sizeX * 10),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,true,anchorPane);
 
-        setupScene.setCircle(circleSetting,18,570,30,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
+        setupScene.setCircle(circleSetting,Math.max(sizeX,sizeY) * 18,sizeX * 570,sizeY * 30,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,listOfLayoutX,listOfLayoutY,listOfRadius,true,anchorPane);
 
         circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
         returnShopMenuButton.setOnMouseClicked((event)-> goToMainMenu());
@@ -535,101 +543,47 @@ public class HistoryGamePlayedMenuController implements InterfaceMenu{
         scene = new Scene(root, sizeX * 600, sizeY * 800);
         stage.setScene(scene);
 
-        blackJackTitleLabel.setLayoutY(sizeY * 20);
-        blackJackTitleLabel.setPrefHeight(sizeY * 20);
-        blackJackTitleLabel.setPrefWidth(sizeX * 600);
-        blackJackTitleLabel.setFont(new Font(sizeX * 30));
+        int indexLayoutX = 0, indexLayoutY = 0, indexPrefHeight = 0, indexPrefWidth = 0, indexFontSize = 0, indexRadius = 0;
 
-        slotMachineTitleLabel.setLayoutY(sizeY * 20);
-        slotMachineTitleLabel.setPrefHeight(sizeY * 20);
-        slotMachineTitleLabel.setPrefWidth(sizeX * 600);
-        slotMachineTitleLabel.setFont(new Font(sizeX * 30));
-
-        rouletteTitleLabel.setLayoutY(sizeY * 20);
-        rouletteTitleLabel.setPrefHeight(sizeY * 20);
-        rouletteTitleLabel.setPrefWidth(sizeX * 600);
-        rouletteTitleLabel.setFont(new Font(sizeX * 30));
-
-        textHistory.setLayoutX(sizeX * 200);
-        textHistory.setLayoutY(sizeY * 150);
-        textHistory.setPrefHeight(sizeY * 530);
-        textHistory.setPrefWidth(sizeX * 380);
-        textHistory.setStyle("-fx-font-size: " + sizeX * 30);
-
-        textSearchUser.setLayoutX(sizeX * 20);
-        textSearchUser.setLayoutY(sizeY * 600);
-        textSearchUser.setPrefHeight(sizeY * 20);
-        textSearchUser.setPrefWidth(sizeX * 150);
-        textSearchUser.setFont(new Font(sizeX * 15));
-
-        textSearchDateYear.setLayoutX(sizeX * 20);
-        textSearchDateYear.setLayoutY(sizeY * 500);
-        textSearchDateYear.setPrefHeight(sizeY * 20);
-        textSearchDateYear.setPrefWidth(sizeX * 60);
-        textSearchDateYear.setFont(new Font(sizeX * 15));
-
-        textSearchDateMonth.setLayoutX(sizeX * 90);
-        textSearchDateMonth.setLayoutY(sizeY * 500);
-        textSearchDateMonth.setPrefHeight(sizeY * 20);
-        textSearchDateMonth.setPrefWidth(sizeX * 35);
-        textSearchDateMonth.setFont(new Font(sizeX * 15));
-
-        textSearchDateDay.setLayoutX(sizeX * 135);
-        textSearchDateDay.setLayoutY(sizeY * 500);
-        textSearchDateDay.setPrefHeight(sizeY * 20);
-        textSearchDateDay.setPrefWidth(sizeX * 35);
-        textSearchDateDay.setFont(new Font(sizeX * 15));
-
-        gameBlackJackButton.setLayoutX(sizeX * 20);
-        gameBlackJackButton.setLayoutY(sizeY * 150);
-        gameBlackJackButton.setPrefHeight(sizeY * 20);
-        gameBlackJackButton.setPrefWidth(sizeX * 150);
-        gameBlackJackButton.setFont(new Font(sizeX * 15));
-
-        gameSlotMachineButton.setLayoutX(sizeX * 20);
-        gameSlotMachineButton.setLayoutY(sizeY * 250);
-        gameSlotMachineButton.setPrefHeight(sizeY * 20);
-        gameSlotMachineButton.setPrefWidth(sizeX * 150);
-        gameSlotMachineButton.setFont(new Font(sizeX * 15));
-
-        gameRouletteButton.setLayoutX(sizeX * 20);
-        gameRouletteButton.setLayoutY(sizeY * 350);
-        gameRouletteButton.setPrefHeight(sizeY * 20);
-        gameRouletteButton.setPrefWidth(sizeX * 150);
-        gameRouletteButton.setFont(new Font(sizeX * 15));
-
-        returnShopMenuButton.setLayoutX(sizeX * 25);
-        returnShopMenuButton.setLayoutY(sizeY * 720);
-        returnShopMenuButton.setPrefHeight(sizeY * 60);
-        returnShopMenuButton.setPrefWidth(sizeX * 123);
-        returnShopMenuButton.setFont(new Font(sizeX * 20));
-
-        leftInformationButton.setLayoutX(sizeX * 300);
-        leftInformationButton.setLayoutY(sizeY * 720);
-        leftInformationButton.setPrefHeight(sizeY * 20);
-        leftInformationButton.setPrefWidth(sizeX * 50);
-        leftInformationButton.setFont(new Font(sizeX * 15));
-
-        rightInformationButton.setLayoutX(sizeX * 450);
-        rightInformationButton.setLayoutY(sizeY * 720);
-        rightInformationButton.setPrefHeight(sizeY * 20);
-        rightInformationButton.setPrefWidth(sizeX * 50);
-        rightInformationButton.setFont(new Font(sizeX * 15));
-
-        searchUserButton.setLayoutX(sizeX * 20);
-        searchUserButton.setLayoutY(sizeY * 650);
-        searchUserButton.setPrefHeight(sizeY * 20);
-        searchUserButton.setPrefWidth(sizeX * 150);
-        searchUserButton.setFont(new Font(sizeX * 10));
-
-        searchByDateButton.setLayoutX(sizeX * 20);
-        searchByDateButton.setLayoutY(sizeY * 550);
-        searchByDateButton.setPrefHeight(sizeY * 20);
-        searchByDateButton.setPrefWidth(sizeX * 150);
-        searchByDateButton.setFont(new Font(sizeX * 10));
-
-        circleSetting.setLayoutX(sizeX * 570);
-        circleSetting.setLayoutY(sizeY * 30);
-        circleSetting.setRadius(Math.max(sizeX,sizeY) * 18);
+        for(Node node : anchorPane.getChildren()){
+            if(node instanceof Label){
+                SetupScene.refreshPositionLabel(node,listOfLayoutX.get(indexLayoutX),listOfLayoutY.get(indexLayoutY),listOfPrefHeight.get(indexPrefHeight),listOfPrefWidth.get(indexPrefWidth),listOfFontSize.get(indexFontSize),sizeX,sizeY);
+                indexLayoutX ++;
+                indexLayoutY ++;
+                indexPrefHeight ++;
+                indexPrefWidth ++;
+                indexFontSize ++;
+            }
+            if(node instanceof TextField){
+                SetupScene.refreshPositionTextField(node,listOfLayoutX.get(indexLayoutX),listOfLayoutY.get(indexLayoutY),listOfPrefHeight.get(indexPrefHeight),listOfPrefWidth.get(indexPrefWidth),listOfFontSize.get(indexFontSize),sizeX,sizeY);
+                indexLayoutX ++;
+                indexLayoutY ++;
+                indexPrefHeight ++;
+                indexPrefWidth ++;
+                indexFontSize ++;
+            }
+            if(node instanceof Button){
+                SetupScene.refreshPositionButton(node,listOfLayoutX.get(indexLayoutX),listOfLayoutY.get(indexLayoutY),listOfPrefHeight.get(indexPrefHeight),listOfPrefWidth.get(indexPrefWidth),listOfFontSize.get(indexFontSize),sizeX,sizeY);
+                indexLayoutX ++;
+                indexLayoutY ++;
+                indexPrefHeight ++;
+                indexPrefWidth ++;
+                indexFontSize ++;
+            }
+            if(node instanceof Circle){
+                SetupScene.refreshPositionCircle(node,listOfLayoutX.get(indexLayoutX),listOfLayoutY.get(indexLayoutY),listOfRadius.get(indexRadius),sizeX,sizeY);
+                indexLayoutX ++;
+                indexLayoutY ++;
+                indexRadius ++;
+            }
+            if(node instanceof TextArea){
+                SetupScene.refreshPositionTextArea(node,listOfLayoutX.get(indexLayoutX),listOfLayoutY.get(indexLayoutY),listOfPrefHeight.get(indexPrefHeight),listOfPrefWidth.get(indexPrefWidth),listOfFontSize.get(indexFontSize),sizeX,sizeY);
+                indexLayoutX ++;
+                indexLayoutY ++;
+                indexPrefHeight ++;
+                indexPrefWidth ++;
+                indexFontSize ++;
+            }
+        }
     }
 }

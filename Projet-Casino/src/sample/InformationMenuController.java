@@ -6,6 +6,7 @@ import games.User;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,6 +25,8 @@ import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class InformationMenuController implements InterfaceMenu{
@@ -45,6 +48,13 @@ public class InformationMenuController implements InterfaceMenu{
     private boolean backgroundAnimation;
     private double sizeX;
     private double sizeY;
+
+    private final List<Double> listOfLayoutX = new ArrayList<>();
+    private final List<Double> listOfLayoutY = new ArrayList<>();
+    private final List<Double> listOfPrefHeight = new ArrayList<>();
+    private final List<Double> listOfPrefWidth = new ArrayList<>();
+    private final List<Double> listOfFontSize = new ArrayList<>();
+    private final List<Double> listOfRadius = new ArrayList<>();
 
     private final Label labelTitle = new Label();
     private final Label labelUserName = new Label();
@@ -90,24 +100,24 @@ public class InformationMenuController implements InterfaceMenu{
         stage.setScene(scene);
         anchorPane = new AnchorPane();
 
-        setupScene.setLabel(labelTitle,language.getLine("informationLabel"), Pos.CENTER,0,20,20,500,new Font(30), Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelEmail,language.getLine("emailLabel"),Pos.CENTER_LEFT,20,120,20,300,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelUserName,language.getLine("userNameLabel"),Pos.CENTER_LEFT,20,180,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelToken,language.getLine("tokenLabel") + ": " + user.getToken(),Pos.CENTER_LEFT,20,240,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelMoney,language.getLine("moneyLabel") + " " + user.getMoney(),Pos.CENTER_LEFT,20,300,20,500,new Font(20),Paint.valueOf("BLACK"),true,anchorPane);
-        setupScene.setLabel(labelError,"",Pos.CENTER,140,360,20,300,new Font(15),Paint.valueOf("RED"),false,anchorPane);
+        setupScene.setLabel(labelTitle,language.getLine("informationLabel"), Pos.CENTER,0,20,20,500,new Font(30), Paint.valueOf("BLACK"),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,true,anchorPane);
+        setupScene.setLabel(labelEmail,language.getLine("emailLabel"),Pos.CENTER_LEFT,20,120,20,300,new Font(20),Paint.valueOf("BLACK"),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,true,anchorPane);
+        setupScene.setLabel(labelUserName,language.getLine("userNameLabel"),Pos.CENTER_LEFT,20,180,20,500,new Font(20),Paint.valueOf("BLACK"),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,true,anchorPane);
+        setupScene.setLabel(labelToken,language.getLine("tokenLabel") + ": " + user.getToken(),Pos.CENTER_LEFT,20,240,20,500,new Font(20),Paint.valueOf("BLACK"),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,true,anchorPane);
+        setupScene.setLabel(labelMoney,language.getLine("moneyLabel") + " " + user.getMoney(),Pos.CENTER_LEFT,20,300,20,500,new Font(20),Paint.valueOf("BLACK"),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,true,anchorPane);
+        setupScene.setLabel(labelError,"",Pos.CENTER,140,360,20,300,new Font(15),Paint.valueOf("RED"),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,false,anchorPane);
 
-        setupScene.setTextField(textEmail,"",Pos.CENTER_LEFT,90,120,20,230,new Font(15),true,anchorPane);
+        setupScene.setTextField(textEmail,"",Pos.CENTER_LEFT,90,120,20,230,new Font(15),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,true,anchorPane);
         textEmail.setText(user.getEmail());
-        setupScene.setTextField(textUserName,"",Pos.CENTER_LEFT,150,180,20,140,new Font(15),true,anchorPane);
+        setupScene.setTextField(textUserName,"",Pos.CENTER_LEFT,150,180,20,140,new Font(15),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,true,anchorPane);
         textUserName.setText(user.getUserName());
 
-        setupScene.setButton(returnMainMenuButton,language.getLine("quitButton"),Pos.CENTER,20,440,20,100,new Font(15),true,anchorPane);
-        setupScene.setButton(changeEmailButton,language.getLine("informationChangeEmailButton"),Pos.CENTER,330,120,20,150,new Font(15),true,anchorPane);
-        setupScene.setButton(changeUserNameButton,language.getLine("informationChangeUserNameButton"),Pos.CENTER,300,180,20,180,new Font(15),true,anchorPane);
-        setupScene.setButton(changePasswordButton,language.getLine("informationChangePasswordButton"),Pos.CENTER,20,380,20,180,new Font(15),true,anchorPane);
+        setupScene.setButton(returnMainMenuButton,language.getLine("quitButton"),Pos.CENTER,20,440,20,100,new Font(15),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,true,anchorPane);
+        setupScene.setButton(changeEmailButton,language.getLine("informationChangeEmailButton"),Pos.CENTER,330,120,20,150,new Font(15),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,true,anchorPane);
+        setupScene.setButton(changeUserNameButton,language.getLine("informationChangeUserNameButton"),Pos.CENTER,300,180,20,180,new Font(15),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,true,anchorPane);
+        setupScene.setButton(changePasswordButton,language.getLine("informationChangePasswordButton"),Pos.CENTER,20,380,20,180,new Font(15),listOfLayoutX,listOfLayoutY,listOfPrefHeight,listOfPrefWidth,listOfFontSize,true,anchorPane);
 
-        setupScene.setCircle(circleSetting,18,475,30,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,true,anchorPane);
+        setupScene.setCircle(circleSetting,18,475,30,new ImagePattern(new Image(new File("Projet-Casino/image/pictureSetting.png").toURI().toString())),Paint.valueOf("WHITE"), StrokeType.INSIDE,1.0,listOfLayoutX,listOfLayoutY,listOfRadius,true,anchorPane);
 
         circleSetting.setOnMouseClicked((event)-> goToMenuSetting());
         returnMainMenuButton.setOnMouseClicked((event)-> goToMainMenu());
@@ -246,78 +256,39 @@ public class InformationMenuController implements InterfaceMenu{
         scene = new Scene(root, sizeX * 500, sizeY * 500);
         stage.setScene(scene);
 
-        labelTitle.setPrefHeight(sizeY * 20);
-        labelTitle.setPrefWidth(sizeX * 500);
-        labelTitle.setFont(new Font(sizeX * 30));
+        int indexLayoutX = 0, indexLayoutY = 0, indexPrefHeight = 0, indexPrefWidth = 0, indexFontSize = 0, indexRadius = 0;
 
-        labelEmail.setLayoutX(sizeX * 20);
-        labelEmail.setLayoutY(sizeY * 120);
-        labelEmail.setPrefHeight(sizeY * 20);
-        labelEmail.setPrefWidth(sizeX * 300);
-        labelEmail.setFont(new Font(sizeX * 20));
-
-        labelUserName.setLayoutX(sizeX * 20);
-        labelUserName.setLayoutY(sizeY * 180);
-        labelUserName.setPrefHeight(sizeY * 20);
-        labelUserName.setPrefWidth(sizeX * 500);
-        labelUserName.setFont(new Font(sizeX * 20));
-
-        labelToken.setLayoutX(sizeX * 20);
-        labelToken.setLayoutY(sizeY * 240);
-        labelToken.setPrefHeight(sizeY * 20);
-        labelToken.setPrefWidth(sizeX * 500);
-        labelToken.setFont(new Font(sizeX * 20));
-
-        labelMoney.setLayoutX(sizeX * 20);
-        labelMoney.setLayoutY(sizeY * 300);
-        labelMoney.setPrefHeight(sizeY * 20);
-        labelMoney.setPrefWidth(sizeX * 500);
-        labelMoney.setFont(new Font(sizeX * 20));
-
-        labelError.setLayoutX(sizeX * 140);
-        labelError.setLayoutY(sizeY * 360);
-        labelError.setPrefHeight(sizeY * 20);
-        labelError.setPrefWidth(sizeX * 300);
-        labelError.setFont(new Font(sizeX * 15));
-
-        textEmail.setLayoutX(sizeX * 90);
-        textEmail.setLayoutY(sizeY * 120);
-        textEmail.setPrefHeight(sizeY * 20);
-        textEmail.setPrefWidth(sizeX * 230);
-        textEmail.setFont(new Font(sizeX * 15));
-
-        textUserName.setLayoutX(sizeX * 150);
-        textUserName.setLayoutY(sizeY * 180);
-        textUserName.setPrefHeight(sizeY * 20);
-        textUserName.setPrefWidth(sizeX * 140);
-        textUserName.setFont(new Font(sizeX * 15));
-
-        returnMainMenuButton.setLayoutX(sizeX * 20);
-        returnMainMenuButton.setLayoutY(sizeY * 440);
-        returnMainMenuButton.setPrefHeight(sizeY * 20);
-        returnMainMenuButton.setPrefWidth(sizeX * 100);
-        returnMainMenuButton.setFont(new Font(sizeX * 15));
-
-        changeEmailButton.setLayoutX(sizeX * 330);
-        changeEmailButton.setLayoutY(sizeY * 120);
-        changeEmailButton.setPrefHeight(sizeY * 20);
-        changeEmailButton.setPrefWidth(sizeX * 150);
-        changeEmailButton.setFont(new Font(sizeX * 15));
-
-        changeUserNameButton.setLayoutX(sizeX * 300);
-        changeUserNameButton.setLayoutY(sizeY * 180);
-        changeUserNameButton.setPrefHeight(sizeY * 20);
-        changeUserNameButton.setPrefWidth(sizeX * 180);
-        changeUserNameButton.setFont(new Font(sizeX * 15));
-
-        changePasswordButton.setLayoutX(sizeX * 20);
-        changePasswordButton.setLayoutY(sizeY * 380);
-        changePasswordButton.setPrefHeight(sizeY * 20);
-        changePasswordButton.setPrefWidth(sizeX * 180);
-        changePasswordButton.setFont(new Font(sizeX * 15));
-
-        circleSetting.setLayoutX(sizeX * 475);
-        circleSetting.setLayoutY(sizeY * 30);
-        circleSetting.setRadius(Math.max(sizeX,sizeY) * 18);
+        for(Node node : anchorPane.getChildren()){
+            if(node instanceof Label){
+                SetupScene.refreshPositionLabel(node,listOfLayoutX.get(indexLayoutX),listOfLayoutY.get(indexLayoutY),listOfPrefHeight.get(indexPrefHeight),listOfPrefWidth.get(indexPrefWidth),listOfFontSize.get(indexFontSize),sizeX,sizeY);
+                indexLayoutX ++;
+                indexLayoutY ++;
+                indexPrefHeight ++;
+                indexPrefWidth ++;
+                indexFontSize ++;
+            }
+            if(node instanceof TextField){
+                SetupScene.refreshPositionTextField(node,listOfLayoutX.get(indexLayoutX),listOfLayoutY.get(indexLayoutY),listOfPrefHeight.get(indexPrefHeight),listOfPrefWidth.get(indexPrefWidth),listOfFontSize.get(indexFontSize),sizeX,sizeY);
+                indexLayoutX ++;
+                indexLayoutY ++;
+                indexPrefHeight ++;
+                indexPrefWidth ++;
+                indexFontSize ++;
+            }
+            if(node instanceof Button){
+                SetupScene.refreshPositionButton(node,listOfLayoutX.get(indexLayoutX),listOfLayoutY.get(indexLayoutY),listOfPrefHeight.get(indexPrefHeight),listOfPrefWidth.get(indexPrefWidth),listOfFontSize.get(indexFontSize),sizeX,sizeY);
+                indexLayoutX ++;
+                indexLayoutY ++;
+                indexPrefHeight ++;
+                indexPrefWidth ++;
+                indexFontSize ++;
+            }
+            if(node instanceof Circle){
+                SetupScene.refreshPositionCircle(node,listOfLayoutX.get(indexLayoutX),listOfLayoutY.get(indexLayoutY),listOfRadius.get(indexRadius),sizeX,sizeY);
+                indexLayoutX ++;
+                indexLayoutY ++;
+                indexRadius ++;
+            }
+        }
     }
 }
